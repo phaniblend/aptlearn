@@ -10,7 +10,7 @@
       "flow": [
         {
           "stepId": "title",
-          "mentorSays": "Welcome! Today we're going to learn about the Two Sum problem. This lesson will help you think through how to solve problems with arrays.\n\nLet's start by making sure we're on the same page about the basics.",
+          "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Define and use variables in your chosen language\n2. Understand what arrays are and how indexing works\n3. Create functions with parameters\n4. Use loops to iterate through arrays\n5. Solve the two sum problem using different approaches",
           "action": "continue",
           "next": "prerequisite-check"
         },
@@ -1064,7 +1064,7 @@
       "flow": [
         {
           "stepId": "title",
-          "mentorSays": "Welcome! Today we'll learn how to print all elements of an array. This is a fundamental skill you'll use in almost every array problem.\n\nLet's start by making sure we're on the same page about the basics.",
+          "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Define and use variables in your chosen language\n2. Create functions with parameters\n3. Loop through arrays using 'for loop' in your chosen language\n4. Print or display each element of an array",
           "action": "continue",
           "next": "prerequisite-check"
         },
@@ -1809,7 +1809,7 @@
       "flow": [
         {
           "stepId": "title",
-          "mentorSays": "Welcome! Today we'll learn how to find the largest number in an array. This is a common problem that helps you practice loops and comparisons.\n\nLet's start by making sure we're on the same page about the basics.",
+          "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Define and use variables in your chosen language\n2. Create functions with parameters\n3. Loop through arrays using 'for loop' in your chosen language\n4. Compare values to find the maximum element in an array",
           "action": "continue",
           "next": "prerequisite-check"
         },
@@ -2575,7 +2575,7 @@
       "flow": [
         {
           "stepId": "title",
-          "mentorSays": "Welcome! Today we'll learn how to find the smallest number in an array. This is similar to finding the maximum, but we look for the minimum instead.\n\nLet's start by making sure we're on the same page about the basics.",
+          "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Define and use variables in your chosen language\n2. Create functions with parameters\n3. Loop through arrays using 'for loop' in your chosen language\n4. Compare values to find the minimum element in an array",
           "action": "continue",
           "next": "prerequisite-check"
         },
@@ -3299,7 +3299,7 @@
       "flow": [
         {
           "stepId": "title",
-          "mentorSays": "Welcome! Today we'll learn how to add up all the numbers in an array. This is a fundamental operation you'll use in many problems.\n\nLet's start by making sure we're on the same page about the basics.",
+          "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Define and use variables in your chosen language\n2. Create functions with parameters\n3. Loop through arrays using 'for loop' in your chosen language\n4. Accumulate values to calculate the sum of all array elements",
           "action": "continue",
           "next": "prerequisite-check"
         },
@@ -4023,7 +4023,7 @@
       "flow": [
         {
           "stepId": "title",
-          "mentorSays": "Welcome! Today we'll learn how to reverse an array. This means flipping the order of elements so the first becomes last and the last becomes first.\n\nLet's start by making sure we're on the same page about the basics.",
+          "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Define and use variables in your chosen language\n2. Create functions with parameters\n3. Loop through arrays using 'for loop' in your chosen language\n4. Swap elements to reverse an array in-place",
           "action": "continue",
           "next": "prerequisite-check"
         },
@@ -4740,7 +4740,7 @@
       "flow": [
         {
           "stepId": "title",
-          "mentorSays": "Welcome! Today we'll learn how to check if an array is sorted. This means determining whether the numbers go from smallest to largest (ascending) or largest to smallest (descending).\n\nLet's start by making sure we're on the same page about the basics.",
+          "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Define and use variables in your chosen language\n2. Create functions with parameters\n3. Loop through arrays using 'for loop' in your chosen language\n4. Compare adjacent elements to check if an array is sorted",
           "action": "continue",
           "next": "prerequisite-check"
         },
@@ -5457,7 +5457,7 @@
       "flow": [
         {
           "stepId": "title",
-          "mentorSays": "Welcome! Today we'll learn how to find the index (position) of an element in an array. This means searching for a number and returning where it's located.\n\nLet's start by making sure we're on the same page about the basics.",
+          "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Define and use variables in your chosen language\n2. Create functions with parameters\n3. Loop through arrays using 'for loop' in your chosen language\n4. Search for an element and return its index position",
           "action": "continue",
           "next": "prerequisite-check"
         },
@@ -6174,7 +6174,7 @@
       "flow": [
         {
           "stepId": "title",
-          "mentorSays": "Welcome! Today we'll learn how to count how many times a specific number appears in an array. This means going through the array and counting each time we see our target number.\n\nLet's start by making sure we're on the same page about the basics.",
+          "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Define and use variables in your chosen language\n2. Create functions with parameters\n3. Loop through arrays using 'for loop' in your chosen language\n4. Count how many times a specific value appears in an array",
           "action": "continue",
           "next": "prerequisite-check"
         },
@@ -6898,7 +6898,7 @@
       "flow": [
         {
           "stepId": "title",
-          "mentorSays": "Welcome! Today we'll learn how to remove duplicate elements from a sorted array. This means keeping only one copy of each unique number.\n\nLet's start by making sure we're on the same page about the basics.",
+          "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Define and use variables in your chosen language\n2. Create functions with parameters\n3. Loop through arrays using 'for loop' in your chosen language\n4. Use two pointers to remove duplicates from a sorted array",
           "action": "continue",
           "next": "prerequisite-check"
         },
@@ -7622,7 +7622,7 @@
       "flow": [
         {
           "stepId": "title",
-          "mentorSays": "Welcome! Today we'll learn how to merge two arrays into one. This means combining two arrays while maintaining the order of elements.\n\nLet's start by making sure we're on the same page about the basics.",
+          "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Define and use variables in your chosen language\n2. Create functions with parameters\n3. Loop through arrays using 'for loop' in your chosen language\n4. Combine two arrays into one while maintaining order",
           "action": "continue",
           "next": "prerequisite-check"
         },
