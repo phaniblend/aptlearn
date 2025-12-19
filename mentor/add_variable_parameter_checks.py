@@ -153,9 +153,49 @@ def fix_lesson_flow(flow, lesson_id):
             
             # Insert coding-call step before test-code
             if i < len(flow) and flow[i].get('stepId') == 'test-code':
-                func_name = "findMax" if lang != 'python' else "find_max"
-                call_example = LANGUAGES[lang]['call_example']
+                # Extract function name from the example
                 func_example = step['example']
+                func_name = None
+                
+                # Try to extract function name from different language patterns
+                if lang == 'js' or lang == 'ts':
+                    match = re.search(r'function\s+(\w+)', func_example)
+                    if match:
+                        func_name = match.group(1)
+                elif lang == 'python':
+                    match = re.search(r'def\s+(\w+)', func_example)
+                    if match:
+                        func_name = match.group(1)
+                elif lang == 'java':
+                    match = re.search(r'public\s+\w+\s+(\w+)', func_example)
+                    if match:
+                        func_name = match.group(1)
+                elif lang == 'cpp':
+                    match = re.search(r'(\w+)\s*\([^)]*\)\s*\{', func_example)
+                    if match:
+                        func_name = match.group(1)
+                
+                # Fallback to default if extraction failed
+                if not func_name:
+                    func_name = "findMax" if lang != 'python' else "find_max"
+                
+                # Create call example based on language
+                if lang == 'python':
+                    call_example = f"{func_name}([3, 7, 2, 9, 5])"
+                elif lang == 'java':
+                    call_example = f"{func_name}(new int[]{{3, 7, 2, 9, 5}})"
+                elif lang == 'cpp':
+                    call_example = f"{func_name}({{3, 7, 2, 9, 5}})"
+                else:
+                    call_example = f"{func_name}([3, 7, 2, 9, 5])"
+                
+                # Complete the function example if it's incomplete
+                if not func_example.strip().endswith('}'):
+                    if lang == 'python':
+                        if not func_example.strip().endswith('pass'):
+                            func_example += "\n    return result"
+                    else:
+                        func_example += "\n  return result\n}"
                 
                 coding_call = {
                     "stepId": f"coding-call-{lang}",
