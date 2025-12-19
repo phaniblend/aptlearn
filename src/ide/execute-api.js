@@ -70,19 +70,39 @@ function getTempFilename(language) {
       return 'temp.js';
     case 'python':
       return 'temp.py';
+    case 'java':
+      return 'Solution.java';
+    case 'cpp':
+      return 'temp.cpp';
+    case 'typescript':
+      return 'temp.ts';
     default:
-      throw new Error('Unsupported language');
+      throw new Error(`Unsupported language: ${language}`);
   }
 }
 
 function buildCommand(language, filePath) {
+  const baseName = path.basename(filePath, path.extname(filePath));
+  const dir = path.dirname(filePath);
+  
   switch (language) {
     case 'javascript':
       return `node "${filePath}"`;
     case 'python':
       return `python "${filePath}"`;
+    case 'java':
+      // Compile then run
+      return `cd "${dir}" && javac "${filePath}" && java ${baseName}`;
+    case 'cpp':
+      // Compile then run
+      const exePath = path.join(dir, baseName + '.exe');
+      return `cd "${dir}" && g++ "${filePath}" -o "${exePath}" && "${exePath}"`;
+    case 'typescript':
+      // Compile TypeScript to JS then run
+      const jsPath = filePath.replace('.ts', '.js');
+      return `cd "${dir}" && npx tsc "${filePath}" --target es2020 --module commonjs && node "${jsPath}"`;
     default:
-      throw new Error('Unsupported language');
+      throw new Error(`Unsupported language: ${language}`);
   }
 }
 
