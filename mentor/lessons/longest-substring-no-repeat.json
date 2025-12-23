@@ -1,0 +1,904 @@
+{
+  "id": "longest-substring-no-repeat",
+  "title": "Longest substring without repeating chars",
+  "pattern": "sliding-window",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Longest Substring Without Repeating Characters problem asks for\n2. Use a sliding window with a hash map to track characters\n3. Expand and shrink the window to find the longest valid substring\n4. Implement the solution step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what the Longest Substring Without Repeating Characters problem is asking.\n\nImagine you have a string: \"abcabcbb\"\n\nYour task: Find the length of the longest substring that doesn't contain any repeating characters.\n\nLet's explore the string:\n- \"abc\" - all unique, length 3\n- \"abca\" - 'a' repeats, invalid\n- \"bca\" - all unique, length 3\n- \"bcab\" - 'b' repeats, invalid\n- \"cab\" - all unique, length 3\n- \"cabc\" - 'c' repeats, invalid\n- \"abcbb\" - 'b' repeats multiple times, invalid\n- \"bb\" - 'b' repeats, invalid\n- \"b\" - single character, length 1\n\nWait, let me trace more carefully:\n- Start at index 0: \"a\" (length 1)\n- Expand to \"ab\" (length 2)\n- Expand to \"abc\" (length 3) ✓\n- Try to expand to \"abca\" - 'a' repeats! So the longest starting at 0 is \"abc\" (length 3)\n- Start at index 1: \"b\" → \"bc\" → \"bca\" (length 3) ✓\n- Start at index 3: \"a\" → \"ab\" → \"abc\" (length 3) ✓\n- Start at index 4: \"b\" → \"bc\" → \"bcb\" - 'b' repeats! So \"bc\" (length 2)\n- Start at index 5: \"c\" → \"cb\" → \"cbb\" - 'b' repeats! So \"cb\" (length 2)\n- Start at index 6: \"b\" (length 1)\n- Start at index 7: \"b\" (length 1)\n\nThe longest substring without repeating characters is \"abc\" (or \"bca\" or \"cab\"), which has length 3.\n\nThat's what the problem wants: the length of the longest substring with all unique characters.",
+      "example": "s = \"abcabcbb\"\n\nFind longest substring without repeating characters:\n- \"abc\" (length 3) ✓\n- \"bca\" (length 3) ✓\n- \"cab\" (length 3) ✓\n- \"abc\" (length 3) ✓\n\nAnswer: 3\n\nAnother example:\ns = \"bbbbb\"\n\nAll characters repeat. Longest substring: \"b\" (length 1)\n\nAnswer: 1\n\nAnother example:\ns = \"pwwkew\"\n\n- \"pw\" (length 2)\n- \"wke\" (length 3) ✓\n- \"kew\" (length 3) ✓\n\nAnswer: 3",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU find the longest substring without repeating characters?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Use a sliding window with a hash map to track characters",
+          "next": "explore-sliding-window"
+        },
+        {
+          "label": "Check all possible substrings and find the longest valid one",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use two pointers and expand/shrink the window",
+          "next": "explore-two-pointers"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"I'll check all possible substrings and find which one is the longest without repeating characters.\"\n\nFor \"abcabcbb\":\n- Check all substrings starting at index 0: \"a\", \"ab\", \"abc\", \"abca\" (invalid)\n- Check all substrings starting at index 1: \"b\", \"bc\", \"bca\", \"bcab\" (invalid)\n- ... and so on\n\nThis works! However, it's O(n³) time complexity (O(n²) substrings, O(n) to check each).\n\nWould you like to learn the sliding window approach which is O(n) time?",
+      "choices": [
+        {
+          "label": "Yes, teach me the sliding window approach",
+          "next": "explore-sliding-window"
+        },
+        {
+          "label": "No, I want to code the brute force first",
+          "next": "language-selection-brute"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-two-pointers",
+      "mentorSays": "Great thinking! Two pointers is exactly what we need! The sliding window approach uses two pointers (left and right) to maintain a window of unique characters.\n\nThis is the same as the sliding window approach. Let's learn it!",
+      "action": "continue",
+      "next": "explore-sliding-window"
+    },
+    {
+      "stepId": "explore-sliding-window",
+      "mentorSays": "Excellent choice! The sliding window approach is efficient and elegant. Here's the core idea:\n\n1. **Two pointers**: Use `left` and `right` to define the current window\n2. **Hash map**: Track which characters are in the current window and their last seen index\n3. **Expand**: Move `right` pointer to expand the window\n4. **Shrink**: If we encounter a repeating character, move `left` pointer to exclude the previous occurrence\n5. **Track maximum**: Keep track of the maximum window size seen so far\n\nLet's trace this with \"abcabcbb\":\n\n- **Initial**: left = 0, right = 0, maxLen = 0, charMap = {}\n- **right = 0**: char = 'a', not in map → add to map, window = \"a\", maxLen = 1\n- **right = 1**: char = 'b', not in map → add to map, window = \"ab\", maxLen = 2\n- **right = 2**: char = 'c', not in map → add to map, window = \"abc\", maxLen = 3\n- **right = 3**: char = 'a', already in map at index 0 → move left to 1, window = \"bca\", maxLen = 3\n- **right = 4**: char = 'b', already in map at index 1 → move left to 2, window = \"cab\", maxLen = 3\n- **right = 5**: char = 'c', already in map at index 2 → move left to 3, window = \"abc\", maxLen = 3\n- **right = 6**: char = 'b', already in map at index 4 → move left to 5, window = \"cb\", maxLen = 3\n- **right = 7**: char = 'b', already in map at index 6 → move left to 7, window = \"b\", maxLen = 3\n\nAnswer: 3\n\nThis is O(n) time and O(min(n, m)) space where m is the character set size! Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in JavaScript, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "main-function-check-js"
+    },
+    {
+      "stepId": "main-functions-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameter-check-js"
+    },
+    {
+      "stepId": "main-parameters-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "main-loop-check-js"
+    },
+    {
+      "stepId": "main-loops-check-js",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "main-loops-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in JavaScript runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
+      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "action": "continue",
+      "next": "main-coding-start-js"
+    },
+    {
+      "stepId": "main-hash-maps-check-js",
+      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know hash maps",
+          "next": "main-next-js"
+        },
+        {
+          "label": "No, explain hash maps",
+          "next": "main-hash-maps-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "main-hash-maps-explanation-js",
+      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In JavaScript, you can use objects or dictionaries to create hash maps.",
+      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the longest substring solution using sliding window in JavaScript.",
+      "example": "function lengthOfLongestSubstring(s) {\n  \n}",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "First, initialize variables: left pointer, maxLen, and a map to track characters and their indices.",
+      "example": "function lengthOfLongestSubstring(s) {\n  let left = 0;\n  let maxLen = 0;\n  const charMap = new Map();\n}",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Now, loop through the string with right pointer. For each character, we'll check if it's already in the map.",
+      "example": "function lengthOfLongestSubstring(s) {\n  let left = 0;\n  let maxLen = 0;\n  const charMap = new Map();\n  \n  // Loop through string with right pointer\n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    \n  }\n}",
+      "action": "continue",
+      "next": "coding-check-char-js"
+    },
+    {
+      "stepId": "coding-check-char-js",
+      "mentorSays": "For each character, check if it's already in the map and if its last seen index is within our current window (>= left). If so, we need to move the left pointer.",
+      "example": "function lengthOfLongestSubstring(s) {\n  let left = 0;\n  let maxLen = 0;\n  const charMap = new Map();\n  \n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    \n    // Check if character is already in current window\n    if (charMap.has(char) && charMap.get(char) >= left) {\n      \n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-move-left-js"
+    },
+    {
+      "stepId": "coding-move-left-js",
+      "mentorSays": "If the character is already in the window, move the left pointer to just after the previous occurrence of this character.",
+      "example": "function lengthOfLongestSubstring(s) {\n  let left = 0;\n  let maxLen = 0;\n  const charMap = new Map();\n  \n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    \n    if (charMap.has(char) && charMap.get(char) >= left) {\n      // Move left pointer to exclude the previous occurrence\n      left = charMap.get(char) + 1;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-update-map-js"
+    },
+    {
+      "stepId": "coding-update-map-js",
+      "mentorSays": "Update the map with the current character and its index, then calculate the current window length and update maxLen.",
+      "example": "function lengthOfLongestSubstring(s) {\n  let left = 0;\n  let maxLen = 0;\n  const charMap = new Map();\n  \n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    \n    if (charMap.has(char) && charMap.get(char) >= left) {\n      left = charMap.get(char) + 1;\n    }\n    \n    // Update map with current character and index\n    charMap.set(char, right);\n    // Calculate current window length and update maxLen\n    maxLen = Math.max(maxLen, right - left + 1);\n  }\n}",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Finally, return maxLen.",
+      "example": "function lengthOfLongestSubstring(s) {\n  let left = 0;\n  let maxLen = 0;\n  const charMap = new Map();\n  \n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    \n    if (charMap.has(char) && charMap.get(char) >= left) {\n      left = charMap.get(char) + 1;\n    }\n    \n    charMap.set(char, right);\n    maxLen = Math.max(maxLen, right - left + 1);\n  }\n  \n  return maxLen;\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Test with s = \"abcabcbb\". Expected: 3 (substring \"abc\").",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in Python, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "main-function-check-python"
+    },
+    {
+      "stepId": "main-functions-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameter-check-python"
+    },
+    {
+      "stepId": "main-parameters-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "main-loop-check-python"
+    },
+    {
+      "stepId": "main-loops-check-python",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-loops-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
+      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "action": "continue",
+      "next": "main-coding-start-python"
+    },
+    {
+      "stepId": "main-hash-maps-check-python",
+      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know hash maps",
+          "next": "main-next-python"
+        },
+        {
+          "label": "No, explain hash maps",
+          "next": "main-hash-maps-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-hash-maps-explanation-python",
+      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In Python, you can use objects or dictionaries to create hash maps.",
+      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement the longest substring solution using sliding window in Python.",
+      "example": "def length_of_longest_substring(s):\n    \n    pass",
+      "action": "continue",
+      "next": "coding-init-python"
+    },
+    {
+      "stepId": "coding-init-python",
+      "mentorSays": "First, initialize variables: left pointer, maxLen, and a dictionary to track characters and their indices.",
+      "example": "def length_of_longest_substring(s):\n    # Initialize variables\n    left = 0\n    max_len = 0\n    char_map = {}\n    \n    pass",
+      "action": "continue",
+      "next": "coding-loop-python"
+    },
+    {
+      "stepId": "coding-loop-python",
+      "mentorSays": "Now, loop through the string with right pointer. For each character, we'll check if it's already in the map.",
+      "example": "def length_of_longest_substring(s):\n    left = 0\n    max_len = 0\n    char_map = {}\n    \n    # Loop through string with right pointer\n    for right in range(len(s)):\n        char = s[right]\n        \n    \n    pass",
+      "action": "continue",
+      "next": "coding-check-char-python"
+    },
+    {
+      "stepId": "coding-check-char-python",
+      "mentorSays": "For each character, check if it's already in the map and if its last seen index is within our current window (>= left). If so, we need to move the left pointer.",
+      "example": "def length_of_longest_substring(s):\n    left = 0\n    max_len = 0\n    char_map = {}\n    \n    for right in range(len(s)):\n        char = s[right]\n        \n        # Check if character is already in current window\n        if char in char_map and char_map[char] >= left:\n            \n    \n    pass",
+      "action": "continue",
+      "next": "coding-move-left-python"
+    },
+    {
+      "stepId": "coding-move-left-python",
+      "mentorSays": "If the character is already in the window, move the left pointer to just after the previous occurrence of this character.",
+      "example": "def length_of_longest_substring(s):\n    left = 0\n    max_len = 0\n    char_map = {}\n    \n    for right in range(len(s)):\n        char = s[right]\n        \n        if char in char_map and char_map[char] >= left:\n            # Move left pointer to exclude the previous occurrence\n            left = char_map[char] + 1\n    \n    pass",
+      "action": "continue",
+      "next": "coding-update-map-python"
+    },
+    {
+      "stepId": "coding-update-map-python",
+      "mentorSays": "Update the map with the current character and its index, then calculate the current window length and update maxLen.",
+      "example": "def length_of_longest_substring(s):\n    left = 0\n    max_len = 0\n    char_map = {}\n    \n    for right in range(len(s)):\n        char = s[right]\n        \n        if char in char_map and char_map[char] >= left:\n            left = char_map[char] + 1\n        \n        # Update map with current character and index\n        char_map[char] = right\n        # Calculate current window length and update maxLen\n        max_len = max(max_len, right - left + 1)\n    \n    pass",
+      "action": "continue",
+      "next": "coding-return-python"
+    },
+    {
+      "stepId": "coding-return-python",
+      "mentorSays": "Finally, return maxLen.",
+      "example": "def length_of_longest_substring(s):\n    left = 0\n    max_len = 0\n    char_map = {}\n    \n    for right in range(len(s)):\n        char = s[right]\n        \n        if char in char_map and char_map[char] >= left:\n            left = char_map[char] + 1\n        \n        char_map[char] = right\n        max_len = max(max_len, right - left + 1)\n    \n    return max_len",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Test with s = \"abcabcbb\". Expected: 3.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in Java, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "main-function-check-java"
+    },
+    {
+      "stepId": "main-functions-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-java"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-java",
+      "mentorSays": "A method is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameter-check-java"
+    },
+    {
+      "stepId": "main-parameters-check-java",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "main-loop-check-java"
+    },
+    {
+      "stepId": "main-loops-check-java",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-loops-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Java runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
+      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "action": "continue",
+      "next": "main-coding-start-java"
+    },
+    {
+      "stepId": "main-hash-maps-check-java",
+      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know hash maps",
+          "next": "main-next-java"
+        },
+        {
+          "label": "No, explain hash maps",
+          "next": "main-hash-maps-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-hash-maps-explanation-java",
+      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In Java, you can use objects or dictionaries to create hash maps.",
+      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement the longest substring solution using sliding window in Java.",
+      "example": "public int lengthOfLongestSubstring(String s) {\n    \n}",
+      "action": "continue",
+      "next": "coding-init-java"
+    },
+    {
+      "stepId": "coding-init-java",
+      "mentorSays": "First, initialize variables: left pointer, maxLen, and a HashMap to track characters and their indices.",
+      "example": "public int lengthOfLongestSubstring(String s) {\n    // Initialize variables\n    Map<Character, Integer> charMap = new HashMap<>();\n    int left = 0;\n    int maxLen = 0;\n}",
+      "action": "continue",
+      "next": "coding-loop-java"
+    },
+    {
+      "stepId": "coding-loop-java",
+      "mentorSays": "Now, loop through the string with right pointer. For each character, we'll check if it's already in the map.",
+      "example": "public int lengthOfLongestSubstring(String s) {\n    Map<Character, Integer> charMap = new HashMap<>();\n    int left = 0;\n    int maxLen = 0;\n    \n    // Loop through string with right pointer\n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        \n    }\n}",
+      "action": "continue",
+      "next": "coding-check-char-java"
+    },
+    {
+      "stepId": "coding-check-char-java",
+      "mentorSays": "For each character, check if it's already in the map and if its last seen index is within our current window (>= left). If so, we need to move the left pointer.",
+      "example": "public int lengthOfLongestSubstring(String s) {\n    Map<Character, Integer> charMap = new HashMap<>();\n    int left = 0;\n    int maxLen = 0;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        \n        // Check if character is already in current window\n        if (charMap.containsKey(c) && charMap.get(c) >= left) {\n            \n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-move-left-java"
+    },
+    {
+      "stepId": "coding-move-left-java",
+      "mentorSays": "If the character is already in the window, move the left pointer to just after the previous occurrence of this character.",
+      "example": "public int lengthOfLongestSubstring(String s) {\n    Map<Character, Integer> charMap = new HashMap<>();\n    int left = 0;\n    int maxLen = 0;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        \n        if (charMap.containsKey(c) && charMap.get(c) >= left) {\n            // Move left pointer to exclude the previous occurrence\n            left = charMap.get(c) + 1;\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-update-map-java"
+    },
+    {
+      "stepId": "coding-update-map-java",
+      "mentorSays": "Update the map with the current character and its index, then calculate the current window length and update maxLen.",
+      "example": "public int lengthOfLongestSubstring(String s) {\n    Map<Character, Integer> charMap = new HashMap<>();\n    int left = 0;\n    int maxLen = 0;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        \n        if (charMap.containsKey(c) && charMap.get(c) >= left) {\n            left = charMap.get(c) + 1;\n        }\n        \n        // Update map with current character and index\n        charMap.put(c, right);\n        // Calculate current window length and update maxLen\n        maxLen = Math.max(maxLen, right - left + 1);\n    }\n}",
+      "action": "continue",
+      "next": "coding-return-java"
+    },
+    {
+      "stepId": "coding-return-java",
+      "mentorSays": "Finally, return maxLen.",
+      "example": "public int lengthOfLongestSubstring(String s) {\n    Map<Character, Integer> charMap = new HashMap<>();\n    int left = 0;\n    int maxLen = 0;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        \n        if (charMap.containsKey(c) && charMap.get(c) >= left) {\n            left = charMap.get(c) + 1;\n        }\n        \n        charMap.put(c, right);\n        maxLen = Math.max(maxLen, right - left + 1);\n    }\n    \n    return maxLen;\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Test with s = \"abcabcbb\". Expected: 3.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in C++, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "main-function-check-cpp"
+    },
+    {
+      "stepId": "main-functions-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameter-check-cpp"
+    },
+    {
+      "stepId": "main-parameters-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "main-loop-check-cpp"
+    },
+    {
+      "stepId": "main-loops-check-cpp",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-loops-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in C++ runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
+      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "action": "continue",
+      "next": "main-coding-start-cpp"
+    },
+    {
+      "stepId": "main-hash-maps-check-cpp",
+      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know hash maps",
+          "next": "main-next-cpp"
+        },
+        {
+          "label": "No, explain hash maps",
+          "next": "main-hash-maps-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-hash-maps-explanation-cpp",
+      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In C++, you can use objects or dictionaries to create hash maps.",
+      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement the longest substring solution using sliding window in C++.",
+      "example": "int lengthOfLongestSubstring(string s) {\n    \n}",
+      "action": "continue",
+      "next": "coding-init-cpp"
+    },
+    {
+      "stepId": "coding-init-cpp",
+      "mentorSays": "First, initialize variables: left pointer, maxLen, and an unordered_map to track characters and their indices.",
+      "example": "int lengthOfLongestSubstring(string s) {\n    // Initialize variables\n    unordered_map<char, int> charMap;\n    int left = 0;\n    int maxLen = 0;\n}",
+      "action": "continue",
+      "next": "coding-loop-cpp"
+    },
+    {
+      "stepId": "coding-loop-cpp",
+      "mentorSays": "Now, loop through the string with right pointer. For each character, we'll check if it's already in the map.",
+      "example": "int lengthOfLongestSubstring(string s) {\n    unordered_map<char, int> charMap;\n    int left = 0;\n    int maxLen = 0;\n    \n    // Loop through string with right pointer\n    for (int right = 0; right < s.length(); right++) {\n        char c = s[right];\n        \n    }\n}",
+      "action": "continue",
+      "next": "coding-check-char-cpp"
+    },
+    {
+      "stepId": "coding-check-char-cpp",
+      "mentorSays": "For each character, check if it's already in the map and if its last seen index is within our current window (>= left). If so, we need to move the left pointer.",
+      "example": "int lengthOfLongestSubstring(string s) {\n    unordered_map<char, int> charMap;\n    int left = 0;\n    int maxLen = 0;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s[right];\n        \n        // Check if character is already in current window\n        if (charMap.find(c) != charMap.end() && charMap[c] >= left) {\n            \n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-move-left-cpp"
+    },
+    {
+      "stepId": "coding-move-left-cpp",
+      "mentorSays": "If the character is already in the window, move the left pointer to just after the previous occurrence of this character.",
+      "example": "int lengthOfLongestSubstring(string s) {\n    unordered_map<char, int> charMap;\n    int left = 0;\n    int maxLen = 0;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s[right];\n        \n        if (charMap.find(c) != charMap.end() && charMap[c] >= left) {\n            // Move left pointer to exclude the previous occurrence\n            left = charMap[c] + 1;\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-update-map-cpp"
+    },
+    {
+      "stepId": "coding-update-map-cpp",
+      "mentorSays": "Update the map with the current character and its index, then calculate the current window length and update maxLen.",
+      "example": "int lengthOfLongestSubstring(string s) {\n    unordered_map<char, int> charMap;\n    int left = 0;\n    int maxLen = 0;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s[right];\n        \n        if (charMap.find(c) != charMap.end() && charMap[c] >= left) {\n            left = charMap[c] + 1;\n        }\n        \n        // Update map with current character and index\n        charMap[c] = right;\n        // Calculate current window length and update maxLen\n        maxLen = max(maxLen, right - left + 1);\n    }\n}",
+      "action": "continue",
+      "next": "coding-return-cpp"
+    },
+    {
+      "stepId": "coding-return-cpp",
+      "mentorSays": "Finally, return maxLen.",
+      "example": "int lengthOfLongestSubstring(string s) {\n    unordered_map<char, int> charMap;\n    int left = 0;\n    int maxLen = 0;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s[right];\n        \n        if (charMap.find(c) != charMap.end() && charMap[c] >= left) {\n            left = charMap[c] + 1;\n        }\n        \n        charMap[c] = right;\n        maxLen = max(maxLen, right - left + 1);\n    }\n    \n    return maxLen;\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Test with s = \"abcabcbb\". Expected: 3.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in TypeScript, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "main-function-check-ts"
+    },
+    {
+      "stepId": "main-functions-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameter-check-ts"
+    },
+    {
+      "stepId": "main-parameters-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "main-loop-check-ts"
+    },
+    {
+      "stepId": "main-loops-check-ts",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-loops-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in TypeScript runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
+      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "action": "continue",
+      "next": "main-coding-start-ts"
+    },
+    {
+      "stepId": "main-hash-maps-check-ts",
+      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know hash maps",
+          "next": "main-next-ts"
+        },
+        {
+          "label": "No, explain hash maps",
+          "next": "main-hash-maps-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-hash-maps-explanation-ts",
+      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In TypeScript, you can use objects or dictionaries to create hash maps.",
+      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement the longest substring solution using sliding window in TypeScript.",
+      "example": "function lengthOfLongestSubstring(s: string): number {\n  \n}",
+      "action": "continue",
+      "next": "coding-init-ts"
+    },
+    {
+      "stepId": "coding-init-ts",
+      "mentorSays": "First, initialize variables: left pointer, maxLen, and a Map to track characters and their indices.",
+      "example": "function lengthOfLongestSubstring(s: string): number {\n  // Initialize variables\n  const charMap = new Map<string, number>();\n  let left = 0;\n  let maxLen = 0;\n}",
+      "action": "continue",
+      "next": "coding-loop-ts"
+    },
+    {
+      "stepId": "coding-loop-ts",
+      "mentorSays": "Now, loop through the string with right pointer. For each character, we'll check if it's already in the map.",
+      "example": "function lengthOfLongestSubstring(s: string): number {\n  const charMap = new Map<string, number>();\n  let left = 0;\n  let maxLen = 0;\n  \n  // Loop through string with right pointer\n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    \n  }\n}",
+      "action": "continue",
+      "next": "coding-check-char-ts"
+    },
+    {
+      "stepId": "coding-check-char-ts",
+      "mentorSays": "For each character, check if it's already in the map and if its last seen index is within our current window (>= left). If so, we need to move the left pointer.",
+      "example": "function lengthOfLongestSubstring(s: string): number {\n  const charMap = new Map<string, number>();\n  let left = 0;\n  let maxLen = 0;\n  \n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    \n    // Check if character is already in current window\n    if (charMap.has(char) && charMap.get(char)! >= left) {\n      \n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-move-left-ts"
+    },
+    {
+      "stepId": "coding-move-left-ts",
+      "mentorSays": "If the character is already in the window, move the left pointer to just after the previous occurrence of this character.",
+      "example": "function lengthOfLongestSubstring(s: string): number {\n  const charMap = new Map<string, number>();\n  let left = 0;\n  let maxLen = 0;\n  \n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    \n    if (charMap.has(char) && charMap.get(char)! >= left) {\n      // Move left pointer to exclude the previous occurrence\n      left = charMap.get(char)! + 1;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-update-map-ts"
+    },
+    {
+      "stepId": "coding-update-map-ts",
+      "mentorSays": "Update the map with the current character and its index, then calculate the current window length and update maxLen.",
+      "example": "function lengthOfLongestSubstring(s: string): number {\n  const charMap = new Map<string, number>();\n  let left = 0;\n  let maxLen = 0;\n  \n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    \n    if (charMap.has(char) && charMap.get(char)! >= left) {\n      left = charMap.get(char)! + 1;\n    }\n    \n    // Update map with current character and index\n    charMap.set(char, right);\n    // Calculate current window length and update maxLen\n    maxLen = Math.max(maxLen, right - left + 1);\n  }\n}",
+      "action": "continue",
+      "next": "coding-return-ts"
+    },
+    {
+      "stepId": "coding-return-ts",
+      "mentorSays": "Finally, return maxLen.",
+      "example": "function lengthOfLongestSubstring(s: string): number {\n  const charMap = new Map<string, number>();\n  let left = 0;\n  let maxLen = 0;\n  \n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    \n    if (charMap.has(char) && charMap.get(char)! >= left) {\n      left = charMap.get(char)! + 1;\n    }\n    \n    charMap.set(char, right);\n    maxLen = Math.max(maxLen, right - left + 1);\n  }\n  \n  return maxLen;\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Test with s = \"abcabcbb\". Expected: 3.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "test-code",
+      "mentorSays": "Perfect! Now try running your code with the example input. Test it to make sure it produces the expected output!",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've completed this lesson. Practice more to master this pattern!",
+      "action": "continue"
+    }
+  ]
+}
