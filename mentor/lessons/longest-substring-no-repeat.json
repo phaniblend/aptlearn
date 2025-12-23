@@ -40,16 +40,8 @@
     {
       "stepId": "explore-brute-force",
       "mentorSays": "That's a straightforward approach! You're thinking: \"I'll check all possible substrings and find which one is the longest without repeating characters.\"\n\nFor \"abcabcbb\":\n- Check all substrings starting at index 0: \"a\", \"ab\", \"abc\", \"abca\" (invalid)\n- Check all substrings starting at index 1: \"b\", \"bc\", \"bca\", \"bcab\" (invalid)\n- ... and so on\n\nThis works! However, it's O(n³) time complexity (O(n²) substrings, O(n) to check each).\n\nWould you like to learn the sliding window approach which is O(n) time?",
-      "choices": [
-        {
-          "label": "Yes, teach me the sliding window approach",
-          "next": "explore-sliding-window"
-        },
-        {
-          "label": "No, I want to code the brute force first",
-          "next": "language-selection-brute"
-        }
-      ]
+      "action": "continue",
+      "next": "explore-sliding-window"
     },
     {
       "stepId": "explore-two-pointers",
@@ -90,7 +82,7 @@
       ]
     },
     {
-      "stepId": "main-variables-check-js",
+      "stepId": "variable-check-js",
       "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
       "choices": [
         {
@@ -104,14 +96,14 @@
       ]
     },
     {
-      "stepId": "main-variables-explanation-js",
-      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in JavaScript, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
-      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'left' or 'charMap') and put data inside it.\n\nFor example, 'let left = 0;' creates a variable that stores the number 0. Later, you can use that variable name to refer to it.",
+      "example": "let left = 0;\nlet charMap = new Map();\n\nNow the variables refer to their values\nWe can use the variable names to access them",
       "action": "continue",
-      "next": "main-function-check-js"
+      "next": "function-check-js"
     },
     {
-      "stepId": "main-functions-check-js",
+      "stepId": "function-check-js",
       "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
       "choices": [
         {
@@ -125,14 +117,14 @@
       ]
     },
     {
-      "stepId": "main-functions-explanation-js",
+      "stepId": "function-explanation-js",
       "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
-      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
       "action": "continue",
-      "next": "main-parameter-check-js"
+      "next": "parameter-check-js"
     },
     {
-      "stepId": "main-parameters-check-js",
+      "stepId": "parameter-check-js",
       "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
       "choices": [
         {
@@ -146,19 +138,19 @@
       ]
     },
     {
-      "stepId": "main-parameters-explanation-js",
-      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
-      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function lengthOfLongestSubstring(s)', the 's' is a parameter - it's a placeholder that will receive an actual string when you call the function.\n\nWhen you call 'lengthOfLongestSubstring(\"abcabcbb\")', the string \"abcabcbb\" goes into 's'.",
+      "example": "function lengthOfLongestSubstring(s) {\n  // 's' is a parameter\n}\n\n// When we call it:\nlengthOfLongestSubstring(\"abcabcbb\");\n// The string goes into 's'",
       "action": "continue",
-      "next": "main-loop-check-js"
+      "next": "loop-check-js"
     },
     {
-      "stepId": "main-loops-check-js",
-      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in JavaScript?",
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in JavaScript?",
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-js"
+          "next": "hashmap-check-js"
         },
         {
           "label": "No, explain loops",
@@ -167,30 +159,30 @@
       ]
     },
     {
-      "stepId": "main-loops-explanation-js",
-      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in JavaScript runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
-      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in JavaScript runs code for each index in a sequence.\n\nFor example, 'for (let right = 0; right < s.length; right++)' means: run the code for each index from 0 to s.length-1.",
+      "example": "for (let right = 0; right < 3; right++) {\n  console.log(right);\n}\n\nThis prints: 0, 1, 2",
       "action": "continue",
-      "next": "main-coding-start-js"
+      "next": "hashmap-check-js"
     },
     {
-      "stepId": "main-hash-maps-check-js",
-      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in JavaScript?",
+      "stepId": "hashmap-check-js",
+      "mentorSays": "To solve this efficiently, we'll use a hash map (Map) to track characters. Do you know what a Map is in JavaScript?",
       "choices": [
         {
-          "label": "Yes, I know hash maps",
-          "next": "main-next-js"
+          "label": "Yes, I know Maps",
+          "next": "coding-start-js"
         },
         {
-          "label": "No, explain hash maps",
-          "next": "main-hash-maps-explanation-js"
+          "label": "No, explain Maps",
+          "next": "hashmap-explanation-js"
         }
       ]
     },
     {
-      "stepId": "main-hash-maps-explanation-js",
-      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In JavaScript, you can use objects or dictionaries to create hash maps.",
-      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "stepId": "hashmap-explanation-js",
+      "mentorSays": "A Map stores key-value pairs. You can quickly look up values by their keys. In JavaScript, you can use 'new Map()' to create a map.\n\nFor example, 'charMap.set('a', 0)' stores 'a' → 0, and 'charMap.get('a')' retrieves 0.",
+      "example": "let charMap = new Map();\ncharMap.set('a', 0);\nlet index = charMap.get('a');  // returns 0",
       "action": "continue",
       "next": "coding-start-js"
     },
@@ -203,7 +195,7 @@
     },
     {
       "stepId": "coding-init-js",
-      "mentorSays": "First, initialize variables: left pointer, maxLen, and a map to track characters and their indices.",
+      "mentorSays": "First, initialize variables: left pointer, maxLen, and a Map to track characters and their indices.",
       "example": "function lengthOfLongestSubstring(s) {\n  let left = 0;\n  let maxLen = 0;\n  const charMap = new Map();\n}",
       "action": "continue",
       "next": "coding-loop-js"
@@ -246,11 +238,12 @@
     {
       "stepId": "test-code-js",
       "mentorSays": "Perfect! Test with s = \"abcabcbb\". Expected: 3 (substring \"abc\").",
+      "example": "Test input:\ns = \"abcabcbb\"\n\nExpected output: 3\n\nBecause the longest substring without repeating characters is \"abc\" with length 3.",
       "action": "continue",
       "next": "final"
     },
     {
-      "stepId": "main-variables-check-python",
+      "stepId": "variable-check-python",
       "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
       "choices": [
         {
@@ -264,14 +257,14 @@
       ]
     },
     {
-      "stepId": "main-variables-explanation-python",
-      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in Python, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
-      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "stepId": "variable-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'left' or 'char_map') and put data inside it.\n\nFor example, 'left = 0' creates a variable that stores the number 0. Later, you can use that variable name to refer to it.",
+      "example": "left = 0\nchar_map = {}\n\nNow the variables refer to their values\nWe can use the variable names to access them",
       "action": "continue",
-      "next": "main-function-check-python"
+      "next": "function-check-python"
     },
     {
-      "stepId": "main-functions-check-python",
+      "stepId": "function-check-python",
       "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
       "choices": [
         {
@@ -285,14 +278,14 @@
       ]
     },
     {
-      "stepId": "main-functions-explanation-python",
+      "stepId": "function-explanation-python",
       "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
-      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
       "action": "continue",
-      "next": "main-parameter-check-python"
+      "next": "parameter-check-python"
     },
     {
-      "stepId": "main-parameters-check-python",
+      "stepId": "parameter-check-python",
       "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
       "choices": [
         {
@@ -306,19 +299,19 @@
       ]
     },
     {
-      "stepId": "main-parameters-explanation-python",
-      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
-      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def length_of_longest_substring(s):', the 's' is a parameter - it's a placeholder that will receive an actual string when you call the function.\n\nWhen you call 'length_of_longest_substring(\"abcabcbb\")', the string \"abcabcbb\" goes into 's'.",
+      "example": "def length_of_longest_substring(s):\n  # 's' is a parameter\n\n# When we call it:\nlength_of_longest_substring(\"abcabcbb\")\n# The string goes into 's'",
       "action": "continue",
-      "next": "main-loop-check-python"
+      "next": "loop-check-python"
     },
     {
-      "stepId": "main-loops-check-python",
-      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in Python?",
+      "stepId": "loop-check-python",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Python?",
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-python"
+          "next": "hashmap-check-python"
         },
         {
           "label": "No, explain loops",
@@ -327,30 +320,30 @@
       ]
     },
     {
-      "stepId": "main-loops-explanation-python",
-      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
-      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "stepId": "loop-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each index in a sequence.\n\nFor example, 'for right in range(len(s)):' means: run the code for each index from 0 to len(s)-1.",
+      "example": "for right in range(3):\n    print(right)\n\nThis prints: 0, 1, 2",
       "action": "continue",
-      "next": "main-coding-start-python"
+      "next": "hashmap-check-python"
     },
     {
-      "stepId": "main-hash-maps-check-python",
-      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in Python?",
+      "stepId": "hashmap-check-python",
+      "mentorSays": "To solve this efficiently, we'll use a dictionary (hash map) to track characters. Do you know what a dictionary is in Python?",
       "choices": [
         {
-          "label": "Yes, I know hash maps",
-          "next": "main-next-python"
+          "label": "Yes, I know dictionaries",
+          "next": "coding-start-python"
         },
         {
-          "label": "No, explain hash maps",
-          "next": "main-hash-maps-explanation-python"
+          "label": "No, explain dictionaries",
+          "next": "hashmap-explanation-python"
         }
       ]
     },
     {
-      "stepId": "main-hash-maps-explanation-python",
-      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In Python, you can use objects or dictionaries to create hash maps.",
-      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "stepId": "hashmap-explanation-python",
+      "mentorSays": "A dictionary stores key-value pairs. You can quickly look up values by their keys. In Python, you can use '{}' to create a dictionary.\n\nFor example, 'char_map['a'] = 0' stores 'a' → 0, and 'char_map['a']' retrieves 0.",
+      "example": "char_map = {}\nchar_map['a'] = 0\nindex = char_map['a']  # returns 0",
       "action": "continue",
       "next": "coding-start-python"
     },
@@ -406,11 +399,12 @@
     {
       "stepId": "test-code-python",
       "mentorSays": "Perfect! Test with s = \"abcabcbb\". Expected: 3.",
+      "example": "Test input:\ns = \"abcabcbb\"\n\nExpected output: 3\n\nBecause the longest substring without repeating characters is \"abc\" with length 3.",
       "action": "continue",
       "next": "final"
     },
     {
-      "stepId": "main-variables-check-java",
+      "stepId": "variable-check-java",
       "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
       "choices": [
         {
@@ -424,36 +418,36 @@
       ]
     },
     {
-      "stepId": "main-variables-explanation-java",
-      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in Java, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
-      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "stepId": "variable-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'left' or 'charMap') and put data inside it.\n\nFor example, 'int left = 0;' creates a variable that stores the number 0. Later, you can use that variable name to refer to it.",
+      "example": "int left = 0;\nMap<Character, Integer> charMap = new HashMap<>();\n\nNow the variables refer to their values\nWe can use the variable names to access them",
       "action": "continue",
-      "next": "main-function-check-java"
+      "next": "function-check-java"
     },
     {
-      "stepId": "main-functions-check-java",
+      "stepId": "function-check-java",
       "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
       "choices": [
         {
-          "label": "Yes, I know functions",
+          "label": "Yes, I know methods",
           "next": "parameter-check-java"
         },
         {
-          "label": "No, explain functions",
+          "label": "No, explain methods",
           "next": "function-explanation-java"
         }
       ]
     },
     {
-      "stepId": "main-functions-explanation-java",
-      "mentorSays": "A method is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
-      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "stepId": "function-explanation-java",
+      "mentorSays": "A method (Java's version of a function) is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
       "action": "continue",
-      "next": "main-parameter-check-java"
+      "next": "parameter-check-java"
     },
     {
-      "stepId": "main-parameters-check-java",
-      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a method, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
       "choices": [
         {
           "label": "Yes, I know parameters",
@@ -466,19 +460,19 @@
       ]
     },
     {
-      "stepId": "main-parameters-explanation-java",
-      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
-      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public int lengthOfLongestSubstring(String s)', the 's' is a parameter - it's a placeholder that will receive an actual string when you call the method.\n\nWhen you call 'lengthOfLongestSubstring(\"abcabcbb\")', the string \"abcabcbb\" goes into 's'.",
+      "example": "public int lengthOfLongestSubstring(String s) {\n  // 's' is a parameter\n}\n\n// When we call it:\nlengthOfLongestSubstring(\"abcabcbb\");\n// The string goes into 's'",
       "action": "continue",
-      "next": "main-loop-check-java"
+      "next": "loop-check-java"
     },
     {
-      "stepId": "main-loops-check-java",
-      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in Java?",
+      "stepId": "loop-check-java",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Java?",
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-java"
+          "next": "hashmap-check-java"
         },
         {
           "label": "No, explain loops",
@@ -487,30 +481,30 @@
       ]
     },
     {
-      "stepId": "main-loops-explanation-java",
-      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Java runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
-      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "stepId": "loop-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Java runs code for each index in a sequence.\n\nFor example, 'for (int right = 0; right < s.length(); right++)' means: run the code for each index from 0 to s.length()-1.",
+      "example": "for (int right = 0; right < 3; right++) {\n    System.out.println(right);\n}\n\nThis prints: 0, 1, 2",
       "action": "continue",
-      "next": "main-coding-start-java"
+      "next": "hashmap-check-java"
     },
     {
-      "stepId": "main-hash-maps-check-java",
-      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in Java?",
+      "stepId": "hashmap-check-java",
+      "mentorSays": "To solve this efficiently, we'll use a HashMap to track characters. Do you know what a HashMap is in Java?",
       "choices": [
         {
-          "label": "Yes, I know hash maps",
-          "next": "main-next-java"
+          "label": "Yes, I know HashMaps",
+          "next": "coding-start-java"
         },
         {
-          "label": "No, explain hash maps",
-          "next": "main-hash-maps-explanation-java"
+          "label": "No, explain HashMaps",
+          "next": "hashmap-explanation-java"
         }
       ]
     },
     {
-      "stepId": "main-hash-maps-explanation-java",
-      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In Java, you can use objects or dictionaries to create hash maps.",
-      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "stepId": "hashmap-explanation-java",
+      "mentorSays": "A HashMap stores key-value pairs. You can quickly look up values by their keys. In Java, you can use 'new HashMap<>()' to create a hash map.\n\nFor example, 'charMap.put('a', 0)' stores 'a' → 0, and 'charMap.get('a')' retrieves 0.",
+      "example": "Map<Character, Integer> charMap = new HashMap<>();\ncharMap.put('a', 0);\nint index = charMap.get('a');  // returns 0",
       "action": "continue",
       "next": "coding-start-java"
     },
@@ -566,11 +560,12 @@
     {
       "stepId": "test-code-java",
       "mentorSays": "Perfect! Test with s = \"abcabcbb\". Expected: 3.",
+      "example": "Test input:\ns = \"abcabcbb\"\n\nExpected output: 3\n\nBecause the longest substring without repeating characters is \"abc\" with length 3.",
       "action": "continue",
       "next": "final"
     },
     {
-      "stepId": "main-variables-check-cpp",
+      "stepId": "variable-check-cpp",
       "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
       "choices": [
         {
@@ -584,14 +579,14 @@
       ]
     },
     {
-      "stepId": "main-variables-explanation-cpp",
-      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in C++, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
-      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "stepId": "variable-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'left' or 'charMap') and put data inside it.\n\nFor example, 'int left = 0;' creates a variable that stores the number 0. Later, you can use that variable name to refer to it.",
+      "example": "int left = 0;\nunordered_map<char, int> charMap;\n\nNow the variables refer to their values\nWe can use the variable names to access them",
       "action": "continue",
-      "next": "main-function-check-cpp"
+      "next": "function-check-cpp"
     },
     {
-      "stepId": "main-functions-check-cpp",
+      "stepId": "function-check-cpp",
       "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
       "choices": [
         {
@@ -605,14 +600,14 @@
       ]
     },
     {
-      "stepId": "main-functions-explanation-cpp",
+      "stepId": "function-explanation-cpp",
       "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
-      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
       "action": "continue",
-      "next": "main-parameter-check-cpp"
+      "next": "parameter-check-cpp"
     },
     {
-      "stepId": "main-parameters-check-cpp",
+      "stepId": "parameter-check-cpp",
       "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
       "choices": [
         {
@@ -626,19 +621,19 @@
       ]
     },
     {
-      "stepId": "main-parameters-explanation-cpp",
-      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
-      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'int lengthOfLongestSubstring(string s)', the 's' is a parameter - it's a placeholder that will receive an actual string when you call the function.\n\nWhen you call 'lengthOfLongestSubstring(\"abcabcbb\")', the string \"abcabcbb\" goes into 's'.",
+      "example": "int lengthOfLongestSubstring(string s) {\n  // 's' is a parameter\n}\n\n// When we call it:\nlengthOfLongestSubstring(\"abcabcbb\");\n// The string goes into 's'",
       "action": "continue",
-      "next": "main-loop-check-cpp"
+      "next": "loop-check-cpp"
     },
     {
-      "stepId": "main-loops-check-cpp",
-      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in C++?",
+      "stepId": "loop-check-cpp",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in C++?",
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-cpp"
+          "next": "hashmap-check-cpp"
         },
         {
           "label": "No, explain loops",
@@ -647,30 +642,30 @@
       ]
     },
     {
-      "stepId": "main-loops-explanation-cpp",
-      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in C++ runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
-      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "stepId": "loop-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in C++ runs code for each index in a sequence.\n\nFor example, 'for (int right = 0; right < s.length(); right++)' means: run the code for each index from 0 to s.length()-1.",
+      "example": "for (int right = 0; right < 3; right++) {\n    cout << right << endl;\n}\n\nThis prints: 0, 1, 2",
       "action": "continue",
-      "next": "main-coding-start-cpp"
+      "next": "hashmap-check-cpp"
     },
     {
-      "stepId": "main-hash-maps-check-cpp",
-      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in C++?",
+      "stepId": "hashmap-check-cpp",
+      "mentorSays": "To solve this efficiently, we'll use an unordered_map to track characters. Do you know what an unordered_map is in C++?",
       "choices": [
         {
-          "label": "Yes, I know hash maps",
-          "next": "main-next-cpp"
+          "label": "Yes, I know unordered_maps",
+          "next": "coding-start-cpp"
         },
         {
-          "label": "No, explain hash maps",
-          "next": "main-hash-maps-explanation-cpp"
+          "label": "No, explain unordered_maps",
+          "next": "hashmap-explanation-cpp"
         }
       ]
     },
     {
-      "stepId": "main-hash-maps-explanation-cpp",
-      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In C++, you can use objects or dictionaries to create hash maps.",
-      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "stepId": "hashmap-explanation-cpp",
+      "mentorSays": "An unordered_map stores key-value pairs. You can quickly look up values by their keys. In C++, you can use 'unordered_map<char, int>' to create a hash map.\n\nFor example, 'charMap[c] = 0' stores c → 0, and 'charMap[c]' retrieves 0.",
+      "example": "unordered_map<char, int> charMap;\ncharMap['a'] = 0;\nint index = charMap['a'];  // returns 0",
       "action": "continue",
       "next": "coding-start-cpp"
     },
@@ -726,11 +721,12 @@
     {
       "stepId": "test-code-cpp",
       "mentorSays": "Perfect! Test with s = \"abcabcbb\". Expected: 3.",
+      "example": "Test input:\ns = \"abcabcbb\"\n\nExpected output: 3\n\nBecause the longest substring without repeating characters is \"abc\" with length 3.",
       "action": "continue",
       "next": "final"
     },
     {
-      "stepId": "main-variables-check-ts",
+      "stepId": "variable-check-ts",
       "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
       "choices": [
         {
@@ -744,14 +740,14 @@
       ]
     },
     {
-      "stepId": "main-variables-explanation-ts",
-      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in TypeScript, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
-      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "stepId": "variable-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'left' or 'charMap') and put data inside it.\n\nFor example, 'let left = 0;' creates a variable that stores the number 0. Later, you can use that variable name to refer to it.",
+      "example": "let left = 0;\nlet charMap = new Map<string, number>();\n\nNow the variables refer to their values\nWe can use the variable names to access them",
       "action": "continue",
-      "next": "main-function-check-ts"
+      "next": "function-check-ts"
     },
     {
-      "stepId": "main-functions-check-ts",
+      "stepId": "function-check-ts",
       "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
       "choices": [
         {
@@ -765,14 +761,14 @@
       ]
     },
     {
-      "stepId": "main-functions-explanation-ts",
+      "stepId": "function-explanation-ts",
       "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
-      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "example": "function add(a: number, b: number): number {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
       "action": "continue",
-      "next": "main-parameter-check-ts"
+      "next": "parameter-check-ts"
     },
     {
-      "stepId": "main-parameters-check-ts",
+      "stepId": "parameter-check-ts",
       "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
       "choices": [
         {
@@ -786,19 +782,19 @@
       ]
     },
     {
-      "stepId": "main-parameters-explanation-ts",
-      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
-      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function lengthOfLongestSubstring(s: string): number', the 's' is a parameter - it's a placeholder that will receive an actual string when you call the function.\n\nWhen you call 'lengthOfLongestSubstring(\"abcabcbb\")', the string \"abcabcbb\" goes into 's'.",
+      "example": "function lengthOfLongestSubstring(s: string): number {\n  // 's' is a parameter\n}\n\n// When we call it:\nlengthOfLongestSubstring(\"abcabcbb\");\n// The string goes into 's'",
       "action": "continue",
-      "next": "main-loop-check-ts"
+      "next": "loop-check-ts"
     },
     {
-      "stepId": "main-loops-check-ts",
-      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in TypeScript?",
+      "stepId": "loop-check-ts",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in TypeScript?",
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-ts"
+          "next": "hashmap-check-ts"
         },
         {
           "label": "No, explain loops",
@@ -807,30 +803,30 @@
       ]
     },
     {
-      "stepId": "main-loops-explanation-ts",
-      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in TypeScript runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
-      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "stepId": "loop-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in TypeScript runs code for each index in a sequence.\n\nFor example, 'for (let right = 0; right < s.length; right++)' means: run the code for each index from 0 to s.length-1.",
+      "example": "for (let right = 0; right < 3; right++) {\n  console.log(right);\n}\n\nThis prints: 0, 1, 2",
       "action": "continue",
-      "next": "main-coding-start-ts"
+      "next": "hashmap-check-ts"
     },
     {
-      "stepId": "main-hash-maps-check-ts",
-      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in TypeScript?",
+      "stepId": "hashmap-check-ts",
+      "mentorSays": "To solve this efficiently, we'll use a Map to track characters. Do you know what a Map is in TypeScript?",
       "choices": [
         {
-          "label": "Yes, I know hash maps",
-          "next": "main-next-ts"
+          "label": "Yes, I know Maps",
+          "next": "coding-start-ts"
         },
         {
-          "label": "No, explain hash maps",
-          "next": "main-hash-maps-explanation-ts"
+          "label": "No, explain Maps",
+          "next": "hashmap-explanation-ts"
         }
       ]
     },
     {
-      "stepId": "main-hash-maps-explanation-ts",
-      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In TypeScript, you can use objects or dictionaries to create hash maps.",
-      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "stepId": "hashmap-explanation-ts",
+      "mentorSays": "A Map stores key-value pairs. You can quickly look up values by their keys. In TypeScript, you can use 'new Map<string, number>()' to create a map.\n\nFor example, 'charMap.set('a', 0)' stores 'a' → 0, and 'charMap.get('a')' retrieves 0.",
+      "example": "let charMap = new Map<string, number>();\ncharMap.set('a', 0);\nlet index = charMap.get('a');  // returns 0",
       "action": "continue",
       "next": "coding-start-ts"
     },
@@ -886,18 +882,13 @@
     {
       "stepId": "test-code-ts",
       "mentorSays": "Perfect! Test with s = \"abcabcbb\". Expected: 3.",
-      "action": "continue",
-      "next": "final"
-    },
-    {
-      "stepId": "test-code",
-      "mentorSays": "Perfect! Now try running your code with the example input. Test it to make sure it produces the expected output!",
+      "example": "Test input:\ns = \"abcabcbb\"\n\nExpected output: 3\n\nBecause the longest substring without repeating characters is \"abc\" with length 3.",
       "action": "continue",
       "next": "final"
     },
     {
       "stepId": "final",
-      "mentorSays": "🎉 Well done! You've completed this lesson. Practice more to master this pattern!",
+      "mentorSays": "🎉 Well done! You've learned to think through the Longest Substring Without Repeating Characters problem. You understand what the problem asks for, how to use a sliding window with a hash map to track characters, and how to expand and shrink the window efficiently.\n\nThis kind of thinking—using sliding windows with hash maps—is essential for solving many string problems. Keep practicing!",
       "action": "continue"
     }
   ]
