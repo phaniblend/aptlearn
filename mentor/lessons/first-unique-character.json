@@ -108,7 +108,7 @@
       "choices": [
         {
           "label": "Yes, I know functions",
-          "next": "hashmap-check-js"
+          "next": "parameter-check-js"
         },
         {
           "label": "No, explain functions",
@@ -120,6 +120,48 @@
       "stepId": "function-explanation-js",
       "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
       "example": "function firstUniqChar(s) {\n  return -1;\n}\n\nfirstUniqChar(\"leetcode\") returns 0",
+      "action": "continue",
+      "next": "parameter-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function firstUniqChar(s)', the 's' is a parameter - it's a placeholder that will receive an actual string when you call the function.",
+      "example": "function firstUniqChar(s) {\n  // 's' is a parameter\n}\n\n// When we call it:\nfirstUniqChar(\"leetcode\");\n// The string goes into 's'",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops to iterate through the string. Do you know what a loop is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "hashmap-check-js"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in JavaScript runs code for each item in a sequence.\n\nFor example, you can loop through a string to check each character one by one.",
+      "example": "for (let i = 0; i < s.length; i++) {\n  // Process s[i]\n}",
       "action": "continue",
       "next": "hashmap-check-js"
     },
@@ -146,22 +188,36 @@
     },
     {
       "stepId": "coding-start-js",
-      "mentorSays": "Perfect! Let's implement the first unique character solution in JavaScript.",
+      "mentorSays": "Perfect! Let's implement the first unique character solution in JavaScript. We'll create a function that takes a string and returns the index of the first unique character.",
       "example": "function firstUniqChar(s) {\n  \n}",
       "action": "continue",
-      "next": "coding-count-js"
+      "next": "coding-init-freq-js"
     },
     {
-      "stepId": "coding-count-js",
-      "mentorSays": "First, count character frequencies in the string.",
+      "stepId": "coding-init-freq-js",
+      "mentorSays": "First, initialize an empty hash map to store character frequencies.",
+      "example": "function firstUniqChar(s) {\n  const freq = {};\n}",
+      "action": "continue",
+      "next": "coding-count-loop-js"
+    },
+    {
+      "stepId": "coding-count-loop-js",
+      "mentorSays": "Now, loop through the string and count how many times each character appears.",
       "example": "function firstUniqChar(s) {\n  const freq = {};\n  \n  // Count character frequencies\n  for (let i = 0; i < s.length; i++) {\n    const char = s[i];\n    freq[char] = (freq[char] || 0) + 1;\n  }\n}",
       "action": "continue",
-      "next": "coding-find-js"
+      "next": "coding-scan-loop-js"
     },
     {
-      "stepId": "coding-find-js",
+      "stepId": "coding-scan-loop-js",
       "mentorSays": "Now, scan the string from left to right and find the first character with frequency 1.",
-      "example": "function firstUniqChar(s) {\n  const freq = {};\n  \n  for (let i = 0; i < s.length; i++) {\n    const char = s[i];\n    freq[char] = (freq[char] || 0) + 1;\n  }\n  \n  // Find first character with frequency 1\n  for (let i = 0; i < s.length; i++) {\n    if (freq[s[i]] === 1) {\n      return i;\n    }\n  }\n  \n  return -1;\n}",
+      "example": "function firstUniqChar(s) {\n  const freq = {};\n  \n  for (let i = 0; i < s.length; i++) {\n    const char = s[i];\n    freq[char] = (freq[char] || 0) + 1;\n  }\n  \n  // Find first character with frequency 1\n  for (let i = 0; i < s.length; i++) {\n    if (freq[s[i]] === 1) {\n      return i;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "If no unique character is found, return -1.",
+      "example": "function firstUniqChar(s) {\n  const freq = {};\n  \n  for (let i = 0; i < s.length; i++) {\n    const char = s[i];\n    freq[char] = (freq[char] || 0) + 1;\n  }\n  \n  for (let i = 0; i < s.length; i++) {\n    if (freq[s[i]] === 1) {\n      return i;\n    }\n  }\n  \n  return -1;\n}",
       "action": "continue",
       "next": "test-code-js"
     },
@@ -199,7 +255,7 @@
       "choices": [
         {
           "label": "Yes, I know functions",
-          "next": "hashmap-check-python"
+          "next": "parameter-check-python"
         },
         {
           "label": "No, explain functions",
@@ -211,6 +267,48 @@
       "stepId": "function-explanation-python",
       "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
       "example": "def first_uniq_char(s):\n    return -1\n\nfirst_uniq_char(\"leetcode\") returns 0",
+      "action": "continue",
+      "next": "parameter-check-python"
+    },
+    {
+      "stepId": "parameter-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def first_uniq_char(s):', the 's' is a parameter - it's a placeholder that will receive an actual string when you call the function.",
+      "example": "def first_uniq_char(s):\n  # 's' is a parameter\n\n# When we call it:\nfirst_uniq_char(\"leetcode\")\n# The string goes into 's'",
+      "action": "continue",
+      "next": "loop-check-python"
+    },
+    {
+      "stepId": "loop-check-python",
+      "mentorSays": "To solve this problem, we'll need to use loops to iterate through the string. Do you know what a loop is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "hashmap-check-python"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, you can loop through a string to check each character one by one.",
+      "example": "for char in s:\n    # Process char",
       "action": "continue",
       "next": "hashmap-check-python"
     },
@@ -237,22 +335,36 @@
     },
     {
       "stepId": "coding-start-python",
-      "mentorSays": "Perfect! Let's implement the first unique character solution in Python.",
+      "mentorSays": "Perfect! Let's implement the first unique character solution in Python. We'll create a function that takes a string and returns the index of the first unique character.",
       "example": "def first_uniq_char(s):\n    \n    pass",
       "action": "continue",
-      "next": "coding-count-python"
+      "next": "coding-init-freq-python"
     },
     {
-      "stepId": "coding-count-python",
-      "mentorSays": "First, count character frequencies in the string.",
+      "stepId": "coding-init-freq-python",
+      "mentorSays": "First, initialize an empty dictionary to store character frequencies.",
+      "example": "def first_uniq_char(s):\n    freq = {}\n    \n    pass",
+      "action": "continue",
+      "next": "coding-count-loop-python"
+    },
+    {
+      "stepId": "coding-count-loop-python",
+      "mentorSays": "Now, loop through the string and count how many times each character appears.",
       "example": "def first_uniq_char(s):\n    freq = {}\n    \n    # Count character frequencies\n    for char in s:\n        freq[char] = freq.get(char, 0) + 1\n    \n    pass",
       "action": "continue",
-      "next": "coding-find-python"
+      "next": "coding-scan-loop-python"
     },
     {
-      "stepId": "coding-find-python",
+      "stepId": "coding-scan-loop-python",
       "mentorSays": "Now, scan the string from left to right and find the first character with frequency 1.",
-      "example": "def first_uniq_char(s):\n    freq = {}\n    \n    for char in s:\n        freq[char] = freq.get(char, 0) + 1\n    \n    # Find first character with frequency 1\n    for i, char in enumerate(s):\n        if freq[char] == 1:\n            return i\n    \n    return -1",
+      "example": "def first_uniq_char(s):\n    freq = {}\n    \n    for char in s:\n        freq[char] = freq.get(char, 0) + 1\n    \n    # Find first character with frequency 1\n    for i, char in enumerate(s):\n        if freq[char] == 1:\n            return i\n    \n    pass",
+      "action": "continue",
+      "next": "coding-return-python"
+    },
+    {
+      "stepId": "coding-return-python",
+      "mentorSays": "If no unique character is found, return -1.",
+      "example": "def first_uniq_char(s):\n    freq = {}\n    \n    for char in s:\n        freq[char] = freq.get(char, 0) + 1\n    \n    for i, char in enumerate(s):\n        if freq[char] == 1:\n            return i\n    \n    return -1",
       "action": "continue",
       "next": "test-code-python"
     },
@@ -290,7 +402,7 @@
       "choices": [
         {
           "label": "Yes, I know methods",
-          "next": "hashmap-check-java"
+          "next": "parameter-check-java"
         },
         {
           "label": "No, explain methods",
@@ -302,6 +414,48 @@
       "stepId": "function-explanation-java",
       "mentorSays": "A method (Java's version of a function) is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
       "example": "public int firstUniqChar(String s) {\n    return -1;\n}\n\nfirstUniqChar(\"leetcode\") returns 0",
+      "action": "continue",
+      "next": "parameter-check-java"
+    },
+    {
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a method, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public int firstUniqChar(String s)', the 's' is a parameter - it's a placeholder that will receive an actual string when you call the method.",
+      "example": "public int firstUniqChar(String s) {\n  // 's' is a parameter\n}\n\n// When we call it:\nfirstUniqChar(\"leetcode\");\n// The string goes into 's'",
+      "action": "continue",
+      "next": "loop-check-java"
+    },
+    {
+      "stepId": "loop-check-java",
+      "mentorSays": "To solve this problem, we'll need to use loops to iterate through the string. Do you know what a loop is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "hashmap-check-java"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Java runs code for each item in a sequence.\n\nFor example, you can loop through a string to check each character one by one.",
+      "example": "for (int i = 0; i < s.length(); i++) {\n    // Process s.charAt(i)\n}",
       "action": "continue",
       "next": "hashmap-check-java"
     },
@@ -328,22 +482,36 @@
     },
     {
       "stepId": "coding-start-java",
-      "mentorSays": "Perfect! Let's implement the first unique character solution in Java.",
+      "mentorSays": "Perfect! Let's implement the first unique character solution in Java. We'll create a method that takes a string and returns the index of the first unique character.",
       "example": "import java.util.*;\n\npublic int firstUniqChar(String s) {\n    \n}",
       "action": "continue",
-      "next": "coding-count-java"
+      "next": "coding-init-freq-java"
     },
     {
-      "stepId": "coding-count-java",
-      "mentorSays": "First, count character frequencies in the string.",
+      "stepId": "coding-init-freq-java",
+      "mentorSays": "First, initialize an empty HashMap to store character frequencies.",
+      "example": "import java.util.*;\n\npublic int firstUniqChar(String s) {\n    Map<Character, Integer> freq = new HashMap<>();\n}",
+      "action": "continue",
+      "next": "coding-count-loop-java"
+    },
+    {
+      "stepId": "coding-count-loop-java",
+      "mentorSays": "Now, loop through the string and count how many times each character appears.",
       "example": "import java.util.*;\n\npublic int firstUniqChar(String s) {\n    Map<Character, Integer> freq = new HashMap<>();\n    \n    // Count character frequencies\n    for (int i = 0; i < s.length(); i++) {\n        char c = s.charAt(i);\n        freq.put(c, freq.getOrDefault(c, 0) + 1);\n    }\n}",
       "action": "continue",
-      "next": "coding-find-java"
+      "next": "coding-scan-loop-java"
     },
     {
-      "stepId": "coding-find-java",
+      "stepId": "coding-scan-loop-java",
       "mentorSays": "Now, scan the string from left to right and find the first character with frequency 1.",
-      "example": "import java.util.*;\n\npublic int firstUniqChar(String s) {\n    Map<Character, Integer> freq = new HashMap<>();\n    \n    for (int i = 0; i < s.length(); i++) {\n        char c = s.charAt(i);\n        freq.put(c, freq.getOrDefault(c, 0) + 1);\n    }\n    \n    // Find first character with frequency 1\n    for (int i = 0; i < s.length(); i++) {\n        if (freq.get(s.charAt(i)) == 1) {\n            return i;\n        }\n    }\n    \n    return -1;\n}",
+      "example": "import java.util.*;\n\npublic int firstUniqChar(String s) {\n    Map<Character, Integer> freq = new HashMap<>();\n    \n    for (int i = 0; i < s.length(); i++) {\n        char c = s.charAt(i);\n        freq.put(c, freq.getOrDefault(c, 0) + 1);\n    }\n    \n    // Find first character with frequency 1\n    for (int i = 0; i < s.length(); i++) {\n        if (freq.get(s.charAt(i)) == 1) {\n            return i;\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-return-java"
+    },
+    {
+      "stepId": "coding-return-java",
+      "mentorSays": "If no unique character is found, return -1.",
+      "example": "import java.util.*;\n\npublic int firstUniqChar(String s) {\n    Map<Character, Integer> freq = new HashMap<>();\n    \n    for (int i = 0; i < s.length(); i++) {\n        char c = s.charAt(i);\n        freq.put(c, freq.getOrDefault(c, 0) + 1);\n    }\n    \n    for (int i = 0; i < s.length(); i++) {\n        if (freq.get(s.charAt(i)) == 1) {\n            return i;\n        }\n    }\n    \n    return -1;\n}",
       "action": "continue",
       "next": "test-code-java"
     },
@@ -381,7 +549,7 @@
       "choices": [
         {
           "label": "Yes, I know functions",
-          "next": "hashmap-check-cpp"
+          "next": "parameter-check-cpp"
         },
         {
           "label": "No, explain functions",
@@ -393,6 +561,48 @@
       "stepId": "function-explanation-cpp",
       "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
       "example": "int firstUniqChar(string s) {\n    return -1;\n}\n\nfirstUniqChar(\"leetcode\") returns 0",
+      "action": "continue",
+      "next": "parameter-check-cpp"
+    },
+    {
+      "stepId": "parameter-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'int firstUniqChar(string s)', the 's' is a parameter - it's a placeholder that will receive an actual string when you call the function.",
+      "example": "int firstUniqChar(string s) {\n  // 's' is a parameter\n}\n\n// When we call it:\nfirstUniqChar(\"leetcode\");\n// The string goes into 's'",
+      "action": "continue",
+      "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "loop-check-cpp",
+      "mentorSays": "To solve this problem, we'll need to use loops to iterate through the string. Do you know what a loop is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "hashmap-check-cpp"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in C++ runs code for each item in a sequence.\n\nFor example, you can loop through a string to check each character one by one.",
+      "example": "for (int i = 0; i < s.length(); i++) {\n    // Process s[i]\n}",
       "action": "continue",
       "next": "hashmap-check-cpp"
     },
@@ -419,22 +629,36 @@
     },
     {
       "stepId": "coding-start-cpp",
-      "mentorSays": "Perfect! Let's implement the first unique character solution in C++.",
+      "mentorSays": "Perfect! Let's implement the first unique character solution in C++. We'll create a function that takes a string and returns the index of the first unique character.",
       "example": "#include <unordered_map>\n#include <string>\n\nint firstUniqChar(string s) {\n    \n}",
       "action": "continue",
-      "next": "coding-count-cpp"
+      "next": "coding-init-freq-cpp"
     },
     {
-      "stepId": "coding-count-cpp",
-      "mentorSays": "First, count character frequencies in the string.",
+      "stepId": "coding-init-freq-cpp",
+      "mentorSays": "First, initialize an empty unordered_map to store character frequencies.",
+      "example": "#include <unordered_map>\n#include <string>\n\nint firstUniqChar(string s) {\n    unordered_map<char, int> freq;\n}",
+      "action": "continue",
+      "next": "coding-count-loop-cpp"
+    },
+    {
+      "stepId": "coding-count-loop-cpp",
+      "mentorSays": "Now, loop through the string and count how many times each character appears.",
       "example": "#include <unordered_map>\n#include <string>\n\nint firstUniqChar(string s) {\n    unordered_map<char, int> freq;\n    \n    // Count character frequencies\n    for (int i = 0; i < s.length(); i++) {\n        freq[s[i]]++;\n    }\n}",
       "action": "continue",
-      "next": "coding-find-cpp"
+      "next": "coding-scan-loop-cpp"
     },
     {
-      "stepId": "coding-find-cpp",
+      "stepId": "coding-scan-loop-cpp",
       "mentorSays": "Now, scan the string from left to right and find the first character with frequency 1.",
-      "example": "#include <unordered_map>\n#include <string>\n\nint firstUniqChar(string s) {\n    unordered_map<char, int> freq;\n    \n    for (int i = 0; i < s.length(); i++) {\n        freq[s[i]]++;\n    }\n    \n    // Find first character with frequency 1\n    for (int i = 0; i < s.length(); i++) {\n        if (freq[s[i]] == 1) {\n            return i;\n        }\n    }\n    \n    return -1;\n}",
+      "example": "#include <unordered_map>\n#include <string>\n\nint firstUniqChar(string s) {\n    unordered_map<char, int> freq;\n    \n    for (int i = 0; i < s.length(); i++) {\n        freq[s[i]]++;\n    }\n    \n    // Find first character with frequency 1\n    for (int i = 0; i < s.length(); i++) {\n        if (freq[s[i]] == 1) {\n            return i;\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-return-cpp"
+    },
+    {
+      "stepId": "coding-return-cpp",
+      "mentorSays": "If no unique character is found, return -1.",
+      "example": "#include <unordered_map>\n#include <string>\n\nint firstUniqChar(string s) {\n    unordered_map<char, int> freq;\n    \n    for (int i = 0; i < s.length(); i++) {\n        freq[s[i]]++;\n    }\n    \n    for (int i = 0; i < s.length(); i++) {\n        if (freq[s[i]] == 1) {\n            return i;\n        }\n    }\n    \n    return -1;\n}",
       "action": "continue",
       "next": "test-code-cpp"
     },
@@ -472,7 +696,7 @@
       "choices": [
         {
           "label": "Yes, I know functions",
-          "next": "hashmap-check-ts"
+          "next": "parameter-check-ts"
         },
         {
           "label": "No, explain functions",
@@ -484,6 +708,48 @@
       "stepId": "function-explanation-ts",
       "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
       "example": "function firstUniqChar(s: string): number {\n    return -1;\n}\n\nfirstUniqChar(\"leetcode\") returns 0",
+      "action": "continue",
+      "next": "parameter-check-ts"
+    },
+    {
+      "stepId": "parameter-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function firstUniqChar(s: string): number', the 's' is a parameter - it's a placeholder that will receive an actual string when you call the function.",
+      "example": "function firstUniqChar(s: string): number {\n  // 's' is a parameter\n}\n\n// When we call it:\nfirstUniqChar(\"leetcode\");\n// The string goes into 's'",
+      "action": "continue",
+      "next": "loop-check-ts"
+    },
+    {
+      "stepId": "loop-check-ts",
+      "mentorSays": "To solve this problem, we'll need to use loops to iterate through the string. Do you know what a loop is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "hashmap-check-ts"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in TypeScript runs code for each item in a sequence.\n\nFor example, you can loop through a string to check each character one by one.",
+      "example": "for (let i = 0; i < s.length; i++) {\n  // Process s[i]\n}",
       "action": "continue",
       "next": "hashmap-check-ts"
     },
@@ -510,22 +776,36 @@
     },
     {
       "stepId": "coding-start-ts",
-      "mentorSays": "Perfect! Let's implement the first unique character solution in TypeScript.",
+      "mentorSays": "Perfect! Let's implement the first unique character solution in TypeScript. We'll create a function that takes a string and returns the index of the first unique character.",
       "example": "function firstUniqChar(s: string): number {\n  \n}",
       "action": "continue",
-      "next": "coding-count-ts"
+      "next": "coding-init-freq-ts"
     },
     {
-      "stepId": "coding-count-ts",
-      "mentorSays": "First, count character frequencies in the string.",
+      "stepId": "coding-init-freq-ts",
+      "mentorSays": "First, initialize an empty object to store character frequencies.",
+      "example": "function firstUniqChar(s: string): number {\n  const freq: { [key: string]: number } = {};\n}",
+      "action": "continue",
+      "next": "coding-count-loop-ts"
+    },
+    {
+      "stepId": "coding-count-loop-ts",
+      "mentorSays": "Now, loop through the string and count how many times each character appears.",
       "example": "function firstUniqChar(s: string): number {\n  const freq: { [key: string]: number } = {};\n  \n  // Count character frequencies\n  for (let i = 0; i < s.length; i++) {\n    const char = s[i];\n    freq[char] = (freq[char] || 0) + 1;\n  }\n}",
       "action": "continue",
-      "next": "coding-find-ts"
+      "next": "coding-scan-loop-ts"
     },
     {
-      "stepId": "coding-find-ts",
+      "stepId": "coding-scan-loop-ts",
       "mentorSays": "Now, scan the string from left to right and find the first character with frequency 1.",
-      "example": "function firstUniqChar(s: string): number {\n  const freq: { [key: string]: number } = {};\n  \n  for (let i = 0; i < s.length; i++) {\n    const char = s[i];\n    freq[char] = (freq[char] || 0) + 1;\n  }\n  \n  // Find first character with frequency 1\n  for (let i = 0; i < s.length; i++) {\n    if (freq[s[i]] === 1) {\n      return i;\n    }\n  }\n  \n  return -1;\n}",
+      "example": "function firstUniqChar(s: string): number {\n  const freq: { [key: string]: number } = {};\n  \n  for (let i = 0; i < s.length; i++) {\n    const char = s[i];\n    freq[char] = (freq[char] || 0) + 1;\n  }\n  \n  // Find first character with frequency 1\n  for (let i = 0; i < s.length; i++) {\n    if (freq[s[i]] === 1) {\n      return i;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-return-ts"
+    },
+    {
+      "stepId": "coding-return-ts",
+      "mentorSays": "If no unique character is found, return -1.",
+      "example": "function firstUniqChar(s: string): number {\n  const freq: { [key: string]: number } = {};\n  \n  for (let i = 0; i < s.length; i++) {\n    const char = s[i];\n    freq[char] = (freq[char] || 0) + 1;\n  }\n  \n  for (let i = 0; i < s.length; i++) {\n    if (freq[s[i]] === 1) {\n      return i;\n    }\n  }\n  \n  return -1;\n}",
       "action": "continue",
       "next": "test-code-ts"
     },
