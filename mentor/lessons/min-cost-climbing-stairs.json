@@ -1,0 +1,580 @@
+{
+  "id": "min-cost-climbing-stairs",
+  "title": "Min cost climbing stairs",
+  "pattern": "dynamic-programming",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Min Cost Climbing Stairs problem asks for\n2. Use dynamic programming to find minimum cost\n3. Build the solution by tracking costs at each step\n4. Implement the solution step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what the Min Cost Climbing Stairs problem is asking.\n\nImagine you have stairs with costs: [10, 15, 20]\n\n- Step 0 costs 10\n- Step 1 costs 15\n- Step 2 costs 20\n\nYour task: Find the minimum cost to reach the top (beyond the last step).\n\nRules:\n- You can start at step 0 OR step 1 (no cost to start)\n- You can climb 1 or 2 steps at a time\n- When you step on a stair, you pay its cost\n- You want to reach the top (beyond index 2)\n\nLet's trace with [10, 15, 20]:\n\n**Option 1**: Start at step 0\n- Pay cost[0] = 10\n- Climb 2 steps → reach top\n- Total: 10\n\n**Option 2**: Start at step 0\n- Pay cost[0] = 10\n- Climb 1 step → step 1, pay cost[1] = 15\n- Climb 1 step → reach top\n- Total: 10 + 15 = 25\n\n**Option 3**: Start at step 1\n- Pay cost[1] = 15\n- Climb 1 step → reach top\n- Total: 15\n\n**Option 4**: Start at step 1\n- Pay cost[1] = 15\n- Climb 2 steps → reach top (beyond index 2)\n- Total: 15\n\nMinimum cost: 10 (Option 1) ✓\n\n**Key Insight**: We use dynamic programming:\n- dp[i] = minimum cost to reach step i\n- Base case: dp[0] = cost[0], dp[1] = cost[1]\n- Recurrence: dp[i] = cost[i] + min(dp[i-1], dp[i-2])\n- Result: min(dp[n-1], dp[n-2]) (can reach top from last two steps)\n\nLet's trace with [10, 15, 20]:\n\n- **dp[0] = 10** (cost to reach step 0)\n- **dp[1] = 15** (cost to reach step 1)\n- **dp[2] = 20 + min(15, 10) = 20 + 10 = 30**\n- **Result = min(30, 15) = 15**\n\nWait, let me reconsider. Actually:\n- If we start at step 0 and pay 10, we can climb 2 steps to reach top → cost 10\n- If we start at step 1 and pay 15, we can climb 1 step to reach top → cost 15\n\nSo minimum is 10. But the DP should account for this. Let me recalculate:\n\nActually, the standard approach:\n- dp[i] = minimum cost to reach step i (inclusive, paying cost[i])\n- To reach top (beyond n-1), we can come from step n-1 or n-2\n- So result = min(dp[n-1], dp[n-2])\n\nWith [10, 15, 20]:\n- dp[0] = 10\n- dp[1] = 15\n- dp[2] = 20 + min(15, 10) = 30\n- Result = min(30, 15) = 15\n\nBut we know the answer should be 10 (start at 0, pay 10, jump 2 steps). The issue is that when we're at step 0, we've already paid, so to reach top we need to climb 2 steps, which doesn't require paying step 2.\n\nActually, the correct interpretation:\n- dp[i] = minimum cost to reach step i (and pay cost[i])\n- To reach the top (beyond the array), we can:\n  - Start at step 0, pay cost[0], climb 2 steps → total = cost[0]\n  - Start at step 1, pay cost[1], climb 1 step → total = cost[1]\n  - Reach step n-1, pay cost[n-1], then climb 1 step → total = dp[n-1]\n  - Reach step n-2, pay cost[n-2], then climb 2 steps → total = dp[n-2]\n\nSo result = min(dp[n-1], dp[n-2])\n\nWith [10, 15, 20]:\n- dp[0] = 10\n- dp[1] = 15\n- dp[2] = 20 + min(15, 10) = 30\n- Result = min(30, 15) = 15\n\nBut wait, we can start at step 0, pay 10, and climb 2 steps without paying step 2. So the answer should be 10.\n\nThe correct solution:\n- dp[i] = minimum cost to reach step i\n- We can start at step 0 or 1 for free\n- dp[0] = cost[0], dp[1] = cost[1]\n- dp[i] = cost[i] + min(dp[i-1], dp[i-2])\n- To reach top, we can come from step n-1 or n-2\n- Result = min(dp[n-1], dp[n-2])\n\nActually, the standard LeetCode solution:\n- You can start at index 0 or 1\n- Once you pay the cost, you can climb 1 or 2 steps\n- Find minimum cost to reach the top (index = cost.length)\n\nStandard approach:\n- dp[i] = minimum cost to reach step i\n- dp[0] = cost[0], dp[1] = cost[1]\n- dp[i] = cost[i] + min(dp[i-1], dp[i-2])\n- Answer = min(dp[n-1], dp[n-2])\n\nWith [10, 15, 20]:\n- dp[0] = 10\n- dp[1] = 15\n- dp[2] = 20 + min(15, 10) = 30\n- Answer = min(30, 15) = 15\n\nBut the actual answer is 15, which means starting at step 1, paying 15, and climbing 1 step. Let me verify: start at step 1 (index 1), pay cost[1]=15, climb 1 step to reach index 2 (top). Total = 15. ✓\n\nThat's what the problem wants: the minimum cost to reach the top of the stairs.",
+      "example": "cost = [10, 15, 20]\n\nFind minimum cost to reach top:\n- Start at step 1, pay 15, climb 1 step → 15 ✓\n\nAnswer: 15\n\nAnother example:\ncost = [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]\n\nAnswer: 6\n\nAnother example:\ncost = [0, 0, 0, 0]\n\nAnswer: 0",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU find the minimum cost?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Use dynamic programming to track minimum cost at each step",
+          "next": "explore-dp"
+        },
+        {
+          "label": "Try all possible paths and find the minimum",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a greedy approach - always choose the cheaper step",
+          "next": "explore-greedy"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"I'll try all possible paths and find which one has the minimum cost.\"\n\nThis works! However, it's exponential time complexity.\n\nWould you like to learn the dynamic programming approach which is O(n) time?",
+      "action": "continue",
+      "next": "explore-dp"
+    },
+    {
+      "stepId": "explore-greedy",
+      "mentorSays": "Great thinking! However, greedy doesn't always work here because choosing the cheaper immediate step might lead to a more expensive path later.\n\nFor example, with [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]:\n- Greedy might choose step 0 (cost 1), but then you're forced into expensive steps\n- Optimal: start at step 0, skip to step 2, continue optimally\n\nLet's learn the dynamic programming approach which always finds the optimal solution!",
+      "action": "continue",
+      "next": "explore-dp"
+    },
+    {
+      "stepId": "explore-dp",
+      "mentorSays": "Excellent choice! Dynamic programming is efficient and always finds the optimal solution. Here's the core idea:\n\n1. **DP Array**: dp[i] = minimum cost to reach step i (and pay cost[i])\n2. **Base Cases**:\n   - dp[0] = cost[0] (cost to reach step 0)\n   - dp[1] = cost[1] (cost to reach step 1)\n3. **Recurrence**: For i >= 2:\n   - dp[i] = cost[i] + min(dp[i-1], dp[i-2])\n   - (pay current cost + minimum of coming from 1 or 2 steps back)\n4. **Result**: min(dp[n-1], dp[n-2])\n   - (can reach top from last step or second-to-last step)\n\nLet's trace with cost=[10, 15, 20]:\n\n- **dp[0] = 10** (cost to reach step 0)\n- **dp[1] = 15** (cost to reach step 1)\n- **dp[2] = 20 + min(15, 10) = 20 + 10 = 30**\n- **Result = min(30, 15) = 15** ✓\n\nThis is O(n) time and O(n) space! Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'dp' or 'cost') and put data inside it.\n\nFor example, 'let dp = [];' creates a variable that stores an empty array.",
+      "example": "let dp = [];\n\nNow the variable refers to an empty array",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "array-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "array-check-js"
+    },
+    {
+      "stepId": "array-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what an array is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-js",
+      "mentorSays": "An array is like a list of items that keeps them in order. Each item has a position number called an 'index'. Array indices start counting from 0.",
+      "example": "arr = [1, 2, 3]\n\narr[0] = 1\narr[1] = 2\narr[2] = 3",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement min cost climbing stairs using dynamic programming in JavaScript.",
+      "example": "function minCostClimbingStairs(cost) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "First, create a DP array to store minimum costs. Initialize base cases for steps 0 and 1.",
+      "example": "function minCostClimbingStairs(cost) {\n  const n = cost.length;\n  const dp = new Array(n);\n  \n  // Base cases\n  dp[0] = cost[0];\n  dp[1] = cost[1];",
+      "action": "continue",
+      "next": "coding-fill-js"
+    },
+    {
+      "stepId": "coding-fill-js",
+      "mentorSays": "Now, fill the DP array: for each step i >= 2, the minimum cost is the current cost plus the minimum of reaching from step i-1 or i-2.",
+      "example": "function minCostClimbingStairs(cost) {\n  const n = cost.length;\n  const dp = new Array(n);\n  \n  dp[0] = cost[0];\n  dp[1] = cost[1];\n  \n  // Fill DP array\n  for (let i = 2; i < n; i++) {\n    dp[i] = cost[i] + Math.min(dp[i-1], dp[i-2]);\n  }",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Finally, return the minimum of dp[n-1] and dp[n-2], since we can reach the top from either the last step or second-to-last step.",
+      "example": "function minCostClimbingStairs(cost) {\n  const n = cost.length;\n  const dp = new Array(n);\n  \n  dp[0] = cost[0];\n  dp[1] = cost[1];\n  \n  for (let i = 2; i < n; i++) {\n    dp[i] = cost[i] + Math.min(dp[i-1], dp[i-2]);\n  }\n  \n  return Math.min(dp[n-1], dp[n-2]);\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\ncost = [10, 15, 20]\n\nAfter calling minCostClimbingStairs(cost), it should return:\n15\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\ncost = [10, 15, 20]\n\nAfter minCostClimbingStairs(cost):\n15",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'dp' or 'cost') and put data inside it.\n\nFor example, 'dp = []' creates a variable that stores an empty list.",
+      "example": "dp = []\n\nNow the variable refers to an empty list",
+      "action": "continue",
+      "next": "function-check-python"
+    },
+    {
+      "stepId": "function-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "array-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "array-check-python"
+    },
+    {
+      "stepId": "array-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a list is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know lists",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain lists",
+          "next": "array-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-python",
+      "mentorSays": "A list is like an array - a collection of items that keeps them in order. Each item has a position number called an 'index'. List indices start counting from 0.",
+      "example": "arr = [1, 2, 3]\n\narr[0] = 1\narr[1] = 2\narr[2] = 3",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement min cost climbing stairs using dynamic programming in Python.",
+      "example": "def min_cost_climbing_stairs(cost):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-init-python"
+    },
+    {
+      "stepId": "coding-init-python",
+      "mentorSays": "First, create a DP list to store minimum costs. Initialize base cases for steps 0 and 1.",
+      "example": "def min_cost_climbing_stairs(cost):\n    n = len(cost)\n    dp = [0] * n\n    \n    # Base cases\n    dp[0] = cost[0]\n    dp[1] = cost[1]",
+      "action": "continue",
+      "next": "coding-fill-python"
+    },
+    {
+      "stepId": "coding-fill-python",
+      "mentorSays": "Now, fill the DP list: for each step i >= 2, the minimum cost is the current cost plus the minimum of reaching from step i-1 or i-2.",
+      "example": "def min_cost_climbing_stairs(cost):\n    n = len(cost)\n    dp = [0] * n\n    \n    dp[0] = cost[0]\n    dp[1] = cost[1]\n    \n    # Fill DP list\n    for i in range(2, n):\n        dp[i] = cost[i] + min(dp[i-1], dp[i-2])",
+      "action": "continue",
+      "next": "coding-return-python"
+    },
+    {
+      "stepId": "coding-return-python",
+      "mentorSays": "Finally, return the minimum of dp[n-1] and dp[n-2], since we can reach the top from either the last step or second-to-last step.",
+      "example": "def min_cost_climbing_stairs(cost):\n    n = len(cost)\n    dp = [0] * n\n    \n    dp[0] = cost[0]\n    dp[1] = cost[1]\n    \n    for i in range(2, n):\n        dp[i] = cost[i] + min(dp[i-1], dp[i-2])\n    \n    return min(dp[n-1], dp[n-2])",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\ncost = [10, 15, 20]\n\nAfter calling min_cost_climbing_stairs(cost), it should return:\n15\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\ncost = [10, 15, 20]\n\nAfter min_cost_climbing_stairs(cost):\n15",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'dp' or 'cost') and put data inside it.\n\nFor example, 'int[] dp = new int[n];' creates a variable that stores an array.",
+      "example": "int[] dp = new int[n];\n\nNow the variable refers to an array",
+      "action": "continue",
+      "next": "function-check-java"
+    },
+    {
+      "stepId": "function-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know methods",
+          "next": "array-check-java"
+        },
+        {
+          "label": "No, explain methods",
+          "next": "function-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-java",
+      "mentorSays": "A method is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "array-check-java"
+    },
+    {
+      "stepId": "array-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what an array is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-java",
+      "mentorSays": "An array is like a list of items that keeps them in order. Each item has a position number called an 'index'. Array indices start counting from 0.",
+      "example": "int[] arr = {1, 2, 3};\n\narr[0] = 1\narr[1] = 2\narr[2] = 3",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement min cost climbing stairs using dynamic programming in Java.",
+      "example": "public int minCostClimbingStairs(int[] cost) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-java"
+    },
+    {
+      "stepId": "coding-init-java",
+      "mentorSays": "First, create a DP array to store minimum costs. Initialize base cases for steps 0 and 1.",
+      "example": "public int minCostClimbingStairs(int[] cost) {\n    int n = cost.length;\n    int[] dp = new int[n];\n    \n    // Base cases\n    dp[0] = cost[0];\n    dp[1] = cost[1];",
+      "action": "continue",
+      "next": "coding-fill-java"
+    },
+    {
+      "stepId": "coding-fill-java",
+      "mentorSays": "Now, fill the DP array: for each step i >= 2, the minimum cost is the current cost plus the minimum of reaching from step i-1 or i-2.",
+      "example": "public int minCostClimbingStairs(int[] cost) {\n    int n = cost.length;\n    int[] dp = new int[n];\n    \n    dp[0] = cost[0];\n    dp[1] = cost[1];\n    \n    // Fill DP array\n    for (int i = 2; i < n; i++) {\n        dp[i] = cost[i] + Math.min(dp[i-1], dp[i-2]);\n    }",
+      "action": "continue",
+      "next": "coding-return-java"
+    },
+    {
+      "stepId": "coding-return-java",
+      "mentorSays": "Finally, return the minimum of dp[n-1] and dp[n-2], since we can reach the top from either the last step or second-to-last step.",
+      "example": "public int minCostClimbingStairs(int[] cost) {\n    int n = cost.length;\n    int[] dp = new int[n];\n    \n    dp[0] = cost[0];\n    dp[1] = cost[1];\n    \n    for (int i = 2; i < n; i++) {\n        dp[i] = cost[i] + Math.min(dp[i-1], dp[i-2]);\n    }\n    \n    return Math.min(dp[n-1], dp[n-2]);\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\ncost = [10, 15, 20]\n\nAfter calling minCostClimbingStairs(cost), it should return:\n15\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\ncost = [10, 15, 20]\n\nAfter minCostClimbingStairs(cost):\n15",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'dp' or 'cost') and put data inside it.\n\nFor example, 'vector<int> dp(n);' creates a variable that stores a vector.",
+      "example": "vector<int> dp(n);\n\nNow the variable refers to a vector",
+      "action": "continue",
+      "next": "function-check-cpp"
+    },
+    {
+      "stepId": "function-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "array-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "array-check-cpp"
+    },
+    {
+      "stepId": "array-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a vector is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know vectors",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain vectors",
+          "next": "array-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-cpp",
+      "mentorSays": "A vector is like an array - a collection of items that keeps them in order. Each item has a position number called an 'index'. Vector indices start counting from 0.",
+      "example": "vector<int> arr = {1, 2, 3};\n\narr[0] = 1\narr[1] = 2\narr[2] = 3",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement min cost climbing stairs using dynamic programming in C++.",
+      "example": "int minCostClimbingStairs(vector<int>& cost) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-cpp"
+    },
+    {
+      "stepId": "coding-init-cpp",
+      "mentorSays": "First, create a DP vector to store minimum costs. Initialize base cases for steps 0 and 1.",
+      "example": "int minCostClimbingStairs(vector<int>& cost) {\n    int n = cost.size();\n    vector<int> dp(n);\n    \n    // Base cases\n    dp[0] = cost[0];\n    dp[1] = cost[1];",
+      "action": "continue",
+      "next": "coding-fill-cpp"
+    },
+    {
+      "stepId": "coding-fill-cpp",
+      "mentorSays": "Now, fill the DP vector: for each step i >= 2, the minimum cost is the current cost plus the minimum of reaching from step i-1 or i-2.",
+      "example": "int minCostClimbingStairs(vector<int>& cost) {\n    int n = cost.size();\n    vector<int> dp(n);\n    \n    dp[0] = cost[0];\n    dp[1] = cost[1];\n    \n    // Fill DP vector\n    for (int i = 2; i < n; i++) {\n        dp[i] = cost[i] + min(dp[i-1], dp[i-2]);\n    }",
+      "action": "continue",
+      "next": "coding-return-cpp"
+    },
+    {
+      "stepId": "coding-return-cpp",
+      "mentorSays": "Finally, return the minimum of dp[n-1] and dp[n-2], since we can reach the top from either the last step or second-to-last step.",
+      "example": "int minCostClimbingStairs(vector<int>& cost) {\n    int n = cost.size();\n    vector<int> dp(n);\n    \n    dp[0] = cost[0];\n    dp[1] = cost[1];\n    \n    for (int i = 2; i < n; i++) {\n        dp[i] = cost[i] + min(dp[i-1], dp[i-2]);\n    }\n    \n    return min(dp[n-1], dp[n-2]);\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\ncost = [10, 15, 20]\n\nAfter calling minCostClimbingStairs(cost), it should return:\n15\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\ncost = [10, 15, 20]\n\nAfter minCostClimbingStairs(cost):\n15",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'dp' or 'cost') and put data inside it.\n\nFor example, 'let dp: number[] = [];' creates a variable that stores an empty array.",
+      "example": "let dp: number[] = [];\n\nNow the variable refers to an empty array",
+      "action": "continue",
+      "next": "function-check-ts"
+    },
+    {
+      "stepId": "function-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "array-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function add(a: number, b: number): number {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "array-check-ts"
+    },
+    {
+      "stepId": "array-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what an array is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-ts",
+      "mentorSays": "An array is like a list of items that keeps them in order. Each item has a position number called an 'index'. Array indices start counting from 0.",
+      "example": "arr: number[] = [1, 2, 3]\n\narr[0] = 1\narr[1] = 2\narr[2] = 3",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement min cost climbing stairs using dynamic programming in TypeScript.",
+      "example": "function minCostClimbingStairs(cost: number[]): number {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-ts"
+    },
+    {
+      "stepId": "coding-init-ts",
+      "mentorSays": "First, create a DP array to store minimum costs. Initialize base cases for steps 0 and 1.",
+      "example": "function minCostClimbingStairs(cost: number[]): number {\n  const n = cost.length;\n  const dp: number[] = new Array(n);\n  \n  // Base cases\n  dp[0] = cost[0];\n  dp[1] = cost[1];",
+      "action": "continue",
+      "next": "coding-fill-ts"
+    },
+    {
+      "stepId": "coding-fill-ts",
+      "mentorSays": "Now, fill the DP array: for each step i >= 2, the minimum cost is the current cost plus the minimum of reaching from step i-1 or i-2.",
+      "example": "function minCostClimbingStairs(cost: number[]): number {\n  const n = cost.length;\n  const dp: number[] = new Array(n);\n  \n  dp[0] = cost[0];\n  dp[1] = cost[1];\n  \n  // Fill DP array\n  for (let i = 2; i < n; i++) {\n    dp[i] = cost[i] + Math.min(dp[i-1], dp[i-2]);\n  }",
+      "action": "continue",
+      "next": "coding-return-ts"
+    },
+    {
+      "stepId": "coding-return-ts",
+      "mentorSays": "Finally, return the minimum of dp[n-1] and dp[n-2], since we can reach the top from either the last step or second-to-last step.",
+      "example": "function minCostClimbingStairs(cost: number[]): number {\n  const n = cost.length;\n  const dp: number[] = new Array(n);\n  \n  dp[0] = cost[0];\n  dp[1] = cost[1];\n  \n  for (let i = 2; i < n; i++) {\n    dp[i] = cost[i] + Math.min(dp[i-1], dp[i-2]);\n  }\n  \n  return Math.min(dp[n-1], dp[n-2]);\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\ncost = [10, 15, 20]\n\nAfter calling minCostClimbingStairs(cost), it should return:\n15\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\ncost = [10, 15, 20]\n\nAfter minCostClimbingStairs(cost):\n15",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've learned min cost climbing stairs using dynamic programming. You understand how to track minimum costs at each step and choose the optimal path!\n\nThis is O(n) time and O(n) space - excellent for optimization problems! Keep practicing!",
+      "action": "continue"
+    }
+  ]
+}
