@@ -1,0 +1,129 @@
+Total algorithms: 135
+Existing lessons: 36
+Missing lessons: 99
+
+================================================================================
+MISSING LESSONS TO BE CREATED:
+================================================================================
+
+
+[ARRAY BASICS]
+  - two-sum                                  | Two Sum                                            | easy   | hash-map
+
+[BACKTRACKING]
+  - n-queens                                 | N-Queens                                           | hard   | backtracking
+  - sudoku-solver                            | Sudoku Solver                                      | hard   | backtracking
+  - combination-sum                          | Combination Sum                                    | medium | backtracking
+  - combination-sum-ii                       | Combination Sum II                                 | medium | backtracking
+  - generate-parentheses                     | Generate Parentheses                               | medium | backtracking
+  - permutations                             | Permutations                                       | medium | backtracking
+  - permutations-ii                          | Permutations II                                    | medium | backtracking
+  - subsets                                  | Subsets                                            | medium | backtracking
+  - subsets-ii                               | Subsets II                                         | medium | backtracking
+  - word-search                              | Word Search                                        | medium | backtracking
+
+[BINARY SEARCH]
+  - binary-search                            | Binary Search                                      | easy   | binary-search
+  - search-insert-position                   | Search Insert Position                             | easy   | binary-search
+  - sqrt-x                                   | Sqrt(x)                                            | easy   | binary-search
+  - find-first-last-position                 | Find First and Last Position                       | medium | binary-search
+  - find-minimum-rotated                     | Find Minimum in Rotated Sorted Array               | medium | binary-search
+  - find-peak-element                        | Find Peak Element                                  | medium | binary-search
+  - koko-eating-bananas                      | Koko Eating Bananas                                | medium | binary-search
+  - pow-x-n                                  | Pow(x, n)                                          | medium | binary-search
+  - search-2d-matrix                         | Search a 2D Matrix                                 | medium | binary-search
+  - search-rotated-sorted-array              | Search in Rotated Sorted Array                     | medium | binary-search
+
+[DYNAMIC PROGRAMMING]
+  - buy-sell-stock-iii                       | Best Time to Buy and Sell Stock III                | hard   | dynamic-programming
+  - buy-sell-stock-ii                        | Best Time to Buy and Sell Stock II                 | medium | greedy
+  - decode-ways                              | Decode Ways                                        | medium | dynamic-programming
+  - longest-palindromic-substring            | Longest Palindromic Substring                      | medium | dynamic-programming
+  - paint-house                              | Paint House                                        | medium | dynamic-programming
+  - palindromic-substrings                   | Palindromic Substrings                             | medium | dynamic-programming
+  - partition-equal-subset-sum               | Partition Equal Subset Sum                         | medium | dynamic-programming
+  - target-sum                               | Target Sum                                         | medium | dynamic-programming
+  - word-break                               | Word Break                                         | medium | dynamic-programming
+
+[GRAPHS]
+  - word-ladder                              | Word Ladder                                        | hard   | graph
+  - all-paths-source-target                  | All Paths From Source to Target                    | medium | graph
+  - cheapest-flights                         | Cheapest Flights Within K Stops                    | medium | graph
+  - clone-graph                              | Clone Graph                                        | medium | graph
+  - course-schedule                          | Course Schedule                                    | medium | graph
+  - course-schedule-ii                       | Course Schedule II                                 | medium | graph
+  - graph-valid-tree                         | Graph Valid Tree                                   | medium | graph
+  - network-delay-time                       | Network Delay Time                                 | medium | graph
+  - number-of-islands                        | Number of Islands                                  | medium | graph
+  - pacific-atlantic                         | Pacific Atlantic Water Flow                        | medium | graph
+  - redundant-connection                     | Redundant Connection                               | medium | graph
+  - rotting-oranges                          | Rotting Oranges                                    | medium | graph
+  - shortest-path-binary-matrix              | Shortest Path in Binary Matrix                     | medium | graph
+  - surrounded-regions                       | Surrounded Regions                                 | medium | graph
+  - walls-and-gates                          | Walls and Gates                                    | medium | graph
+
+[GREEDY]
+  - meeting-rooms                            | Meeting Rooms                                      | easy   | greedy
+  - jump-game-ii                             | Jump Game II                                       | hard   | greedy
+  - activity-selection                       | Activity Selection Problem                         | medium | greedy
+  - fractional-knapsack                      | Fractional Knapsack                                | medium | greedy
+  - gas-station                              | Gas Station                                        | medium | greedy
+  - insert-interval                          | Insert Interval                                    | medium | greedy
+  - jump-game                                | Jump Game                                          | medium | greedy
+  - meeting-rooms-ii                         | Meeting Rooms II                                   | medium | greedy
+  - merge-intervals                          | Merge Intervals                                    | medium | greedy
+  - non-overlapping-intervals                | Non-overlapping Intervals                          | medium | greedy
+
+[LINKED LISTS]
+  - intersection-two-linked-lists            | Intersection of Two Linked Lists                   | easy   | linked-list
+  - linked-list-cycle                        | Linked List Cycle                                  | easy   | linked-list
+  - merge-two-sorted-lists                   | Merge Two Sorted Lists                             | easy   | linked-list
+  - palindrome-linked-list                   | Palindrome Linked List                             | easy   | linked-list
+  - reverse-linked-list                      | Reverse Linked List                                | easy   | linked-list
+  - reverse-nodes-k-group                    | Reverse Nodes in k-Group                           | hard   | linked-list
+  - add-two-numbers                          | Add Two Numbers                                    | medium | linked-list
+  - copy-list-random-pointer                 | Copy List with Random Pointer                      | medium | linked-list
+  - remove-nth-node                          | Remove Nth Node From End                           | medium | linked-list
+  - swap-nodes-pairs                         | Swap Nodes in Pairs                                | medium | linked-list
+
+[SLIDING WINDOW]
+  - maximum-average-subarray                 | Maximum Average Subarray                           | easy   | sliding-window
+  - fruit-into-baskets                       | Fruit Into Baskets                                 | medium | sliding-window
+  - longest-repeating-character-replacement  | Longest Repeating Character Replacement            | medium | sliding-window
+  - longest-substring-with-at-most-k         | Longest Substring with At Most K Distinct Characters | medium | sliding-window
+  - maximum-sum-subarray                     | Maximum Sum Subarray (Kadane's)                    | medium | sliding-window
+  - minimum-size-subarray-sum                | Minimum Size Subarray Sum                          | medium | sliding-window
+  - permutation-in-string                    | Permutation in String                              | medium | sliding-window
+  - subarray-product-less-than-k             | Subarray Product Less Than K                       | medium | sliding-window
+
+[SORTING]
+  - bubble-sort                              | Bubble Sort                                        | easy   | sorting
+  - bucket-sort                              | Bucket Sort                                        | medium | sorting
+  - shell-sort                               | Shell Sort                                         | medium | sorting
+
+[TREES]
+  - binary-tree-inorder                      | Binary Tree Inorder Traversal                      | easy   | tree
+  - binary-tree-postorder                    | Binary Tree Postorder Traversal                    | easy   | tree
+  - binary-tree-preorder                     | Binary Tree Preorder Traversal                     | easy   | tree
+  - diameter-of-binary-tree                  | Diameter of Binary Tree                            | easy   | tree
+  - invert-binary-tree                       | Invert Binary Tree                                 | easy   | tree
+  - max-depth-binary-tree                    | Maximum Depth of Binary Tree                       | easy   | tree
+  - path-sum                                 | Path Sum                                           | easy   | tree
+  - same-tree                                | Same Tree                                          | easy   | tree
+  - symmetric-tree                           | Symmetric Tree                                     | easy   | tree
+  - binary-tree-level-order                  | Binary Tree Level Order Traversal                  | medium | tree
+  - binary-tree-zigzag                       | Binary Tree Zigzag Level Order                     | medium | tree
+  - construct-binary-tree                    | Construct Binary Tree from Preorder and Inorder    | medium | tree
+  - kth-smallest-bst                         | Kth Smallest Element in BST                        | medium | tree
+  - lowest-common-ancestor                   | Lowest Common Ancestor                             | medium | tree
+  - validate-binary-search-tree              | Validate Binary Search Tree                        | medium | tree
+
+[TWO POINTERS]
+  - merge-sorted-arrays                      | Merge Sorted Arrays                                | easy   | two-pointers
+  - remove-duplicates-sorted                 | Remove Duplicates from Sorted Array                | easy   | two-pointers
+  - reverse-string                           | Reverse String                                     | easy   | two-pointers
+  - squares-of-sorted-array                  | Squares of Sorted Array                            | easy   | two-pointers
+  - valid-palindrome                         | Valid Palindrome                                   | easy   | two-pointers
+  - trapping-rain-water                      | Trapping Rain Water                                | hard   | two-pointers
+  - three-sum                                | 3Sum                                               | medium | two-pointers
+  - four-sum                                 | 4Sum                                               | medium | two-pointers
