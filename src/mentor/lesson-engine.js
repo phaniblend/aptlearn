@@ -5,6 +5,7 @@ const LESSONS_FILE = path.join(__dirname, '..', '..', 'mentor', 'lessons.json');
 const LESSONS_DIR = path.join(__dirname, '..', '..', 'mentor', 'lessons');
 const LESSON_GEN_DIR = path.join(__dirname, '..', '..', 'mentor', 'lessonGen');
 const REACT_LESSONS_DIR = path.join(LESSON_GEN_DIR, 'react');
+const REACT_TS_LESSONS_DIR = path.join(LESSON_GEN_DIR, 'react-typescript');
 
 /**
  * Load lessons from individual JSON files or fallback to lessons.json
@@ -28,7 +29,7 @@ async function loadLessons() {
     }
   }
   
-  // Load React Interview Prep lessons from mentor/lessonGen/react
+  // Load React JavaScript Interview Prep lessons from mentor/lessonGen/react
   if (fs.existsSync(REACT_LESSONS_DIR)) {
     const files = fs.readdirSync(REACT_LESSONS_DIR).filter(f => f.endsWith('.json'));
     for (const file of files) {
@@ -39,6 +40,21 @@ async function loadLessons() {
         allLessons.push(lesson);
       } catch (err) {
         console.warn(`Failed to load React lesson from ${file}:`, err.message);
+      }
+    }
+  }
+  
+  // Load React TypeScript Interview Prep lessons from mentor/lessonGen/react-typescript
+  if (fs.existsSync(REACT_TS_LESSONS_DIR)) {
+    const files = fs.readdirSync(REACT_TS_LESSONS_DIR).filter(f => f.endsWith('.json'));
+    for (const file of files) {
+      try {
+        const filePath = path.join(REACT_TS_LESSONS_DIR, file);
+        const raw = fs.readFileSync(filePath, 'utf-8');
+        const lesson = JSON.parse(raw);
+        allLessons.push(lesson);
+      } catch (err) {
+        console.warn(`Failed to load React TypeScript lesson from ${file}:`, err.message);
       }
     }
   }
