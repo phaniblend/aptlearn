@@ -1,0 +1,244 @@
+{
+  "id": "angular-72-monorepo-setup",
+  "title": "Monorepo Setup",
+  "technology": "Angular",
+  "difficulty": "lead",
+  "language": "typescript",
+  "status": "draft",
+  "metadata": {
+    "time_estimate": "35-45 min",
+    "tests": "Workspace management, shared code",
+    "challenge_number": "72"
+  },
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand Monorepo Setup in Angular\n2. Implement the solution using Workspace management, shared code\n3. Apply Angular best practices and patterns\n4. Handle edge cases and error scenarios\n5. Write maintainable, production-ready Angular code",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Let's understand what this Monorepo Setup challenge asks for in Angular.\n\n**The Challenge:**\n// Create an Angular component for: Monorepo Setup\n// Use @Component decorator\n// Make it standalone\n\n**What We're Building:**\nThis challenge tests your understanding of Workspace management, shared code in Angular. You'll need to create an Angular component that demonstrates these concepts effectively while following Angular best practices.\n\n**Why This Matters:**\n\nMonorepo Setup is a fundamental Angular concept that you'll use in every application. Understanding this is essential for:\n- Building production-ready Angular applications\n- Following Angular best practices and patterns\n- Writing maintainable, scalable code\n- Passing technical interviews\n- Working effectively in Angular teams\n\n**Real-World Applications:**\n- Used in production Angular applications at companies like Google, Microsoft, IBM\n- Essential for building scalable, maintainable UIs\n- Industry-standard approach that every Angular developer must know\n- Foundation for more advanced Angular patterns\n\n**Conceptual Foundation:**\n\nUNDERSTANDING MONOREPO SETUP IN ANGULAR:\n\nThis concept is fundamental to Angular development. It enables you to build interactive, maintainable user interfaces.\n\n**Key Concepts:**\n- Core Angular pattern\n- Essential for building modern web applications\n- Follows Angular best practices\n- Industry-standard approach used by major companies\n\n**How It Works:**\n\nThe solution involves understanding Angular's component model, TypeScript's type system, and how to implement this specific pattern effectively. This pattern is used extensively in real-world Angular applications.\n\n**Step-by-Step Example:**\n\nLet's build a Monorepo Setup component step by step:\n\n**Step 1: Set up the component structure**\n```typescript\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-monoreposetup',\n  template: '<div>{{ title }}</div>',\n  standalone: true\n})\nexport class MonoreposetupComponent {\n  // Component logic will go here\n}\n```\n\n**Step 2: Add the core functionality**\nBased on the challenge requirements, we'll implement the main feature.\n\n**Step 3: Add enhancements and edge case handling**\nWe'll add proper error handling, edge cases, and Angular best practices.\n\n**Step 4: Export and use the component**\n```typescript\n// In parent component\nimport { MonoreposetupComponent } from './monoreposetup.component';\n\n@Component({\n  template: '<app-monoreposetup></app-monoreposetup>',\n  imports: [MonoreposetupComponent]\n})\n```\n\n**Pattern Variations:**\n\n**PATTERN 1: Basic Implementation**\n\nThe simplest approach that solves the core requirement with Angular best practices.\n\n**PATTERN 2: Enhanced Implementation**\n\nAdds error handling, edge cases, and better Angular patterns.\n\n**PATTERN 3: Advanced Implementation**\n\nIncludes performance optimizations, advanced Angular patterns, and comprehensive error handling.\n\n**Which Pattern to Use:**\n\n- **Pattern 1**: Simple use cases, learning, quick prototypes\n- **Pattern 2**: Most common scenarios, production-ready code\n- **Pattern 3**: Complex requirements, performance-critical applications\n\n**Best Practices:**\n\n**Best Practices:**\n\n1. **Component Design**\n   - One component per file\n   - Clear, descriptive names\n   - Standalone components (modern Angular)\n   - Proper separation of concerns\n\n2. **TypeScript**\n   - Use explicit types\n   - Leverage TypeScript's type system\n   - Avoid `any` type\n   - Use interfaces for complex data\n\n3. **Templates**\n   - Keep templates simple\n   - Use structural directives (*ngIf, *ngFor)\n   - Use property and event binding correctly\n   - Avoid complex logic in templates\n\n4. **Services**\n   - Use dependency injection\n   - Keep services focused\n   - Use providedIn: 'root' for singletons\n   - Separate business logic from components\n\n**Common Mistakes and How to Avoid Them:**\n\n**MISTAKE 1: Not Following Angular Patterns**\n\n❌ **Wrong:**\n```typescript\n// Not following Angular conventions\n```\n\n✓ **Correct:**\n```typescript\n// Following Angular best practices\n```\n\n**Why it matters:** Angular patterns ensure maintainability and consistency.\n\n---\n\n**MISTAKE 2: Forgetting Standalone Components**\n\n❌ **Wrong:**\n```typescript\n// Using NgModules when not needed\n```\n\n✓ **Correct:**\n```typescript\n@Component({\n  standalone: true  // Modern Angular\n})\n```\n\n**Why it matters:** Standalone components are simpler and more modern.\n\n**Real-World Examples:**\n\n**Example 1: Simple Use Case**\n\n```typescript\n// Basic implementation for simple scenarios\n// Shows the core concept clearly\n```\n\n**Example 2: Common Production Pattern**\n\n```typescript\n// Typical implementation used in production apps\n// Includes error handling and edge cases\n```\n\n**Example 3: Advanced Usage**\n\n```typescript\n// Advanced implementation for complex requirements\n// Includes optimizations and best practices\n```\n\n**Next Steps After This Lesson:**\n\nOnce you master this, you'll learn:\n\n1. **Related Concept 1** - Builds on this foundation\n   ```typescript\n   // Example code\n   ```\n\n2. **Related Concept 2** - Extends your knowledge\n   ```typescript\n   // Example code\n   ```\n\n3. **Related Concept 3** - Advanced patterns\n   ```typescript\n   // Example code\n   ```\n\n**Summary:**\n\nMastering Monorepo Setup in Angular involves:\n1. ✅ Understanding the core Angular concept\n2. ✅ Implementing the solution correctly\n3. ✅ Following Angular best practices\n4. ✅ Handling edge cases properly\n5. ✅ Writing clean, maintainable code\n\n**Time estimate:** 35-45 min\n**Difficulty level:** Lead\n\nThis is a practical interview question that tests your understanding of core Angular concepts and your ability to implement them correctly.",
+      "example": "// Create an Angular component for: Monorepo Setup\n// Use @Component decorator\n// Make it standalone",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU solve this Monorepo Setup challenge in Angular?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "I'll start with the basic approach and build up",
+          "next": "explore-approach-1"
+        },
+        {
+          "label": "I want to see the optimal solution directly",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I need more context about the problem",
+          "next": "problem-illustration"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-approach-1",
+      "mentorSays": "Good! Starting with a basic approach is a solid strategy. Let's build it step by step, then we'll see the complete solution.",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "Perfect! Here's the optimal solution approach with Angular:\n\n```typescript\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<div>Solution</div>',\n  standalone: true\n})\nexport class Component {\n  // Implementation\n}...\n```\n\nThis solution demonstrates Angular best practices and shows how to properly implement Workspace management, shared code.",
+      "example": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<div>Solution</div>',\n  standalone: true\n})\nexport class Component {\n  // Implementation\n}",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Since this is an Angular challenge, we'll use TypeScript. Let's start coding!",
+      "action": "continue",
+      "next": "typescript-check"
+    },
+    {
+      "stepId": "typescript-check",
+      "mentorSays": "Do you understand TypeScript basics and how it works with Angular?",
+      "choices": [
+        {
+          "label": "Yes, I understand typescript",
+          "next": "component-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "typescript-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "typescript-check-explanation",
+      "mentorSays": "TypeScript is a typed superset of JavaScript that Angular uses. It adds static type checking.\n\n**TypeScript with Angular:**\n\n```typescript\n// Basic types\nlet name: string = 'John';\nlet age: number = 25;\nlet isActive: boolean = true;\n\n// Interfaces\ninterface User {\n  name: string;\n  age: number;\n}\n\n// Classes\nclass UserService {\n  getUser(): User {\n    return { name: 'John', age: 25 };\n  }\n}\n```\n\n**Key Benefits:**\n- Catch errors at compile-time\n- Better IDE autocomplete\n- Self-documenting code\n- Easier refactoring",
+      "example": "// Example for typescript-check",
+      "action": "continue",
+      "next": "component-check"
+    },
+    {
+      "stepId": "component-check",
+      "mentorSays": "Do you understand Angular components?",
+      "choices": [
+        {
+          "label": "Yes, I understand component",
+          "next": "decorator-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "component-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "component-check-explanation",
+      "mentorSays": "Components are the building blocks of Angular applications.\n\n**What are Components?**\n\nComponents are TypeScript classes decorated with @Component that control a portion of the screen.\n\n**Example:**\n```typescript\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-hello',\n  template: '<h1>Hello World</h1>',\n  standalone: true\n})\nexport class HelloComponent {}\n```\n\n**Key Points:**\n- Components have a selector (HTML tag)\n- Components have a template (HTML)\n- Components can have styles (CSS)\n- Standalone components don't need NgModules",
+      "example": "// Example for component-check",
+      "action": "continue",
+      "next": "decorator-check"
+    },
+    {
+      "stepId": "decorator-check",
+      "mentorSays": "Do you understand Angular decorators like @Component?",
+      "choices": [
+        {
+          "label": "Yes, I understand decorator",
+          "next": "template-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "decorator-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "decorator-check-explanation",
+      "mentorSays": "Decorators are functions that modify classes, properties, or methods.\n\n**@Component Decorator:**\n\n```typescript\n@Component({\n  selector: 'app-hello',\n  template: '<h1>Hello</h1>',\n  standalone: true\n})\nexport class HelloComponent {}\n```\n\n**Common Decorators:**\n- `@Component` - Marks a class as a component\n- `@Input()` - Marks a property as an input\n- `@Output()` - Marks a property as an output\n- `@Injectable()` - Marks a class as a service\n\n**Key Points:**\n- Decorators use @ symbol\n- They provide metadata to Angular\n- They're TypeScript/JavaScript features",
+      "example": "// Example for decorator-check",
+      "action": "continue",
+      "next": "template-check"
+    },
+    {
+      "stepId": "template-check",
+      "mentorSays": "Do you understand Angular templates?",
+      "choices": [
+        {
+          "label": "Yes, I understand template",
+          "next": "standalone-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "template-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "template-check-explanation",
+      "mentorSays": "Templates are HTML with Angular-specific syntax.\n\n**Template Basics:**\n\n```html\n<!-- Interpolation -->\n<h1>{{{{ title }}}}</h1>\n\n<!-- Property Binding -->\n<img [src]=\"imageUrl\" />\n\n<!-- Event Binding -->\n<button (click)=\"onClick()\">Click</button>\n\n<!-- Structural Directives -->\n<div *ngIf=\"condition\">Content</div>\n<ul>\n  <li *ngFor=\"let item of items\">{{{{ item }}}}</li>\n</ul>\n```\n\n**Key Points:**\n- Templates are HTML with Angular syntax\n- Interpolation: `{{{{ expression }}}}`\n- Property binding: `[property]=\"value\"`\n- Event binding: `(event)=\"handler()\"`",
+      "example": "// Example for template-check",
+      "action": "continue",
+      "next": "standalone-check"
+    },
+    {
+      "stepId": "standalone-check",
+      "mentorSays": "Do you understand standalone components?",
+      "choices": [
+        {
+          "label": "Yes, I understand standalone",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, please explain",
+          "next": "standalone-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "standalone-check-explanation",
+      "mentorSays": "Standalone components are modern Angular components that don't require NgModules.\n\n**Standalone Component:**\n\n```typescript\n@Component({\n  selector: 'app-hello',\n  template: '<h1>Hello</h1>',\n  standalone: true  // Standalone!\n})\nexport class HelloComponent {}\n```\n\n**Using Standalone Components:**\n\n```typescript\n@Component({\n  selector: 'app-root',\n  template: '<app-hello></app-hello>',\n  standalone: true,\n  imports: [HelloComponent]  // Import dependencies\n})\nexport class AppComponent {}\n```\n\n**Key Points:**\n- `standalone: true` makes component standalone\n- Must import dependencies in `imports` array\n- No NgModule needed\n- Modern Angular approach",
+      "example": "// Example for standalone-check",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Now let's build the Monorepo Setup solution step by step. We'll start with the basic structure and then add the implementation.",
+      "action": "continue",
+      "next": "coding-step-1-ts"
+    },
+    {
+      "stepId": "coding-step-1-ts",
+      "mentorSays": "First, let's import the necessary Angular modules. We'll need Component and potentially other Angular features.",
+      "example": "import {{ Component }} from '@angular/core';\nimport {{ Input }} from '@angular/core';  // If needed",
+      "action": "continue",
+      "next": "coding-step-2-ts"
+    },
+    {
+      "stepId": "coding-step-2-ts",
+      "mentorSays": "Now let's create the component class with the @Component decorator. This defines our Angular component.",
+      "example": "@Component({\n  selector: 'app-monoreposetup',\n  template: '<div>{{ title }}</div>',\n  standalone: true\n})",
+      "action": "continue",
+      "next": "coding-step-3-ts"
+    },
+    {
+      "stepId": "coding-step-3-ts",
+      "mentorSays": "Now let's define our component class with the necessary properties and methods.",
+      "example": "export class MonoreposetupComponent {\n  // Component properties and methods\n}",
+      "action": "continue",
+      "next": "coding-step-4-ts"
+    },
+    {
+      "stepId": "coding-step-4-ts",
+      "mentorSays": "Now let's add step 4 of the implementation. This builds on what we've created so far.",
+      "example": "// Step 4 implementation\n// import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<",
+      "action": "continue",
+      "next": "coding-step-5-ts"
+    },
+    {
+      "stepId": "coding-step-5-ts",
+      "mentorSays": "Now let's add step 5 of the implementation. This builds on what we've created so far.",
+      "example": "// Step 5 implementation\n// import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<",
+      "action": "continue",
+      "next": "coding-step-6-ts"
+    },
+    {
+      "stepId": "coding-step-6-ts",
+      "mentorSays": "Now let's add step 6 of the implementation. This builds on what we've created so far.",
+      "example": "// Step 6 implementation\n// import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<",
+      "action": "continue",
+      "next": "coding-step-7-ts"
+    },
+    {
+      "stepId": "coding-step-7-ts",
+      "mentorSays": "Excellent! Now let's enhance our component by adding more features or improving the implementation. This makes the component more robust and production-ready.",
+      "example": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<div>Solution</div>',\n  standalone: true\n})\nexport class Component {\n  // Implementation\n}",
+      "action": "continue",
+      "next": "coding-complete-ts"
+    },
+    {
+      "stepId": "coding-complete-ts",
+      "mentorSays": "Perfect! Here's the complete solution with all the pieces together:",
+      "example": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<div>Solution</div>',\n  standalone: true\n})\nexport class Component {\n  // Implementation\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now let's test your component and make sure everything works correctly.\n\n**Testing Steps:**\n\n1. **Save your component:**\n   - Create a file for your component (e.g., `monorepo-setup.component.ts`)\n   - Paste your component code\n   - Save the file\n\n2. **Import in app.component.ts:**\n   ```typescript\n   import { MonoreposetupComponent } from './monorepo-setup.component';\n   ```\n\n3. **Use the component:**\n   ```typescript\n   @Component({\n     selector: 'app-root',\n     template: '<app-monorepo-setup></app-monorepo-setup>',\n     standalone: true,\n     imports: [MonoreposetupComponent]\n   })\n   export class AppComponent {}\n   ```\n\n4. **Run your Angular app:**\n   ```bash\n   ng serve\n   ```\n\n5. **Verify in browser:**\n   - Open http://localhost:4200\n   - You should see your component working!\n\n**Expected Result:**\nYour component should work as expected based on the challenge requirements: Workspace management, shared code\n\n**Common Issues and Solutions:**\n\n**Problem 1: Component not found**\n```\nSymptom: \"Component is not a known element\"\nSolution: Check imports array includes the component\n         Verify standalone: true is set\n         Ensure component is properly exported\n```\n\n**Problem 2: Template errors**\n```\nSymptom: Template parse errors\nSolution: Check template syntax\n         Verify property binding syntax [property]\n         Check event binding syntax (event)\n         Ensure interpolation syntax {}\n```\n\n**Problem 3: Type errors**\n```\nSymptom: TypeScript compilation errors\nSolution: Check all types are correct\n         Verify interfaces match usage\n         Check for missing type annotations\n         Ensure all imports are correct\n```\n\n**Problem 4: @Input() not working**\n```\nSymptom: Input property not receiving data\nSolution: Check @Input() decorator is present\n         Verify property binding [property] in parent\n         Check property name matches\n         Ensure component is imported in parent\n```\n\n**Problem 5: Standalone component errors**\n```\nSymptom: \"Cannot find module\" or import errors\nSolution: Check imports array includes all dependencies\n         Verify standalone: true is set\n         Ensure all used components/directives are imported\n         Check Angular version supports standalone\n```\n\n**Try These Experiments:**\n\nOnce it's working, try modifying:\n- Add more @Input() properties\n- Add @Output() for events\n- Create child components\n- Add services\n- Experiment with directives\n\n**Success Indicators:**\n\n✅ Component renders without errors\n✅ All functionality works correctly\n✅ No TypeScript compilation errors\n✅ Code follows Angular best practices\n✅ Proper component structure\n✅ IDE autocomplete works correctly\n\nYou've successfully completed the Monorepo Setup challenge!",
+      "example": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<div>Solution</div>',\n  standalone: true\n})\nexport class Component {\n  // Implementation\n}",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've completed the Monorepo Setup challenge in Angular!\n\n**Key Takeaways:**\n- You've mastered Workspace management, shared code in Angular\n- You understand how to implement Monorepo Setup correctly\n- You've applied Angular best practices\n- You can handle this type of interview question confidently\n- You're ready to use this pattern in real-world Angular applications\n\n**What You've Learned:**\n- How to implement Monorepo Setup correctly in Angular\n- Angular patterns and best practices for this concept\n- Problem-solving approaches for Angular challenges\n- Code organization and structure\n- Edge case handling\n\n**Next Steps:**\n- Practice similar Angular concepts\n- Try variations of this challenge\n- Explore more advanced Angular patterns\n- Build real-world applications using this pattern\n- Study related Angular concepts\n\n**Related Challenges:**\n- Practice related Angular concepts\n- Try more complex variations\n- Explore advanced patterns\n- Build complete features using this pattern\n\n**Time Complexity:** Varies based on implementation\n**Space Complexity:** Varies based on implementation\n\nKeep practicing! This pattern is essential for building Angular applications.",
+      "action": "continue"
+    }
+  ]
+}

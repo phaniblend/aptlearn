@@ -91,6 +91,18 @@ app.get('/health', (_req, res) => {
 
 /**
  * ------------------------
+ * User APIs (with session context)
+ * ------------------------
+ */
+const userRouter = require('./user/user-router');
+app.use('/api/user', (req, res, next) => {
+  const { session } = getOrCreateSession(req, res);
+  req.session = session;
+  next();
+}, userRouter);
+
+/**
+ * ------------------------
  * Mentor APIs (with session context)
  * ------------------------
  */
@@ -122,7 +134,11 @@ app.use('/assets', express.static(path.join(FRONTEND_DIR, 'assets')));
 
 // Frontend page routes
 app.get('/', (req, res) => {
-  res.sendFile(path.join(FRONTEND_DIR, 'landing.html'));
+  res.sendFile(path.join(FRONTEND_DIR, 'index.html'));
+});
+
+app.get('/landing', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'index.html'));
 });
 
 app.get('/auth', (req, res) => {
@@ -131,6 +147,14 @@ app.get('/auth', (req, res) => {
 
 app.get('/algos', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'algos.html'));
+});
+
+app.get('/interview-prep', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'interview-prep.html'));
+});
+
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'dashboard.html'));
 });
 
 app.get('/learn/:lessonId', (req, res) => {

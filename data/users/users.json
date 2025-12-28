@@ -1,0 +1,26 @@
+{
+  "guest_1766893918999_k1g37u7gc": {
+    "userId": "guest_1766893918999_k1g37u7gc",
+    "authProvider": "guest",
+    "email": null,
+    "createdAt": "2025-12-28T03:51:58.999Z",
+    "registrationDate": null,
+    "lessonsVisited": [],
+    "lessonsCompleted": [],
+    "freeLessonsConsumedCount": 0,
+    "permanentlyUnlockedLessons": [],
+    "paidLessons": []
+  },
+  "guest_1766893932156_vitaou7p0": {
+    "userId": "guest_1766893932156_vitaou7p0",
+    "authProvider": "guest",
+    "email": null,
+    "createdAt": "2025-12-28T03:52:12.156Z",
+    "registrationDate": null,
+    "lessonsVisited": [],
+    "lessonsCompleted": [],
+    "freeLessonsConsumedCount": 0,
+    "permanentlyUnlockedLessons": [],
+    "paidLessons": []
+  }
+}
