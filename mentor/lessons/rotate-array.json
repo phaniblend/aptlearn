@@ -150,13 +150,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-js"
+          "next": "array-reversal-check-js"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-js"
         }
       ]
+    },
+    {
+      "stepId": "array-reversal-check-js",
+      "mentorSays": "Do you understand the array reversal technique?",
+      "choices": [
+        {
+          "label": "Yes, I know array-reversal",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain array-reversal",
+          "next": "array-reversal-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "array-reversal-explanation-js",
+      "mentorSays": "Reversing an array swaps elements from both ends moving toward the center. For rotation, we can reverse the entire array, then reverse the first k elements and the remaining elements separately.\n\nfunction reverse(nums, start, end) {\n  while (start < end) {\n    [nums[start], nums[end]] = [nums[end], nums[start]];\n    start++;\n    end--;\n  }\n}\n\n// Reverse entire array, then reverse parts\n\nGot it?",
+      "example": "function reverse(nums, start, end) {\n  while (start < end) {\n    [nums[start], nums[end]] = [nums[end], nums[start]];\n    start++;\n    end--;\n  }\n}\n\n// Reverse entire array, then reverse parts",
+      "action": "continue",
+      "next": "coding-start-js"
     },
     {
       "stepId": "loop-explanation-js",
@@ -198,7 +219,14 @@
       "mentorSays": "Reverse the first k elements.",
       "example": "function rotate(nums, k) {\n  k = k % nums.length;\n  \n  function reverse(start, end) {\n    while (start < end) {\n      [nums[start], nums[end]] = [nums[end], nums[start]];\n      start++;\n      end--;\n    }\n  }\n  \n  reverse(0, nums.length - 1);\n  reverse(0, k - 1);\n}",
       "action": "continue",
-      "next": "coding-reverse-rest-js"
+      "next": "coding-three-reversal-js"
+    },
+    {
+      "stepId": "coding-three-reversal-js",
+      "mentorSays": "Here's the elegant three-reversal trick for rotating an array!\n\n1. Reverse the entire array\n2. Reverse the first k elements\n3. Reverse the remaining elements\n\nThis rotates the array in-place with O(1) extra space!",
+      "example": "function rotate(nums, k) {\n  k = k % nums.length;\n  \n  // Reverse entire array\n  reverse(nums, 0, nums.length - 1);\n  \n  // Reverse first k elements\n  reverse(nums, 0, k - 1);\n  \n  // Reverse remaining elements\n  reverse(nums, k, nums.length - 1);\n}",
+      "action": "continue",
+      "next": "test-code-js"
     },
     {
       "stepId": "coding-reverse-rest-js",
@@ -283,13 +311,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-python"
+          "next": "array-reversal-check-python"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-python"
         }
       ]
+    },
+    {
+      "stepId": "array-reversal-check-python",
+      "mentorSays": "Do you understand the array reversal technique?",
+      "choices": [
+        {
+          "label": "Yes, I know array-reversal",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain array-reversal",
+          "next": "array-reversal-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "array-reversal-explanation-python",
+      "mentorSays": "Reversing an array swaps elements from both ends moving toward the center. For rotation, we can reverse the entire array, then reverse the first k elements and the remaining elements separately.\n\nfunction reverse(nums, start, end) {\n  while (start < end) {\n    [nums[start], nums[end]] = [nums[end], nums[start]];\n    start++;\n    end--;\n  }\n}\n\n// Reverse entire array, then reverse parts\n\nGot it?",
+      "example": "function reverse(nums, start, end) {\n  while (start < end) {\n    [nums[start], nums[end]] = [nums[end], nums[start]];\n    start++;\n    end--;\n  }\n}\n\n// Reverse entire array, then reverse parts",
+      "action": "continue",
+      "next": "coding-start-python"
     },
     {
       "stepId": "loop-explanation-python",
@@ -331,7 +380,14 @@
       "mentorSays": "Reverse the first k elements.",
       "example": "def rotate(nums, k):\n    k = k % len(nums)\n    \n    def reverse(start, end):\n        while start < end:\n            nums[start], nums[end] = nums[end], nums[start]\n            start += 1\n            end -= 1\n    \n    reverse(0, len(nums) - 1)\n    reverse(0, k - 1)\n    \n    pass",
       "action": "continue",
-      "next": "coding-reverse-rest-python"
+      "next": "coding-three-reversal-python"
+    },
+    {
+      "stepId": "coding-three-reversal-python",
+      "mentorSays": "Here's the elegant three-reversal trick for rotating an array!\n\n1. Reverse the entire array\n2. Reverse the first k elements\n3. Reverse the remaining elements\n\nThis rotates the array in-place with O(1) extra space!",
+      "example": "function rotate(nums, k) {\n  k = k % nums.length;\n  \n  // Reverse entire array\n  reverse(nums, 0, nums.length - 1);\n  \n  // Reverse first k elements\n  reverse(nums, 0, k - 1);\n  \n  // Reverse remaining elements\n  reverse(nums, k, nums.length - 1);\n}",
+      "action": "continue",
+      "next": "test-code-python"
     },
     {
       "stepId": "coding-reverse-rest-python",
@@ -416,13 +472,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-java"
+          "next": "array-reversal-check-java"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-java"
         }
       ]
+    },
+    {
+      "stepId": "array-reversal-check-java",
+      "mentorSays": "Do you understand the array reversal technique?",
+      "choices": [
+        {
+          "label": "Yes, I know array-reversal",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain array-reversal",
+          "next": "array-reversal-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "array-reversal-explanation-java",
+      "mentorSays": "Reversing an array swaps elements from both ends moving toward the center. For rotation, we can reverse the entire array, then reverse the first k elements and the remaining elements separately.\n\nfunction reverse(nums, start, end) {\n  while (start < end) {\n    [nums[start], nums[end]] = [nums[end], nums[start]];\n    start++;\n    end--;\n  }\n}\n\n// Reverse entire array, then reverse parts\n\nGot it?",
+      "example": "function reverse(nums, start, end) {\n  while (start < end) {\n    [nums[start], nums[end]] = [nums[end], nums[start]];\n    start++;\n    end--;\n  }\n}\n\n// Reverse entire array, then reverse parts",
+      "action": "continue",
+      "next": "coding-start-java"
     },
     {
       "stepId": "loop-explanation-java",
@@ -464,7 +541,14 @@
       "mentorSays": "Reverse the first k elements.",
       "example": "public void rotate(int[] nums, int k) {\n    k = k % nums.length;\n    \n    reverse(nums, 0, nums.length - 1);\n    reverse(nums, 0, k - 1);\n}\n\nprivate void reverse(int[] nums, int start, int end) {\n    while (start < end) {\n        int temp = nums[start];\n        nums[start] = nums[end];\n        nums[end] = temp;\n        start++;\n        end--;\n    }\n}",
       "action": "continue",
-      "next": "coding-reverse-rest-java"
+      "next": "coding-three-reversal-java"
+    },
+    {
+      "stepId": "coding-three-reversal-java",
+      "mentorSays": "Here's the elegant three-reversal trick for rotating an array!\n\n1. Reverse the entire array\n2. Reverse the first k elements\n3. Reverse the remaining elements\n\nThis rotates the array in-place with O(1) extra space!",
+      "example": "function rotate(nums, k) {\n  k = k % nums.length;\n  \n  // Reverse entire array\n  reverse(nums, 0, nums.length - 1);\n  \n  // Reverse first k elements\n  reverse(nums, 0, k - 1);\n  \n  // Reverse remaining elements\n  reverse(nums, k, nums.length - 1);\n}",
+      "action": "continue",
+      "next": "test-code-java"
     },
     {
       "stepId": "coding-reverse-rest-java",
@@ -549,13 +633,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-cpp"
+          "next": "array-reversal-check-cpp"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-cpp"
         }
       ]
+    },
+    {
+      "stepId": "array-reversal-check-cpp",
+      "mentorSays": "Do you understand the array reversal technique?",
+      "choices": [
+        {
+          "label": "Yes, I know array-reversal",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain array-reversal",
+          "next": "array-reversal-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "array-reversal-explanation-cpp",
+      "mentorSays": "Reversing an array swaps elements from both ends moving toward the center. For rotation, we can reverse the entire array, then reverse the first k elements and the remaining elements separately.\n\nfunction reverse(nums, start, end) {\n  while (start < end) {\n    [nums[start], nums[end]] = [nums[end], nums[start]];\n    start++;\n    end--;\n  }\n}\n\n// Reverse entire array, then reverse parts\n\nGot it?",
+      "example": "function reverse(nums, start, end) {\n  while (start < end) {\n    [nums[start], nums[end]] = [nums[end], nums[start]];\n    start++;\n    end--;\n  }\n}\n\n// Reverse entire array, then reverse parts",
+      "action": "continue",
+      "next": "coding-start-cpp"
     },
     {
       "stepId": "loop-explanation-cpp",
@@ -590,7 +695,14 @@
       "mentorSays": "Reverse the first k elements.",
       "example": "#include <vector>\n#include <algorithm>\n\nvoid rotate(vector<int>& nums, int k) {\n    k = k % nums.size();\n    \n    reverse(nums.begin(), nums.end());\n    reverse(nums.begin(), nums.begin() + k);\n}",
       "action": "continue",
-      "next": "coding-reverse-rest-cpp"
+      "next": "coding-three-reversal-cpp"
+    },
+    {
+      "stepId": "coding-three-reversal-cpp",
+      "mentorSays": "Here's the elegant three-reversal trick for rotating an array!\n\n1. Reverse the entire array\n2. Reverse the first k elements\n3. Reverse the remaining elements\n\nThis rotates the array in-place with O(1) extra space!",
+      "example": "function rotate(nums, k) {\n  k = k % nums.length;\n  \n  // Reverse entire array\n  reverse(nums, 0, nums.length - 1);\n  \n  // Reverse first k elements\n  reverse(nums, 0, k - 1);\n  \n  // Reverse remaining elements\n  reverse(nums, k, nums.length - 1);\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
     },
     {
       "stepId": "coding-reverse-rest-cpp",
@@ -675,13 +787,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-ts"
+          "next": "array-reversal-check-ts"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-ts"
         }
       ]
+    },
+    {
+      "stepId": "array-reversal-check-ts",
+      "mentorSays": "Do you understand the array reversal technique?",
+      "choices": [
+        {
+          "label": "Yes, I know array-reversal",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain array-reversal",
+          "next": "array-reversal-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "array-reversal-explanation-ts",
+      "mentorSays": "Reversing an array swaps elements from both ends moving toward the center. For rotation, we can reverse the entire array, then reverse the first k elements and the remaining elements separately.\n\nfunction reverse(nums, start, end) {\n  while (start < end) {\n    [nums[start], nums[end]] = [nums[end], nums[start]];\n    start++;\n    end--;\n  }\n}\n\n// Reverse entire array, then reverse parts\n\nGot it?",
+      "example": "function reverse(nums, start, end) {\n  while (start < end) {\n    [nums[start], nums[end]] = [nums[end], nums[start]];\n    start++;\n    end--;\n  }\n}\n\n// Reverse entire array, then reverse parts",
+      "action": "continue",
+      "next": "coding-start-ts"
     },
     {
       "stepId": "loop-explanation-ts",
@@ -723,7 +856,14 @@
       "mentorSays": "Reverse the first k elements.",
       "example": "function rotate(nums: number[], k: number): void {\n  k = k % nums.length;\n  \n  function reverse(start: number, end: number): void {\n    while (start < end) {\n      [nums[start], nums[end]] = [nums[end], nums[start]];\n      start++;\n      end--;\n    }\n  }\n  \n  reverse(0, nums.length - 1);\n  reverse(0, k - 1);\n}",
       "action": "continue",
-      "next": "coding-reverse-rest-ts"
+      "next": "coding-three-reversal-ts"
+    },
+    {
+      "stepId": "coding-three-reversal-ts",
+      "mentorSays": "Here's the elegant three-reversal trick for rotating an array!\n\n1. Reverse the entire array\n2. Reverse the first k elements\n3. Reverse the remaining elements\n\nThis rotates the array in-place with O(1) extra space!",
+      "example": "function rotate(nums, k) {\n  k = k % nums.length;\n  \n  // Reverse entire array\n  reverse(nums, 0, nums.length - 1);\n  \n  // Reverse first k elements\n  reverse(nums, 0, k - 1);\n  \n  // Reverse remaining elements\n  reverse(nums, k, nums.length - 1);\n}",
+      "action": "continue",
+      "next": "test-code-ts"
     },
     {
       "stepId": "coding-reverse-rest-ts",

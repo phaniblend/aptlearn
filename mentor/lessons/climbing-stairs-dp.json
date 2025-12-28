@@ -14,7 +14,7 @@
     },
     {
       "stepId": "problem-illustration",
-      "mentorSays": "Perfect! Now let's understand what the Climbing Stairs problem is asking.\n\nImagine you have n stairs (for example, n = 5).\n\nYour task: Count the number of distinct ways to climb to the top.\n\nRules:\n- You can climb 1 or 2 steps at a time\n- You want to reach the top (step n)\n\nLet's trace with n = 5:\n\n**Ways to reach step 5**:\n- 1+1+1+1+1 (all 1-step moves)\n- 1+1+1+2\n- 1+1+2+1\n- 1+2+1+1\n- 2+1+1+1\n- 1+2+2\n- 2+1+2\n- 2+2+1\n\nTotal: 8 ways ✓\n\n**Key Insight**: This is exactly like Fibonacci!\n- To reach step n, you can come from step n-1 (climb 1 step) or step n-2 (climb 2 steps)\n- Ways to reach step n = Ways to reach step (n-1) + Ways to reach step (n-2)\n\nWe use dynamic programming:\n- dp[i] = number of ways to reach step i\n- Base cases: dp[0] = 1 (one way to be at start), dp[1] = 1 (one way: climb 1 step)\n- Recurrence: dp[i] = dp[i-1] + dp[i-2] for i >= 2\n- Result: dp[n]\n\nLet's trace with n = 5:\n\n- **dp[0] = 1** (base case: one way to be at start)\n- **dp[1] = 1** (base case: one way to reach step 1)\n- **dp[2] = dp[1] + dp[0] = 1 + 1 = 2** (from step 1 or step 0)\n- **dp[3] = dp[2] + dp[1] = 2 + 1 = 3** (from step 2 or step 1)\n- **dp[4] = dp[3] + dp[2] = 3 + 2 = 5** (from step 3 or step 2)\n- **dp[5] = dp[4] + dp[3] = 5 + 3 = 8** ✓\n\nAnswer: 8\n\nThat's what the problem wants: the number of distinct ways to climb to the top.",
+      "mentorSays": "Let's understand the climbing stairs problem deeply.\n\nTHE PROBLEM:\nYou have a staircase with n steps.\nEach time you can climb either 1 step or 2 steps.\nHow many distinct ways can you reach the top?\n\nEXAMPLE: n = 5 (Detailed Walkthrough)\n\nLet's list all possible ways:\n1. 1+1+1+1+1 (five single steps)\n2. 1+1+1+2 (three singles, one double)\n3. 1+1+2+1\n4. 1+2+1+1\n5. 2+1+1+1\n6. 1+2+2\n7. 2+1+2\n8. 2+2+1\n\nTotal: 8 ways\n\nRECURSIVE THINKING:\nTo reach step 5, I could:\n- Be at step 4, then take 1 step → ways(4)\n- Be at step 3, then take 2 steps → ways(3)\n\nSo: ways(5) = ways(4) + ways(3)\n\nBUILDING THE SOLUTION:\nways(0) = 1  (base case: 0 steps = do nothing)\nways(1) = 1  (base case: only one way)\nways(2) = ways(1) + ways(0) = 1 + 1 = 2\nways(3) = ways(2) + ways(1) = 2 + 1 = 3\nways(4) = ways(3) + ways(2) = 3 + 2 = 5\nways(5) = ways(4) + ways(3) = 5 + 3 = 8 ✓\n\nRECURSION TREE (shows overlapping subproblems):\n                ways(5)\n               /       \\\n          ways(4)     ways(3)\n          /    \\       /    \\\n    ways(3) ways(2) ways(2) ways(1)\n     /  \\     /  \\    /  \\\n   w(2) w(1) w(1) w(0) w(1) w(0)\n\nNotice: ways(2) appears 3 times, ways(3) appears 2 times!\n\nThis is why we need dynamic programming - to avoid recalculating!\n\nDP TABLE CONSTRUCTION:\ni:     0  1  2  3  4  5\ndp[i]: 1  1  2  3  5  8\n\nPattern: This is the Fibonacci sequence!\n\nTIME COMPLEXITY: O(n) - single pass\nSPACE COMPLEXITY: O(n) or O(1) with optimization\n\nWHY DP IS BETTER:\n- Naive recursion: O(2^n) - exponential!\n- DP: O(n) - linear!\n- For n=30: Recursion makes millions of calls, DP makes 30 calculations!",
       "example": "n = 5\n\nFind number of ways to climb:\nF(5) = 8 ways ✓\n\nAnother example:\nn = 3\n\nAnswer: 3 ways\n(1+1+1, 1+2, 2+1)\n\nAnother example:\nn = 2\n\nAnswer: 2 ways\n(1+1, 2)",
       "action": "continue",
       "next": "thinking-challenge"
@@ -129,13 +129,55 @@
       "choices": [
         {
           "label": "Yes, I know arrays",
-          "next": "coding-start-js"
+          "next": "base-cases-check-js"
         },
         {
           "label": "No, explain arrays",
           "next": "array-explanation-js"
         }
       ]
+    },
+    {
+      "stepId": "base-cases-check-js",
+      "mentorSays": "Do you understand what base cases are in dynamic programming?",
+      "choices": [
+        {
+          "label": "Yes, I know base-cases",
+          "next": "overlapping-subproblems-check-js"
+        },
+        {
+          "label": "No, explain base-cases",
+          "next": "base-cases-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "overlapping-subproblems-check-js",
+      "mentorSays": "Do you understand why we need dynamic programming for this problem?",
+      "choices": [
+        {
+          "label": "Yes, I know overlapping-subproblems",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain overlapping-subproblems",
+          "next": "overlapping-subproblems-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "overlapping-subproblems-explanation-js",
+      "mentorSays": "Without DP, we recalculate the same subproblems many times. Example: ways(5) = ways(4) + ways(3) = [ways(3) + ways(2)] + [ways(2) + ways(1)]. Notice ways(2) is calculated 3 times! ways(3) is calculated 2 times! DP solves each subproblem once and reuses the result.\n\n// Without DP, we recalculate:\n// ways(5) = ways(4) + ways(3)\n//         = [ways(3) + ways(2)] + [ways(2) + ways(1)]\n// Notice: ways(2) calculated 3 times!\n//         ways(3) calculated 2 times!\n\n// With DP, we solve once and reuse:\nlet dp = [1, 1, 2, 3, 5, 8];\n// Each value calculated only once!\n\nGot it?",
+      "example": "// Without DP, we recalculate:\n// ways(5) = ways(4) + ways(3)\n//         = [ways(3) + ways(2)] + [ways(2) + ways(1)]\n// Notice: ways(2) calculated 3 times!\n//         ways(3) calculated 2 times!\n\n// With DP, we solve once and reuse:\nlet dp = [1, 1, 2, 3, 5, 8];\n// Each value calculated only once!",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "base-cases-explanation-js",
+      "mentorSays": "Base cases are the simplest inputs where the answer is obvious. For climbing stairs: 0 steps = 1 way (do nothing), 1 step = 1 way (one single step), 2 steps = 2 ways (two singles OR one double). These form the foundation for solving larger problems!\n\n// Base cases for climbing stairs:\n// dp[0] = 1  (one way to be at start)\n// dp[1] = 1  (one way: climb 1 step)\n\nlet dp = [1, 1];\n// These are the simplest cases where answer is obvious!\n\nGot it?",
+      "example": "// Base cases for climbing stairs:\n// dp[0] = 1  (one way to be at start)\n// dp[1] = 1  (one way: climb 1 step)\n\nlet dp = [1, 1];\n// These are the simplest cases where answer is obvious!",
+      "action": "continue",
+      "next": "coding-start-js"
     },
     {
       "stepId": "array-explanation-js",
@@ -169,6 +211,20 @@
       "stepId": "coding-fill-js",
       "mentorSays": "Now, fill the DP array: for each i from 2 to n, compute dp[i] = dp[i-1] + dp[i-2].",
       "example": "function climbStairs(n) {\n  if (n === 0) return 1;\n  if (n === 1) return 1;\n  \n  const dp = new Array(n + 1);\n  dp[0] = 1;\n  dp[1] = 1;\n  \n  for (let i = 2; i <= n; i++) {\n    dp[i] = dp[i-1] + dp[i-2];\n  }",
+      "action": "continue",
+      "next": "coding-recursive-relation-js"
+    },
+    {
+      "stepId": "coding-recursive-relation-js",
+      "mentorSays": "Let's define the recursive relation.\n\nTo reach step i, you could have come from:\n- Step i-1 (then take 1 step)\n- Step i-2 (then take 2 steps)\n\nSo: ways[i] = ways[i-1] + ways[i-2]\n\nThis is the Fibonacci sequence!\n\nways[0] = 1\nways[1] = 1\nways[2] = ways[1] + ways[0] = 2\nways[3] = ways[2] + ways[1] = 3\nways[4] = ways[3] + ways[2] = 5\nways[5] = ways[4] + ways[3] = 8",
+      "example": "// Recursive relation:\n// dp[i] = dp[i-1] + dp[i-2]\n\nfor (let i = 2; i <= n; i++) {\n  dp[i] = dp[i-1] + dp[i-2];\n}",
+      "action": "continue",
+      "next": "coding-space-optimization-js"
+    },
+    {
+      "stepId": "coding-space-optimization-js",
+      "mentorSays": "We can optimize space from O(n) to O(1).\n\nNotice: we only need the previous 2 values!\n\nInstead of:\nlet dp = [1, 1, 2, 3, 5, 8]\n\nWe can use:\nlet prev2 = 1;  // dp[i-2]\nlet prev1 = 1;  // dp[i-1]\nlet current;\n\nfor (let i = 2; i <= n; i++) {\n  current = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = current;\n}\n\nSpace: O(n) → O(1)\nTime: still O(n)",
+      "example": "// Space optimized version:\nlet prev2 = 1, prev1 = 1;\nfor (let i = 2; i <= n; i++) {\n  let current = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = current;\n}\nreturn prev1;",
       "action": "continue",
       "next": "coding-return-js"
     },
@@ -234,13 +290,55 @@
       "choices": [
         {
           "label": "Yes, I know lists",
-          "next": "coding-start-python"
+          "next": "base-cases-check-python"
         },
         {
           "label": "No, explain lists",
           "next": "array-explanation-python"
         }
       ]
+    },
+    {
+      "stepId": "base-cases-check-python",
+      "mentorSays": "Do you understand what base cases are in dynamic programming?",
+      "choices": [
+        {
+          "label": "Yes, I know base-cases",
+          "next": "overlapping-subproblems-check-python"
+        },
+        {
+          "label": "No, explain base-cases",
+          "next": "base-cases-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "overlapping-subproblems-check-python",
+      "mentorSays": "Do you understand why we need dynamic programming for this problem?",
+      "choices": [
+        {
+          "label": "Yes, I know overlapping-subproblems",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain overlapping-subproblems",
+          "next": "overlapping-subproblems-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "overlapping-subproblems-explanation-python",
+      "mentorSays": "Without DP, we recalculate the same subproblems many times. Example: ways(5) = ways(4) + ways(3) = [ways(3) + ways(2)] + [ways(2) + ways(1)]. Notice ways(2) is calculated 3 times! ways(3) is calculated 2 times! DP solves each subproblem once and reuses the result.\n\n# Without DP, we recalculate:\n# ways(5) = ways(4) + ways(3)\n#         = [ways(3) + ways(2)] + [ways(2) + ways(1)]\n# Notice: ways(2) calculated 3 times!\n#         ways(3) calculated 2 times!\n\n# With DP, we solve once and reuse:\ndp = [1, 1, 2, 3, 5, 8]\n# Each value calculated only once!\n\nGot it?",
+      "example": "# Without DP, we recalculate:\n# ways(5) = ways(4) + ways(3)\n#         = [ways(3) + ways(2)] + [ways(2) + ways(1)]\n# Notice: ways(2) calculated 3 times!\n#         ways(3) calculated 2 times!\n\n# With DP, we solve once and reuse:\ndp = [1, 1, 2, 3, 5, 8]\n# Each value calculated only once!",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "base-cases-explanation-python",
+      "mentorSays": "Base cases are the simplest inputs where the answer is obvious. For climbing stairs: 0 steps = 1 way (do nothing), 1 step = 1 way (one single step), 2 steps = 2 ways (two singles OR one double). These form the foundation for solving larger problems!\n\n# Base cases for climbing stairs:\n# dp[0] = 1  (one way to be at start)\n# dp[1] = 1  (one way: climb 1 step)\n\ndp = [1, 1]\n# These are the simplest cases where answer is obvious!\n\nGot it?",
+      "example": "# Base cases for climbing stairs:\n# dp[0] = 1  (one way to be at start)\n# dp[1] = 1  (one way: climb 1 step)\n\ndp = [1, 1]\n# These are the simplest cases where answer is obvious!",
+      "action": "continue",
+      "next": "coding-start-python"
     },
     {
       "stepId": "array-explanation-python",
@@ -274,6 +372,20 @@
       "stepId": "coding-fill-python",
       "mentorSays": "Now, fill the DP list: for each i from 2 to n, compute dp[i] = dp[i-1] + dp[i-2].",
       "example": "def climb_stairs(n):\n    if n == 0:\n        return 1\n    if n == 1:\n        return 1\n    \n    dp = [0] * (n + 1)\n    dp[0] = 1\n    dp[1] = 1\n    \n    for i in range(2, n + 1):\n        dp[i] = dp[i-1] + dp[i-2]",
+      "action": "continue",
+      "next": "coding-recursive-relation-python"
+    },
+    {
+      "stepId": "coding-recursive-relation-python",
+      "mentorSays": "Let's define the recursive relation.\n\nTo reach step i, you could have come from:\n- Step i-1 (then take 1 step)\n- Step i-2 (then take 2 steps)\n\nSo: ways[i] = ways[i-1] + ways[i-2]\n\nThis is the Fibonacci sequence!\n\nways[0] = 1\nways[1] = 1\nways[2] = ways[1] + ways[0] = 2\nways[3] = ways[2] + ways[1] = 3\nways[4] = ways[3] + ways[2] = 5\nways[5] = ways[4] + ways[3] = 8",
+      "example": "// Recursive relation:\n// dp[i] = dp[i-1] + dp[i-2]\n\nfor (let i = 2; i <= n; i++) {\n  dp[i] = dp[i-1] + dp[i-2];\n}",
+      "action": "continue",
+      "next": "coding-space-optimization-python"
+    },
+    {
+      "stepId": "coding-space-optimization-python",
+      "mentorSays": "We can optimize space from O(n) to O(1).\n\nNotice: we only need the previous 2 values!\n\nInstead of:\nlet dp = [1, 1, 2, 3, 5, 8]\n\nWe can use:\nlet prev2 = 1;  // dp[i-2]\nlet prev1 = 1;  // dp[i-1]\nlet current;\n\nfor (let i = 2; i <= n; i++) {\n  current = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = current;\n}\n\nSpace: O(n) → O(1)\nTime: still O(n)",
+      "example": "// Space optimized version:\nlet prev2 = 1, prev1 = 1;\nfor (let i = 2; i <= n; i++) {\n  let current = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = current;\n}\nreturn prev1;",
       "action": "continue",
       "next": "coding-return-python"
     },
@@ -339,13 +451,55 @@
       "choices": [
         {
           "label": "Yes, I know arrays",
-          "next": "coding-start-java"
+          "next": "base-cases-check-java"
         },
         {
           "label": "No, explain arrays",
           "next": "array-explanation-java"
         }
       ]
+    },
+    {
+      "stepId": "base-cases-check-java",
+      "mentorSays": "Do you understand what base cases are in dynamic programming?",
+      "choices": [
+        {
+          "label": "Yes, I know base-cases",
+          "next": "overlapping-subproblems-check-java"
+        },
+        {
+          "label": "No, explain base-cases",
+          "next": "base-cases-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "overlapping-subproblems-check-java",
+      "mentorSays": "Do you understand why we need dynamic programming for this problem?",
+      "choices": [
+        {
+          "label": "Yes, I know overlapping-subproblems",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain overlapping-subproblems",
+          "next": "overlapping-subproblems-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "overlapping-subproblems-explanation-java",
+      "mentorSays": "Without DP, we recalculate the same subproblems many times. Example: ways(5) = ways(4) + ways(3) = [ways(3) + ways(2)] + [ways(2) + ways(1)]. Notice ways(2) is calculated 3 times! ways(3) is calculated 2 times! DP solves each subproblem once and reuses the result.\n\n// Without DP, we recalculate:\n// ways(5) = ways(4) + ways(3)\n//         = [ways(3) + ways(2)] + [ways(2) + ways(1)]\n// Notice: ways(2) calculated 3 times!\n//         ways(3) calculated 2 times!\n\n// With DP, we solve once and reuse:\nint[] dp = {1, 1, 2, 3, 5, 8};\n// Each value calculated only once!\n\nGot it?",
+      "example": "// Without DP, we recalculate:\n// ways(5) = ways(4) + ways(3)\n//         = [ways(3) + ways(2)] + [ways(2) + ways(1)]\n// Notice: ways(2) calculated 3 times!\n//         ways(3) calculated 2 times!\n\n// With DP, we solve once and reuse:\nint[] dp = {1, 1, 2, 3, 5, 8};\n// Each value calculated only once!",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "base-cases-explanation-java",
+      "mentorSays": "Base cases are the simplest inputs where the answer is obvious. For climbing stairs: 0 steps = 1 way (do nothing), 1 step = 1 way (one single step), 2 steps = 2 ways (two singles OR one double). These form the foundation for solving larger problems!\n\n// Base cases for climbing stairs:\n// dp[0] = 1  (one way to be at start)\n// dp[1] = 1  (one way: climb 1 step)\n\nint[] dp = {1, 1};\n// These are the simplest cases where answer is obvious!\n\nGot it?",
+      "example": "// Base cases for climbing stairs:\n// dp[0] = 1  (one way to be at start)\n// dp[1] = 1  (one way: climb 1 step)\n\nint[] dp = {1, 1};\n// These are the simplest cases where answer is obvious!",
+      "action": "continue",
+      "next": "coding-start-java"
     },
     {
       "stepId": "array-explanation-java",
@@ -379,6 +533,20 @@
       "stepId": "coding-fill-java",
       "mentorSays": "Now, fill the DP array: for each i from 2 to n, compute dp[i] = dp[i-1] + dp[i-2].",
       "example": "public int climbStairs(int n) {\n    if (n == 0) return 1;\n    if (n == 1) return 1;\n    \n    int[] dp = new int[n + 1];\n    dp[0] = 1;\n    dp[1] = 1;\n    \n    for (int i = 2; i <= n; i++) {\n        dp[i] = dp[i-1] + dp[i-2];\n    }",
+      "action": "continue",
+      "next": "coding-recursive-relation-java"
+    },
+    {
+      "stepId": "coding-recursive-relation-java",
+      "mentorSays": "Let's define the recursive relation.\n\nTo reach step i, you could have come from:\n- Step i-1 (then take 1 step)\n- Step i-2 (then take 2 steps)\n\nSo: ways[i] = ways[i-1] + ways[i-2]\n\nThis is the Fibonacci sequence!\n\nways[0] = 1\nways[1] = 1\nways[2] = ways[1] + ways[0] = 2\nways[3] = ways[2] + ways[1] = 3\nways[4] = ways[3] + ways[2] = 5\nways[5] = ways[4] + ways[3] = 8",
+      "example": "// Recursive relation:\n// dp[i] = dp[i-1] + dp[i-2]\n\nfor (let i = 2; i <= n; i++) {\n  dp[i] = dp[i-1] + dp[i-2];\n}",
+      "action": "continue",
+      "next": "coding-space-optimization-java"
+    },
+    {
+      "stepId": "coding-space-optimization-java",
+      "mentorSays": "We can optimize space from O(n) to O(1).\n\nNotice: we only need the previous 2 values!\n\nInstead of:\nlet dp = [1, 1, 2, 3, 5, 8]\n\nWe can use:\nlet prev2 = 1;  // dp[i-2]\nlet prev1 = 1;  // dp[i-1]\nlet current;\n\nfor (let i = 2; i <= n; i++) {\n  current = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = current;\n}\n\nSpace: O(n) → O(1)\nTime: still O(n)",
+      "example": "// Space optimized version:\nlet prev2 = 1, prev1 = 1;\nfor (let i = 2; i <= n; i++) {\n  let current = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = current;\n}\nreturn prev1;",
       "action": "continue",
       "next": "coding-return-java"
     },
@@ -444,13 +612,55 @@
       "choices": [
         {
           "label": "Yes, I know vectors",
-          "next": "coding-start-cpp"
+          "next": "base-cases-check-cpp"
         },
         {
           "label": "No, explain vectors",
           "next": "array-explanation-cpp"
         }
       ]
+    },
+    {
+      "stepId": "base-cases-check-cpp",
+      "mentorSays": "Do you understand what base cases are in dynamic programming?",
+      "choices": [
+        {
+          "label": "Yes, I know base-cases",
+          "next": "overlapping-subproblems-check-cpp"
+        },
+        {
+          "label": "No, explain base-cases",
+          "next": "base-cases-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "overlapping-subproblems-check-cpp",
+      "mentorSays": "Do you understand why we need dynamic programming for this problem?",
+      "choices": [
+        {
+          "label": "Yes, I know overlapping-subproblems",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain overlapping-subproblems",
+          "next": "overlapping-subproblems-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "overlapping-subproblems-explanation-cpp",
+      "mentorSays": "Without DP, we recalculate the same subproblems many times. Example: ways(5) = ways(4) + ways(3) = [ways(3) + ways(2)] + [ways(2) + ways(1)]. Notice ways(2) is calculated 3 times! ways(3) is calculated 2 times! DP solves each subproblem once and reuses the result.\n\n// Without DP, we recalculate:\n// ways(5) = ways(4) + ways(3)\n//         = [ways(3) + ways(2)] + [ways(2) + ways(1)]\n// Notice: ways(2) calculated 3 times!\n//         ways(3) calculated 2 times!\n\n// With DP, we solve once and reuse:\nvector<int> dp = {1, 1, 2, 3, 5, 8};\n// Each value calculated only once!\n\nGot it?",
+      "example": "// Without DP, we recalculate:\n// ways(5) = ways(4) + ways(3)\n//         = [ways(3) + ways(2)] + [ways(2) + ways(1)]\n// Notice: ways(2) calculated 3 times!\n//         ways(3) calculated 2 times!\n\n// With DP, we solve once and reuse:\nvector<int> dp = {1, 1, 2, 3, 5, 8};\n// Each value calculated only once!",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "base-cases-explanation-cpp",
+      "mentorSays": "Base cases are the simplest inputs where the answer is obvious. For climbing stairs: 0 steps = 1 way (do nothing), 1 step = 1 way (one single step), 2 steps = 2 ways (two singles OR one double). These form the foundation for solving larger problems!\n\n// Base cases for climbing stairs:\n// dp[0] = 1  (one way to be at start)\n// dp[1] = 1  (one way: climb 1 step)\n\nvector<int> dp = {1, 1};\n// These are the simplest cases where answer is obvious!\n\nGot it?",
+      "example": "// Base cases for climbing stairs:\n// dp[0] = 1  (one way to be at start)\n// dp[1] = 1  (one way: climb 1 step)\n\nvector<int> dp = {1, 1};\n// These are the simplest cases where answer is obvious!",
+      "action": "continue",
+      "next": "coding-start-cpp"
     },
     {
       "stepId": "array-explanation-cpp",
@@ -484,6 +694,20 @@
       "stepId": "coding-fill-cpp",
       "mentorSays": "Now, fill the DP vector: for each i from 2 to n, compute dp[i] = dp[i-1] + dp[i-2].",
       "example": "int climbStairs(int n) {\n    if (n == 0) return 1;\n    if (n == 1) return 1;\n    \n    vector<int> dp(n + 1);\n    dp[0] = 1;\n    dp[1] = 1;\n    \n    for (int i = 2; i <= n; i++) {\n        dp[i] = dp[i-1] + dp[i-2];\n    }",
+      "action": "continue",
+      "next": "coding-recursive-relation-cpp"
+    },
+    {
+      "stepId": "coding-recursive-relation-cpp",
+      "mentorSays": "Let's define the recursive relation.\n\nTo reach step i, you could have come from:\n- Step i-1 (then take 1 step)\n- Step i-2 (then take 2 steps)\n\nSo: ways[i] = ways[i-1] + ways[i-2]\n\nThis is the Fibonacci sequence!\n\nways[0] = 1\nways[1] = 1\nways[2] = ways[1] + ways[0] = 2\nways[3] = ways[2] + ways[1] = 3\nways[4] = ways[3] + ways[2] = 5\nways[5] = ways[4] + ways[3] = 8",
+      "example": "// Recursive relation:\n// dp[i] = dp[i-1] + dp[i-2]\n\nfor (let i = 2; i <= n; i++) {\n  dp[i] = dp[i-1] + dp[i-2];\n}",
+      "action": "continue",
+      "next": "coding-space-optimization-cpp"
+    },
+    {
+      "stepId": "coding-space-optimization-cpp",
+      "mentorSays": "We can optimize space from O(n) to O(1).\n\nNotice: we only need the previous 2 values!\n\nInstead of:\nlet dp = [1, 1, 2, 3, 5, 8]\n\nWe can use:\nlet prev2 = 1;  // dp[i-2]\nlet prev1 = 1;  // dp[i-1]\nlet current;\n\nfor (let i = 2; i <= n; i++) {\n  current = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = current;\n}\n\nSpace: O(n) → O(1)\nTime: still O(n)",
+      "example": "// Space optimized version:\nlet prev2 = 1, prev1 = 1;\nfor (let i = 2; i <= n; i++) {\n  let current = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = current;\n}\nreturn prev1;",
       "action": "continue",
       "next": "coding-return-cpp"
     },
@@ -549,13 +773,55 @@
       "choices": [
         {
           "label": "Yes, I know arrays",
-          "next": "coding-start-ts"
+          "next": "base-cases-check-ts"
         },
         {
           "label": "No, explain arrays",
           "next": "array-explanation-ts"
         }
       ]
+    },
+    {
+      "stepId": "base-cases-check-ts",
+      "mentorSays": "Do you understand what base cases are in dynamic programming?",
+      "choices": [
+        {
+          "label": "Yes, I know base-cases",
+          "next": "overlapping-subproblems-check-ts"
+        },
+        {
+          "label": "No, explain base-cases",
+          "next": "base-cases-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "overlapping-subproblems-check-ts",
+      "mentorSays": "Do you understand why we need dynamic programming for this problem?",
+      "choices": [
+        {
+          "label": "Yes, I know overlapping-subproblems",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain overlapping-subproblems",
+          "next": "overlapping-subproblems-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "overlapping-subproblems-explanation-ts",
+      "mentorSays": "Without DP, we recalculate the same subproblems many times. Example: ways(5) = ways(4) + ways(3) = [ways(3) + ways(2)] + [ways(2) + ways(1)]. Notice ways(2) is calculated 3 times! ways(3) is calculated 2 times! DP solves each subproblem once and reuses the result.\n\n// Without DP, we recalculate:\n// ways(5) = ways(4) + ways(3)\n//         = [ways(3) + ways(2)] + [ways(2) + ways(1)]\n// Notice: ways(2) calculated 3 times!\n//         ways(3) calculated 2 times!\n\n// With DP, we solve once and reuse:\nlet dp: number[] = [1, 1, 2, 3, 5, 8];\n// Each value calculated only once!\n\nGot it?",
+      "example": "// Without DP, we recalculate:\n// ways(5) = ways(4) + ways(3)\n//         = [ways(3) + ways(2)] + [ways(2) + ways(1)]\n// Notice: ways(2) calculated 3 times!\n//         ways(3) calculated 2 times!\n\n// With DP, we solve once and reuse:\nlet dp: number[] = [1, 1, 2, 3, 5, 8];\n// Each value calculated only once!",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "base-cases-explanation-ts",
+      "mentorSays": "Base cases are the simplest inputs where the answer is obvious. For climbing stairs: 0 steps = 1 way (do nothing), 1 step = 1 way (one single step), 2 steps = 2 ways (two singles OR one double). These form the foundation for solving larger problems!\n\n// Base cases for climbing stairs:\n// dp[0] = 1  (one way to be at start)\n// dp[1] = 1  (one way: climb 1 step)\n\nlet dp: number[] = [1, 1];\n// These are the simplest cases where answer is obvious!\n\nGot it?",
+      "example": "// Base cases for climbing stairs:\n// dp[0] = 1  (one way to be at start)\n// dp[1] = 1  (one way: climb 1 step)\n\nlet dp: number[] = [1, 1];\n// These are the simplest cases where answer is obvious!",
+      "action": "continue",
+      "next": "coding-start-ts"
     },
     {
       "stepId": "array-explanation-ts",
@@ -589,6 +855,20 @@
       "stepId": "coding-fill-ts",
       "mentorSays": "Now, fill the DP array: for each i from 2 to n, compute dp[i] = dp[i-1] + dp[i-2].",
       "example": "function climbStairs(n: number): number {\n  if (n === 0) return 1;\n  if (n === 1) return 1;\n  \n  const dp: number[] = new Array(n + 1);\n  dp[0] = 1;\n  dp[1] = 1;\n  \n  for (let i = 2; i <= n; i++) {\n    dp[i] = dp[i-1] + dp[i-2];\n  }",
+      "action": "continue",
+      "next": "coding-recursive-relation-ts"
+    },
+    {
+      "stepId": "coding-recursive-relation-ts",
+      "mentorSays": "Let's define the recursive relation.\n\nTo reach step i, you could have come from:\n- Step i-1 (then take 1 step)\n- Step i-2 (then take 2 steps)\n\nSo: ways[i] = ways[i-1] + ways[i-2]\n\nThis is the Fibonacci sequence!\n\nways[0] = 1\nways[1] = 1\nways[2] = ways[1] + ways[0] = 2\nways[3] = ways[2] + ways[1] = 3\nways[4] = ways[3] + ways[2] = 5\nways[5] = ways[4] + ways[3] = 8",
+      "example": "// Recursive relation:\n// dp[i] = dp[i-1] + dp[i-2]\n\nfor (let i = 2; i <= n; i++) {\n  dp[i] = dp[i-1] + dp[i-2];\n}",
+      "action": "continue",
+      "next": "coding-space-optimization-ts"
+    },
+    {
+      "stepId": "coding-space-optimization-ts",
+      "mentorSays": "We can optimize space from O(n) to O(1).\n\nNotice: we only need the previous 2 values!\n\nInstead of:\nlet dp = [1, 1, 2, 3, 5, 8]\n\nWe can use:\nlet prev2 = 1;  // dp[i-2]\nlet prev1 = 1;  // dp[i-1]\nlet current;\n\nfor (let i = 2; i <= n; i++) {\n  current = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = current;\n}\n\nSpace: O(n) → O(1)\nTime: still O(n)",
+      "example": "// Space optimized version:\nlet prev2 = 1, prev1 = 1;\nfor (let i = 2; i <= n; i++) {\n  let current = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = current;\n}\nreturn prev1;",
       "action": "continue",
       "next": "coding-return-ts"
     },

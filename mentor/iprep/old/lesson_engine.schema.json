@@ -1,0 +1,76 @@
+{
+  "lessonId": "",
+  "track": "",
+  "primaryLanguage": "",
+  "technology": "",
+  "challenge": {
+    "title": "",
+    "prompt": ""
+  },
+  "flow": [
+    {
+      "stepId": "primary-language-gate",
+      "type": "gate",
+      "concept": "{{primaryLanguage}}:basics",
+      "ui": {
+        "question": "Are you comfortable with the basics of {{primaryLanguage}}?",
+        "yes": "Yes, continue",
+        "no": "No, I need to learn this first"
+      },
+      "onNo": {
+        "action": "pause",
+        "resources": []
+      }
+    },
+    {
+      "stepId": "technology-gate",
+      "type": "gate",
+      "concept": "{{technology}}:basics",
+      "ui": {
+        "question": "Are you familiar with {{technology}} at a basic level?",
+        "yes": "Yes, continue",
+        "no": "No, please explain"
+      },
+      "onNo": {
+        "action": "ai-explain",
+        "ai": {
+          "concept": "{{technology}}",
+          "constraints": {
+            "incremental": true,
+            "procedural": true,
+            "noPrimaryLanguageTeaching": true,
+            "scope": "only what is required for this task"
+          }
+        }
+      }
+    },
+    {
+      "stepId": "problem-statement",
+      "type": "static",
+      "content": "{{challenge.prompt}}"
+    },
+    {
+      "stepId": "concept-gates",
+      "type": "concept-sequence",
+      "concepts": [],
+      "onNo": {
+        "action": "ai-explain",
+        "ai": {
+          "incremental": true,
+          "procedural": true,
+          "noPrimaryLanguageTeaching": true
+        }
+      }
+    },
+    {
+      "stepId": "coding",
+      "type": "coding",
+      "strategy": "incremental"
+    },
+    {
+      "stepId": "final",
+      "type": "final",
+      "content": "Well done. You have completed this challenge."
+    }
+  ]
+}

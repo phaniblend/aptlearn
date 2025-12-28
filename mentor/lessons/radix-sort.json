@@ -14,7 +14,7 @@
     },
     {
       "stepId": "problem-illustration",
-      "mentorSays": "Perfect! Now let's understand what Radix Sort does.\n\nImagine you have an unsorted array: [170, 45, 75, 90, 2, 802, 24, 66]\n\nYour task: Sort it in ascending order (smallest to largest).\n\nRadix sort works by sorting numbers digit by digit, from least significant digit (rightmost) to most significant digit (leftmost). It uses counting sort as a subroutine for each digit position!\n\nLet's trace through the algorithm:\n\n**Step 1: Find maximum**\n- Max = 802 (3 digits)\n- We'll process 3 digit positions\n\n**Step 2: Sort by 1's place (least significant digit)**\n- Group by last digit: 0→[170,90], 2→[2,802], 4→[24], 5→[45,75], 6→[66]\n- After counting sort: [170, 90, 2, 802, 24, 45, 75, 66]\n\n**Step 3: Sort by 10's place**\n- Group by second digit: 0→[2,802], 2→[24], 4→[45], 6→[66], 7→[170,75], 9→[90]\n- After counting sort: [2, 802, 24, 45, 66, 170, 75, 90]\n\n**Step 4: Sort by 100's place (most significant digit)**\n- Group by first digit: 0→[2,24,45,66,75,90], 8→[802]\n- After counting sort: [2, 24, 45, 66, 75, 90, 170, 802]\n\n**Final**: [2, 24, 45, 66, 75, 90, 170, 802] (sorted!)\n\nRadix sort is O(d × (n + k)) where d is number of digits and k is the radix (10 for decimal). Very efficient for integers with limited digits!",
+      "mentorSays": "Radix sort is unique - it sorts digit by digit, from least significant to most significant.\n\n**HOW IT WORKS:**\n\nRadix sort processes numbers one digit position at a time, using counting sort as a subroutine.\n\n**EXAMPLE: Detailed Walkthrough**\n\nArray: [170, 45, 75, 90, 2, 802, 24, 66]\n\n**STEP 1: Find Maximum**\n- Max = 802 (has 3 digits)\n- We need to process 3 digit positions (ones, tens, hundreds)\n\n**STEP 2: PASS 1 - Sort by ONES digit (least significant)**\n\nGroup numbers by their ones digit:\n- 0 → [170, 90]\n- 2 → [2, 802]\n- 4 → [24]\n- 5 → [45, 75]\n- 6 → [66]\n\nAfter counting sort by ones place:\n[170, 90, 2, 802, 24, 45, 75, 66]\n\nNotice: Numbers with same ones digit maintain relative order from input.\n\n**STEP 3: PASS 2 - Sort by TENS digit**\n\nGroup numbers by their tens digit:\n- 0 → [2, 802] (these have 0 in tens place)\n- 2 → [24]\n- 4 → [45]\n- 6 → [66]\n- 7 → [170, 75]\n- 9 → [90]\n\nAfter counting sort by tens place:\n[2, 802, 24, 45, 66, 170, 75, 90]\n\n**STEP 4: PASS 3 - Sort by HUNDREDS digit (most significant)**\n\nGroup numbers by their hundreds digit:\n- 0 → [2, 24, 45, 66, 75, 90] (these have 0 in hundreds place)\n- 1 → [170]\n- 8 → [802]\n\nAfter counting sort by hundreds place:\n[2, 24, 45, 66, 75, 90, 170, 802]\n\n**FINAL RESULT:** [2, 24, 45, 66, 75, 90, 170, 802] ✓ SORTED!\n\n**WHY DOES IT WORK?**\n\nBy processing from least significant to most significant digit, we maintain the relative order from previous passes. This is called a STABLE SORT property.\n\n**KEY INSIGHT:**\n- Each pass sorts by one digit position\n- Counting sort is used as the subroutine (stable sort)\n- After all digits processed, array is fully sorted\n\n**TIME COMPLEXITY:**\n- O(d × (n + k)) where:\n  - d = number of digits (3 in our example)\n  - n = number of elements (8 in our example)\n  - k = radix/base (10 for decimal numbers)\n\n**SPACE COMPLEXITY:** O(n + k) for counting sort arrays\n\n**WHEN TO USE:**\n- Integers with limited digits\n- When range of values is known\n- Very efficient for fixed-width integers",
       "example": "arr = [170, 45, 75, 90, 2, 802, 24, 66]\n\nStep 1: Max = 802 (3 digits)\nStep 2: Sort by 1's place → [170, 90, 2, 802, 24, 45, 75, 66]\nStep 3: Sort by 10's place → [2, 802, 24, 45, 66, 170, 75, 90]\nStep 4: Sort by 100's place → [2, 24, 45, 66, 75, 90, 170, 802]\n\nFinal: [2, 24, 45, 66, 75, 90, 170, 802]",
       "action": "continue",
       "next": "thinking-challenge"
@@ -595,13 +595,223 @@
       "choices": [
         {
           "label": "Yes, I know arrays",
-          "next": "coding-start-ts"
+          "next": "modulo-check-ts"
         },
         {
           "label": "No, explain arrays",
           "next": "array-explanation-ts"
         }
       ]
+    },
+    {
+      "stepId": "modulo-check-js",
+      "mentorSays": "Do you understand the modulo (%) operator?",
+      "choices": [
+        {
+          "label": "Yes, I know modulo",
+          "next": "digit-extraction-check-js"
+        },
+        {
+          "label": "No, explain modulo",
+          "next": "modulo-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "digit-extraction-check-js",
+      "mentorSays": "Do you understand how to extract specific digits from numbers?",
+      "choices": [
+        {
+          "label": "Yes, I know digit-extraction",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain digit-extraction",
+          "next": "digit-extraction-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "digit-extraction-explanation-js",
+      "mentorSays": "To get the digit at position d, we use division and modulo. Radix sort processes one digit position at a time!\n\nlet num = 5432;\nlet onesDigit = Math.floor(num / 1) % 10;    // 2\nlet tensDigit = Math.floor(num / 10) % 10;   // 3\nlet hundredsDigit = Math.floor(num / 100) % 10; // 4\n\nGot it?",
+      "example": "let num = 5432;\nlet onesDigit = Math.floor(num / 1) % 10;    // 2\nlet tensDigit = Math.floor(num / 10) % 10;   // 3\nlet hundredsDigit = Math.floor(num / 100) % 10; // 4",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "modulo-explanation-js",
+      "mentorSays": "Modulo gives the remainder after division. For radix sort, we use it to extract digits.\n\n10 % 3 = 1  // 10 ÷ 3 = 3 remainder 1\n17 % 5 = 2  // 17 ÷ 5 = 3 remainder 2\n\n// Extract ones digit:\n123 % 10 = 3  // ones digit\n\nGot it?",
+      "example": "10 % 3 = 1  // 10 ÷ 3 = 3 remainder 1\n17 % 5 = 2  // 17 ÷ 5 = 3 remainder 2\n\n// Extract ones digit:\n123 % 10 = 3  // ones digit",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "modulo-check-python",
+      "mentorSays": "Do you understand the modulo (%) operator?",
+      "choices": [
+        {
+          "label": "Yes, I know modulo",
+          "next": "digit-extraction-check-python"
+        },
+        {
+          "label": "No, explain modulo",
+          "next": "modulo-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "digit-extraction-check-python",
+      "mentorSays": "Do you understand how to extract specific digits from numbers?",
+      "choices": [
+        {
+          "label": "Yes, I know digit-extraction",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain digit-extraction",
+          "next": "digit-extraction-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "digit-extraction-explanation-python",
+      "mentorSays": "To get the digit at position d, we use division and modulo. Radix sort processes one digit position at a time!\n\nnum = 5432\nones_digit = (num // 1) % 10    # 2\ntens_digit = (num // 10) % 10   # 3\nhundreds_digit = (num // 100) % 10  # 4\n\nGot it?",
+      "example": "num = 5432\nones_digit = (num // 1) % 10    # 2\ntens_digit = (num // 10) % 10   # 3\nhundreds_digit = (num // 100) % 10  # 4",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "modulo-explanation-python",
+      "mentorSays": "Modulo gives the remainder after division. For radix sort, we use it to extract digits.\n\n10 % 3 == 1  # 10 ÷ 3 = 3 remainder 1\n17 % 5 == 2  # 17 ÷ 5 = 3 remainder 2\n\n# Extract ones digit:\n123 % 10 == 3  # ones digit\n\nGot it?",
+      "example": "10 % 3 == 1  # 10 ÷ 3 = 3 remainder 1\n17 % 5 == 2  # 17 ÷ 5 = 3 remainder 2\n\n# Extract ones digit:\n123 % 10 == 3  # ones digit",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "modulo-check-java",
+      "mentorSays": "Do you understand the modulo (%) operator?",
+      "choices": [
+        {
+          "label": "Yes, I know modulo",
+          "next": "digit-extraction-check-java"
+        },
+        {
+          "label": "No, explain modulo",
+          "next": "modulo-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "digit-extraction-check-java",
+      "mentorSays": "Do you understand how to extract specific digits from numbers?",
+      "choices": [
+        {
+          "label": "Yes, I know digit-extraction",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain digit-extraction",
+          "next": "digit-extraction-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "digit-extraction-explanation-java",
+      "mentorSays": "To get the digit at position d, we use division and modulo. Radix sort processes one digit position at a time!\n\nint num = 5432;\nint onesDigit = (num / 1) % 10;    // 2\nint tensDigit = (num / 10) % 10;   // 3\nint hundredsDigit = (num / 100) % 10; // 4\n\nGot it?",
+      "example": "int num = 5432;\nint onesDigit = (num / 1) % 10;    // 2\nint tensDigit = (num / 10) % 10;   // 3\nint hundredsDigit = (num / 100) % 10; // 4",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "modulo-explanation-java",
+      "mentorSays": "Modulo gives the remainder after division. For radix sort, we use it to extract digits.\n\n10 % 3 == 1  // 10 ÷ 3 = 3 remainder 1\n17 % 5 == 2  // 17 ÷ 5 = 3 remainder 2\n\n// Extract ones digit:\n123 % 10 == 3  // ones digit\n\nGot it?",
+      "example": "10 % 3 == 1  // 10 ÷ 3 = 3 remainder 1\n17 % 5 == 2  // 17 ÷ 5 = 3 remainder 2\n\n// Extract ones digit:\n123 % 10 == 3  // ones digit",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "modulo-check-cpp",
+      "mentorSays": "Do you understand the modulo (%) operator?",
+      "choices": [
+        {
+          "label": "Yes, I know modulo",
+          "next": "digit-extraction-check-cpp"
+        },
+        {
+          "label": "No, explain modulo",
+          "next": "modulo-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "digit-extraction-check-cpp",
+      "mentorSays": "Do you understand how to extract specific digits from numbers?",
+      "choices": [
+        {
+          "label": "Yes, I know digit-extraction",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain digit-extraction",
+          "next": "digit-extraction-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "digit-extraction-explanation-cpp",
+      "mentorSays": "To get the digit at position d, we use division and modulo. Radix sort processes one digit position at a time!\n\nint num = 5432;\nint onesDigit = (num / 1) % 10;    // 2\nint tensDigit = (num / 10) % 10;   // 3\nint hundredsDigit = (num / 100) % 10; // 4\n\nGot it?",
+      "example": "int num = 5432;\nint onesDigit = (num / 1) % 10;    // 2\nint tensDigit = (num / 10) % 10;   // 3\nint hundredsDigit = (num / 100) % 10; // 4",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "modulo-explanation-cpp",
+      "mentorSays": "Modulo gives the remainder after division. For radix sort, we use it to extract digits.\n\n10 % 3 == 1  // 10 ÷ 3 = 3 remainder 1\n17 % 5 == 2  // 17 ÷ 5 = 3 remainder 2\n\n// Extract ones digit:\n123 % 10 == 3  // ones digit\n\nGot it?",
+      "example": "10 % 3 == 1  // 10 ÷ 3 = 3 remainder 1\n17 % 5 == 2  // 17 ÷ 5 = 3 remainder 2\n\n// Extract ones digit:\n123 % 10 == 3  // ones digit",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "modulo-check-ts",
+      "mentorSays": "Do you understand the modulo (%) operator?",
+      "choices": [
+        {
+          "label": "Yes, I know modulo",
+          "next": "digit-extraction-check-ts"
+        },
+        {
+          "label": "No, explain modulo",
+          "next": "modulo-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "digit-extraction-check-ts",
+      "mentorSays": "Do you understand how to extract specific digits from numbers?",
+      "choices": [
+        {
+          "label": "Yes, I know digit-extraction",
+          "next": "modulo-check-ts"
+        },
+        {
+          "label": "No, explain digit-extraction",
+          "next": "digit-extraction-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "digit-extraction-explanation-ts",
+      "mentorSays": "To get the digit at position d, we use division and modulo. Radix sort processes one digit position at a time!\n\nlet num = 5432;\nlet onesDigit = Math.floor(num / 1) % 10;    // 2\nlet tensDigit = Math.floor(num / 10) % 10;   // 3\nlet hundredsDigit = Math.floor(num / 100) % 10; // 4\n\nGot it?",
+      "example": "let num = 5432;\nlet onesDigit = Math.floor(num / 1) % 10;    // 2\nlet tensDigit = Math.floor(num / 10) % 10;   // 3\nlet hundredsDigit = Math.floor(num / 100) % 10; // 4",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "modulo-explanation-ts",
+      "mentorSays": "Modulo gives the remainder after division. For radix sort, we use it to extract digits.\n\n10 % 3 === 1  // 10 ÷ 3 = 3 remainder 1\n17 % 5 === 2  // 17 ÷ 5 = 3 remainder 2\n\n// Extract ones digit:\n123 % 10 === 3  // ones digit\n\nGot it?",
+      "example": "10 % 3 === 1  // 10 ÷ 3 = 3 remainder 1\n17 % 5 === 2  // 17 ÷ 5 = 3 remainder 2\n\n// Extract ones digit:\n123 % 10 === 3  // ones digit",
+      "action": "continue",
+      "next": "coding-start-ts"
     },
     {
       "stepId": "array-explanation-ts",

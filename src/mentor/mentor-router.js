@@ -10,6 +10,34 @@ const {
 
 /**
  * ------------------------
+ * Get all lessons (for Interview Prep section)
+ * ------------------------
+ */
+router.get('/lessons', async (req, res) => {
+  try {
+    const lessons = await loadLessons();
+    
+    // Return metadata only for listing
+    const lessonList = lessons.map(l => ({
+      id: l.id,
+      title: l.title,
+      technology: l.technology,
+      difficulty: l.difficulty,
+      language: l.language,
+      status: l.status,
+      pattern: l.pattern,
+      metadata: l.metadata
+    }));
+    
+    res.json({ lessons: lessonList });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to load lessons' });
+  }
+});
+
+/**
+ * ------------------------
  * Start a lesson
  * ------------------------
  * body: { lessonId }

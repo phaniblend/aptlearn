@@ -150,7 +150,7 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-js"
+          "next": "array-check-js"
         },
         {
           "label": "No, explain loops",
@@ -159,11 +159,52 @@
       ]
     },
     {
+      "stepId": "array-check-js",
+      "mentorSays": "To solve this problem, we'll work with arrays. Do you understand how arrays work in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "greedy-check-js"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "greedy-check-js",
+      "mentorSays": "Do you understand the greedy approach?",
+      "choices": [
+        {
+          "label": "Yes, I know greedy",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain greedy",
+          "next": "greedy-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "greedy-explanation-js",
+      "mentorSays": "The greedy approach makes the best local choice at each step. For this problem, we greedily track the minimum price seen so far and calculate the maximum profit we could make by selling today.\n\nlet minPrice = Infinity;\nlet maxProfit = 0;\n\n// Greedy: always track minimum price\nfor (let price of prices) {\n  minPrice = Math.min(minPrice, price);\n  maxProfit = Math.max(maxProfit, price - minPrice);\n}\n\nGot it?",
+      "example": "let minPrice = Infinity;\nlet maxProfit = 0;\n\n// Greedy: always track minimum price\nfor (let price of prices) {\n  minPrice = Math.min(minPrice, price);\n  maxProfit = Math.max(maxProfit, price - minPrice);\n}",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "array-explanation-js",
+      "mentorSays": "An array is a collection of items stored in order. You can access elements by their position (index).\n\nFor this problem, we need to access each price in the array:\n\nlet prices = [7, 1, 5, 3, 6, 4];\nprices[0]; // Access first element (7)\nprices.length; // Get array length\n\nThis lets us check every price to find the maximum profit.\n\nGot it?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
       "stepId": "loop-explanation-js",
       "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in JavaScript runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each price one by one.",
       "example": "for (let i = 0; i < prices.length; i++) {\n  // Process prices[i]\n}",
       "action": "continue",
-      "next": "coding-start-js"
+      "next": "array-check-js"
     },
     {
       "stepId": "coding-start-js",
@@ -197,6 +238,20 @@
       "stepId": "coding-calculate-profit-js",
       "mentorSays": "Calculate the profit if we sell today (current price - minimum price) and update maxProfit if this profit is larger.",
       "example": "function maxProfit(prices) {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    if (prices[i] < minPrice) {\n      minPrice = prices[i];\n    }\n    \n    const profit = prices[i] - minPrice;\n    if (profit > maxProfit) {\n      maxProfit = profit;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-edge-case-js"
+    },
+    {
+      "stepId": "coding-edge-case-js",
+      "mentorSays": "Before we return, let's handle an important edge case.\n\nWhat if there's no profitable trade? Our profit stays at 0, which is correct!\n\nLet's verify our logic handles this:\n- If prices only decrease, minPrice keeps updating but profit stays 0\n- If prices never go up, we correctly return 0\n\nOur code already handles this perfectly - no changes needed. But it's important to think through edge cases!",
+      "example": "function maxProfit(prices) {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    if (prices[i] < minPrice) {\n      minPrice = prices[i];\n    }\n    \n    const profit = prices[i] - minPrice;\n    if (profit > maxProfit) {\n      maxProfit = profit;\n    }\n  }\n  \n  // Edge case: If no profit, returns 0 ✓\n  return maxProfit;\n}",
+      "action": "continue",
+      "next": "coding-edge-case-js"
+    },
+    {
+      "stepId": "coding-edge-case-js",
+      "mentorSays": "Before we return, let's think about an important edge case.\n\nWhat if there's no profitable trade? Our profit variable stays at 0, which is correct!\n\nLet's verify our logic handles this:\n- If prices only decrease, minPrice keeps updating but profit stays 0\n- If prices never go up, we correctly return 0\n\nOur code already handles this perfectly - no changes needed. But it's important to think through edge cases!",
+      "example": "function maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfit = 0;\n  \n  for (let i = 0; i < prices.length; i++) {\n    if (prices[i] < minPrice) {\n      minPrice = prices[i];\n    } else {\n      let profit = prices[i] - minPrice;\n      if (profit > maxProfit) {\n        maxProfit = profit;\n      }\n    }\n  }\n  \n  // Edge case: If no profit, returns 0 ✓\n  return maxProfit;\n}",
       "action": "continue",
       "next": "coding-return-js"
     },
@@ -283,7 +338,7 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-python"
+          "next": "array-check-python"
         },
         {
           "label": "No, explain loops",
@@ -292,11 +347,52 @@
       ]
     },
     {
+      "stepId": "array-check-python",
+      "mentorSays": "To solve this problem, we'll work with arrays. Do you understand how arrays work in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "greedy-check-python"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "greedy-check-python",
+      "mentorSays": "Do you understand the greedy approach?",
+      "choices": [
+        {
+          "label": "Yes, I know greedy",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain greedy",
+          "next": "greedy-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "greedy-explanation-python",
+      "mentorSays": "The greedy approach makes the best local choice at each step. For this problem, we greedily track the minimum price seen so far and calculate the maximum profit we could make by selling today.\n\nlet minPrice = Infinity;\nlet maxProfit = 0;\n\n// Greedy: always track minimum price\nfor (let price of prices) {\n  minPrice = Math.min(minPrice, price);\n  maxProfit = Math.max(maxProfit, price - minPrice);\n}\n\nGot it?",
+      "example": "let minPrice = Infinity;\nlet maxProfit = 0;\n\n// Greedy: always track minimum price\nfor (let price of prices) {\n  minPrice = Math.min(minPrice, price);\n  maxProfit = Math.max(maxProfit, price - minPrice);\n}",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "array-explanation-python",
+      "mentorSays": "An array is a collection of items stored in order. You can access elements by their position (index).\n\nFor this problem, we need to access each price in the array:\n\nprices = [7, 1, 5, 3, 6, 4]\nprices[0]  # Access first element (7)\nlen(prices)  # Get list length\n\nThis lets us check every price to find the maximum profit.\n\nGot it?",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
       "stepId": "loop-explanation-python",
       "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, you can loop through a list to check each price one by one.",
       "example": "for i in range(1, len(prices)):\n    # Process prices[i]",
       "action": "continue",
-      "next": "coding-start-python"
+      "next": "array-check-python"
     },
     {
       "stepId": "coding-start-python",
@@ -330,6 +426,20 @@
       "stepId": "coding-calculate-profit-python",
       "mentorSays": "Calculate the profit if we sell today (current price - minimum price) and update max_profit if this profit is larger.",
       "example": "def max_profit(prices):\n    min_price = prices[0]\n    max_profit = 0\n    \n    for i in range(1, len(prices)):\n        if prices[i] < min_price:\n            min_price = prices[i]\n        \n        profit = prices[i] - min_price\n        if profit > max_profit:\n            max_profit = profit\n    \n    pass",
+      "action": "continue",
+      "next": "coding-edge-case-python"
+    },
+    {
+      "stepId": "coding-edge-case-python",
+      "mentorSays": "Before we return, let's handle an important edge case.\n\nWhat if there's no profitable trade? Our profit stays at 0, which is correct!\n\nLet's verify our logic handles this:\n- If prices only decrease, minPrice keeps updating but profit stays 0\n- If prices never go up, we correctly return 0\n\nOur code already handles this perfectly - no changes needed. But it's important to think through edge cases!",
+      "example": "def max_profit(prices):\n    min_price = prices[0]\n    max_profit = 0\n    \n    for i in range(1, len(prices)):\n        if prices[i] < min_price:\n            min_price = prices[i]\n        \n        profit = prices[i] - min_price\n        if profit > max_profit:\n            max_profit = profit\n    \n    # Edge case: If no profit, returns 0 ✓\n    return max_profit",
+      "action": "continue",
+      "next": "coding-edge-case-python"
+    },
+    {
+      "stepId": "coding-edge-case-python",
+      "mentorSays": "Before we return, let's think about an important edge case.\n\nWhat if there's no profitable trade? Our profit variable stays at 0, which is correct!\n\nLet's verify our logic handles this:\n- If prices only decrease, minPrice keeps updating but profit stays 0\n- If prices never go up, we correctly return 0\n\nOur code already handles this perfectly - no changes needed. But it's important to think through edge cases!",
+      "example": "function maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfit = 0;\n  \n  for (let i = 0; i < prices.length; i++) {\n    if (prices[i] < minPrice) {\n      minPrice = prices[i];\n    } else {\n      let profit = prices[i] - minPrice;\n      if (profit > maxProfit) {\n        maxProfit = profit;\n      }\n    }\n  }\n  \n  // Edge case: If no profit, returns 0 ✓\n  return maxProfit;\n}",
       "action": "continue",
       "next": "coding-return-python"
     },
@@ -416,7 +526,7 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-java"
+          "next": "array-check-java"
         },
         {
           "label": "No, explain loops",
@@ -425,11 +535,52 @@
       ]
     },
     {
+      "stepId": "array-check-java",
+      "mentorSays": "To solve this problem, we'll work with arrays. Do you understand how arrays work in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "greedy-check-java"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "greedy-check-java",
+      "mentorSays": "Do you understand the greedy approach?",
+      "choices": [
+        {
+          "label": "Yes, I know greedy",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain greedy",
+          "next": "greedy-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "greedy-explanation-java",
+      "mentorSays": "The greedy approach makes the best local choice at each step. For this problem, we greedily track the minimum price seen so far and calculate the maximum profit we could make by selling today.\n\nlet minPrice = Infinity;\nlet maxProfit = 0;\n\n// Greedy: always track minimum price\nfor (let price of prices) {\n  minPrice = Math.min(minPrice, price);\n  maxProfit = Math.max(maxProfit, price - minPrice);\n}\n\nGot it?",
+      "example": "let minPrice = Infinity;\nlet maxProfit = 0;\n\n// Greedy: always track minimum price\nfor (let price of prices) {\n  minPrice = Math.min(minPrice, price);\n  maxProfit = Math.max(maxProfit, price - minPrice);\n}",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "array-explanation-java",
+      "mentorSays": "An array is a collection of items stored in order. You can access elements by their position (index).\n\nFor this problem, we need to access each price in the array:\n\nint[] prices = {7, 1, 5, 3, 6, 4};\nprices[0]; // Access first element (7)\nprices.length; // Get array length\n\nThis lets us check every price to find the maximum profit.\n\nGot it?",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
       "stepId": "loop-explanation-java",
       "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Java runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each price one by one.",
       "example": "for (int i = 1; i < prices.length; i++) {\n    // Process prices[i]\n}",
       "action": "continue",
-      "next": "coding-start-java"
+      "next": "array-check-java"
     },
     {
       "stepId": "coding-start-java",
@@ -463,6 +614,20 @@
       "stepId": "coding-calculate-profit-java",
       "mentorSays": "Calculate the profit if we sell today (current price - minimum price) and update maxProfit if this profit is larger.",
       "example": "public int maxProfit(int[] prices) {\n    int minPrice = prices[0];\n    int maxProfit = 0;\n    \n    for (int i = 1; i < prices.length; i++) {\n        if (prices[i] < minPrice) {\n            minPrice = prices[i];\n        }\n        \n        int profit = prices[i] - minPrice;\n        if (profit > maxProfit) {\n            maxProfit = profit;\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-edge-case-java"
+    },
+    {
+      "stepId": "coding-edge-case-java",
+      "mentorSays": "Before we return, let's handle an important edge case.\n\nWhat if there's no profitable trade? Our profit stays at 0, which is correct!\n\nLet's verify our logic handles this:\n- If prices only decrease, minPrice keeps updating but profit stays 0\n- If prices never go up, we correctly return 0\n\nOur code already handles this perfectly - no changes needed. But it's important to think through edge cases!",
+      "example": "public int maxProfit(int[] prices) {\n    int minPrice = prices[0];\n    int maxProfit = 0;\n    \n    for (int i = 1; i < prices.length; i++) {\n        if (prices[i] < minPrice) {\n            minPrice = prices[i];\n        }\n        \n        int profit = prices[i] - minPrice;\n        if (profit > maxProfit) {\n            maxProfit = profit;\n        }\n    }\n    \n    // Edge case: If no profit, returns 0 ✓\n    return maxProfit;\n}",
+      "action": "continue",
+      "next": "coding-edge-case-java"
+    },
+    {
+      "stepId": "coding-edge-case-java",
+      "mentorSays": "Before we return, let's think about an important edge case.\n\nWhat if there's no profitable trade? Our profit variable stays at 0, which is correct!\n\nLet's verify our logic handles this:\n- If prices only decrease, minPrice keeps updating but profit stays 0\n- If prices never go up, we correctly return 0\n\nOur code already handles this perfectly - no changes needed. But it's important to think through edge cases!",
+      "example": "function maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfit = 0;\n  \n  for (let i = 0; i < prices.length; i++) {\n    if (prices[i] < minPrice) {\n      minPrice = prices[i];\n    } else {\n      let profit = prices[i] - minPrice;\n      if (profit > maxProfit) {\n        maxProfit = profit;\n      }\n    }\n  }\n  \n  // Edge case: If no profit, returns 0 ✓\n  return maxProfit;\n}",
       "action": "continue",
       "next": "coding-return-java"
     },
@@ -549,7 +714,7 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-cpp"
+          "next": "array-check-cpp"
         },
         {
           "label": "No, explain loops",
@@ -558,11 +723,52 @@
       ]
     },
     {
+      "stepId": "array-check-cpp",
+      "mentorSays": "To solve this problem, we'll work with arrays. Do you understand how arrays work in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "greedy-check-cpp"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "greedy-check-cpp",
+      "mentorSays": "Do you understand the greedy approach?",
+      "choices": [
+        {
+          "label": "Yes, I know greedy",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain greedy",
+          "next": "greedy-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "greedy-explanation-cpp",
+      "mentorSays": "The greedy approach makes the best local choice at each step. For this problem, we greedily track the minimum price seen so far and calculate the maximum profit we could make by selling today.\n\nlet minPrice = Infinity;\nlet maxProfit = 0;\n\n// Greedy: always track minimum price\nfor (let price of prices) {\n  minPrice = Math.min(minPrice, price);\n  maxProfit = Math.max(maxProfit, price - minPrice);\n}\n\nGot it?",
+      "example": "let minPrice = Infinity;\nlet maxProfit = 0;\n\n// Greedy: always track minimum price\nfor (let price of prices) {\n  minPrice = Math.min(minPrice, price);\n  maxProfit = Math.max(maxProfit, price - minPrice);\n}",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "array-explanation-cpp",
+      "mentorSays": "An array is a collection of items stored in order. You can access elements by their position (index).\n\nFor this problem, we need to access each price in the array:\n\nvector<int> prices = {7, 1, 5, 3, 6, 4};\nprices[0]; // Access first element (7)\nprices.size(); // Get vector size\n\nThis lets us check every price to find the maximum profit.\n\nGot it?",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
       "stepId": "loop-explanation-cpp",
       "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in C++ runs code for each item in a sequence.\n\nFor example, you can loop through a vector to check each price one by one.",
       "example": "for (int i = 1; i < prices.size(); i++) {\n    // Process prices[i]\n}",
       "action": "continue",
-      "next": "coding-start-cpp"
+      "next": "array-check-cpp"
     },
     {
       "stepId": "coding-start-cpp",
@@ -596,6 +802,20 @@
       "stepId": "coding-calculate-profit-cpp",
       "mentorSays": "Calculate the profit if we sell today (current price - minimum price) and update maxProfit if this profit is larger.",
       "example": "#include <vector>\n#include <algorithm>\n\nint maxProfit(vector<int>& prices) {\n    int minPrice = prices[0];\n    int maxProfit = 0;\n    \n    for (int i = 1; i < prices.size(); i++) {\n        if (prices[i] < minPrice) {\n            minPrice = prices[i];\n        }\n        \n        int profit = prices[i] - minPrice;\n        if (profit > maxProfit) {\n            maxProfit = profit;\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-edge-case-cpp"
+    },
+    {
+      "stepId": "coding-edge-case-cpp",
+      "mentorSays": "Before we return, let's handle an important edge case.\n\nWhat if there's no profitable trade? Our profit stays at 0, which is correct!\n\nLet's verify our logic handles this:\n- If prices only decrease, minPrice keeps updating but profit stays 0\n- If prices never go up, we correctly return 0\n\nOur code already handles this perfectly - no changes needed. But it's important to think through edge cases!",
+      "example": "#include <vector>\n#include <algorithm>\n\nint maxProfit(vector<int>& prices) {\n    int minPrice = prices[0];\n    int maxProfit = 0;\n    \n    for (int i = 1; i < prices.size(); i++) {\n        if (prices[i] < minPrice) {\n            minPrice = prices[i];\n        }\n        \n        int profit = prices[i] - minPrice;\n        if (profit > maxProfit) {\n            maxProfit = profit;\n        }\n    }\n    \n    // Edge case: If no profit, returns 0 ✓\n    return maxProfit;\n}",
+      "action": "continue",
+      "next": "coding-edge-case-cpp"
+    },
+    {
+      "stepId": "coding-edge-case-cpp",
+      "mentorSays": "Before we return, let's think about an important edge case.\n\nWhat if there's no profitable trade? Our profit variable stays at 0, which is correct!\n\nLet's verify our logic handles this:\n- If prices only decrease, minPrice keeps updating but profit stays 0\n- If prices never go up, we correctly return 0\n\nOur code already handles this perfectly - no changes needed. But it's important to think through edge cases!",
+      "example": "function maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfit = 0;\n  \n  for (let i = 0; i < prices.length; i++) {\n    if (prices[i] < minPrice) {\n      minPrice = prices[i];\n    } else {\n      let profit = prices[i] - minPrice;\n      if (profit > maxProfit) {\n        maxProfit = profit;\n      }\n    }\n  }\n  \n  // Edge case: If no profit, returns 0 ✓\n  return maxProfit;\n}",
       "action": "continue",
       "next": "coding-return-cpp"
     },
@@ -682,7 +902,7 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-ts"
+          "next": "array-check-ts"
         },
         {
           "label": "No, explain loops",
@@ -691,11 +911,52 @@
       ]
     },
     {
+      "stepId": "array-check-ts",
+      "mentorSays": "To solve this problem, we'll work with arrays. Do you understand how arrays work in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "greedy-check-ts"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "greedy-check-ts",
+      "mentorSays": "Do you understand the greedy approach?",
+      "choices": [
+        {
+          "label": "Yes, I know greedy",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain greedy",
+          "next": "greedy-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "greedy-explanation-ts",
+      "mentorSays": "The greedy approach makes the best local choice at each step. For this problem, we greedily track the minimum price seen so far and calculate the maximum profit we could make by selling today.\n\nlet minPrice = Infinity;\nlet maxProfit = 0;\n\n// Greedy: always track minimum price\nfor (let price of prices) {\n  minPrice = Math.min(minPrice, price);\n  maxProfit = Math.max(maxProfit, price - minPrice);\n}\n\nGot it?",
+      "example": "let minPrice = Infinity;\nlet maxProfit = 0;\n\n// Greedy: always track minimum price\nfor (let price of prices) {\n  minPrice = Math.min(minPrice, price);\n  maxProfit = Math.max(maxProfit, price - minPrice);\n}",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "array-explanation-ts",
+      "mentorSays": "An array is a collection of items stored in order. You can access elements by their position (index).\n\nFor this problem, we need to access each price in the array:\n\nlet prices: number[] = [7, 1, 5, 3, 6, 4];\nprices[0]; // Access first element (7)\nprices.length; // Get array length\n\nThis lets us check every price to find the maximum profit.\n\nGot it?",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
       "stepId": "loop-explanation-ts",
       "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in TypeScript runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each price one by one.",
       "example": "for (let i = 1; i < prices.length; i++) {\n  // Process prices[i]\n}",
       "action": "continue",
-      "next": "coding-start-ts"
+      "next": "array-check-ts"
     },
     {
       "stepId": "coding-start-ts",
@@ -729,6 +990,20 @@
       "stepId": "coding-calculate-profit-ts",
       "mentorSays": "Calculate the profit if we sell today (current price - minimum price) and update maxProfit if this profit is larger.",
       "example": "function maxProfit(prices: number[]): number {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    if (prices[i] < minPrice) {\n      minPrice = prices[i];\n    }\n    \n    const profit = prices[i] - minPrice;\n    if (profit > maxProfit) {\n      maxProfit = profit;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-edge-case-ts"
+    },
+    {
+      "stepId": "coding-edge-case-ts",
+      "mentorSays": "Before we return, let's handle an important edge case.\n\nWhat if there's no profitable trade? Our profit stays at 0, which is correct!\n\nLet's verify our logic handles this:\n- If prices only decrease, minPrice keeps updating but profit stays 0\n- If prices never go up, we correctly return 0\n\nOur code already handles this perfectly - no changes needed. But it's important to think through edge cases!",
+      "example": "function maxProfit(prices: number[]): number {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    if (prices[i] < minPrice) {\n      minPrice = prices[i];\n    }\n    \n    const profit = prices[i] - minPrice;\n    if (profit > maxProfit) {\n      maxProfit = profit;\n    }\n  }\n  \n  // Edge case: If no profit, returns 0 ✓\n  return maxProfit;\n}",
+      "action": "continue",
+      "next": "coding-edge-case-ts"
+    },
+    {
+      "stepId": "coding-edge-case-ts",
+      "mentorSays": "Before we return, let's think about an important edge case.\n\nWhat if there's no profitable trade? Our profit variable stays at 0, which is correct!\n\nLet's verify our logic handles this:\n- If prices only decrease, minPrice keeps updating but profit stays 0\n- If prices never go up, we correctly return 0\n\nOur code already handles this perfectly - no changes needed. But it's important to think through edge cases!",
+      "example": "function maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfit = 0;\n  \n  for (let i = 0; i < prices.length; i++) {\n    if (prices[i] < minPrice) {\n      minPrice = prices[i];\n    } else {\n      let profit = prices[i] - minPrice;\n      if (profit > maxProfit) {\n        maxProfit = profit;\n      }\n    }\n  }\n  \n  // Edge case: If no profit, returns 0 ✓\n  return maxProfit;\n}",
       "action": "continue",
       "next": "coding-return-ts"
     },

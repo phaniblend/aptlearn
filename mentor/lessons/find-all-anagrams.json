@@ -14,8 +14,8 @@
     },
     {
       "stepId": "problem-illustration",
-      "mentorSays": "Perfect! Now let's understand what the Find All Anagrams problem is asking.\n\nImagine you have two strings:\n- s = \"cbaebabacd\"\n- p = \"abc\"\n\nYour task: Find all starting indices in s where an anagram of p appears.\n\nAn anagram means the strings contain the same characters with the same frequencies, just in different orders.\n\nLet's check each substring of length 3 (length of p):\n- Index 0: \"cba\" - has c, b, a → same as \"abc\" ✓ (anagram)\n- Index 1: \"bae\" - has b, a, e → different from \"abc\" ✗\n- Index 2: \"aeb\" - has a, e, b → different from \"abc\" ✗\n- Index 3: \"eba\" - has e, b, a → different from \"abc\" ✗\n- Index 4: \"bab\" - has b, a, b → different from \"abc\" ✗\n- Index 5: \"aba\" - has a, b, a → different from \"abc\" ✗\n- Index 6: \"bac\" - has b, a, c → same as \"abc\" ✓ (anagram)\n- Index 7: \"acd\" - has a, c, d → different from \"abc\" ✗\n\nSo anagrams of \"abc\" appear at indices 0 and 6.\n\n**Key Insight**: We use a sliding window of size len(p) and compare character frequencies:\n1. Count character frequencies in p\n2. For each window in s, count character frequencies\n3. If frequencies match, it's an anagram!\n\nThat's what the problem wants: return all starting indices where an anagram of p appears in s.",
-      "example": "s = \"cbaebabacd\"\np = \"abc\"\n\nFind all starting indices where anagram of \"abc\" appears:\n- Index 0: \"cba\" → frequencies match \"abc\" ✓\n- Index 6: \"bac\" → frequencies match \"abc\" ✓\n\nAnswer: [0, 6]\n\nAnother example:\ns = \"abab\"\np = \"ab\"\n\nFind all starting indices where anagram of \"ab\" appears:\n- Index 0: \"ab\" → frequencies match \"ab\" ✓\n- Index 1: \"ba\" → frequencies match \"ab\" ✓\n- Index 2: \"ab\" → frequencies match \"ab\" ✓\n\nAnswer: [0, 1, 2]",
+      "mentorSays": "Let's understand what we're looking for.\n\nWHAT IS AN ANAGRAM?\nAn anagram is a word formed by rearranging letters of another word.\n- 'listen' and 'silent' are anagrams (same letters, different order)\n- 'abc' and 'bca' are anagrams\n- 'abc' and 'def' are NOT anagrams (different letters)\n\nTHE PROBLEM:\nGiven a string s and a pattern p, find all starting positions where p's anagrams appear in s.\n\nEXAMPLE 1:\ns = 'cbaebabacd'\np = 'abc'\n\nLet's check each position:\n- Position 0: 'cba' - Is this an anagram of 'abc'? YES! (c, b, a = a, b, c) ✓\n- Position 1: 'bae' - Is this an anagram of 'abc'? NO (has 'e') ✗\n- Position 2: 'aeb' - Is this an anagram of 'abc'? NO (has 'e') ✗\n- Position 3: 'eba' - Is this an anagram of 'abc'? NO (has 'e') ✗\n- Position 4: 'bab' - Is this an anagram of 'abc'? NO (has 2 b's) ✗\n- Position 5: 'aba' - Is this an anagram of 'abc'? NO (has 2 a's) ✗\n- Position 6: 'bac' - Is this an anagram of 'abc'? YES! (b, a, c = a, b, c) ✓\n- Position 7: 'acd' - Not enough characters left\n- Position 8: 'cd' - Not enough characters left\n\nAnswer: [0, 6]\n\nEXAMPLE 2:\ns = 'abab'\np = 'ab'\n\n- Position 0: 'ab' - anagram of 'ab'? YES! ✓\n- Position 1: 'ba' - anagram of 'ab'? YES! ✓\n- Position 2: 'ab' - anagram of 'ab'? YES! ✓\n\nAnswer: [0, 1, 2]\n\nWHY IS THIS TRICKY?\n- We need to check EVERY position in s\n- Each check requires comparing character counts\n- Naive approach: check every substring = O(n * m * 26) - slow!\n- Smart approach: Use sliding window = O(n) - fast!\n\nWHAT MAKES IT A SLIDING WINDOW PROBLEM?\n- We're looking at substrings of fixed length (p.length)\n- We slide this 'window' across the string s\n- Instead of recounting characters each time, we update the count by:\n  - Removing the character that left the window\n  - Adding the character that entered the window\n\nThis is classic sliding window!",
+      "example": "s = \"cbaebabacd\"\np = \"abc\"\n\nVisual representation:\n[ c b a ] e b a b a c d  ← Window at index 0: \"cba\" ✓\nc [ b a e ] b a b a c d  ← Window at index 1: \"bae\" ✗\nc b [ a e b ] a b a c d  ← Window at index 2: \"aeb\" ✗\n...\nc b a e b a [ b a c ] d  ← Window at index 6: \"bac\" ✓\n\nAnswer: [0, 6]",
       "action": "continue",
       "next": "thinking-challenge"
     },
@@ -108,7 +108,7 @@
       "choices": [
         {
           "label": "Yes, I know functions",
-          "next": "hashmap-check-js"
+          "next": "string-check-js"
         },
         {
           "label": "No, explain functions",
@@ -117,11 +117,51 @@
       ]
     },
     {
+      "stepId": "string-check-js",
+      "mentorSays": "Do you understand how to work with strings and characters in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know strings",
+          "next": "array-check-js"
+        },
+        {
+          "label": "No, explain strings",
+          "next": "string-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "string-explanation-js",
+      "mentorSays": "In JavaScript, you can access individual characters in a string:\n\nlet word = 'listen';\nlet firstChar = word[0];  // 'l'\nlet secondChar = word[1]; // 'i'\n\n// Loop through all characters:\nfor (let i = 0; i < word.length; i++) {\n  console.log(word[i]);\n}\n\nFor anagrams, we need to count how many times each character appears.\n\nGot it?",
+      "action": "continue",
+      "next": "array-check-js"
+    },
+    {
+      "stepId": "array-check-js",
+      "mentorSays": "To solve this problem, we'll use arrays/lists to store results. Do you understand how arrays work in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "hashmap-check-js"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-js",
+      "mentorSays": "An array (or list) stores multiple values in order. We'll use it to store the starting indices where anagrams are found:\n\nlet result = [];\nresult.push(0);  // Add index 0\nresult.push(6);  // Add index 6\n// result = [0, 6]\n\nGot it?",
+      "action": "continue",
+      "next": "hashmap-check-js"
+    },
+    {
       "stepId": "function-explanation-js",
       "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
       "example": "function findAnagrams(s, p) {\n  return [];\n}\n\nfindAnagrams(\"cbaebabacd\", \"abc\") returns [0, 6]",
       "action": "continue",
-      "next": "hashmap-check-js"
+      "next": "string-check-js"
     },
     {
       "stepId": "hashmap-check-js",
@@ -227,7 +267,7 @@
       "choices": [
         {
           "label": "Yes, I know functions",
-          "next": "hashmap-check-python"
+          "next": "string-check-python"
         },
         {
           "label": "No, explain functions",
@@ -236,11 +276,51 @@
       ]
     },
     {
+      "stepId": "string-check-python",
+      "mentorSays": "Do you understand how to work with strings and characters in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know strings",
+          "next": "array-check-python"
+        },
+        {
+          "label": "No, explain strings",
+          "next": "string-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "string-explanation-python",
+      "mentorSays": "In Python, you can access individual characters in a string:\n\nword = 'listen'\nfirst_char = word[0]  # 'l'\nsecond_char = word[1]  # 'i'\n\n# Loop through all characters:\nfor i in range(len(word)):\n    print(word[i])\n\nFor anagrams, we need to count how many times each character appears.\n\nGot it?",
+      "action": "continue",
+      "next": "array-check-python"
+    },
+    {
+      "stepId": "array-check-python",
+      "mentorSays": "To solve this problem, we'll use arrays/lists to store results. Do you understand how arrays work in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "hashmap-check-python"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-python",
+      "mentorSays": "An array (or list) stores multiple values in order. We'll use it to store the starting indices where anagrams are found:\n\nresult = []\nresult.append(0)  # Add index 0\nresult.append(6)  # Add index 6\n# result = [0, 6]\n\nGot it?",
+      "action": "continue",
+      "next": "hashmap-check-python"
+    },
+    {
       "stepId": "function-explanation-python",
       "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
       "example": "def find_anagrams(s, p):\n    return []\n\nfind_anagrams(\"cbaebabacd\", \"abc\") returns [0, 6]",
       "action": "continue",
-      "next": "hashmap-check-python"
+      "next": "string-check-python"
     },
     {
       "stepId": "hashmap-check-python",
@@ -346,7 +426,7 @@
       "choices": [
         {
           "label": "Yes, I know methods",
-          "next": "hashmap-check-java"
+          "next": "string-check-java"
         },
         {
           "label": "No, explain methods",
@@ -355,11 +435,51 @@
       ]
     },
     {
+      "stepId": "string-check-java",
+      "mentorSays": "Do you understand how to work with strings and characters in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know strings",
+          "next": "array-check-java"
+        },
+        {
+          "label": "No, explain strings",
+          "next": "string-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "string-explanation-java",
+      "mentorSays": "In Java, you can access individual characters in a string:\n\nString word = \"listen\";\nchar firstChar = word.charAt(0);  // 'l'\nchar secondChar = word.charAt(1); // 'i'\n\n// Loop through all characters:\nfor (int i = 0; i < word.length(); i++) {\n    System.out.println(word.charAt(i));\n}\n\nFor anagrams, we need to count how many times each character appears.\n\nGot it?",
+      "action": "continue",
+      "next": "array-check-java"
+    },
+    {
+      "stepId": "array-check-java",
+      "mentorSays": "To solve this problem, we'll use arrays/lists to store results. Do you understand how arrays work in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "hashmap-check-java"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-java",
+      "mentorSays": "An array (or list) stores multiple values in order. We'll use it to store the starting indices where anagrams are found:\n\nList<Integer> result = new ArrayList<>();\nresult.add(0);  // Add index 0\nresult.add(6);  // Add index 6\n// result = [0, 6]\n\nGot it?",
+      "action": "continue",
+      "next": "hashmap-check-java"
+    },
+    {
       "stepId": "function-explanation-java",
       "mentorSays": "A method (Java's version of a function) is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
       "example": "public List<Integer> findAnagrams(String s, String p) {\n    return new ArrayList<>();\n}\n\nfindAnagrams(\"cbaebabacd\", \"abc\") returns [0, 6]",
       "action": "continue",
-      "next": "hashmap-check-java"
+      "next": "string-check-java"
     },
     {
       "stepId": "hashmap-check-java",
@@ -465,7 +585,7 @@
       "choices": [
         {
           "label": "Yes, I know functions",
-          "next": "hashmap-check-cpp"
+          "next": "string-check-cpp"
         },
         {
           "label": "No, explain functions",
@@ -474,11 +594,51 @@
       ]
     },
     {
+      "stepId": "string-check-cpp",
+      "mentorSays": "Do you understand how to work with strings and characters in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know strings",
+          "next": "array-check-cpp"
+        },
+        {
+          "label": "No, explain strings",
+          "next": "string-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "string-explanation-cpp",
+      "mentorSays": "In C++, you can access individual characters in a string:\n\nstring word = \"listen\";\nchar firstChar = word[0];  // 'l'\nchar secondChar = word[1]; // 'i'\n\n// Loop through all characters:\nfor (int i = 0; i < word.size(); i++) {\n    cout << word[i];\n}\n\nFor anagrams, we need to count how many times each character appears.\n\nGot it?",
+      "action": "continue",
+      "next": "array-check-cpp"
+    },
+    {
+      "stepId": "array-check-cpp",
+      "mentorSays": "To solve this problem, we'll use arrays/lists to store results. Do you understand how arrays work in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "hashmap-check-cpp"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-cpp",
+      "mentorSays": "An array (or list) stores multiple values in order. We'll use it to store the starting indices where anagrams are found:\n\nvector<int> result;\nresult.push_back(0);  // Add index 0\nresult.push_back(6);  // Add index 6\n// result = [0, 6]\n\nGot it?",
+      "action": "continue",
+      "next": "hashmap-check-cpp"
+    },
+    {
       "stepId": "function-explanation-cpp",
       "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
       "example": "vector<int> findAnagrams(string s, string p) {\n    return {};\n}\n\nfindAnagrams(\"cbaebabacd\", \"abc\") returns [0, 6]",
       "action": "continue",
-      "next": "hashmap-check-cpp"
+      "next": "string-check-cpp"
     },
     {
       "stepId": "hashmap-check-cpp",
@@ -584,7 +744,7 @@
       "choices": [
         {
           "label": "Yes, I know functions",
-          "next": "hashmap-check-ts"
+          "next": "string-check-ts"
         },
         {
           "label": "No, explain functions",
@@ -593,11 +753,51 @@
       ]
     },
     {
+      "stepId": "string-check-ts",
+      "mentorSays": "Do you understand how to work with strings and characters in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know strings",
+          "next": "array-check-ts"
+        },
+        {
+          "label": "No, explain strings",
+          "next": "string-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "string-explanation-ts",
+      "mentorSays": "In TypeScript, you can access individual characters in a string:\n\nlet word: string = 'listen';\nlet firstChar = word[0];  // 'l'\nlet secondChar = word[1]; // 'i'\n\n// Loop through all characters:\nfor (let i = 0; i < word.length; i++) {\n  console.log(word[i]);\n}\n\nFor anagrams, we need to count how many times each character appears.\n\nGot it?",
+      "action": "continue",
+      "next": "array-check-ts"
+    },
+    {
+      "stepId": "array-check-ts",
+      "mentorSays": "To solve this problem, we'll use arrays/lists to store results. Do you understand how arrays work in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "hashmap-check-ts"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-ts",
+      "mentorSays": "An array (or list) stores multiple values in order. We'll use it to store the starting indices where anagrams are found:\n\nlet result: number[] = [];\nresult.push(0);  // Add index 0\nresult.push(6);  // Add index 6\n// result = [0, 6]\n\nGot it?",
+      "action": "continue",
+      "next": "hashmap-check-ts"
+    },
+    {
       "stepId": "function-explanation-ts",
       "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
       "example": "function findAnagrams(s: string, p: string): number[] {\n    return [];\n}\n\nfindAnagrams(\"cbaebabacd\", \"abc\") returns [0, 6]",
       "action": "continue",
-      "next": "hashmap-check-ts"
+      "next": "string-check-ts"
     },
     {
       "stepId": "hashmap-check-ts",

@@ -14,7 +14,7 @@
     },
     {
       "stepId": "problem-illustration",
-      "mentorSays": "Perfect! Now let's understand what the Longest Increasing Subsequence problem is asking.\n\nImagine you have an array: [10, 9, 2, 5, 3, 7, 101, 18]\n\nYour task: Find the length of the longest increasing subsequence (LIS).\n\nA subsequence is different from a subarray - elements don't need to be consecutive, just in order!\n\nLet's find increasing subsequences:\n- [10] → length 1\n- [2] → length 1\n- [2, 5] → length 2\n- [2, 3] → length 2\n- [2, 5, 7] → length 3\n- [2, 3, 7] → length 3\n- [2, 3, 7, 18] → length 4\n- [2, 5, 7, 101] → length 4 ✓\n- [2, 3, 7, 101] → length 4 ✓\n\nLongest increasing subsequence: length 4\n\n**Key Insight**: We use dynamic programming:\n- dp[i] = length of LIS ending at index i\n- For each element, check all previous smaller elements\n- dp[i] = max(dp[j] + 1) for all j < i where nums[j] < nums[i]\n\nLet's trace with [10, 9, 2, 5, 3, 7, 101, 18]:\n\n- **dp[0] = 1** (just [10])\n- **dp[1] = 1** (just [9], can't extend [10] since 9 < 10)\n- **dp[2] = 1** (just [2])\n- **dp[3] = 2** (extend [2] → [2, 5])\n- **dp[4] = 2** (extend [2] → [2, 3])\n- **dp[5] = 3** (extend [2, 5] or [2, 3] → [2, 5, 7] or [2, 3, 7])\n- **dp[6] = 4** (extend [2, 5, 7] → [2, 5, 7, 101])\n- **dp[7] = 4** (extend [2, 3, 7] → [2, 3, 7, 18])\n\nAnswer: max(dp) = 4\n\nThat's what the problem wants: the length of the longest increasing subsequence.",
+      "mentorSays": "Longest Increasing Subsequence (LIS) has TWO approaches!\n\nPROBLEM:\nnums = [10, 9, 2, 5, 3, 7, 101, 18]\nFind the longest strictly increasing subsequence.\n\nEXAMPLES:\n- [2, 3, 7, 101] ✓ (length 4)\n- [2, 5, 7, 18] ✓ (length 4)\n- [2, 3, 7, 18] ✓ (length 4)\n\nThere are multiple LIS with length 4!\n\nAPPROACH 1: O(n²) Dynamic Programming\n\ndp[i] = length of LIS ending at index i\n\nInitialize: dp[i] = 1 (each element is LIS of length 1)\n\nFor each i from 0 to n-1:\n  For each j from 0 to i-1:\n    If nums[j] < nums[i]:\n      dp[i] = max(dp[i], dp[j] + 1)\n\nSTEP-BY-STEP:\n\nIndex: 0   1  2  3  4  5  6    7\nnums:  10  9  2  5  3  7  101  18\ndp:    1   1  1  2  2  3  4    4\n\ni=0, nums[0]=10:\n  dp[0] = 1 (base case)\n\ni=1, nums[1]=9:\n  j=0: nums[0]=10 > nums[1]=9 → No update\n  dp[1] = 1\n\ni=2, nums[2]=2:\n  j=0: nums[0]=10 > nums[2]=2 → No update\n  j=1: nums[1]=9 > nums[2]=2 → No update\n  dp[2] = 1\n\ni=3, nums[3]=5:\n  j=0: nums[0]=10 > nums[3]=5 → No update\n  j=1: nums[1]=9 > nums[3]=5 → No update\n  j=2: nums[2]=2 < nums[3]=5 → dp[3] = max(1, dp[2]+1) = 2\n  dp[3] = 2\n\n[Continue...]\n\ni=6, nums[6]=101:\n  All previous elements < 101\n  Best is dp[5]=3 (from [2,3,7])\n  dp[6] = dp[5] + 1 = 4\n\nANSWER: max(dp) = 4\n\nTIME: O(n²)\nSPACE: O(n)\n\nAPPROACH 2: O(n log n) with Binary Search\n\nMaintain an array 'tails' where:\ntails[i] = smallest ending value of LIS with length i+1\n\nFor each num in nums:\n  Binary search for position in tails\n  Update tails[pos] = num\n\nEXAMPLE:\nnums = [10, 9, 2, 5, 3, 7, 101, 18]\n\ntails = []\n\nnum=10: tails = [10]\nnum=9:  tails = [9]   (9 < 10, replace)\nnum=2:  tails = [2]   (2 < 9, replace)\nnum=5:  tails = [2, 5]   (5 > 2, append)\nnum=3:  tails = [2, 3]   (3 < 5, replace)\nnum=7:  tails = [2, 3, 7]   (7 > 3, append)\nnum=101: tails = [2, 3, 7, 101]   (101 > 7, append)\nnum=18: tails = [2, 3, 7, 18]   (18 < 101, replace)\n\nANSWER: tails.length = 4\n\nWHY DOES THIS WORK?\n- We want smallest possible values at each position\n- This keeps more possibilities open for future elements\n- Binary search finds where to insert/replace\n\nTIME: O(n log n)\nSPACE: O(n)\n\nCOMPARISON:\nO(n²): Simple, finds all LIS\nO(n log n): Complex but faster, finds length only",
       "example": "nums = [10, 9, 2, 5, 3, 7, 101, 18]\n\nFind LIS:\n- [2, 5, 7, 101] (length 4) ✓\n- [2, 3, 7, 101] (length 4) ✓\n- [2, 3, 7, 18] (length 4) ✓\n\nAnswer: 4\n\nAnother example:\nnums = [0, 1, 0, 3, 2, 3]\n\nAnswer: 4 ([0, 1, 2, 3])\n\nAnother example:\nnums = [7, 7, 7, 7, 7, 7]\n\nAnswer: 1 (all elements are equal, no increasing subsequence)",
       "action": "continue",
       "next": "thinking-challenge"
@@ -129,13 +129,55 @@
       "choices": [
         {
           "label": "Yes, I know arrays",
-          "next": "coding-start-js"
+          "next": "nested-loops-check-js"
         },
         {
           "label": "No, explain arrays",
           "next": "array-explanation-js"
         }
       ]
+    },
+    {
+      "stepId": "nested-loops-check-js",
+      "mentorSays": "Do you understand the O(n²) nested loop approach?",
+      "choices": [
+        {
+          "label": "Yes, I know nested-loops",
+          "next": "binary-search-optimization-check-js"
+        },
+        {
+          "label": "No, explain nested-loops",
+          "next": "nested-loops-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "binary-search-optimization-check-js",
+      "mentorSays": "Do you understand the O(n log n) binary search optimization?",
+      "choices": [
+        {
+          "label": "Yes, I know binary-search-optimization",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain binary-search-optimization",
+          "next": "binary-search-optimization-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "binary-search-optimization-explanation-js",
+      "mentorSays": "The O(n log n) approach uses binary search to maintain the smallest ending values. For each number, we binary search to find where to insert/replace. This keeps the array sorted and allows us to find the LIS length in O(n log n) time!\n\n// O(n log n) approach uses binary search:\nlet tails = [];\nfor (let num of nums) {\n  let left = 0, right = tails.length;\n  while (left < right) {\n    let mid = Math.floor((left + right) / 2);\n    if (tails[mid] < num) {\n      left = mid + 1;\n    } else {\n      right = mid;\n    }\n  }\n  if (left === tails.length) {\n    tails.push(num);\n  } else {\n    tails[left] = num;\n  }\n}\n\nGot it?",
+      "example": "// O(n log n) approach uses binary search:\nlet tails = [];\nfor (let num of nums) {\n  let left = 0, right = tails.length;\n  while (left < right) {\n    let mid = Math.floor((left + right) / 2);\n    if (tails[mid] < num) {\n      left = mid + 1;\n    } else {\n      right = mid;\n    }\n  }\n  if (left === tails.length) {\n    tails.push(num);\n  } else {\n    tails[left] = num;\n  }\n}",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "nested-loops-explanation-js",
+      "mentorSays": "The O(n²) approach uses nested loops. For each position i, we check all previous positions j. If nums[j] < nums[i], we can extend the LIS ending at j to include i. This gives us dp[i] = max(dp[i], dp[j] + 1).\n\n// O(n²) approach uses nested loops:\nfor (let i = 0; i < nums.length; i++) {\n  dp[i] = 1;  // Each element is LIS of length 1\n  for (let j = 0; j < i; j++) {\n    if (nums[j] < nums[i]) {\n      dp[i] = Math.max(dp[i], dp[j] + 1);\n    }\n  }\n}\n\nGot it?",
+      "example": "// O(n²) approach uses nested loops:\nfor (let i = 0; i < nums.length; i++) {\n  dp[i] = 1;  // Each element is LIS of length 1\n  for (let j = 0; j < i; j++) {\n    if (nums[j] < nums[i]) {\n      dp[i] = Math.max(dp[i], dp[j] + 1);\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-start-js"
     },
     {
       "stepId": "array-explanation-js",
@@ -169,6 +211,20 @@
       "stepId": "coding-update-js",
       "mentorSays": "If nums[j] < nums[i], we can extend the subsequence ending at j. Update dp[i] to be the maximum of its current value and dp[j] + 1.",
       "example": "function lengthOfLIS(nums) {\n  if (nums.length === 0) return 0;\n  \n  const dp = new Array(nums.length).fill(1);\n  \n  for (let i = 1; i < nums.length; i++) {\n    for (let j = 0; j < i; j++) {\n      if (nums[j] < nums[i]) {\n        // Can extend subsequence ending at j\n        dp[i] = Math.max(dp[i], dp[j] + 1);\n      }\n    }\n  }",
+      "action": "continue",
+      "next": "coding-nested-dp-js"
+    },
+    {
+      "stepId": "coding-nested-dp-js",
+      "mentorSays": "Let's implement the O(n²) DP solution.\n\nFor each position i, we check all previous positions j:\n- If nums[j] < nums[i], we can extend the LIS\n- dp[i] = max(dp[i], dp[j] + 1)\n\nThis finds the LIS length ending at each position!",
+      "example": "// O(n²) DP solution\nlet dp = Array(nums.length).fill(1);\n\nfor (let i = 0; i < nums.length; i++) {\n  for (let j = 0; j < i; j++) {\n    if (nums[j] < nums[i]) {\n      dp[i] = Math.max(dp[i], dp[j] + 1);\n    }\n  }\n}\n\nreturn Math.max(...dp);",
+      "action": "continue",
+      "next": "coding-binary-search-js"
+    },
+    {
+      "stepId": "coding-binary-search-js",
+      "mentorSays": "Now let's implement the O(n log n) optimized solution using binary search.\n\nWe maintain a 'tails' array where tails[i] = smallest ending value of LIS with length i+1.\n\nFor each number, we binary search to find where to insert/replace. This keeps the array sorted!",
+      "example": "// O(n log n) binary search solution\nlet tails = [];\nfor (let num of nums) {\n  let left = 0, right = tails.length;\n  while (left < right) {\n    let mid = Math.floor((left + right) / 2);\n    if (tails[mid] < num) {\n      left = mid + 1;\n    } else {\n      right = mid;\n    }\n  }\n  if (left === tails.length) {\n    tails.push(num);\n  } else {\n    tails[left] = num;\n  }\n}\nreturn tails.length;",
       "action": "continue",
       "next": "coding-return-js"
     },
@@ -234,13 +290,55 @@
       "choices": [
         {
           "label": "Yes, I know lists",
-          "next": "coding-start-python"
+          "next": "nested-loops-check-python"
         },
         {
           "label": "No, explain lists",
           "next": "array-explanation-python"
         }
       ]
+    },
+    {
+      "stepId": "nested-loops-check-python",
+      "mentorSays": "Do you understand the O(n²) nested loop approach?",
+      "choices": [
+        {
+          "label": "Yes, I know nested-loops",
+          "next": "binary-search-optimization-check-python"
+        },
+        {
+          "label": "No, explain nested-loops",
+          "next": "nested-loops-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "binary-search-optimization-check-python",
+      "mentorSays": "Do you understand the O(n log n) binary search optimization?",
+      "choices": [
+        {
+          "label": "Yes, I know binary-search-optimization",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain binary-search-optimization",
+          "next": "binary-search-optimization-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "binary-search-optimization-explanation-python",
+      "mentorSays": "The O(n log n) approach uses binary search to maintain the smallest ending values. For each number, we binary search to find where to insert/replace. This keeps the array sorted and allows us to find the LIS length in O(n log n) time!\n\n# O(n log n) approach uses binary search:\nimport bisect\ntails = []\nfor num in nums:\n    pos = bisect.bisect_left(tails, num)\n    if pos == len(tails):\n        tails.append(num)\n    else:\n        tails[pos] = num\n\nGot it?",
+      "example": "# O(n log n) approach uses binary search:\nimport bisect\ntails = []\nfor num in nums:\n    pos = bisect.bisect_left(tails, num)\n    if pos == len(tails):\n        tails.append(num)\n    else:\n        tails[pos] = num",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "nested-loops-explanation-python",
+      "mentorSays": "The O(n²) approach uses nested loops. For each position i, we check all previous positions j. If nums[j] < nums[i], we can extend the LIS ending at j to include i. This gives us dp[i] = max(dp[i], dp[j] + 1).\n\n# O(n²) approach uses nested loops:\nfor i in range(len(nums)):\n    dp[i] = 1  # Each element is LIS of length 1\n    for j in range(i):\n        if nums[j] < nums[i]:\n            dp[i] = max(dp[i], dp[j] + 1)\n\nGot it?",
+      "example": "# O(n²) approach uses nested loops:\nfor i in range(len(nums)):\n    dp[i] = 1  # Each element is LIS of length 1\n    for j in range(i):\n        if nums[j] < nums[i]:\n            dp[i] = max(dp[i], dp[j] + 1)",
+      "action": "continue",
+      "next": "coding-start-python"
     },
     {
       "stepId": "array-explanation-python",
@@ -274,6 +372,20 @@
       "stepId": "coding-update-python",
       "mentorSays": "If nums[j] < nums[i], we can extend the subsequence ending at j. Update dp[i] to be the maximum of its current value and dp[j] + 1.",
       "example": "def length_of_lis(nums):\n    if len(nums) == 0:\n        return 0\n    \n    dp = [1] * len(nums)\n    \n    for i in range(1, len(nums)):\n        for j in range(i):\n            if nums[j] < nums[i]:\n                # Can extend subsequence ending at j\n                dp[i] = max(dp[i], dp[j] + 1)",
+      "action": "continue",
+      "next": "coding-nested-dp-python"
+    },
+    {
+      "stepId": "coding-nested-dp-python",
+      "mentorSays": "Let's implement the O(n²) DP solution.\n\nFor each position i, we check all previous positions j:\n- If nums[j] < nums[i], we can extend the LIS\n- dp[i] = max(dp[i], dp[j] + 1)\n\nThis finds the LIS length ending at each position!",
+      "example": "// O(n²) DP solution\nlet dp = Array(nums.length).fill(1);\n\nfor (let i = 0; i < nums.length; i++) {\n  for (let j = 0; j < i; j++) {\n    if (nums[j] < nums[i]) {\n      dp[i] = Math.max(dp[i], dp[j] + 1);\n    }\n  }\n}\n\nreturn Math.max(...dp);",
+      "action": "continue",
+      "next": "coding-binary-search-python"
+    },
+    {
+      "stepId": "coding-binary-search-python",
+      "mentorSays": "Now let's implement the O(n log n) optimized solution using binary search.\n\nWe maintain a 'tails' array where tails[i] = smallest ending value of LIS with length i+1.\n\nFor each number, we binary search to find where to insert/replace. This keeps the array sorted!",
+      "example": "// O(n log n) binary search solution\nlet tails = [];\nfor (let num of nums) {\n  let left = 0, right = tails.length;\n  while (left < right) {\n    let mid = Math.floor((left + right) / 2);\n    if (tails[mid] < num) {\n      left = mid + 1;\n    } else {\n      right = mid;\n    }\n  }\n  if (left === tails.length) {\n    tails.push(num);\n  } else {\n    tails[left] = num;\n  }\n}\nreturn tails.length;",
       "action": "continue",
       "next": "coding-return-python"
     },
@@ -339,13 +451,55 @@
       "choices": [
         {
           "label": "Yes, I know arrays",
-          "next": "coding-start-java"
+          "next": "nested-loops-check-java"
         },
         {
           "label": "No, explain arrays",
           "next": "array-explanation-java"
         }
       ]
+    },
+    {
+      "stepId": "nested-loops-check-java",
+      "mentorSays": "Do you understand the O(n²) nested loop approach?",
+      "choices": [
+        {
+          "label": "Yes, I know nested-loops",
+          "next": "binary-search-optimization-check-java"
+        },
+        {
+          "label": "No, explain nested-loops",
+          "next": "nested-loops-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "binary-search-optimization-check-java",
+      "mentorSays": "Do you understand the O(n log n) binary search optimization?",
+      "choices": [
+        {
+          "label": "Yes, I know binary-search-optimization",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain binary-search-optimization",
+          "next": "binary-search-optimization-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "binary-search-optimization-explanation-java",
+      "mentorSays": "The O(n log n) approach uses binary search to maintain the smallest ending values. For each number, we binary search to find where to insert/replace. This keeps the array sorted and allows us to find the LIS length in O(n log n) time!\n\n// O(n log n) approach uses binary search:\nList<Integer> tails = new ArrayList<>();\nfor (int num : nums) {\n    int pos = Collections.binarySearch(tails, num);\n    if (pos < 0) pos = -(pos + 1);\n    if (pos == tails.size()) {\n        tails.add(num);\n    } else {\n        tails.set(pos, num);\n    }\n}\n\nGot it?",
+      "example": "// O(n log n) approach uses binary search:\nList<Integer> tails = new ArrayList<>();\nfor (int num : nums) {\n    int pos = Collections.binarySearch(tails, num);\n    if (pos < 0) pos = -(pos + 1);\n    if (pos == tails.size()) {\n        tails.add(num);\n    } else {\n        tails.set(pos, num);\n    }\n}",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "nested-loops-explanation-java",
+      "mentorSays": "The O(n²) approach uses nested loops. For each position i, we check all previous positions j. If nums[j] < nums[i], we can extend the LIS ending at j to include i. This gives us dp[i] = max(dp[i], dp[j] + 1).\n\n// O(n²) approach uses nested loops:\nfor (int i = 0; i < nums.length; i++) {\n    dp[i] = 1;  // Each element is LIS of length 1\n    for (int j = 0; j < i; j++) {\n        if (nums[j] < nums[i]) {\n            dp[i] = Math.max(dp[i], dp[j] + 1);\n        }\n    }\n}\n\nGot it?",
+      "example": "// O(n²) approach uses nested loops:\nfor (int i = 0; i < nums.length; i++) {\n    dp[i] = 1;  // Each element is LIS of length 1\n    for (int j = 0; j < i; j++) {\n        if (nums[j] < nums[i]) {\n            dp[i] = Math.max(dp[i], dp[j] + 1);\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-start-java"
     },
     {
       "stepId": "array-explanation-java",
@@ -379,6 +533,20 @@
       "stepId": "coding-update-java",
       "mentorSays": "If nums[j] < nums[i], we can extend the subsequence ending at j. Update dp[i] to be the maximum of its current value and dp[j] + 1.",
       "example": "public int lengthOfLIS(int[] nums) {\n    if (nums.length == 0) return 0;\n    \n    int[] dp = new int[nums.length];\n    Arrays.fill(dp, 1);\n    \n    for (int i = 1; i < nums.length; i++) {\n        for (int j = 0; j < i; j++) {\n            if (nums[j] < nums[i]) {\n                // Can extend subsequence ending at j\n                dp[i] = Math.max(dp[i], dp[j] + 1);\n            }\n        }\n    }",
+      "action": "continue",
+      "next": "coding-nested-dp-java"
+    },
+    {
+      "stepId": "coding-nested-dp-java",
+      "mentorSays": "Let's implement the O(n²) DP solution.\n\nFor each position i, we check all previous positions j:\n- If nums[j] < nums[i], we can extend the LIS\n- dp[i] = max(dp[i], dp[j] + 1)\n\nThis finds the LIS length ending at each position!",
+      "example": "// O(n²) DP solution\nlet dp = Array(nums.length).fill(1);\n\nfor (let i = 0; i < nums.length; i++) {\n  for (let j = 0; j < i; j++) {\n    if (nums[j] < nums[i]) {\n      dp[i] = Math.max(dp[i], dp[j] + 1);\n    }\n  }\n}\n\nreturn Math.max(...dp);",
+      "action": "continue",
+      "next": "coding-binary-search-java"
+    },
+    {
+      "stepId": "coding-binary-search-java",
+      "mentorSays": "Now let's implement the O(n log n) optimized solution using binary search.\n\nWe maintain a 'tails' array where tails[i] = smallest ending value of LIS with length i+1.\n\nFor each number, we binary search to find where to insert/replace. This keeps the array sorted!",
+      "example": "// O(n log n) binary search solution\nlet tails = [];\nfor (let num of nums) {\n  let left = 0, right = tails.length;\n  while (left < right) {\n    let mid = Math.floor((left + right) / 2);\n    if (tails[mid] < num) {\n      left = mid + 1;\n    } else {\n      right = mid;\n    }\n  }\n  if (left === tails.length) {\n    tails.push(num);\n  } else {\n    tails[left] = num;\n  }\n}\nreturn tails.length;",
       "action": "continue",
       "next": "coding-return-java"
     },
@@ -444,13 +612,55 @@
       "choices": [
         {
           "label": "Yes, I know vectors",
-          "next": "coding-start-cpp"
+          "next": "nested-loops-check-cpp"
         },
         {
           "label": "No, explain vectors",
           "next": "array-explanation-cpp"
         }
       ]
+    },
+    {
+      "stepId": "nested-loops-check-cpp",
+      "mentorSays": "Do you understand the O(n²) nested loop approach?",
+      "choices": [
+        {
+          "label": "Yes, I know nested-loops",
+          "next": "binary-search-optimization-check-cpp"
+        },
+        {
+          "label": "No, explain nested-loops",
+          "next": "nested-loops-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "binary-search-optimization-check-cpp",
+      "mentorSays": "Do you understand the O(n log n) binary search optimization?",
+      "choices": [
+        {
+          "label": "Yes, I know binary-search-optimization",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain binary-search-optimization",
+          "next": "binary-search-optimization-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "binary-search-optimization-explanation-cpp",
+      "mentorSays": "The O(n log n) approach uses binary search to maintain the smallest ending values. For each number, we binary search to find where to insert/replace. This keeps the array sorted and allows us to find the LIS length in O(n log n) time!\n\n// O(n log n) approach uses binary search:\nvector<int> tails;\nfor (int num : nums) {\n    auto it = lower_bound(tails.begin(), tails.end(), num);\n    if (it == tails.end()) {\n        tails.push_back(num);\n    } else {\n        *it = num;\n    }\n}\n\nGot it?",
+      "example": "// O(n log n) approach uses binary search:\nvector<int> tails;\nfor (int num : nums) {\n    auto it = lower_bound(tails.begin(), tails.end(), num);\n    if (it == tails.end()) {\n        tails.push_back(num);\n    } else {\n        *it = num;\n    }\n}",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "nested-loops-explanation-cpp",
+      "mentorSays": "The O(n²) approach uses nested loops. For each position i, we check all previous positions j. If nums[j] < nums[i], we can extend the LIS ending at j to include i. This gives us dp[i] = max(dp[i], dp[j] + 1).\n\n// O(n²) approach uses nested loops:\nfor (int i = 0; i < nums.size(); i++) {\n    dp[i] = 1;  // Each element is LIS of length 1\n    for (int j = 0; j < i; j++) {\n        if (nums[j] < nums[i]) {\n            dp[i] = max(dp[i], dp[j] + 1);\n        }\n    }\n}\n\nGot it?",
+      "example": "// O(n²) approach uses nested loops:\nfor (int i = 0; i < nums.size(); i++) {\n    dp[i] = 1;  // Each element is LIS of length 1\n    for (int j = 0; j < i; j++) {\n        if (nums[j] < nums[i]) {\n            dp[i] = max(dp[i], dp[j] + 1);\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-start-cpp"
     },
     {
       "stepId": "array-explanation-cpp",
@@ -484,6 +694,20 @@
       "stepId": "coding-update-cpp",
       "mentorSays": "If nums[j] < nums[i], we can extend the subsequence ending at j. Update dp[i] to be the maximum of its current value and dp[j] + 1.",
       "example": "int lengthOfLIS(vector<int>& nums) {\n    if (nums.empty()) return 0;\n    \n    vector<int> dp(nums.size(), 1);\n    \n    for (int i = 1; i < nums.size(); i++) {\n        for (int j = 0; j < i; j++) {\n            if (nums[j] < nums[i]) {\n                // Can extend subsequence ending at j\n                dp[i] = max(dp[i], dp[j] + 1);\n            }\n        }\n    }",
+      "action": "continue",
+      "next": "coding-nested-dp-cpp"
+    },
+    {
+      "stepId": "coding-nested-dp-cpp",
+      "mentorSays": "Let's implement the O(n²) DP solution.\n\nFor each position i, we check all previous positions j:\n- If nums[j] < nums[i], we can extend the LIS\n- dp[i] = max(dp[i], dp[j] + 1)\n\nThis finds the LIS length ending at each position!",
+      "example": "// O(n²) DP solution\nlet dp = Array(nums.length).fill(1);\n\nfor (let i = 0; i < nums.length; i++) {\n  for (let j = 0; j < i; j++) {\n    if (nums[j] < nums[i]) {\n      dp[i] = Math.max(dp[i], dp[j] + 1);\n    }\n  }\n}\n\nreturn Math.max(...dp);",
+      "action": "continue",
+      "next": "coding-binary-search-cpp"
+    },
+    {
+      "stepId": "coding-binary-search-cpp",
+      "mentorSays": "Now let's implement the O(n log n) optimized solution using binary search.\n\nWe maintain a 'tails' array where tails[i] = smallest ending value of LIS with length i+1.\n\nFor each number, we binary search to find where to insert/replace. This keeps the array sorted!",
+      "example": "// O(n log n) binary search solution\nlet tails = [];\nfor (let num of nums) {\n  let left = 0, right = tails.length;\n  while (left < right) {\n    let mid = Math.floor((left + right) / 2);\n    if (tails[mid] < num) {\n      left = mid + 1;\n    } else {\n      right = mid;\n    }\n  }\n  if (left === tails.length) {\n    tails.push(num);\n  } else {\n    tails[left] = num;\n  }\n}\nreturn tails.length;",
       "action": "continue",
       "next": "coding-return-cpp"
     },
@@ -549,13 +773,55 @@
       "choices": [
         {
           "label": "Yes, I know arrays",
-          "next": "coding-start-ts"
+          "next": "nested-loops-check-ts"
         },
         {
           "label": "No, explain arrays",
           "next": "array-explanation-ts"
         }
       ]
+    },
+    {
+      "stepId": "nested-loops-check-ts",
+      "mentorSays": "Do you understand the O(n²) nested loop approach?",
+      "choices": [
+        {
+          "label": "Yes, I know nested-loops",
+          "next": "binary-search-optimization-check-ts"
+        },
+        {
+          "label": "No, explain nested-loops",
+          "next": "nested-loops-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "binary-search-optimization-check-ts",
+      "mentorSays": "Do you understand the O(n log n) binary search optimization?",
+      "choices": [
+        {
+          "label": "Yes, I know binary-search-optimization",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain binary-search-optimization",
+          "next": "binary-search-optimization-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "binary-search-optimization-explanation-ts",
+      "mentorSays": "The O(n log n) approach uses binary search to maintain the smallest ending values. For each number, we binary search to find where to insert/replace. This keeps the array sorted and allows us to find the LIS length in O(n log n) time!\n\n// O(n log n) approach uses binary search:\nlet tails: number[] = [];\nfor (let num of nums) {\n  let left = 0, right = tails.length;\n  while (left < right) {\n    let mid = Math.floor((left + right) / 2);\n    if (tails[mid] < num) {\n      left = mid + 1;\n    } else {\n      right = mid;\n    }\n  }\n  if (left === tails.length) {\n    tails.push(num);\n  } else {\n    tails[left] = num;\n  }\n}\n\nGot it?",
+      "example": "// O(n log n) approach uses binary search:\nlet tails: number[] = [];\nfor (let num of nums) {\n  let left = 0, right = tails.length;\n  while (left < right) {\n    let mid = Math.floor((left + right) / 2);\n    if (tails[mid] < num) {\n      left = mid + 1;\n    } else {\n      right = mid;\n    }\n  }\n  if (left === tails.length) {\n    tails.push(num);\n  } else {\n    tails[left] = num;\n  }\n}",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "nested-loops-explanation-ts",
+      "mentorSays": "The O(n²) approach uses nested loops. For each position i, we check all previous positions j. If nums[j] < nums[i], we can extend the LIS ending at j to include i. This gives us dp[i] = max(dp[i], dp[j] + 1).\n\n// O(n²) approach uses nested loops:\nfor (let i = 0; i < nums.length; i++) {\n  dp[i] = 1;  // Each element is LIS of length 1\n  for (let j = 0; j < i; j++) {\n    if (nums[j] < nums[i]) {\n      dp[i] = Math.max(dp[i], dp[j] + 1);\n    }\n  }\n}\n\nGot it?",
+      "example": "// O(n²) approach uses nested loops:\nfor (let i = 0; i < nums.length; i++) {\n  dp[i] = 1;  // Each element is LIS of length 1\n  for (let j = 0; j < i; j++) {\n    if (nums[j] < nums[i]) {\n      dp[i] = Math.max(dp[i], dp[j] + 1);\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-start-ts"
     },
     {
       "stepId": "array-explanation-ts",
@@ -589,6 +855,20 @@
       "stepId": "coding-update-ts",
       "mentorSays": "If nums[j] < nums[i], we can extend the subsequence ending at j. Update dp[i] to be the maximum of its current value and dp[j] + 1.",
       "example": "function lengthOfLIS(nums: number[]): number {\n  if (nums.length === 0) return 0;\n  \n  const dp: number[] = new Array(nums.length).fill(1);\n  \n  for (let i = 1; i < nums.length; i++) {\n    for (let j = 0; j < i; j++) {\n      if (nums[j] < nums[i]) {\n        // Can extend subsequence ending at j\n        dp[i] = Math.max(dp[i], dp[j] + 1);\n      }\n    }\n  }",
+      "action": "continue",
+      "next": "coding-nested-dp-ts"
+    },
+    {
+      "stepId": "coding-nested-dp-ts",
+      "mentorSays": "Let's implement the O(n²) DP solution.\n\nFor each position i, we check all previous positions j:\n- If nums[j] < nums[i], we can extend the LIS\n- dp[i] = max(dp[i], dp[j] + 1)\n\nThis finds the LIS length ending at each position!",
+      "example": "// O(n²) DP solution\nlet dp = Array(nums.length).fill(1);\n\nfor (let i = 0; i < nums.length; i++) {\n  for (let j = 0; j < i; j++) {\n    if (nums[j] < nums[i]) {\n      dp[i] = Math.max(dp[i], dp[j] + 1);\n    }\n  }\n}\n\nreturn Math.max(...dp);",
+      "action": "continue",
+      "next": "coding-binary-search-ts"
+    },
+    {
+      "stepId": "coding-binary-search-ts",
+      "mentorSays": "Now let's implement the O(n log n) optimized solution using binary search.\n\nWe maintain a 'tails' array where tails[i] = smallest ending value of LIS with length i+1.\n\nFor each number, we binary search to find where to insert/replace. This keeps the array sorted!",
+      "example": "// O(n log n) binary search solution\nlet tails = [];\nfor (let num of nums) {\n  let left = 0, right = tails.length;\n  while (left < right) {\n    let mid = Math.floor((left + right) / 2);\n    if (tails[mid] < num) {\n      left = mid + 1;\n    } else {\n      right = mid;\n    }\n  }\n  if (left === tails.length) {\n    tails.push(num);\n  } else {\n    tails[left] = num;\n  }\n}\nreturn tails.length;",
       "action": "continue",
       "next": "coding-return-ts"
     },

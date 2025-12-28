@@ -2,14 +2,60 @@ const fs = require('fs');
 const path = require('path');
 
 const LESSONS_FILE = path.join(__dirname, '..', '..', 'mentor', 'lessons.json');
+const LESSONS_DIR = path.join(__dirname, '..', '..', 'mentor', 'lessons');
+const LESSON_GEN_DIR = path.join(__dirname, '..', '..', 'mentor', 'lessonGen');
+const REACT_LESSONS_DIR = path.join(LESSON_GEN_DIR, 'react');
 
 /**
- * Load lessons from JSON file
+ * Load lessons from individual JSON files or fallback to lessons.json
+ * Also loads Interview Prep lessons from lessonGen directories
  */
 async function loadLessons() {
-  const raw = fs.readFileSync(LESSONS_FILE, 'utf-8');
-  const parsed = JSON.parse(raw);
-  return parsed.lessons || [];
+  const allLessons = [];
+  
+  // Load algorithm lessons from mentor/lessons
+  if (fs.existsSync(LESSONS_DIR)) {
+    const files = fs.readdirSync(LESSONS_DIR).filter(f => f.endsWith('.json') && f !== 'algorithm-list.json');
+    for (const file of files) {
+      try {
+        const filePath = path.join(LESSONS_DIR, file);
+        const raw = fs.readFileSync(filePath, 'utf-8');
+        const lesson = JSON.parse(raw);
+        allLessons.push(lesson);
+      } catch (err) {
+        console.warn(`Failed to load lesson from ${file}:`, err.message);
+      }
+    }
+  }
+  
+  // Load React Interview Prep lessons from mentor/lessonGen/react
+  if (fs.existsSync(REACT_LESSONS_DIR)) {
+    const files = fs.readdirSync(REACT_LESSONS_DIR).filter(f => f.endsWith('.json'));
+    for (const file of files) {
+      try {
+        const filePath = path.join(REACT_LESSONS_DIR, file);
+        const raw = fs.readFileSync(filePath, 'utf-8');
+        const lesson = JSON.parse(raw);
+        allLessons.push(lesson);
+      } catch (err) {
+        console.warn(`Failed to load React lesson from ${file}:`, err.message);
+      }
+    }
+  }
+  
+  // If we have lessons loaded, return them
+  if (allLessons.length > 0) {
+    return allLessons;
+  }
+  
+  // Fallback to lessons.json
+  if (fs.existsSync(LESSONS_FILE)) {
+    const raw = fs.readFileSync(LESSONS_FILE, 'utf-8');
+    const parsed = JSON.parse(raw);
+    return parsed.lessons || [];
+  }
+  
+  return [];
 }
 
 /**

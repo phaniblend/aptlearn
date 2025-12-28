@@ -158,13 +158,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-js"
+          "next": "two-pointers-check-js"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-js"
         }
       ]
+    },
+    {
+      "stepId": "two-pointers-check-js",
+      "mentorSays": "Do you understand the two-pointer technique?",
+      "choices": [
+        {
+          "label": "Yes, I know two-pointers",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain two-pointers",
+          "next": "two-pointers-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "two-pointers-explanation-js",
+      "mentorSays": "The two-pointer technique uses two indices to traverse an array efficiently. For this problem, one pointer tracks where to write non-zero elements, and another scans through the array.\n\nlet writeIndex = 0;\nlet readIndex = 0;\n\n// Two pointers: writeIndex writes, readIndex reads\nwhile (readIndex < nums.length) {\n  if (nums[readIndex] !== 0) {\n    nums[writeIndex++] = nums[readIndex];\n  }\n  readIndex++;\n}\n\nGot it?",
+      "example": "let writeIndex = 0;\nlet readIndex = 0;\n\n// Two pointers: writeIndex writes, readIndex reads\nwhile (readIndex < nums.length) {\n  if (nums[readIndex] !== 0) {\n    nums[writeIndex++] = nums[readIndex];\n  }\n  readIndex++;\n}",
+      "action": "continue",
+      "next": "coding-start-js"
     },
     {
       "stepId": "loop-explanation-js",
@@ -192,7 +213,21 @@
       "mentorSays": "Now, let's loop through the array. For each non-zero element, write it at writeIndex and increment writeIndex.",
       "example": "function moveZeros(nums) {\n  let writeIndex = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      nums[writeIndex] = nums[i];\n      writeIndex++;\n    }\n  }\n  // After this loop, all non-zeros are at the front\n}",
       "action": "continue",
+      "next": "coding-swap-logic-js"
+    },
+    {
+      "stepId": "coding-swap-logic-js",
+      "mentorSays": "Let's optimize our solution! Instead of creating a new array, we can use the two-pointer technique to move zeros in-place.\n\nWe use one pointer to track where to write non-zero elements, and another to scan through the array. This is more space-efficient!",
+      "example": "function moveZeroes(nums) {\n  let writeIndex = 0;\n  \n  // Move all non-zero elements to the front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      nums[writeIndex++] = nums[i];\n    }\n  }\n  \n  // Fill remaining positions with zeros\n  while (writeIndex < nums.length) {\n    nums[writeIndex++] = 0;\n  }\n}",
+      "action": "continue",
       "next": "coding-fill-zeros-js"
+    },
+    {
+      "stepId": "coding-optimization-js",
+      "mentorSays": "Let's add one more optimization! We can combine the two-pointer technique with a single pass to make the code even cleaner.\n\nInstead of first moving non-zeros and then filling zeros, we can do it all in one pass using swap operations.",
+      "example": "function moveZeroes(nums) {\n  let writeIndex = 0;\n  \n  // Move all non-zero elements to the front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      // Swap if needed\n      if (i !== writeIndex) {\n        [nums[writeIndex], nums[i]] = [nums[i], nums[writeIndex]];\n      }\n      writeIndex++;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "test-code-js"
     },
     {
       "stepId": "coding-fill-zeros-js",
@@ -277,13 +312,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-python"
+          "next": "two-pointers-check-python"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-python"
         }
       ]
+    },
+    {
+      "stepId": "two-pointers-check-python",
+      "mentorSays": "Do you understand the two-pointer technique?",
+      "choices": [
+        {
+          "label": "Yes, I know two-pointers",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain two-pointers",
+          "next": "two-pointers-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "two-pointers-explanation-python",
+      "mentorSays": "The two-pointer technique uses two indices to traverse an array efficiently. For this problem, one pointer tracks where to write non-zero elements, and another scans through the array.\n\nlet writeIndex = 0;\nlet readIndex = 0;\n\n// Two pointers: writeIndex writes, readIndex reads\nwhile (readIndex < nums.length) {\n  if (nums[readIndex] !== 0) {\n    nums[writeIndex++] = nums[readIndex];\n  }\n  readIndex++;\n}\n\nGot it?",
+      "example": "let writeIndex = 0;\nlet readIndex = 0;\n\n// Two pointers: writeIndex writes, readIndex reads\nwhile (readIndex < nums.length) {\n  if (nums[readIndex] !== 0) {\n    nums[writeIndex++] = nums[readIndex];\n  }\n  readIndex++;\n}",
+      "action": "continue",
+      "next": "coding-start-python"
     },
     {
       "stepId": "loop-explanation-python",
@@ -311,7 +367,21 @@
       "mentorSays": "Now, let's loop through the list. For each non-zero element, write it at write_index and increment write_index.",
       "example": "def move_zeros(nums):\n    write_index = 0\n    \n    for i in range(len(nums)):\n        if nums[i] != 0:\n            nums[write_index] = nums[i]\n            write_index += 1\n    # After this loop, all non-zeros are at the front",
       "action": "continue",
-      "next": "coding-fill-zeros-python"
+      "next": "coding-swap-logic-python"
+    },
+    {
+      "stepId": "coding-swap-logic-python",
+      "mentorSays": "Let's optimize our solution! Instead of creating a new array, we can use the two-pointer technique to move zeros in-place.\n\nWe use one pointer to track where to write non-zero elements, and another to scan through the array. This is more space-efficient!",
+      "example": "function moveZeroes(nums) {\n  let writeIndex = 0;\n  \n  // Move all non-zero elements to the front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      nums[writeIndex++] = nums[i];\n    }\n  }\n  \n  // Fill remaining positions with zeros\n  while (writeIndex < nums.length) {\n    nums[writeIndex++] = 0;\n  }\n}",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "coding-optimization-python",
+      "mentorSays": "Let's add one more optimization! We can combine the two-pointer technique with a single pass to make the code even cleaner.\n\nInstead of first moving non-zeros and then filling zeros, we can do it all in one pass using swap operations.",
+      "example": "function moveZeroes(nums) {\n  let writeIndex = 0;\n  \n  // Move all non-zero elements to the front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      // Swap if needed\n      if (i !== writeIndex) {\n        [nums[writeIndex], nums[i]] = [nums[i], nums[writeIndex]];\n      }\n      writeIndex++;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "test-code-python"
     },
     {
       "stepId": "coding-fill-zeros-python",
@@ -396,13 +466,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-java"
+          "next": "two-pointers-check-java"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-java"
         }
       ]
+    },
+    {
+      "stepId": "two-pointers-check-java",
+      "mentorSays": "Do you understand the two-pointer technique?",
+      "choices": [
+        {
+          "label": "Yes, I know two-pointers",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain two-pointers",
+          "next": "two-pointers-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "two-pointers-explanation-java",
+      "mentorSays": "The two-pointer technique uses two indices to traverse an array efficiently. For this problem, one pointer tracks where to write non-zero elements, and another scans through the array.\n\nlet writeIndex = 0;\nlet readIndex = 0;\n\n// Two pointers: writeIndex writes, readIndex reads\nwhile (readIndex < nums.length) {\n  if (nums[readIndex] !== 0) {\n    nums[writeIndex++] = nums[readIndex];\n  }\n  readIndex++;\n}\n\nGot it?",
+      "example": "let writeIndex = 0;\nlet readIndex = 0;\n\n// Two pointers: writeIndex writes, readIndex reads\nwhile (readIndex < nums.length) {\n  if (nums[readIndex] !== 0) {\n    nums[writeIndex++] = nums[readIndex];\n  }\n  readIndex++;\n}",
+      "action": "continue",
+      "next": "coding-start-java"
     },
     {
       "stepId": "loop-explanation-java",
@@ -430,7 +521,21 @@
       "mentorSays": "Now, let's loop through the array. For each non-zero element, write it at writeIndex and increment writeIndex.",
       "example": "public void moveZeros(int[] nums) {\n    int writeIndex = 0;\n    \n    for (int i = 0; i < nums.length; i++) {\n        if (nums[i] != 0) {\n            nums[writeIndex] = nums[i];\n            writeIndex++;\n        }\n    }\n    // After this loop, all non-zeros are at the front\n}",
       "action": "continue",
-      "next": "coding-fill-zeros-java"
+      "next": "coding-swap-logic-java"
+    },
+    {
+      "stepId": "coding-swap-logic-java",
+      "mentorSays": "Let's optimize our solution! Instead of creating a new array, we can use the two-pointer technique to move zeros in-place.\n\nWe use one pointer to track where to write non-zero elements, and another to scan through the array. This is more space-efficient!",
+      "example": "function moveZeroes(nums) {\n  let writeIndex = 0;\n  \n  // Move all non-zero elements to the front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      nums[writeIndex++] = nums[i];\n    }\n  }\n  \n  // Fill remaining positions with zeros\n  while (writeIndex < nums.length) {\n    nums[writeIndex++] = 0;\n  }\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "coding-optimization-java",
+      "mentorSays": "Let's add one more optimization! We can combine the two-pointer technique with a single pass to make the code even cleaner.\n\nInstead of first moving non-zeros and then filling zeros, we can do it all in one pass using swap operations.",
+      "example": "function moveZeroes(nums) {\n  let writeIndex = 0;\n  \n  // Move all non-zero elements to the front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      // Swap if needed\n      if (i !== writeIndex) {\n        [nums[writeIndex], nums[i]] = [nums[i], nums[writeIndex]];\n      }\n      writeIndex++;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "test-code-java"
     },
     {
       "stepId": "coding-fill-zeros-java",
@@ -515,13 +620,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-cpp"
+          "next": "two-pointers-check-cpp"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-cpp"
         }
       ]
+    },
+    {
+      "stepId": "two-pointers-check-cpp",
+      "mentorSays": "Do you understand the two-pointer technique?",
+      "choices": [
+        {
+          "label": "Yes, I know two-pointers",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain two-pointers",
+          "next": "two-pointers-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "two-pointers-explanation-cpp",
+      "mentorSays": "The two-pointer technique uses two indices to traverse an array efficiently. For this problem, one pointer tracks where to write non-zero elements, and another scans through the array.\n\nlet writeIndex = 0;\nlet readIndex = 0;\n\n// Two pointers: writeIndex writes, readIndex reads\nwhile (readIndex < nums.length) {\n  if (nums[readIndex] !== 0) {\n    nums[writeIndex++] = nums[readIndex];\n  }\n  readIndex++;\n}\n\nGot it?",
+      "example": "let writeIndex = 0;\nlet readIndex = 0;\n\n// Two pointers: writeIndex writes, readIndex reads\nwhile (readIndex < nums.length) {\n  if (nums[readIndex] !== 0) {\n    nums[writeIndex++] = nums[readIndex];\n  }\n  readIndex++;\n}",
+      "action": "continue",
+      "next": "coding-start-cpp"
     },
     {
       "stepId": "loop-explanation-cpp",
@@ -549,7 +675,21 @@
       "mentorSays": "Now, let's loop through the vector. For each non-zero element, write it at writeIndex and increment writeIndex.",
       "example": "void moveZeros(vector<int>& nums) {\n    int writeIndex = 0;\n    \n    for (int i = 0; i < nums.size(); i++) {\n        if (nums[i] != 0) {\n            nums[writeIndex] = nums[i];\n            writeIndex++;\n        }\n    }\n    // After this loop, all non-zeros are at the front\n}",
       "action": "continue",
-      "next": "coding-fill-zeros-cpp"
+      "next": "coding-swap-logic-cpp"
+    },
+    {
+      "stepId": "coding-swap-logic-cpp",
+      "mentorSays": "Let's optimize our solution! Instead of creating a new array, we can use the two-pointer technique to move zeros in-place.\n\nWe use one pointer to track where to write non-zero elements, and another to scan through the array. This is more space-efficient!",
+      "example": "function moveZeroes(nums) {\n  let writeIndex = 0;\n  \n  // Move all non-zero elements to the front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      nums[writeIndex++] = nums[i];\n    }\n  }\n  \n  // Fill remaining positions with zeros\n  while (writeIndex < nums.length) {\n    nums[writeIndex++] = 0;\n  }\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "coding-optimization-cpp",
+      "mentorSays": "Let's add one more optimization! We can combine the two-pointer technique with a single pass to make the code even cleaner.\n\nInstead of first moving non-zeros and then filling zeros, we can do it all in one pass using swap operations.",
+      "example": "function moveZeroes(nums) {\n  let writeIndex = 0;\n  \n  // Move all non-zero elements to the front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      // Swap if needed\n      if (i !== writeIndex) {\n        [nums[writeIndex], nums[i]] = [nums[i], nums[writeIndex]];\n      }\n      writeIndex++;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
     },
     {
       "stepId": "coding-fill-zeros-cpp",
@@ -634,13 +774,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-ts"
+          "next": "two-pointers-check-ts"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-ts"
         }
       ]
+    },
+    {
+      "stepId": "two-pointers-check-ts",
+      "mentorSays": "Do you understand the two-pointer technique?",
+      "choices": [
+        {
+          "label": "Yes, I know two-pointers",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain two-pointers",
+          "next": "two-pointers-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "two-pointers-explanation-ts",
+      "mentorSays": "The two-pointer technique uses two indices to traverse an array efficiently. For this problem, one pointer tracks where to write non-zero elements, and another scans through the array.\n\nlet writeIndex = 0;\nlet readIndex = 0;\n\n// Two pointers: writeIndex writes, readIndex reads\nwhile (readIndex < nums.length) {\n  if (nums[readIndex] !== 0) {\n    nums[writeIndex++] = nums[readIndex];\n  }\n  readIndex++;\n}\n\nGot it?",
+      "example": "let writeIndex = 0;\nlet readIndex = 0;\n\n// Two pointers: writeIndex writes, readIndex reads\nwhile (readIndex < nums.length) {\n  if (nums[readIndex] !== 0) {\n    nums[writeIndex++] = nums[readIndex];\n  }\n  readIndex++;\n}",
+      "action": "continue",
+      "next": "coding-start-ts"
     },
     {
       "stepId": "loop-explanation-ts",
@@ -668,7 +829,21 @@
       "mentorSays": "Now, let's loop through the array. For each non-zero element, write it at writeIndex and increment writeIndex.",
       "example": "function moveZeros(nums: number[]): void {\n  let writeIndex: number = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      nums[writeIndex] = nums[i];\n      writeIndex++;\n    }\n  }\n  // After this loop, all non-zeros are at the front\n}",
       "action": "continue",
-      "next": "coding-fill-zeros-ts"
+      "next": "coding-swap-logic-ts"
+    },
+    {
+      "stepId": "coding-swap-logic-ts",
+      "mentorSays": "Let's optimize our solution! Instead of creating a new array, we can use the two-pointer technique to move zeros in-place.\n\nWe use one pointer to track where to write non-zero elements, and another to scan through the array. This is more space-efficient!",
+      "example": "function moveZeroes(nums) {\n  let writeIndex = 0;\n  \n  // Move all non-zero elements to the front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      nums[writeIndex++] = nums[i];\n    }\n  }\n  \n  // Fill remaining positions with zeros\n  while (writeIndex < nums.length) {\n    nums[writeIndex++] = 0;\n  }\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "coding-optimization-ts",
+      "mentorSays": "Let's add one more optimization! We can combine the two-pointer technique with a single pass to make the code even cleaner.\n\nInstead of first moving non-zeros and then filling zeros, we can do it all in one pass using swap operations.",
+      "example": "function moveZeroes(nums) {\n  let writeIndex = 0;\n  \n  // Move all non-zero elements to the front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      // Swap if needed\n      if (i !== writeIndex) {\n        [nums[writeIndex], nums[i]] = [nums[i], nums[writeIndex]];\n      }\n      writeIndex++;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "test-code-ts"
     },
     {
       "stepId": "coding-fill-zeros-ts",

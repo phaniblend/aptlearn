@@ -158,13 +158,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-js"
+          "next": "heap-check-js"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-js"
         }
       ]
+    },
+    {
+      "stepId": "heap-check-js",
+      "mentorSays": "Do you understand how heaps/priority queues work?",
+      "choices": [
+        {
+          "label": "Yes, I know heap",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain heap",
+          "next": "heap-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "heap-explanation-js",
+      "mentorSays": "A heap is a tree-based data structure where the parent is always greater (max-heap) or smaller (min-heap) than its children. For top K elements, we use a min-heap of size K to keep track of the K most frequent elements.\n\n// Min-heap keeps K largest elements\nlet heap = [];\n\nfor (let [num, freq] of Object.entries(count)) {\n  if (heap.length < k) {\n    heap.push([freq, num]);\n  } else if (freq > heap[0][0]) {\n    heap[0] = [freq, num];\n    heapifyDown(heap);\n  }\n}\n\nGot it?",
+      "example": "// Min-heap keeps K largest elements\nlet heap = [];\n\nfor (let [num, freq] of Object.entries(count)) {\n  if (heap.length < k) {\n    heap.push([freq, num]);\n  } else if (freq > heap[0][0]) {\n    heap[0] = [freq, num];\n    heapifyDown(heap);\n  }\n}",
+      "action": "continue",
+      "next": "coding-start-js"
     },
     {
       "stepId": "loop-explanation-js",
@@ -199,7 +220,21 @@
       "mentorSays": "Now, let's sort the pairs by frequency in descending order (highest frequency first).",
       "example": "function topKFrequent(nums, k) {\n  let freq = {};\n  for (let num of nums) {\n    freq[num] = (freq[num] || 0) + 1;\n  }\n  \n  let pairs = Object.keys(freq).map(key => [parseInt(key), freq[key]]);\n  \n  // Sort by frequency (descending)\n  pairs.sort((a, b) => b[1] - a[1]);\n  // pairs = [[1, 3], [2, 2], [3, 1]] (already sorted)\n}",
       "action": "continue",
-      "next": "coding-take-k-js"
+      "next": "coding-heap-operations-js"
+    },
+    {
+      "stepId": "coding-heap-operations-js",
+      "mentorSays": "Let's use a min-heap to efficiently find the top K frequent elements!\n\nWe maintain a min-heap of size K. For each element, if its frequency is greater than the minimum in the heap, we replace it. This keeps the K most frequent elements in the heap.",
+      "example": "function topKFrequent(nums, k) {\n  let count = {};\n  for (let num of nums) {\n    count[num] = (count[num] || 0) + 1;\n  }\n  \n  // Use min-heap to keep top K\n  let heap = [];\n  for (let [num, freq] of Object.entries(count)) {\n    if (heap.length < k) {\n      heap.push([freq, num]);\n    } else if (freq > heap[0][0]) {\n      heap[0] = [freq, num];\n      // Re-heapify\n    }\n  }\n  \n  return heap.map(item => item[1]);\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "coding-extract-result-js",
+      "mentorSays": "Finally, let's extract the top K elements from our heap!\n\nAfter building the heap with the K most frequent elements, we need to extract them. Since we stored [frequency, number] pairs, we extract just the numbers.",
+      "example": "function topKFrequent(nums, k) {\n  let count = {};\n  for (let num of nums) {\n    count[num] = (count[num] || 0) + 1;\n  }\n  \n  // Use min-heap to keep top K\n  let heap = [];\n  for (let [num, freq] of Object.entries(count)) {\n    if (heap.length < k) {\n      heap.push([freq, num]);\n    } else if (freq > heap[0][0]) {\n      heap[0] = [freq, num];\n      // Re-heapify\n    }\n  }\n  \n  // Extract the numbers from heap\n  return heap.map(item => parseInt(item[1]));\n}",
+      "action": "continue",
+      "next": "test-code-js"
     },
     {
       "stepId": "coding-take-k-js",
@@ -284,13 +319,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-python"
+          "next": "heap-check-python"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-python"
         }
       ]
+    },
+    {
+      "stepId": "heap-check-python",
+      "mentorSays": "Do you understand how heaps/priority queues work?",
+      "choices": [
+        {
+          "label": "Yes, I know heap",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain heap",
+          "next": "heap-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "heap-explanation-python",
+      "mentorSays": "A heap is a tree-based data structure where the parent is always greater (max-heap) or smaller (min-heap) than its children. For top K elements, we use a min-heap of size K to keep track of the K most frequent elements.\n\n// Min-heap keeps K largest elements\nlet heap = [];\n\nfor (let [num, freq] of Object.entries(count)) {\n  if (heap.length < k) {\n    heap.push([freq, num]);\n  } else if (freq > heap[0][0]) {\n    heap[0] = [freq, num];\n    heapifyDown(heap);\n  }\n}\n\nGot it?",
+      "example": "// Min-heap keeps K largest elements\nlet heap = [];\n\nfor (let [num, freq] of Object.entries(count)) {\n  if (heap.length < k) {\n    heap.push([freq, num]);\n  } else if (freq > heap[0][0]) {\n    heap[0] = [freq, num];\n    heapifyDown(heap);\n  }\n}",
+      "action": "continue",
+      "next": "coding-start-python"
     },
     {
       "stepId": "loop-explanation-python",
@@ -311,7 +367,21 @@
       "mentorSays": "First, let's count the frequency of each element using a dictionary (hash map in Python). We can use Counter from collections for this, or build it manually.",
       "example": "def top_k_frequent(nums, k):\n    # Count frequencies\n    from collections import Counter\n    freq = Counter(nums)\n    # freq = Counter({1: 3, 2: 2, 3: 1}) for [1, 1, 1, 2, 2, 3]\n    \n    # Or manually:\n    # freq = {}\n    # for num in nums:\n    #     freq[num] = freq.get(num, 0) + 1",
       "action": "continue",
-      "next": "coding-sort-python"
+      "next": "coding-heap-operations-python"
+    },
+    {
+      "stepId": "coding-heap-operations-python",
+      "mentorSays": "Let's use a min-heap to efficiently find the top K frequent elements!\n\nWe maintain a min-heap of size K. For each element, if its frequency is greater than the minimum in the heap, we replace it. This keeps the K most frequent elements in the heap.",
+      "example": "function topKFrequent(nums, k) {\n  let count = {};\n  for (let num of nums) {\n    count[num] = (count[num] || 0) + 1;\n  }\n  \n  // Use min-heap to keep top K\n  let heap = [];\n  for (let [num, freq] of Object.entries(count)) {\n    if (heap.length < k) {\n      heap.push([freq, num]);\n    } else if (freq > heap[0][0]) {\n      heap[0] = [freq, num];\n      // Re-heapify\n    }\n  }\n  \n  return heap.map(item => item[1]);\n}",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "coding-extract-result-python",
+      "mentorSays": "Finally, let's extract the top K elements from our heap!\n\nAfter building the heap with the K most frequent elements, we need to extract them. Since we stored [frequency, number] pairs, we extract just the numbers.",
+      "example": "function topKFrequent(nums, k) {\n  let count = {};\n  for (let num of nums) {\n    count[num] = (count[num] || 0) + 1;\n  }\n  \n  // Use min-heap to keep top K\n  let heap = [];\n  for (let [num, freq] of Object.entries(count)) {\n    if (heap.length < k) {\n      heap.push([freq, num]);\n    } else if (freq > heap[0][0]) {\n      heap[0] = [freq, num];\n      // Re-heapify\n    }\n  }\n  \n  // Extract the numbers from heap\n  return heap.map(item => parseInt(item[1]));\n}",
+      "action": "continue",
+      "next": "test-code-python"
     },
     {
       "stepId": "coding-sort-python",
@@ -396,13 +466,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-java"
+          "next": "heap-check-java"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-java"
         }
       ]
+    },
+    {
+      "stepId": "heap-check-java",
+      "mentorSays": "Do you understand how heaps/priority queues work?",
+      "choices": [
+        {
+          "label": "Yes, I know heap",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain heap",
+          "next": "heap-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "heap-explanation-java",
+      "mentorSays": "A heap is a tree-based data structure where the parent is always greater (max-heap) or smaller (min-heap) than its children. For top K elements, we use a min-heap of size K to keep track of the K most frequent elements.\n\n// Min-heap keeps K largest elements\nlet heap = [];\n\nfor (let [num, freq] of Object.entries(count)) {\n  if (heap.length < k) {\n    heap.push([freq, num]);\n  } else if (freq > heap[0][0]) {\n    heap[0] = [freq, num];\n    heapifyDown(heap);\n  }\n}\n\nGot it?",
+      "example": "// Min-heap keeps K largest elements\nlet heap = [];\n\nfor (let [num, freq] of Object.entries(count)) {\n  if (heap.length < k) {\n    heap.push([freq, num]);\n  } else if (freq > heap[0][0]) {\n    heap[0] = [freq, num];\n    heapifyDown(heap);\n  }\n}",
+      "action": "continue",
+      "next": "coding-start-java"
     },
     {
       "stepId": "loop-explanation-java",
@@ -423,7 +514,21 @@
       "mentorSays": "First, let's count the frequency of each element using a HashMap.",
       "example": "public int[] topKFrequent(int[] nums, int k) {\n    // Count frequencies\n    Map<Integer, Integer> freq = new HashMap<>();\n    for (int num : nums) {\n        freq.put(num, freq.getOrDefault(num, 0) + 1);\n    }\n    // freq = {1: 3, 2: 2, 3: 1} for [1, 1, 1, 2, 2, 3]\n}",
       "action": "continue",
-      "next": "coding-sort-java"
+      "next": "coding-heap-operations-java"
+    },
+    {
+      "stepId": "coding-heap-operations-java",
+      "mentorSays": "Let's use a min-heap to efficiently find the top K frequent elements!\n\nWe maintain a min-heap of size K. For each element, if its frequency is greater than the minimum in the heap, we replace it. This keeps the K most frequent elements in the heap.",
+      "example": "function topKFrequent(nums, k) {\n  let count = {};\n  for (let num of nums) {\n    count[num] = (count[num] || 0) + 1;\n  }\n  \n  // Use min-heap to keep top K\n  let heap = [];\n  for (let [num, freq] of Object.entries(count)) {\n    if (heap.length < k) {\n      heap.push([freq, num]);\n    } else if (freq > heap[0][0]) {\n      heap[0] = [freq, num];\n      // Re-heapify\n    }\n  }\n  \n  return heap.map(item => item[1]);\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "coding-extract-result-java",
+      "mentorSays": "Finally, let's extract the top K elements from our heap!\n\nAfter building the heap with the K most frequent elements, we need to extract them. Since we stored [frequency, number] pairs, we extract just the numbers.",
+      "example": "function topKFrequent(nums, k) {\n  let count = {};\n  for (let num of nums) {\n    count[num] = (count[num] || 0) + 1;\n  }\n  \n  // Use min-heap to keep top K\n  let heap = [];\n  for (let [num, freq] of Object.entries(count)) {\n    if (heap.length < k) {\n      heap.push([freq, num]);\n    } else if (freq > heap[0][0]) {\n      heap[0] = [freq, num];\n      // Re-heapify\n    }\n  }\n  \n  // Extract the numbers from heap\n  return heap.map(item => parseInt(item[1]));\n}",
+      "action": "continue",
+      "next": "test-code-java"
     },
     {
       "stepId": "coding-sort-java",
@@ -508,13 +613,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-cpp"
+          "next": "heap-check-cpp"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-cpp"
         }
       ]
+    },
+    {
+      "stepId": "heap-check-cpp",
+      "mentorSays": "Do you understand how heaps/priority queues work?",
+      "choices": [
+        {
+          "label": "Yes, I know heap",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain heap",
+          "next": "heap-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "heap-explanation-cpp",
+      "mentorSays": "A heap is a tree-based data structure where the parent is always greater (max-heap) or smaller (min-heap) than its children. For top K elements, we use a min-heap of size K to keep track of the K most frequent elements.\n\n// Min-heap keeps K largest elements\nlet heap = [];\n\nfor (let [num, freq] of Object.entries(count)) {\n  if (heap.length < k) {\n    heap.push([freq, num]);\n  } else if (freq > heap[0][0]) {\n    heap[0] = [freq, num];\n    heapifyDown(heap);\n  }\n}\n\nGot it?",
+      "example": "// Min-heap keeps K largest elements\nlet heap = [];\n\nfor (let [num, freq] of Object.entries(count)) {\n  if (heap.length < k) {\n    heap.push([freq, num]);\n  } else if (freq > heap[0][0]) {\n    heap[0] = [freq, num];\n    heapifyDown(heap);\n  }\n}",
+      "action": "continue",
+      "next": "coding-start-cpp"
     },
     {
       "stepId": "loop-explanation-cpp",
@@ -535,7 +661,21 @@
       "mentorSays": "First, let's count the frequency of each element using an unordered_map.",
       "example": "vector<int> topKFrequent(vector<int>& nums, int k) {\n    // Count frequencies\n    unordered_map<int, int> freq;\n    for (int num : nums) {\n        freq[num]++;\n    }\n    // freq = {1: 3, 2: 2, 3: 1} for [1, 1, 1, 2, 2, 3]\n}",
       "action": "continue",
-      "next": "coding-sort-cpp"
+      "next": "coding-heap-operations-cpp"
+    },
+    {
+      "stepId": "coding-heap-operations-cpp",
+      "mentorSays": "Let's use a min-heap to efficiently find the top K frequent elements!\n\nWe maintain a min-heap of size K. For each element, if its frequency is greater than the minimum in the heap, we replace it. This keeps the K most frequent elements in the heap.",
+      "example": "function topKFrequent(nums, k) {\n  let count = {};\n  for (let num of nums) {\n    count[num] = (count[num] || 0) + 1;\n  }\n  \n  // Use min-heap to keep top K\n  let heap = [];\n  for (let [num, freq] of Object.entries(count)) {\n    if (heap.length < k) {\n      heap.push([freq, num]);\n    } else if (freq > heap[0][0]) {\n      heap[0] = [freq, num];\n      // Re-heapify\n    }\n  }\n  \n  return heap.map(item => item[1]);\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "coding-extract-result-cpp",
+      "mentorSays": "Finally, let's extract the top K elements from our heap!\n\nAfter building the heap with the K most frequent elements, we need to extract them. Since we stored [frequency, number] pairs, we extract just the numbers.",
+      "example": "function topKFrequent(nums, k) {\n  let count = {};\n  for (let num of nums) {\n    count[num] = (count[num] || 0) + 1;\n  }\n  \n  // Use min-heap to keep top K\n  let heap = [];\n  for (let [num, freq] of Object.entries(count)) {\n    if (heap.length < k) {\n      heap.push([freq, num]);\n    } else if (freq > heap[0][0]) {\n      heap[0] = [freq, num];\n      // Re-heapify\n    }\n  }\n  \n  // Extract the numbers from heap\n  return heap.map(item => parseInt(item[1]));\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
     },
     {
       "stepId": "coding-sort-cpp",
@@ -620,13 +760,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-ts"
+          "next": "heap-check-ts"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-ts"
         }
       ]
+    },
+    {
+      "stepId": "heap-check-ts",
+      "mentorSays": "Do you understand how heaps/priority queues work?",
+      "choices": [
+        {
+          "label": "Yes, I know heap",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain heap",
+          "next": "heap-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "heap-explanation-ts",
+      "mentorSays": "A heap is a tree-based data structure where the parent is always greater (max-heap) or smaller (min-heap) than its children. For top K elements, we use a min-heap of size K to keep track of the K most frequent elements.\n\n// Min-heap keeps K largest elements\nlet heap = [];\n\nfor (let [num, freq] of Object.entries(count)) {\n  if (heap.length < k) {\n    heap.push([freq, num]);\n  } else if (freq > heap[0][0]) {\n    heap[0] = [freq, num];\n    heapifyDown(heap);\n  }\n}\n\nGot it?",
+      "example": "// Min-heap keeps K largest elements\nlet heap = [];\n\nfor (let [num, freq] of Object.entries(count)) {\n  if (heap.length < k) {\n    heap.push([freq, num]);\n  } else if (freq > heap[0][0]) {\n    heap[0] = [freq, num];\n    heapifyDown(heap);\n  }\n}",
+      "action": "continue",
+      "next": "coding-start-ts"
     },
     {
       "stepId": "loop-explanation-ts",
@@ -661,7 +822,21 @@
       "mentorSays": "Now, let's sort the pairs by frequency in descending order (highest frequency first).",
       "example": "function topKFrequent(nums: number[], k: number): number[] {\n  let freq: {[key: number]: number} = {};\n  for (let num of nums) {\n    freq[num] = (freq[num] || 0) + 1;\n  }\n  \n  let pairs: [number, number][] = Object.keys(freq).map(key => [parseInt(key), freq[parseInt(key)]]);\n  \n  // Sort by frequency (descending)\n  pairs.sort((a, b) => b[1] - a[1]);\n  // pairs = [[1, 3], [2, 2], [3, 1]] (already sorted)\n}",
       "action": "continue",
-      "next": "coding-take-k-ts"
+      "next": "coding-heap-operations-ts"
+    },
+    {
+      "stepId": "coding-heap-operations-ts",
+      "mentorSays": "Let's use a min-heap to efficiently find the top K frequent elements!\n\nWe maintain a min-heap of size K. For each element, if its frequency is greater than the minimum in the heap, we replace it. This keeps the K most frequent elements in the heap.",
+      "example": "function topKFrequent(nums, k) {\n  let count = {};\n  for (let num of nums) {\n    count[num] = (count[num] || 0) + 1;\n  }\n  \n  // Use min-heap to keep top K\n  let heap = [];\n  for (let [num, freq] of Object.entries(count)) {\n    if (heap.length < k) {\n      heap.push([freq, num]);\n    } else if (freq > heap[0][0]) {\n      heap[0] = [freq, num];\n      // Re-heapify\n    }\n  }\n  \n  return heap.map(item => item[1]);\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "coding-extract-result-ts",
+      "mentorSays": "Finally, let's extract the top K elements from our heap!\n\nAfter building the heap with the K most frequent elements, we need to extract them. Since we stored [frequency, number] pairs, we extract just the numbers.",
+      "example": "function topKFrequent(nums, k) {\n  let count = {};\n  for (let num of nums) {\n    count[num] = (count[num] || 0) + 1;\n  }\n  \n  // Use min-heap to keep top K\n  let heap = [];\n  for (let [num, freq] of Object.entries(count)) {\n    if (heap.length < k) {\n      heap.push([freq, num]);\n    } else if (freq > heap[0][0]) {\n      heap[0] = [freq, num];\n      // Re-heapify\n    }\n  }\n  \n  // Extract the numbers from heap\n  return heap.map(item => parseInt(item[1]));\n}",
+      "action": "continue",
+      "next": "test-code-ts"
     },
     {
       "stepId": "coding-take-k-ts",

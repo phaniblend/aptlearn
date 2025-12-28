@@ -150,13 +150,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-js"
+          "next": "sorting-vs-hashmap-check-js"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-js"
         }
       ]
+    },
+    {
+      "stepId": "sorting-vs-hashmap-check-js",
+      "mentorSays": "Do you understand the difference between sorting and hash map approaches for anagrams?",
+      "choices": [
+        {
+          "label": "Yes, I know sorting-vs-hashmap",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain sorting-vs-hashmap",
+          "next": "sorting-vs-hashmap-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "sorting-vs-hashmap-explanation-js",
+      "mentorSays": "There are two main approaches to check if strings are anagrams: APPROACH 1: Sorting (O(n log n)) - Sort both strings and compare if they're equal. Simple but slower. APPROACH 2: Hash Map / Character Count (O(n)) - Count frequency of each character and compare frequencies. Faster but more code. WHICH IS BETTER? Hash map is O(n) vs sorting O(n log n), but sorting is simpler to code. For small strings, both work fine!\n\n// APPROACH 1: Sorting (O(n log n))\nlet sortedS = s.split('').sort().join('');\nlet sortedT = t.split('').sort().join('');\nreturn sortedS === sortedT;\n\n// APPROACH 2: Hash Map (O(n))\nlet count = {};\nfor (let char of s) {\n  count[char] = (count[char] || 0) + 1;\n}\nfor (let char of t) {\n  count[char] = (count[char] || 0) - 1;\n}\nreturn Object.values(count).every(val => val === 0);\n\nGot it?",
+      "example": "// APPROACH 1: Sorting (O(n log n))\nlet sortedS = s.split('').sort().join('');\nlet sortedT = t.split('').sort().join('');\nreturn sortedS === sortedT;\n\n// APPROACH 2: Hash Map (O(n))\nlet count = {};\nfor (let char of s) {\n  count[char] = (count[char] || 0) + 1;\n}\nfor (let char of t) {\n  count[char] = (count[char] || 0) - 1;\n}\nreturn Object.values(count).every(val => val === 0);",
+      "action": "continue",
+      "next": "coding-start-js"
     },
     {
       "stepId": "loop-explanation-js",
@@ -283,13 +304,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-python"
+          "next": "sorting-vs-hashmap-check-python"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-python"
         }
       ]
+    },
+    {
+      "stepId": "sorting-vs-hashmap-check-python",
+      "mentorSays": "Do you understand the difference between sorting and hash map approaches for anagrams?",
+      "choices": [
+        {
+          "label": "Yes, I know sorting-vs-hashmap",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain sorting-vs-hashmap",
+          "next": "sorting-vs-hashmap-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "sorting-vs-hashmap-explanation-python",
+      "mentorSays": "There are two main approaches to check if strings are anagrams: APPROACH 1: Sorting (O(n log n)) - Sort both strings and compare if they're equal. Simple but slower. APPROACH 2: Hash Map / Character Count (O(n)) - Count frequency of each character and compare frequencies. Faster but more code. WHICH IS BETTER? Hash map is O(n) vs sorting O(n log n), but sorting is simpler to code. For small strings, both work fine!\n\n# APPROACH 1: Sorting (O(n log n))\nsorted_s = sorted(s)\nsorted_t = sorted(t)\nreturn sorted_s == sorted_t\n\n# APPROACH 2: Hash Map (O(n))\ncount = {}\nfor char in s:\n    count[char] = count.get(char, 0) + 1\nfor char in t:\n    count[char] = count.get(char, 0) - 1\nreturn all(val == 0 for val in count.values())\n\nGot it?",
+      "example": "# APPROACH 1: Sorting (O(n log n))\nsorted_s = sorted(s)\nsorted_t = sorted(t)\nreturn sorted_s == sorted_t\n\n# APPROACH 2: Hash Map (O(n))\ncount = {}\nfor char in s:\n    count[char] = count.get(char, 0) + 1\nfor char in t:\n    count[char] = count.get(char, 0) - 1\nreturn all(val == 0 for val in count.values())",
+      "action": "continue",
+      "next": "coding-start-python"
     },
     {
       "stepId": "loop-explanation-python",
@@ -416,13 +458,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-java"
+          "next": "sorting-vs-hashmap-check-java"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-java"
         }
       ]
+    },
+    {
+      "stepId": "sorting-vs-hashmap-check-java",
+      "mentorSays": "Do you understand the difference between sorting and hash map approaches for anagrams?",
+      "choices": [
+        {
+          "label": "Yes, I know sorting-vs-hashmap",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain sorting-vs-hashmap",
+          "next": "sorting-vs-hashmap-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "sorting-vs-hashmap-explanation-java",
+      "mentorSays": "There are two main approaches to check if strings are anagrams: APPROACH 1: Sorting (O(n log n)) - Sort both strings and compare if they're equal. Simple but slower. APPROACH 2: Hash Map / Character Count (O(n)) - Count frequency of each character and compare frequencies. Faster but more code. WHICH IS BETTER? Hash map is O(n) vs sorting O(n log n), but sorting is simpler to code. For small strings, both work fine!\n\n// APPROACH 1: Sorting (O(n log n))\nchar[] sArr = s.toCharArray();\nchar[] tArr = t.toCharArray();\nArrays.sort(sArr);\nArrays.sort(tArr);\nreturn Arrays.equals(sArr, tArr);\n\n// APPROACH 2: Hash Map (O(n))\nMap<Character, Integer> count = new HashMap<>();\nfor (char c : s.toCharArray()) {\n    count.put(c, count.getOrDefault(c, 0) + 1);\n}\nfor (char c : t.toCharArray()) {\n    count.put(c, count.getOrDefault(c, 0) - 1);\n}\nreturn count.values().stream().allMatch(val -> val == 0);\n\nGot it?",
+      "example": "// APPROACH 1: Sorting (O(n log n))\nchar[] sArr = s.toCharArray();\nchar[] tArr = t.toCharArray();\nArrays.sort(sArr);\nArrays.sort(tArr);\nreturn Arrays.equals(sArr, tArr);\n\n// APPROACH 2: Hash Map (O(n))\nMap<Character, Integer> count = new HashMap<>();\nfor (char c : s.toCharArray()) {\n    count.put(c, count.getOrDefault(c, 0) + 1);\n}\nfor (char c : t.toCharArray()) {\n    count.put(c, count.getOrDefault(c, 0) - 1);\n}\nreturn count.values().stream().allMatch(val -> val == 0);",
+      "action": "continue",
+      "next": "coding-start-java"
     },
     {
       "stepId": "loop-explanation-java",
@@ -549,13 +612,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-cpp"
+          "next": "sorting-vs-hashmap-check-cpp"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-cpp"
         }
       ]
+    },
+    {
+      "stepId": "sorting-vs-hashmap-check-cpp",
+      "mentorSays": "Do you understand the difference between sorting and hash map approaches for anagrams?",
+      "choices": [
+        {
+          "label": "Yes, I know sorting-vs-hashmap",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain sorting-vs-hashmap",
+          "next": "sorting-vs-hashmap-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "sorting-vs-hashmap-explanation-cpp",
+      "mentorSays": "There are two main approaches to check if strings are anagrams: APPROACH 1: Sorting (O(n log n)) - Sort both strings and compare if they're equal. Simple but slower. APPROACH 2: Hash Map / Character Count (O(n)) - Count frequency of each character and compare frequencies. Faster but more code. WHICH IS BETTER? Hash map is O(n) vs sorting O(n log n), but sorting is simpler to code. For small strings, both work fine!\n\n// APPROACH 1: Sorting (O(n log n))\nstring sortedS = s;\nstring sortedT = t;\nsort(sortedS.begin(), sortedS.end());\nsort(sortedT.begin(), sortedT.end());\nreturn sortedS == sortedT;\n\n// APPROACH 2: Hash Map (O(n))\nunordered_map<char, int> count;\nfor (char c : s) count[c]++;\nfor (char c : t) count[c]--;\nfor (auto& pair : count) {\n    if (pair.second != 0) return false;\n}\nreturn true;\n\nGot it?",
+      "example": "// APPROACH 1: Sorting (O(n log n))\nstring sortedS = s;\nstring sortedT = t;\nsort(sortedS.begin(), sortedS.end());\nsort(sortedT.begin(), sortedT.end());\nreturn sortedS == sortedT;\n\n// APPROACH 2: Hash Map (O(n))\nunordered_map<char, int> count;\nfor (char c : s) count[c]++;\nfor (char c : t) count[c]--;\nfor (auto& pair : count) {\n    if (pair.second != 0) return false;\n}\nreturn true;",
+      "action": "continue",
+      "next": "coding-start-cpp"
     },
     {
       "stepId": "loop-explanation-cpp",
@@ -682,13 +766,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-ts"
+          "next": "sorting-vs-hashmap-check-ts"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-ts"
         }
       ]
+    },
+    {
+      "stepId": "sorting-vs-hashmap-check-ts",
+      "mentorSays": "Do you understand the difference between sorting and hash map approaches for anagrams?",
+      "choices": [
+        {
+          "label": "Yes, I know sorting-vs-hashmap",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain sorting-vs-hashmap",
+          "next": "sorting-vs-hashmap-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "sorting-vs-hashmap-explanation-ts",
+      "mentorSays": "There are two main approaches to check if strings are anagrams: APPROACH 1: Sorting (O(n log n)) - Sort both strings and compare if they're equal. Simple but slower. APPROACH 2: Hash Map / Character Count (O(n)) - Count frequency of each character and compare frequencies. Faster but more code. WHICH IS BETTER? Hash map is O(n) vs sorting O(n log n), but sorting is simpler to code. For small strings, both work fine!\n\n// APPROACH 1: Sorting (O(n log n))\nlet sortedS = s.split('').sort().join('');\nlet sortedT = t.split('').sort().join('');\nreturn sortedS === sortedT;\n\n// APPROACH 2: Hash Map (O(n))\nlet count: { [key: string]: number } = {};\nfor (let char of s) {\n  count[char] = (count[char] || 0) + 1;\n}\nfor (let char of t) {\n  count[char] = (count[char] || 0) - 1;\n}\nreturn Object.values(count).every(val => val === 0);\n\nGot it?",
+      "example": "// APPROACH 1: Sorting (O(n log n))\nlet sortedS = s.split('').sort().join('');\nlet sortedT = t.split('').sort().join('');\nreturn sortedS === sortedT;\n\n// APPROACH 2: Hash Map (O(n))\nlet count: { [key: string]: number } = {};\nfor (let char of s) {\n  count[char] = (count[char] || 0) + 1;\n}\nfor (let char of t) {\n  count[char] = (count[char] || 0) - 1;\n}\nreturn Object.values(count).every(val => val === 0);",
+      "action": "continue",
+      "next": "coding-start-ts"
     },
     {
       "stepId": "loop-explanation-ts",

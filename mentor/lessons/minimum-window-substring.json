@@ -14,7 +14,7 @@
     },
     {
       "stepId": "problem-illustration",
-      "mentorSays": "Perfect! Now let's understand what the Minimum Window Substring problem is asking.\n\nImagine you have two strings:\n- s = \"ADOBECODEBANC\"\n- t = \"ABC\"\n\nYour task: Find the minimum window (substring) in s that contains all characters from t.\n\nLet's explore:\n- \"ADOBEC\" - contains A, B, C ✓ (length 6)\n- \"CODEBA\" - contains A, B, C ✓ (length 6)\n- \"BANC\" - contains A, B, C ✓ (length 4) ✓\n\nMinimum window: \"BANC\" (length 4)\n\n**Key Insight**: We use a sliding window approach:\n1. Expand the window until it contains all characters from t\n2. Shrink the window from the left to find the minimum valid window\n3. Track character frequencies using a hash map\n\nLet's trace this:\n- **Initial**: left = 0, right = 0, need = {A:1, B:1, C:1}, window = {}\n- **Expand**: Move right until all characters found\n  - right=0: 'A' → window = {A:1}, need = {A:0, B:1, C:1}\n  - right=1: 'D' → window = {A:1, D:1}\n  - right=2: 'O' → window = {A:1, D:1, O:1}\n  - right=3: 'B' → window = {A:1, B:1, D:1, O:1}, need = {A:0, B:0, C:1}\n  - right=4: 'E' → window = {A:1, B:1, E:1, D:1, O:1}\n  - right=5: 'C' → window = {A:1, B:1, C:1, E:1, D:1, O:1}, need = {A:0, B:0, C:0} ✓ All found!\n- **Shrink**: Move left to find minimum\n  - left=0: 'A' removed, need = {A:1, B:0, C:0} → invalid, stop\n  - Current window \"ADOBEC\" (length 6)\n- **Continue**: Move right, then shrink again\n  - Eventually find \"BANC\" (length 4) ✓\n\nThat's what the problem wants: the minimum window substring containing all characters from t.",
+      "mentorSays": "This is one of the hardest sliding window problems. Let's break it down step by step.\n\n**THE PROBLEM:**\nFind the minimum window in s that contains ALL characters of t.\n\n**WHAT DOES THIS MEAN?**\n- A window is a contiguous substring of s\n- The window must contain every character from t (with correct frequencies)\n- We want the SHORTEST such window\n\n**EXAMPLE: Detailed Walkthrough**\n\ns = 'ADOBECODEBANC'\nt = 'ABC'\n\nRequired characters: A=1, B=1, C=1\n\n**STEP-BY-STEP TRACE:**\n\nInitial state:\n- left = 0, right = 0\n- need = {A:1, B:1, C:1}\n- window = {}\n- formed = 0 (characters found)\n- required = 3 (total unique characters needed)\n\n**PHASE 1: EXPAND until window is valid**\n\nright = 0: s[0] = 'A'\n- window = {A:1}\n- need = {A:0, B:1, C:1}\n- formed = 1 (A found)\n\nright = 1: s[1] = 'D'\n- window = {A:1, D:1}\n- formed = 1 (still missing B, C)\n\nright = 2: s[2] = 'O'\n- window = {A:1, D:1, O:1}\n- formed = 1\n\nright = 3: s[3] = 'B'\n- window = {A:1, B:1, D:1, O:1}\n- need = {A:0, B:0, C:1}\n- formed = 2 (A and B found)\n\nright = 4: s[4] = 'E'\n- window = {A:1, B:1, E:1, D:1, O:1}\n- formed = 2\n\nright = 5: s[5] = 'C'\n- window = {A:1, B:1, C:1, E:1, D:1, O:1}\n- need = {A:0, B:0, C:0}\n- formed = 3 ✓ ALL FOUND!\n- Current window: 'ADOBEC' (length 6)\n\n**PHASE 2: SHRINK to find minimum**\n\nleft = 0: Remove 'A'\n- window = {A:0, B:1, C:1, E:1, D:1, O:1}\n- need = {A:1, B:0, C:0}\n- formed = 2 ✗ (missing A, window invalid)\n- Stop shrinking\n\nCurrent best: 'ADOBEC' (length 6)\n\n**PHASE 3: Continue expanding and shrinking**\n\nright = 6: s[6] = 'O'\nright = 7: s[7] = 'D'\nright = 8: s[8] = 'E'\nright = 9: s[9] = 'B'\n- window = {A:0, B:2, C:1, E:2, D:2, O:2}\n- formed = 2 (missing A)\n\nright = 10: s[10] = 'A'\n- window = {A:1, B:2, C:1, E:2, D:2, O:2}\n- formed = 3 ✓ VALID again!\n\nNow shrink:\nleft = 0: Remove 'A' → invalid\nleft = 1: Remove 'D' → still invalid\n...\nleft = 9: Remove 'B'\n- window = {A:1, B:1, C:1, E:2, D:1, O:1}\n- formed = 3 ✓ Still valid!\n- Current window: 'CODEBA' (length 6)\n\nContinue...\n\nEventually find:\nWindow [9, 12] = 'BANC'\n- Has A=1, B=1, C=1 ✓\n- Length: 4\n- MINIMUM! ✓\n\n**Answer: 'BANC'**\n\n**THE STRATEGY:**\n1. Expand window until valid (has all chars from t)\n2. Shrink from left while still valid\n3. Track minimum window found\n4. Repeat until end of string\n\n**TIME COMPLEXITY:** O(|s| + |t|) - each character visited at most twice\n**SPACE COMPLEXITY:** O(|s| + |t|) - for hash maps",
       "example": "s = \"ADOBECODEBANC\"\nt = \"ABC\"\n\nFind minimum window containing A, B, C:\n- \"ADOBEC\" (length 6) ✓\n- \"CODEBA\" (length 6) ✓\n- \"BANC\" (length 4) ✓\n\nAnswer: \"BANC\"\n\nAnother example:\ns = \"a\"\nt = \"a\"\n\nAnswer: \"a\"\n\nAnother example:\ns = \"a\"\nt = \"aa\"\n\nAnswer: \"\" (no valid window)",
       "action": "continue",
       "next": "thinking-challenge"
@@ -129,13 +129,55 @@
       "choices": [
         {
           "label": "Yes, I know hash maps",
-          "next": "coding-start-js"
+          "next": "hashmap-check-js"
         },
         {
           "label": "No, explain hash maps",
           "next": "array-explanation-js"
         }
       ]
+    },
+    {
+      "stepId": "hashmap-check-js",
+      "mentorSays": "Do you understand how to use objects/maps to count occurrences?",
+      "choices": [
+        {
+          "label": "Yes, I know hashmap",
+          "next": "string-check-js"
+        },
+        {
+          "label": "No, explain hashmap",
+          "next": "hashmap-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "string-check-js",
+      "mentorSays": "Do you understand how to work with strings and character access?",
+      "choices": [
+        {
+          "label": "Yes, I know string",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain string",
+          "next": "string-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "string-explanation-js",
+      "mentorSays": "In JavaScript, you can access individual characters in a string. For anagrams, we need to count how many times each character appears.\n\nlet word = 'listen';\nlet firstChar = word[0];  // 'l'\n\n// Loop through characters:\nfor (let i = 0; i < word.length; i++) {\n  console.log(word[i]);\n}\n\nGot it?",
+      "example": "let word = 'listen';\nlet firstChar = word[0];  // 'l'\n\n// Loop through characters:\nfor (let i = 0; i < word.length; i++) {\n  console.log(word[i]);\n}",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "hashmap-explanation-js",
+      "mentorSays": "Use an object to count characters. For anagrams, if two words have the same character counts, they are anagrams!\n\nlet charCount = {};\nfor (let char of 'listen') {\n  charCount[char] = (charCount[char] || 0) + 1;\n}\n// Result: { l: 1, i: 1, s: 1, t: 1, e: 1, n: 1 }\n\nGot it?",
+      "example": "let charCount = {};\nfor (let char of 'listen') {\n  charCount[char] = (charCount[char] || 0) + 1;\n}\n// Result: { l: 1, i: 1, s: 1, t: 1, e: 1, n: 1 }",
+      "action": "continue",
+      "next": "coding-start-js"
     },
     {
       "stepId": "array-explanation-js",
@@ -177,7 +219,14 @@
       "mentorSays": "When all required characters are found (formed === needCount), try to shrink the window from the left to find the minimum valid window. Update the minimum window if we find a smaller one.",
       "example": "function minWindow(s, t) {\n  if (s.length === 0 || t.length === 0) return '';\n  \n  const need = {};\n  for (let char of t) {\n    need[char] = (need[char] || 0) + 1;\n  }\n  const needCount = Object.keys(need).length;\n  \n  let left = 0, right = 0;\n  const window = {};\n  let formed = 0;\n  let minLen = Infinity;\n  let minStart = 0;\n  \n  while (right < s.length) {\n    const char = s[right];\n    window[char] = (window[char] || 0) + 1;\n    \n    if (need[char] && window[char] === need[char]) {\n      formed++;\n    }\n    \n    // Try to shrink window when all characters found\n    while (formed === needCount && left <= right) {\n      // Update minimum window\n      const currentLen = right - left + 1;\n      if (currentLen < minLen) {\n        minLen = currentLen;\n        minStart = left;\n      }\n      \n      // Remove leftmost character\n      const leftChar = s[left];\n      window[leftChar]--;\n      \n      // Check if we lost a required character\n      if (need[leftChar] && window[leftChar] < need[leftChar]) {\n        formed--;\n      }\n      \n      left++;\n    }\n    \n    right++;\n  }",
       "action": "continue",
-      "next": "coding-return-js"
+      "next": "coding-window-validation-js"
+    },
+    {
+      "stepId": "coding-window-validation-js",
+      "mentorSays": "Let's add logic to check if current window is valid.\n\nA window is valid when it contains ALL characters from t:\n- Count each character in the window\n- Compare with required counts from t\n- If window has enough of each character → VALID\n\nWe track this with a 'formed' counter!",
+      "example": "let formed = 0;\nlet required = Object.keys(need).length;\n\n// Check if window is valid\nif (windowCount[char] === need[char]) {\n  formed++;\n}\n\n// Window is valid when formed === required",
+      "action": "continue",
+      "next": "coding-window-validation-js"
     },
     {
       "stepId": "coding-return-js",
@@ -241,13 +290,55 @@
       "choices": [
         {
           "label": "Yes, I know dictionaries",
-          "next": "coding-start-python"
+          "next": "hashmap-check-python"
         },
         {
           "label": "No, explain dictionaries",
           "next": "array-explanation-python"
         }
       ]
+    },
+    {
+      "stepId": "hashmap-check-python",
+      "mentorSays": "Do you understand how to use objects/maps to count occurrences?",
+      "choices": [
+        {
+          "label": "Yes, I know hashmap",
+          "next": "string-check-python"
+        },
+        {
+          "label": "No, explain hashmap",
+          "next": "hashmap-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "string-check-python",
+      "mentorSays": "Do you understand how to work with strings and character access?",
+      "choices": [
+        {
+          "label": "Yes, I know string",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain string",
+          "next": "string-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "string-explanation-python",
+      "mentorSays": "In JavaScript, you can access individual characters in a string. For anagrams, we need to count how many times each character appears.\n\nword = 'listen'\nfirst_char = word[0]  # 'l'\n\n# Loop through characters:\nfor i in range(len(word)):\n    print(word[i])\n\nGot it?",
+      "example": "word = 'listen'\nfirst_char = word[0]  # 'l'\n\n# Loop through characters:\nfor i in range(len(word)):\n    print(word[i])",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "hashmap-explanation-python",
+      "mentorSays": "Use an object to count characters. For anagrams, if two words have the same character counts, they are anagrams!\n\nchar_count = {}\nfor char in 'listen':\n    char_count[char] = char_count.get(char, 0) + 1\n# Result: {'l': 1, 'i': 1, 's': 1, 't': 1, 'e': 1, 'n': 1}\n\nGot it?",
+      "example": "char_count = {}\nfor char in 'listen':\n    char_count[char] = char_count.get(char, 0) + 1\n# Result: {'l': 1, 'i': 1, 's': 1, 't': 1, 'e': 1, 'n': 1}",
+      "action": "continue",
+      "next": "coding-start-python"
     },
     {
       "stepId": "array-explanation-python",
@@ -289,7 +380,14 @@
       "mentorSays": "When all required characters are found (formed == need_count), try to shrink the window from the left to find the minimum valid window. Update the minimum window if we find a smaller one.",
       "example": "def min_window(s, t):\n    if len(s) == 0 or len(t) == 0:\n        return ''\n    \n    need = {}\n    for char in t:\n        need[char] = need.get(char, 0) + 1\n    need_count = len(need)\n    \n    left = 0\n    right = 0\n    window = {}\n    formed = 0\n    min_len = float('inf')\n    min_start = 0\n    \n    while right < len(s):\n        char = s[right]\n        window[char] = window.get(char, 0) + 1\n        \n        if char in need and window[char] == need[char]:\n            formed += 1\n        \n        # Try to shrink window when all characters found\n        while formed == need_count and left <= right:\n            # Update minimum window\n            current_len = right - left + 1\n            if current_len < min_len:\n                min_len = current_len\n                min_start = left\n            \n            # Remove leftmost character\n            left_char = s[left]\n            window[left_char] -= 1\n            \n            # Check if we lost a required character\n            if left_char in need and window[left_char] < need[left_char]:\n                formed -= 1\n            \n            left += 1\n        \n        right += 1",
       "action": "continue",
-      "next": "coding-return-python"
+      "next": "coding-window-validation-python"
+    },
+    {
+      "stepId": "coding-window-validation-python",
+      "mentorSays": "Let's add logic to check if current window is valid.\n\nA window is valid when it contains ALL characters from t:\n- Count each character in the window\n- Compare with required counts from t\n- If window has enough of each character → VALID\n\nWe track this with a 'formed' counter!",
+      "example": "let formed = 0;\nlet required = Object.keys(need).length;\n\n// Check if window is valid\nif (windowCount[char] === need[char]) {\n  formed++;\n}\n\n// Window is valid when formed === required",
+      "action": "continue",
+      "next": "coding-window-validation-python"
     },
     {
       "stepId": "coding-return-python",
@@ -353,13 +451,55 @@
       "choices": [
         {
           "label": "Yes, I know HashMaps",
-          "next": "coding-start-java"
+          "next": "hashmap-check-java"
         },
         {
           "label": "No, explain HashMaps",
           "next": "array-explanation-java"
         }
       ]
+    },
+    {
+      "stepId": "hashmap-check-java",
+      "mentorSays": "Do you understand how to use objects/maps to count occurrences?",
+      "choices": [
+        {
+          "label": "Yes, I know hashmap",
+          "next": "string-check-java"
+        },
+        {
+          "label": "No, explain hashmap",
+          "next": "hashmap-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "string-check-java",
+      "mentorSays": "Do you understand how to work with strings and character access?",
+      "choices": [
+        {
+          "label": "Yes, I know string",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain string",
+          "next": "string-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "string-explanation-java",
+      "mentorSays": "In JavaScript, you can access individual characters in a string. For anagrams, we need to count how many times each character appears.\n\nString word = \"listen\";\nchar firstChar = word.charAt(0);  // 'l'\n\n// Loop through characters:\nfor (int i = 0; i < word.length(); i++) {\n    System.out.println(word.charAt(i));\n}\n\nGot it?",
+      "example": "String word = \"listen\";\nchar firstChar = word.charAt(0);  // 'l'\n\n// Loop through characters:\nfor (int i = 0; i < word.length(); i++) {\n    System.out.println(word.charAt(i));\n}",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "hashmap-explanation-java",
+      "mentorSays": "Use an object to count characters. For anagrams, if two words have the same character counts, they are anagrams!\n\nMap<Character, Integer> charCount = new HashMap<>();\nfor (char c : \"listen\".toCharArray()) {\n    charCount.put(c, charCount.getOrDefault(c, 0) + 1);\n}\n\nGot it?",
+      "example": "Map<Character, Integer> charCount = new HashMap<>();\nfor (char c : \"listen\".toCharArray()) {\n    charCount.put(c, charCount.getOrDefault(c, 0) + 1);\n}",
+      "action": "continue",
+      "next": "coding-start-java"
     },
     {
       "stepId": "array-explanation-java",
@@ -401,7 +541,14 @@
       "mentorSays": "When all required characters are found (formed == needCount), try to shrink the window from the left to find the minimum valid window. Update the minimum window if we find a smaller one.",
       "example": "public String minWindow(String s, String t) {\n    if (s.length() == 0 || t.length() == 0) return \"\";\n    \n    Map<Character, Integer> need = new HashMap<>();\n    for (char c : t.toCharArray()) {\n        need.put(c, need.getOrDefault(c, 0) + 1);\n    }\n    int needCount = need.size();\n    \n    int left = 0, right = 0;\n    Map<Character, Integer> window = new HashMap<>();\n    int formed = 0;\n    int minLen = Integer.MAX_VALUE;\n    int minStart = 0;\n    \n    while (right < s.length()) {\n        char c = s.charAt(right);\n        window.put(c, window.getOrDefault(c, 0) + 1);\n        \n        if (need.containsKey(c) && window.get(c).equals(need.get(c))) {\n            formed++;\n        }\n        \n        // Try to shrink window when all characters found\n        while (formed == needCount && left <= right) {\n            // Update minimum window\n            int currentLen = right - left + 1;\n            if (currentLen < minLen) {\n                minLen = currentLen;\n                minStart = left;\n            }\n            \n            // Remove leftmost character\n            char leftChar = s.charAt(left);\n            window.put(leftChar, window.get(leftChar) - 1);\n            \n            // Check if we lost a required character\n            if (need.containsKey(leftChar) && window.get(leftChar) < need.get(leftChar)) {\n                formed--;\n            }\n            \n            left++;\n        }\n        \n        right++;\n    }",
       "action": "continue",
-      "next": "coding-return-java"
+      "next": "coding-window-validation-java"
+    },
+    {
+      "stepId": "coding-window-validation-java",
+      "mentorSays": "Let's add logic to check if current window is valid.\n\nA window is valid when it contains ALL characters from t:\n- Count each character in the window\n- Compare with required counts from t\n- If window has enough of each character → VALID\n\nWe track this with a 'formed' counter!",
+      "example": "let formed = 0;\nlet required = Object.keys(need).length;\n\n// Check if window is valid\nif (windowCount[char] === need[char]) {\n  formed++;\n}\n\n// Window is valid when formed === required",
+      "action": "continue",
+      "next": "coding-window-validation-java"
     },
     {
       "stepId": "coding-return-java",
@@ -465,13 +612,55 @@
       "choices": [
         {
           "label": "Yes, I know unordered_map",
-          "next": "coding-start-cpp"
+          "next": "hashmap-check-cpp"
         },
         {
           "label": "No, explain unordered_map",
           "next": "array-explanation-cpp"
         }
       ]
+    },
+    {
+      "stepId": "hashmap-check-cpp",
+      "mentorSays": "Do you understand how to use objects/maps to count occurrences?",
+      "choices": [
+        {
+          "label": "Yes, I know hashmap",
+          "next": "string-check-cpp"
+        },
+        {
+          "label": "No, explain hashmap",
+          "next": "hashmap-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "string-check-cpp",
+      "mentorSays": "Do you understand how to work with strings and character access?",
+      "choices": [
+        {
+          "label": "Yes, I know string",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain string",
+          "next": "string-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "string-explanation-cpp",
+      "mentorSays": "In JavaScript, you can access individual characters in a string. For anagrams, we need to count how many times each character appears.\n\nstring word = \"listen\";\nchar firstChar = word[0];  // 'l'\n\n// Loop through characters:\nfor (int i = 0; i < word.size(); i++) {\n    cout << word[i];\n}\n\nGot it?",
+      "example": "string word = \"listen\";\nchar firstChar = word[0];  // 'l'\n\n// Loop through characters:\nfor (int i = 0; i < word.size(); i++) {\n    cout << word[i];\n}",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "hashmap-explanation-cpp",
+      "mentorSays": "Use an object to count characters. For anagrams, if two words have the same character counts, they are anagrams!\n\nunordered_map<char, int> charCount;\nfor (char c : \"listen\") {\n    charCount[c]++;\n}\n\nGot it?",
+      "example": "unordered_map<char, int> charCount;\nfor (char c : \"listen\") {\n    charCount[c]++;\n}",
+      "action": "continue",
+      "next": "coding-start-cpp"
     },
     {
       "stepId": "array-explanation-cpp",
@@ -513,7 +702,14 @@
       "mentorSays": "When all required characters are found (formed == needCount), try to shrink the window from the left to find the minimum valid window. Update the minimum window if we find a smaller one.",
       "example": "string minWindow(string s, string t) {\n    if (s.empty() || t.empty()) return \"\";\n    \n    unordered_map<char, int> need;\n    for (char c : t) {\n        need[c]++;\n    }\n    int needCount = need.size();\n    \n    int left = 0, right = 0;\n    unordered_map<char, int> window;\n    int formed = 0;\n    int minLen = INT_MAX;\n    int minStart = 0;\n    \n    while (right < s.length()) {\n        char c = s[right];\n        window[c]++;\n        \n        if (need.count(c) && window[c] == need[c]) {\n            formed++;\n        }\n        \n        // Try to shrink window when all characters found\n        while (formed == needCount && left <= right) {\n            // Update minimum window\n            int currentLen = right - left + 1;\n            if (currentLen < minLen) {\n                minLen = currentLen;\n                minStart = left;\n            }\n            \n            // Remove leftmost character\n            char leftChar = s[left];\n            window[leftChar]--;\n            \n            // Check if we lost a required character\n            if (need.count(leftChar) && window[leftChar] < need[leftChar]) {\n                formed--;\n            }\n            \n            left++;\n        }\n        \n        right++;\n    }",
       "action": "continue",
-      "next": "coding-return-cpp"
+      "next": "coding-window-validation-cpp"
+    },
+    {
+      "stepId": "coding-window-validation-cpp",
+      "mentorSays": "Let's add logic to check if current window is valid.\n\nA window is valid when it contains ALL characters from t:\n- Count each character in the window\n- Compare with required counts from t\n- If window has enough of each character → VALID\n\nWe track this with a 'formed' counter!",
+      "example": "let formed = 0;\nlet required = Object.keys(need).length;\n\n// Check if window is valid\nif (windowCount[char] === need[char]) {\n  formed++;\n}\n\n// Window is valid when formed === required",
+      "action": "continue",
+      "next": "coding-window-validation-cpp"
     },
     {
       "stepId": "coding-return-cpp",
@@ -577,13 +773,55 @@
       "choices": [
         {
           "label": "Yes, I know hash maps",
-          "next": "coding-start-ts"
+          "next": "hashmap-check-ts"
         },
         {
           "label": "No, explain hash maps",
           "next": "array-explanation-ts"
         }
       ]
+    },
+    {
+      "stepId": "hashmap-check-ts",
+      "mentorSays": "Do you understand how to use objects/maps to count occurrences?",
+      "choices": [
+        {
+          "label": "Yes, I know hashmap",
+          "next": "string-check-ts"
+        },
+        {
+          "label": "No, explain hashmap",
+          "next": "hashmap-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "string-check-ts",
+      "mentorSays": "Do you understand how to work with strings and character access?",
+      "choices": [
+        {
+          "label": "Yes, I know string",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain string",
+          "next": "string-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "string-explanation-ts",
+      "mentorSays": "In JavaScript, you can access individual characters in a string. For anagrams, we need to count how many times each character appears.\n\nlet word: string = 'listen';\nlet firstChar = word[0];  // 'l'\n\n// Loop through characters:\nfor (let i = 0; i < word.length; i++) {\n  console.log(word[i]);\n}\n\nGot it?",
+      "example": "let word: string = 'listen';\nlet firstChar = word[0];  // 'l'\n\n// Loop through characters:\nfor (let i = 0; i < word.length; i++) {\n  console.log(word[i]);\n}",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "hashmap-explanation-ts",
+      "mentorSays": "Use an object to count characters. For anagrams, if two words have the same character counts, they are anagrams!\n\nlet charCount: { [key: string]: number } = {};\nfor (let char of 'listen') {\n  charCount[char] = (charCount[char] || 0) + 1;\n}\n\nGot it?",
+      "example": "let charCount: { [key: string]: number } = {};\nfor (let char of 'listen') {\n  charCount[char] = (charCount[char] || 0) + 1;\n}",
+      "action": "continue",
+      "next": "coding-start-ts"
     },
     {
       "stepId": "array-explanation-ts",
@@ -625,7 +863,14 @@
       "mentorSays": "When all required characters are found (formed === needCount), try to shrink the window from the left to find the minimum valid window. Update the minimum window if we find a smaller one.",
       "example": "function minWindow(s: string, t: string): string {\n  if (s.length === 0 || t.length === 0) return '';\n  \n  const need: { [key: string]: number } = {};\n  for (let char of t) {\n    need[char] = (need[char] || 0) + 1;\n  }\n  const needCount: number = Object.keys(need).length;\n  \n  let left: number = 0, right: number = 0;\n  const window: { [key: string]: number } = {};\n  let formed: number = 0;\n  let minLen: number = Infinity;\n  let minStart: number = 0;\n  \n  while (right < s.length) {\n    const char: string = s[right];\n    window[char] = (window[char] || 0) + 1;\n    \n    if (need[char] && window[char] === need[char]) {\n      formed++;\n    }\n    \n    // Try to shrink window when all characters found\n    while (formed === needCount && left <= right) {\n      // Update minimum window\n      const currentLen: number = right - left + 1;\n      if (currentLen < minLen) {\n        minLen = currentLen;\n        minStart = left;\n      }\n      \n      // Remove leftmost character\n      const leftChar: string = s[left];\n      window[leftChar]--;\n      \n      // Check if we lost a required character\n      if (need[leftChar] && window[leftChar] < need[leftChar]) {\n        formed--;\n      }\n      \n      left++;\n    }\n    \n    right++;\n  }",
       "action": "continue",
-      "next": "coding-return-ts"
+      "next": "coding-window-validation-ts"
+    },
+    {
+      "stepId": "coding-window-validation-ts",
+      "mentorSays": "Let's add logic to check if current window is valid.\n\nA window is valid when it contains ALL characters from t:\n- Count each character in the window\n- Compare with required counts from t\n- If window has enough of each character → VALID\n\nWe track this with a 'formed' counter!",
+      "example": "let formed = 0;\nlet required = Object.keys(need).length;\n\n// Check if window is valid\nif (windowCount[char] === need[char]) {\n  formed++;\n}\n\n// Window is valid when formed === required",
+      "action": "continue",
+      "next": "coding-window-validation-ts"
     },
     {
       "stepId": "coding-return-ts",

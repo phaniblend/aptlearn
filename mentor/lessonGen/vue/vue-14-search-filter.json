@@ -1,0 +1,96 @@
+{
+  "id": "vue-14-search-filter",
+  "title": "Search Filter",
+  "technology": "Vue",
+  "difficulty": "mid",
+  "language": "javascript",
+  "status": "draft",
+  "metadata": {
+    "time_estimate": "15 minutes",
+    "tests": "Computed, filtering",
+    "challenge_number": "14"
+  },
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand Search Filter in Vue\n2. Implement the solution using Computed, filtering\n3. Apply Angular best practices and patterns\n4. Handle edge cases and error scenarios\n5. Write clean, maintainable Vue code",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Let's understand what this Search Filter challenge asks for.\n\n**Challenge Description:**\n**What interviewers look for:**\n\n**What we need to build:**\nThis challenge tests your understanding of Computed, filtering.\n\n**Time estimate:** 15 minutes\n**Difficulty level:** Mid\n\nThis is a practical interview question that tests your understanding of core Angular concepts and your ability to implement them correctly.",
+      "example": "**What interviewers look for:**",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU solve this Search Filter challenge?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "I'll start with the basic approach and build up",
+          "next": "explore-approach-1"
+        },
+        {
+          "label": "I want to see the optimal solution directly",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I need more context about the problem",
+          "next": "problem-illustration"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-approach-1",
+      "mentorSays": "Good! Starting with a basic approach is a solid strategy. Let's build it step by step, then we'll see the complete solution.",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "Perfect! Here's the optimal solution approach:\n\n```typescript\n\n```\n\nThis solution demonstrates best practices for Vue development and shows how to properly implement Computed, filtering.",
+      "example": "",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        }
+      ]
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Let's implement the solution:",
+      "example": "",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code. Make sure it works correctly for the Search Filter challenge.\n\n**Test Cases:**\n1. Test with basic input\n2. Test with edge cases\n3. Test with empty/null values\n4. Verify the output matches expected behavior\n\nTry running it and verify the solution works as expected.",
+      "example": "// Test cases for Search Filter\n// 1. Basic functionality\n// 2. Edge cases\n// 3. Error handling",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've completed the Search Filter challenge.\n\n**Key Takeaways:**\n- You've mastered Computed, filtering\n- You understand how to implement Search Filter in Vue\n- You've applied best practices for Vue development\n- You can handle this type of interview question confidently\n\n**Time Complexity:** Varies based on implementation\n**Space Complexity:** Varies based on implementation\n\n**Related Challenges:**\n- Practice similar Vue concepts\n- Try variations of this challenge\n- Explore more advanced Vue patterns\n\nKeep practicing!",
+      "action": "continue"
+    }
+  ]
+}

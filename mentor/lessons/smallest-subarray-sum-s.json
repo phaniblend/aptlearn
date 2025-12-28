@@ -14,7 +14,7 @@
     },
     {
       "stepId": "problem-illustration",
-      "mentorSays": "Perfect! Now let's understand what the Smallest Subarray with Sum ≥ S problem is asking.\n\nImagine you have an array: [2, 1, 5, 2, 3, 2]\n\nAnd S = 7 (target sum)\n\nYour task: Find the length of the smallest subarray whose sum is greater than or equal to S.\n\nLet's explore subarrays:\n- [2, 1, 5] → sum = 8 ≥ 7 ✓, length = 3\n- [1, 5, 2] → sum = 8 ≥ 7 ✓, length = 3\n- [5, 2] → sum = 7 ≥ 7 ✓, length = 2 ✓\n- [2, 3, 2] → sum = 7 ≥ 7 ✓, length = 3\n\nSmallest length: 2 (subarray [5, 2])\n\n**Key Insight**: We can use a sliding window! We expand the window until the sum ≥ S, then shrink it from the left to find the minimum length while maintaining sum ≥ S.\n\nThat's what the problem wants: the length of the smallest subarray with sum ≥ S.",
+      "mentorSays": "Perfect! Now let's understand what the Smallest Subarray with Sum ≥ S problem is asking.\n\nImagine you have an array: [2, 1, 5, 2, 3, 2]\n\nAnd S = 7 (target sum)\n\nYour task: Find the length of the smallest subarray whose sum is greater than or equal to S.\n\n**DETAILED WALKTHROUGH:**\n\nLet's check all possible subarrays:\n\nStarting at index 0:\n- [2] → sum = 2 < 7 ✗\n- [2, 1] → sum = 3 < 7 ✗\n- [2, 1, 5] → sum = 8 ≥ 7 ✓, length = 3\n- [2, 1, 5, 2] → sum = 10 ≥ 7 ✓, length = 4\n- [2, 1, 5, 2, 3] → sum = 13 ≥ 7 ✓, length = 5\n- [2, 1, 5, 2, 3, 2] → sum = 15 ≥ 7 ✓, length = 6\n\nStarting at index 1:\n- [1] → sum = 1 < 7 ✗\n- [1, 5] → sum = 6 < 7 ✗\n- [1, 5, 2] → sum = 8 ≥ 7 ✓, length = 3\n- [1, 5, 2, 3] → sum = 11 ≥ 7 ✓, length = 4\n- [1, 5, 2, 3, 2] → sum = 13 ≥ 7 ✓, length = 5\n\nStarting at index 2:\n- [5] → sum = 5 < 7 ✗\n- [5, 2] → sum = 7 ≥ 7 ✓, length = 2 ✓ (SMALLEST!)\n- [5, 2, 3] → sum = 10 ≥ 7 ✓, length = 3\n- [5, 2, 3, 2] → sum = 12 ≥ 7 ✓, length = 4\n\nStarting at index 3:\n- [2] → sum = 2 < 7 ✗\n- [2, 3] → sum = 5 < 7 ✗\n- [2, 3, 2] → sum = 7 ≥ 7 ✓, length = 3\n\nStarting at index 4:\n- [3] → sum = 3 < 7 ✗\n- [3, 2] → sum = 5 < 7 ✗\n\nStarting at index 5:\n- [2] → sum = 2 < 7 ✗\n\n**Answer: 2** (subarray [5, 2] at indices 2-3)\n\n**WHY SLIDING WINDOW?**\n\nThe brute force approach checks O(n²) subarrays. But we can do better!\n\nSLIDING WINDOW STRATEGY:\n1. **EXPAND**: Move right pointer, add elements until sum ≥ S\n2. **SHRINK**: Move left pointer, remove elements while sum ≥ S\n3. **TRACK**: Keep track of minimum length found\n\nThis reduces complexity from O(n²) to O(n)!\n\n**VISUAL REPRESENTATION:**\n\n[2, 1, 5, 2, 3, 2], S = 7\n\nWindow [0, 2]: sum = 8 ≥ 7 ✓, length = 3\nWindow [1, 2]: sum = 6 < 7 ✗ (need to expand)\nWindow [1, 3]: sum = 8 ≥ 7 ✓, length = 3\nWindow [2, 3]: sum = 7 ≥ 7 ✓, length = 2 ✓ (MINIMUM!)\n\nThat's what the problem wants: the length of the smallest subarray with sum ≥ S.",
       "example": "nums = [2, 1, 5, 2, 3, 2]\nS = 7\n\nSubarrays with sum ≥ 7:\n[2, 1, 5] → sum = 8, length = 3\n[1, 5, 2] → sum = 8, length = 3\n[5, 2] → sum = 7, length = 2 ✓\n[2, 3, 2] → sum = 7, length = 3\n\nSmallest length: 2\n\nAnswer: 2",
       "action": "continue",
       "next": "thinking-challenge"
@@ -150,13 +150,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-js"
+          "next": "sliding-window-check-js"
         },
         {
           "label": "No, explain loops",
           "next": "main-loops-explanation-js"
         }
       ]
+    },
+    {
+      "stepId": "sliding-window-check-js",
+      "mentorSays": "Do you understand the sliding window technique?",
+      "choices": [
+        {
+          "label": "Yes, I know sliding window",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain sliding window",
+          "next": "sliding-window-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "sliding-window-explanation-js",
+      "mentorSays": "Sliding window maintains a range [left, right]. EXPAND: Move right pointer to include more elements. SHRINK: Move left pointer to reduce window size. For this problem: 1. Expand window until sum >= target, 2. Shrink window while sum >= target, 3. Track minimum length. This avoids checking every subarray!\n\nlet left = 0, right = 0;\n\n// EXPAND: Move right pointer\nwhile (right < nums.length) {\n  sum += nums[right++];\n  \n  // SHRINK: Move left pointer\n  while (sum >= target) {\n    minLen = Math.min(minLen, right - left);\n    sum -= nums[left++];\n  }\n}\n\nGot it?",
+      "example": "let left = 0, right = 0;\n\n// EXPAND: Move right pointer\nwhile (right < nums.length) {\n  sum += nums[right++];\n  \n  // SHRINK: Move left pointer\n  while (sum >= target) {\n    minLen = Math.min(minLen, right - left);\n    sum -= nums[left++];\n  }\n}",
+      "action": "continue",
+      "next": "coding-start-js"
     },
     {
       "stepId": "main-loops-explanation-js",
@@ -190,6 +211,20 @@
       "stepId": "coding-shrink-js",
       "mentorSays": "While sum ≥ s, shrink the window from the left. Update minLen with the current window length, then subtract the left element and move left forward.",
       "example": "function minSubArrayLen(s, nums) {\n  let left = 0, sum = 0, minLen = Infinity;\n  \n  for (let right = 0; right < nums.length; right++) {\n    sum += nums[right];\n    \n    while (sum >= s) {\n      minLen = Math.min(minLen, right - left + 1);\n      sum -= nums[left];\n      left++;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-expand-js"
+    },
+    {
+      "stepId": "coding-expand-js",
+      "mentorSays": "First, let's expand the window by moving the right pointer.\n\nWe keep adding elements to our sum until the sum is at least equal to the target. This expands our window to include more elements.",
+      "example": "while (right < nums.length) {\n  // Expand: add element at right\n  sum += nums[right];\n  right++;\n  \n  // Check if we can shrink\n  while (sum >= target) {\n    // Shrink logic will go here\n  }\n}",
+      "action": "continue",
+      "next": "coding-window-logic-js"
+    },
+    {
+      "stepId": "coding-window-logic-js",
+      "mentorSays": "Now let's understand the core logic.\n\nWe have TWO operations:\n1. EXPAND: Add nums[right] to sum, move right++\n2. SHRINK: Subtract nums[left] from sum, move left++\n\nThe key insight:\n- Expand when sum < target (need more elements)\n- Shrink when sum >= target (try to minimize)\n\nThis creates a sliding window that finds the minimum length!",
+      "example": "let left = 0, right = 0;\n\n// EXPAND: Move right pointer\nwhile (right < nums.length) {\n  sum += nums[right++];\n  \n  // SHRINK: Move left pointer\n  while (sum >= target) {\n    minLen = Math.min(minLen, right - left);\n    sum -= nums[left++];\n  }\n}",
       "action": "continue",
       "next": "coding-return-js"
     },
@@ -275,13 +310,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-python"
+          "next": "sliding-window-check-python"
         },
         {
           "label": "No, explain loops",
           "next": "main-loops-explanation-python"
         }
       ]
+    },
+    {
+      "stepId": "sliding-window-check-python",
+      "mentorSays": "Do you understand the sliding window technique?",
+      "choices": [
+        {
+          "label": "Yes, I know sliding window",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain sliding window",
+          "next": "sliding-window-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "sliding-window-explanation-python",
+      "mentorSays": "Sliding window maintains a range [left, right]. EXPAND: Move right pointer to include more elements. SHRINK: Move left pointer to reduce window size. For this problem: 1. Expand window until sum >= target, 2. Shrink window while sum >= target, 3. Track minimum length. This avoids checking every subarray!\n\nleft, right = 0, 0\n\n# EXPAND: Move right pointer\nwhile right < len(nums):\n    sum += nums[right]\n    right += 1\n    \n    # SHRINK: Move left pointer\n    while sum >= target:\n        min_len = min(min_len, right - left)\n        sum -= nums[left]\n        left += 1\n\nGot it?",
+      "example": "left, right = 0, 0\n\n# EXPAND: Move right pointer\nwhile right < len(nums):\n    sum += nums[right]\n    right += 1\n    \n    # SHRINK: Move left pointer\n    while sum >= target:\n        min_len = min(min_len, right - left)\n        sum -= nums[left]\n        left += 1",
+      "action": "continue",
+      "next": "coding-start-python"
     },
     {
       "stepId": "main-loops-explanation-python",
@@ -315,6 +371,20 @@
       "stepId": "coding-shrink-python",
       "mentorSays": "While sum ≥ s, shrink the window from the left. Update minLen with the current window length, then subtract the left element and move left forward.",
       "example": "def min_sub_array_len(s, nums):\n    left, sum_val, min_len = 0, 0, float('inf')\n    \n    for right in range(len(nums)):\n        sum_val += nums[right]\n        \n        while sum_val >= s:\n            min_len = min(min_len, right - left + 1)\n            sum_val -= nums[left]\n            left += 1",
+      "action": "continue",
+      "next": "coding-expand-python"
+    },
+    {
+      "stepId": "coding-expand-python",
+      "mentorSays": "First, let's expand the window by moving the right pointer.\n\nWe keep adding elements to our sum until the sum is at least equal to the target. This expands our window to include more elements.",
+      "example": "while (right < nums.length) {\n  // Expand: add element at right\n  sum += nums[right];\n  right++;\n  \n  // Check if we can shrink\n  while (sum >= target) {\n    // Shrink logic will go here\n  }\n}",
+      "action": "continue",
+      "next": "coding-window-logic-python"
+    },
+    {
+      "stepId": "coding-window-logic-python",
+      "mentorSays": "Now let's understand the core logic.\n\nWe have TWO operations:\n1. EXPAND: Add nums[right] to sum, move right++\n2. SHRINK: Subtract nums[left] from sum, move left++\n\nThe key insight:\n- Expand when sum < target (need more elements)\n- Shrink when sum >= target (try to minimize)\n\nThis creates a sliding window that finds the minimum length!",
+      "example": "left, right = 0, 0\n\n# EXPAND: Move right pointer\nwhile right < len(nums):\n    sum += nums[right]\n    right += 1\n    \n    # SHRINK: Move left pointer\n    while sum >= target:\n        min_len = min(min_len, right - left)\n        sum -= nums[left]\n        left += 1",
       "action": "continue",
       "next": "coding-return-python"
     },
@@ -400,13 +470,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-java"
+          "next": "sliding-window-check-java"
         },
         {
           "label": "No, explain loops",
           "next": "main-loops-explanation-java"
         }
       ]
+    },
+    {
+      "stepId": "sliding-window-check-java",
+      "mentorSays": "Do you understand the sliding window technique?",
+      "choices": [
+        {
+          "label": "Yes, I know sliding window",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain sliding window",
+          "next": "sliding-window-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "sliding-window-explanation-java",
+      "mentorSays": "Sliding window maintains a range [left, right]. EXPAND: Move right pointer to include more elements. SHRINK: Move left pointer to reduce window size. For this problem: 1. Expand window until sum >= target, 2. Shrink window while sum >= target, 3. Track minimum length. This avoids checking every subarray!\n\nint left = 0, right = 0;\n\n// EXPAND: Move right pointer\nwhile (right < nums.length) {\n    sum += nums[right++];\n    \n    // SHRINK: Move left pointer\n    while (sum >= target) {\n        minLen = Math.min(minLen, right - left);\n        sum -= nums[left++];\n    }\n}\n\nGot it?",
+      "example": "int left = 0, right = 0;\n\n// EXPAND: Move right pointer\nwhile (right < nums.length) {\n    sum += nums[right++];\n    \n    // SHRINK: Move left pointer\n    while (sum >= target) {\n        minLen = Math.min(minLen, right - left);\n        sum -= nums[left++];\n    }\n}",
+      "action": "continue",
+      "next": "coding-start-java"
     },
     {
       "stepId": "main-loops-explanation-java",
@@ -440,6 +531,20 @@
       "stepId": "coding-shrink-java",
       "mentorSays": "While sum ≥ s, shrink the window from the left. Update minLen with the current window length, then subtract the left element and move left forward.",
       "example": "public int minSubArrayLen(int s, int[] nums) {\n    int left = 0, sum = 0, minLen = Integer.MAX_VALUE;\n    \n    for (int right = 0; right < nums.length; right++) {\n        sum += nums[right];\n        \n        while (sum >= s) {\n            minLen = Math.min(minLen, right - left + 1);\n            sum -= nums[left];\n            left++;\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-expand-java"
+    },
+    {
+      "stepId": "coding-expand-java",
+      "mentorSays": "First, let's expand the window by moving the right pointer.\n\nWe keep adding elements to our sum until the sum is at least equal to the target. This expands our window to include more elements.",
+      "example": "while (right < nums.length) {\n  // Expand: add element at right\n  sum += nums[right];\n  right++;\n  \n  // Check if we can shrink\n  while (sum >= target) {\n    // Shrink logic will go here\n  }\n}",
+      "action": "continue",
+      "next": "coding-window-logic-java"
+    },
+    {
+      "stepId": "coding-window-logic-java",
+      "mentorSays": "Now let's understand the core logic.\n\nWe have TWO operations:\n1. EXPAND: Add nums[right] to sum, move right++\n2. SHRINK: Subtract nums[left] from sum, move left++\n\nThe key insight:\n- Expand when sum < target (need more elements)\n- Shrink when sum >= target (try to minimize)\n\nThis creates a sliding window that finds the minimum length!",
+      "example": "int left = 0, right = 0;\n\n// EXPAND: Move right pointer\nwhile (right < nums.length) {\n    sum += nums[right++];\n    \n    // SHRINK: Move left pointer\n    while (sum >= target) {\n        minLen = Math.min(minLen, right - left);\n        sum -= nums[left++];\n    }\n}",
       "action": "continue",
       "next": "coding-return-java"
     },
@@ -525,13 +630,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-cpp"
+          "next": "sliding-window-check-cpp"
         },
         {
           "label": "No, explain loops",
           "next": "main-loops-explanation-cpp"
         }
       ]
+    },
+    {
+      "stepId": "sliding-window-check-cpp",
+      "mentorSays": "Do you understand the sliding window technique?",
+      "choices": [
+        {
+          "label": "Yes, I know sliding window",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain sliding window",
+          "next": "sliding-window-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "sliding-window-explanation-cpp",
+      "mentorSays": "Sliding window maintains a range [left, right]. EXPAND: Move right pointer to include more elements. SHRINK: Move left pointer to reduce window size. For this problem: 1. Expand window until sum >= target, 2. Shrink window while sum >= target, 3. Track minimum length. This avoids checking every subarray!\n\nint left = 0, right = 0;\n\n// EXPAND: Move right pointer\nwhile (right < nums.size()) {\n    sum += nums[right++];\n    \n    // SHRINK: Move left pointer\n    while (sum >= target) {\n        minLen = min(minLen, right - left);\n        sum -= nums[left++];\n    }\n}\n\nGot it?",
+      "example": "int left = 0, right = 0;\n\n// EXPAND: Move right pointer\nwhile (right < nums.size()) {\n    sum += nums[right++];\n    \n    // SHRINK: Move left pointer\n    while (sum >= target) {\n        minLen = min(minLen, right - left);\n        sum -= nums[left++];\n    }\n}",
+      "action": "continue",
+      "next": "coding-start-cpp"
     },
     {
       "stepId": "main-loops-explanation-cpp",
@@ -565,6 +691,20 @@
       "stepId": "coding-shrink-cpp",
       "mentorSays": "While sum ≥ s, shrink the window from the left. Update minLen with the current window length, then subtract the left element and move left forward.",
       "example": "int minSubArrayLen(int s, vector<int>& nums) {\n    int left = 0, sum = 0, minLen = INT_MAX;\n    \n    for (int right = 0; right < nums.size(); right++) {\n        sum += nums[right];\n        \n        while (sum >= s) {\n            minLen = min(minLen, right - left + 1);\n            sum -= nums[left];\n            left++;\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-expand-cpp"
+    },
+    {
+      "stepId": "coding-expand-cpp",
+      "mentorSays": "First, let's expand the window by moving the right pointer.\n\nWe keep adding elements to our sum until the sum is at least equal to the target. This expands our window to include more elements.",
+      "example": "while (right < nums.length) {\n  // Expand: add element at right\n  sum += nums[right];\n  right++;\n  \n  // Check if we can shrink\n  while (sum >= target) {\n    // Shrink logic will go here\n  }\n}",
+      "action": "continue",
+      "next": "coding-window-logic-cpp"
+    },
+    {
+      "stepId": "coding-window-logic-cpp",
+      "mentorSays": "Now let's understand the core logic.\n\nWe have TWO operations:\n1. EXPAND: Add nums[right] to sum, move right++\n2. SHRINK: Subtract nums[left] from sum, move left++\n\nThe key insight:\n- Expand when sum < target (need more elements)\n- Shrink when sum >= target (try to minimize)\n\nThis creates a sliding window that finds the minimum length!",
+      "example": "int left = 0, right = 0;\n\n// EXPAND: Move right pointer\nwhile (right < nums.size()) {\n    sum += nums[right++];\n    \n    // SHRINK: Move left pointer\n    while (sum >= target) {\n        minLen = min(minLen, right - left);\n        sum -= nums[left++];\n    }\n}",
       "action": "continue",
       "next": "coding-return-cpp"
     },
@@ -650,13 +790,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-ts"
+          "next": "sliding-window-check-ts"
         },
         {
           "label": "No, explain loops",
           "next": "main-loops-explanation-ts"
         }
       ]
+    },
+    {
+      "stepId": "sliding-window-check-ts",
+      "mentorSays": "Do you understand the sliding window technique?",
+      "choices": [
+        {
+          "label": "Yes, I know sliding window",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain sliding window",
+          "next": "sliding-window-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "sliding-window-explanation-ts",
+      "mentorSays": "Sliding window maintains a range [left, right]. EXPAND: Move right pointer to include more elements. SHRINK: Move left pointer to reduce window size. For this problem: 1. Expand window until sum >= target, 2. Shrink window while sum >= target, 3. Track minimum length. This avoids checking every subarray!\n\nlet left = 0, right = 0;\n\n// EXPAND: Move right pointer\nwhile (right < nums.length) {\n  sum += nums[right++];\n  \n  // SHRINK: Move left pointer\n  while (sum >= target) {\n    minLen = Math.min(minLen, right - left);\n    sum -= nums[left++];\n  }\n}\n\nGot it?",
+      "example": "let left = 0, right = 0;\n\n// EXPAND: Move right pointer\nwhile (right < nums.length) {\n  sum += nums[right++];\n  \n  // SHRINK: Move left pointer\n  while (sum >= target) {\n    minLen = Math.min(minLen, right - left);\n    sum -= nums[left++];\n  }\n}",
+      "action": "continue",
+      "next": "coding-start-ts"
     },
     {
       "stepId": "main-loops-explanation-ts",
@@ -691,6 +852,20 @@
       "mentorSays": "While sum ≥ s, shrink the window from the left. Update minLen with the current window length, then subtract the left element and move left forward.",
       "example": "function minSubArrayLen(s: number, nums: number[]): number {\n    let left: number = 0, sum: number = 0, minLen: number = Infinity;\n    \n    for (let right = 0; right < nums.length; right++) {\n        sum += nums[right];\n        \n        while (sum >= s) {\n            minLen = Math.min(minLen, right - left + 1);\n            sum -= nums[left];\n            left++;\n        }\n    }\n}",
       "action": "continue",
+      "next": "coding-expand-ts"
+    },
+    {
+      "stepId": "coding-expand-ts",
+      "mentorSays": "First, let's expand the window by moving the right pointer.\n\nWe keep adding elements to our sum until the sum is at least equal to the target. This expands our window to include more elements.",
+      "example": "while (right < nums.length) {\n  // Expand: add element at right\n  sum += nums[right];\n  right++;\n  \n  // Check if we can shrink\n  while (sum >= target) {\n    // Shrink logic will go here\n  }\n}",
+      "action": "continue",
+      "next": "coding-window-logic-ts"
+    },
+    {
+      "stepId": "coding-window-logic-ts",
+      "mentorSays": "Now let's understand the core logic.\n\nWe have TWO operations:\n1. EXPAND: Add nums[right] to sum, move right++\n2. SHRINK: Subtract nums[left] from sum, move left++\n\nThe key insight:\n- Expand when sum < target (need more elements)\n- Shrink when sum >= target (try to minimize)\n\nThis creates a sliding window that finds the minimum length!",
+      "example": "let left = 0, right = 0;\n\n// EXPAND: Move right pointer\nwhile (right < nums.length) {\n  sum += nums[right++];\n  \n  // SHRINK: Move left pointer\n  while (sum >= target) {\n    minLen = Math.min(minLen, right - left);\n    sum -= nums[left++];\n  }\n}",
+      "action": "continue",
       "next": "coding-return-ts"
     },
     {
@@ -706,7 +881,6 @@
       "action": "continue",
       "next": "final"
     },
-    {
     {
       "stepId": "final",
       "mentorSays": "🎉 Well done! You've learned how to find the smallest subarray with sum ≥ S using sliding window. You understand how to expand and shrink the window to find the minimum length efficiently!\n\nThis is O(n) time complexity. Keep practicing!",

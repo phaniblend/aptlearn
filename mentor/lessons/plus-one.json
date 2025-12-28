@@ -150,13 +150,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-js"
+          "next": "carry-check-js"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-js"
         }
       ]
+    },
+    {
+      "stepId": "carry-check-js",
+      "mentorSays": "Do you understand how carry works in addition?",
+      "choices": [
+        {
+          "label": "Yes, I know carry",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain carry",
+          "next": "carry-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "carry-explanation-js",
+      "mentorSays": "When adding 1 to a digit, if the result is 10 or more, we carry 1 to the next digit. For example, 9 + 1 = 10, so we write 0 and carry 1.\n\nlet digits = [9, 9, 9];\nlet carry = 1;\n\n// Add 1 with carry\nfor (let i = digits.length - 1; i >= 0; i--) {\n  let sum = digits[i] + carry;\n  digits[i] = sum % 10;\n  carry = Math.floor(sum / 10);\n}\n\nGot it?",
+      "example": "let digits = [9, 9, 9];\nlet carry = 1;\n\n// Add 1 with carry\nfor (let i = digits.length - 1; i >= 0; i--) {\n  let sum = digits[i] + carry;\n  digits[i] = sum % 10;\n  carry = Math.floor(sum / 10);\n}",
+      "action": "continue",
+      "next": "coding-start-js"
     },
     {
       "stepId": "loop-explanation-js",
@@ -198,7 +219,14 @@
       "mentorSays": "If the digit is 10, set it to 0 and keep carry as 1. Otherwise, set carry to 0 and break.",
       "example": "function plusOne(digits) {\n  let carry = 1;\n  \n  for (let i = digits.length - 1; i >= 0; i--) {\n    digits[i] += carry;\n    \n    if (digits[i] === 10) {\n      digits[i] = 0;\n      carry = 1;\n    } else {\n      carry = 0;\n      break;\n    }\n  }\n}",
       "action": "continue",
-      "next": "coding-handle-overflow-js"
+      "next": "coding-all-nines-js"
+    },
+    {
+      "stepId": "coding-all-nines-js",
+      "mentorSays": "Let's handle a special edge case: what if all digits are 9?\n\nFor [9, 9, 9], adding 1 gives [1, 0, 0, 0]. We need to create a new array with an extra digit at the front!\n\nThis happens when the carry propagates all the way to the beginning.",
+      "example": "function plusOne(digits) {\n  let carry = 1;\n  \n  for (let i = digits.length - 1; i >= 0; i--) {\n    let sum = digits[i] + carry;\n    digits[i] = sum % 10;\n    carry = Math.floor(sum / 10);\n    \n    if (carry === 0) break;\n  }\n  \n  // If carry is still 1, we need a new array\n  if (carry === 1) {\n    return [1, ...digits];\n  }\n  \n  return digits;\n}",
+      "action": "continue",
+      "next": "test-code-js"
     },
     {
       "stepId": "coding-handle-overflow-js",
@@ -283,13 +311,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-python"
+          "next": "carry-check-python"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-python"
         }
       ]
+    },
+    {
+      "stepId": "carry-check-python",
+      "mentorSays": "Do you understand how carry works in addition?",
+      "choices": [
+        {
+          "label": "Yes, I know carry",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain carry",
+          "next": "carry-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "carry-explanation-python",
+      "mentorSays": "When adding 1 to a digit, if the result is 10 or more, we carry 1 to the next digit. For example, 9 + 1 = 10, so we write 0 and carry 1.\n\nlet digits = [9, 9, 9];\nlet carry = 1;\n\n// Add 1 with carry\nfor (let i = digits.length - 1; i >= 0; i--) {\n  let sum = digits[i] + carry;\n  digits[i] = sum % 10;\n  carry = Math.floor(sum / 10);\n}\n\nGot it?",
+      "example": "let digits = [9, 9, 9];\nlet carry = 1;\n\n// Add 1 with carry\nfor (let i = digits.length - 1; i >= 0; i--) {\n  let sum = digits[i] + carry;\n  digits[i] = sum % 10;\n  carry = Math.floor(sum / 10);\n}",
+      "action": "continue",
+      "next": "coding-start-python"
     },
     {
       "stepId": "loop-explanation-python",
@@ -331,7 +380,14 @@
       "mentorSays": "If the digit is 10, set it to 0 and keep carry as 1. Otherwise, set carry to 0 and break.",
       "example": "def plus_one(digits):\n    carry = 1\n    \n    for i in range(len(digits) - 1, -1, -1):\n        digits[i] += carry\n        \n        if digits[i] == 10:\n            digits[i] = 0\n            carry = 1\n        else:\n            carry = 0\n            break\n    \n    pass",
       "action": "continue",
-      "next": "coding-handle-overflow-python"
+      "next": "coding-all-nines-python"
+    },
+    {
+      "stepId": "coding-all-nines-python",
+      "mentorSays": "Let's handle a special edge case: what if all digits are 9?\n\nFor [9, 9, 9], adding 1 gives [1, 0, 0, 0]. We need to create a new array with an extra digit at the front!\n\nThis happens when the carry propagates all the way to the beginning.",
+      "example": "function plusOne(digits) {\n  let carry = 1;\n  \n  for (let i = digits.length - 1; i >= 0; i--) {\n    let sum = digits[i] + carry;\n    digits[i] = sum % 10;\n    carry = Math.floor(sum / 10);\n    \n    if (carry === 0) break;\n  }\n  \n  // If carry is still 1, we need a new array\n  if (carry === 1) {\n    return [1, ...digits];\n  }\n  \n  return digits;\n}",
+      "action": "continue",
+      "next": "test-code-python"
     },
     {
       "stepId": "coding-handle-overflow-python",
@@ -416,13 +472,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-java"
+          "next": "carry-check-java"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-java"
         }
       ]
+    },
+    {
+      "stepId": "carry-check-java",
+      "mentorSays": "Do you understand how carry works in addition?",
+      "choices": [
+        {
+          "label": "Yes, I know carry",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain carry",
+          "next": "carry-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "carry-explanation-java",
+      "mentorSays": "When adding 1 to a digit, if the result is 10 or more, we carry 1 to the next digit. For example, 9 + 1 = 10, so we write 0 and carry 1.\n\nlet digits = [9, 9, 9];\nlet carry = 1;\n\n// Add 1 with carry\nfor (let i = digits.length - 1; i >= 0; i--) {\n  let sum = digits[i] + carry;\n  digits[i] = sum % 10;\n  carry = Math.floor(sum / 10);\n}\n\nGot it?",
+      "example": "let digits = [9, 9, 9];\nlet carry = 1;\n\n// Add 1 with carry\nfor (let i = digits.length - 1; i >= 0; i--) {\n  let sum = digits[i] + carry;\n  digits[i] = sum % 10;\n  carry = Math.floor(sum / 10);\n}",
+      "action": "continue",
+      "next": "coding-start-java"
     },
     {
       "stepId": "loop-explanation-java",
@@ -464,7 +541,14 @@
       "mentorSays": "If the digit is 10, set it to 0 and keep carry as 1. Otherwise, set carry to 0 and break.",
       "example": "public int[] plusOne(int[] digits) {\n    int carry = 1;\n    \n    for (int i = digits.length - 1; i >= 0; i--) {\n        digits[i] += carry;\n        \n        if (digits[i] == 10) {\n            digits[i] = 0;\n            carry = 1;\n        } else {\n            carry = 0;\n            break;\n        }\n    }\n}",
       "action": "continue",
-      "next": "coding-handle-overflow-java"
+      "next": "coding-all-nines-java"
+    },
+    {
+      "stepId": "coding-all-nines-java",
+      "mentorSays": "Let's handle a special edge case: what if all digits are 9?\n\nFor [9, 9, 9], adding 1 gives [1, 0, 0, 0]. We need to create a new array with an extra digit at the front!\n\nThis happens when the carry propagates all the way to the beginning.",
+      "example": "function plusOne(digits) {\n  let carry = 1;\n  \n  for (let i = digits.length - 1; i >= 0; i--) {\n    let sum = digits[i] + carry;\n    digits[i] = sum % 10;\n    carry = Math.floor(sum / 10);\n    \n    if (carry === 0) break;\n  }\n  \n  // If carry is still 1, we need a new array\n  if (carry === 1) {\n    return [1, ...digits];\n  }\n  \n  return digits;\n}",
+      "action": "continue",
+      "next": "test-code-java"
     },
     {
       "stepId": "coding-handle-overflow-java",
@@ -549,13 +633,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-cpp"
+          "next": "carry-check-cpp"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-cpp"
         }
       ]
+    },
+    {
+      "stepId": "carry-check-cpp",
+      "mentorSays": "Do you understand how carry works in addition?",
+      "choices": [
+        {
+          "label": "Yes, I know carry",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain carry",
+          "next": "carry-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "carry-explanation-cpp",
+      "mentorSays": "When adding 1 to a digit, if the result is 10 or more, we carry 1 to the next digit. For example, 9 + 1 = 10, so we write 0 and carry 1.\n\nlet digits = [9, 9, 9];\nlet carry = 1;\n\n// Add 1 with carry\nfor (let i = digits.length - 1; i >= 0; i--) {\n  let sum = digits[i] + carry;\n  digits[i] = sum % 10;\n  carry = Math.floor(sum / 10);\n}\n\nGot it?",
+      "example": "let digits = [9, 9, 9];\nlet carry = 1;\n\n// Add 1 with carry\nfor (let i = digits.length - 1; i >= 0; i--) {\n  let sum = digits[i] + carry;\n  digits[i] = sum % 10;\n  carry = Math.floor(sum / 10);\n}",
+      "action": "continue",
+      "next": "coding-start-cpp"
     },
     {
       "stepId": "loop-explanation-cpp",
@@ -597,7 +702,14 @@
       "mentorSays": "If the digit is 10, set it to 0 and keep carry as 1. Otherwise, set carry to 0 and break.",
       "example": "#include <vector>\n\nvector<int> plusOne(vector<int>& digits) {\n    int carry = 1;\n    \n    for (int i = digits.size() - 1; i >= 0; i--) {\n        digits[i] += carry;\n        \n        if (digits[i] == 10) {\n            digits[i] = 0;\n            carry = 1;\n        } else {\n            carry = 0;\n            break;\n        }\n    }\n}",
       "action": "continue",
-      "next": "coding-handle-overflow-cpp"
+      "next": "coding-all-nines-cpp"
+    },
+    {
+      "stepId": "coding-all-nines-cpp",
+      "mentorSays": "Let's handle a special edge case: what if all digits are 9?\n\nFor [9, 9, 9], adding 1 gives [1, 0, 0, 0]. We need to create a new array with an extra digit at the front!\n\nThis happens when the carry propagates all the way to the beginning.",
+      "example": "function plusOne(digits) {\n  let carry = 1;\n  \n  for (let i = digits.length - 1; i >= 0; i--) {\n    let sum = digits[i] + carry;\n    digits[i] = sum % 10;\n    carry = Math.floor(sum / 10);\n    \n    if (carry === 0) break;\n  }\n  \n  // If carry is still 1, we need a new array\n  if (carry === 1) {\n    return [1, ...digits];\n  }\n  \n  return digits;\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
     },
     {
       "stepId": "coding-handle-overflow-cpp",
@@ -682,13 +794,34 @@
       "choices": [
         {
           "label": "Yes, I know loops",
-          "next": "coding-start-ts"
+          "next": "carry-check-ts"
         },
         {
           "label": "No, explain loops",
           "next": "loop-explanation-ts"
         }
       ]
+    },
+    {
+      "stepId": "carry-check-ts",
+      "mentorSays": "Do you understand how carry works in addition?",
+      "choices": [
+        {
+          "label": "Yes, I know carry",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain carry",
+          "next": "carry-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "carry-explanation-ts",
+      "mentorSays": "When adding 1 to a digit, if the result is 10 or more, we carry 1 to the next digit. For example, 9 + 1 = 10, so we write 0 and carry 1.\n\nlet digits = [9, 9, 9];\nlet carry = 1;\n\n// Add 1 with carry\nfor (let i = digits.length - 1; i >= 0; i--) {\n  let sum = digits[i] + carry;\n  digits[i] = sum % 10;\n  carry = Math.floor(sum / 10);\n}\n\nGot it?",
+      "example": "let digits = [9, 9, 9];\nlet carry = 1;\n\n// Add 1 with carry\nfor (let i = digits.length - 1; i >= 0; i--) {\n  let sum = digits[i] + carry;\n  digits[i] = sum % 10;\n  carry = Math.floor(sum / 10);\n}",
+      "action": "continue",
+      "next": "coding-start-ts"
     },
     {
       "stepId": "loop-explanation-ts",
@@ -730,7 +863,14 @@
       "mentorSays": "If the digit is 10, set it to 0 and keep carry as 1. Otherwise, set carry to 0 and break.",
       "example": "function plusOne(digits: number[]): number[] {\n  let carry = 1;\n  \n  for (let i = digits.length - 1; i >= 0; i--) {\n    digits[i] += carry;\n    \n    if (digits[i] === 10) {\n      digits[i] = 0;\n      carry = 1;\n    } else {\n      carry = 0;\n      break;\n    }\n  }\n}",
       "action": "continue",
-      "next": "coding-handle-overflow-ts"
+      "next": "coding-all-nines-ts"
+    },
+    {
+      "stepId": "coding-all-nines-ts",
+      "mentorSays": "Let's handle a special edge case: what if all digits are 9?\n\nFor [9, 9, 9], adding 1 gives [1, 0, 0, 0]. We need to create a new array with an extra digit at the front!\n\nThis happens when the carry propagates all the way to the beginning.",
+      "example": "function plusOne(digits) {\n  let carry = 1;\n  \n  for (let i = digits.length - 1; i >= 0; i--) {\n    let sum = digits[i] + carry;\n    digits[i] = sum % 10;\n    carry = Math.floor(sum / 10);\n    \n    if (carry === 0) break;\n  }\n  \n  // If carry is still 1, we need a new array\n  if (carry === 1) {\n    return [1, ...digits];\n  }\n  \n  return digits;\n}",
+      "action": "continue",
+      "next": "test-code-ts"
     },
     {
       "stepId": "coding-handle-overflow-ts",

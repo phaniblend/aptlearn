@@ -1,0 +1,173 @@
+{
+  "id": "angular-13-service-creation",
+  "title": "Service Creation",
+  "technology": "Angular",
+  "difficulty": "mid",
+  "language": "typescript",
+  "status": "draft",
+  "metadata": {
+    "time_estimate": "15 minutes",
+    "tests": "`@Injectable`, DI",
+    "challenge_number": "13"
+  },
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand Service Creation in Angular\n2. Implement the solution using `@Injectable`, DI\n3. Apply Angular best practices and patterns\n4. Handle edge cases and error scenarios\n5. Write clean, maintainable Angular code",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Let's understand what this Service Creation challenge asks for.\n\n**Challenge Description:**\n// Create data service with methods\n\n**What we need to build:**\nThis challenge tests your understanding of `@Injectable`, DI.\n\n**Time estimate:** 15 minutes\n**Difficulty level:** Mid\n\n**Expected Solution Overview:**\n```typescript\nimport { Injectable } from '@angular/core';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class DataService {\n  private data: string[] = [];\n\n  getData() {\n    return this.data;\n  }\n\n  addData(item: string) {\n    this.data.push(item);\n  }\n\n  removeData(index: number) {\n    this.data.splice(index, 1)...\n```\n\nThis is a practical interview question that tests your understanding of core Angular concepts and your ability to implement them correctly.",
+      "example": "// Create data service with methods",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU solve this Service Creation challenge?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "I'll start with the basic approach and build up",
+          "next": "explore-approach-1"
+        },
+        {
+          "label": "I want to see the optimal solution directly",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I need more context about the problem",
+          "next": "problem-illustration"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-approach-1",
+      "mentorSays": "Good! Starting with a basic approach is a solid strategy. Let's build it step by step, then we'll see the complete solution.",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "Perfect! Here's the optimal solution approach:\n\n```typescript\nimport { Injectable } from '@angular/core';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class DataService {\n  private data: string[] = [];\n\n  getData() {\n    return this.data;\n  }\n\n  addData(item: string) {\n    this.data.push(item);\n  }\n\n  removeData(index: number) {\n    this.data.splice(index, 1);\n  }\n}\n\n// Component using service\n@Component({\n  selector: 'app-consumer',\n  template: `\n    <ul>\n      <li *ngFor=\"let item of items\">{{ item }}</li>\n    </ul>\n  `,\n  standalone: true,\n  imports: [NgFor]\n})\nexport class ConsumerComponent {\n  items: string[];\n\n  constructor(private dataService: DataService) {\n    this.items = this.dataService.getData();\n  }\n}\n```\n\nThis solution demonstrates best practices for Angular development and shows how to properly implement `@Injectable`, DI.",
+      "example": "import { Injectable } from '@angular/core';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class DataService {\n  private data: string[] = [];\n\n  getData() {\n    return this.data;\n  }\n\n  addData(item: string) {\n    this.data.push(item);\n  }\n\n  removeData(index: number) {\n    this.data.splice(index, 1);\n  }\n}\n\n// Component using service\n@Component({\n  selector: 'app-consumer',\n  template: `\n    <ul>\n      <li *ngFor=\"let item of items\">{{ item }}</li>\n    </ul>\n  `,\n  standalone: true,\n  imports: [NgFor]\n})\nexport class ConsumerComponent {\n  items: string[];\n\n  constructor(private dataService: DataService) {\n    this.items = this.dataService.getData();\n  }\n}",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this solution. Since this is an Angular challenge, we'll use TypeScript.",
+      "action": "continue",
+      "next": "component-check"
+    },
+    {
+      "stepId": "component-check",
+      "mentorSays": "Before we start coding, let me check: Do you know what Angular components are and how to use the @Component decorator?",
+      "choices": [
+        {
+          "label": "Yes, I know components",
+          "next": "decorator-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "component-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "component-explanation",
+      "mentorSays": "Angular components are the building blocks of Angular applications. They consist of:\n- A TypeScript class with the @Component decorator\n- A template (HTML) that defines the view\n- Optional styles for component-specific CSS\n\nExample:\n```typescript\n@Component({\n  selector: 'app-example',\n  template: '<h1>Hello Angular</h1>',\n  standalone: true\n})\nexport class ExampleComponent {}\n```\n\nThe @Component decorator tells Angular that this class is a component. The selector is how you use it in templates (like `<app-example>`).",
+      "example": "@Component({\n  selector: 'app-example',\n  template: '<h1>Hello Angular</h1>',\n  standalone: true\n})\nexport class ExampleComponent {}",
+      "action": "continue",
+      "next": "decorator-check"
+    },
+    {
+      "stepId": "decorator-check",
+      "mentorSays": "Do you understand TypeScript decorators like @Component, @Input, @Output?",
+      "choices": [
+        {
+          "label": "Yes, I know decorators",
+          "next": "template-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "decorator-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "decorator-explanation",
+      "mentorSays": "Decorators are special functions that modify classes, methods, or properties. In Angular:\n- @Component marks a class as a component\n- @Input() marks a property to receive data from parent component\n- @Output() marks an EventEmitter to send data to parent component\n\nExample:\n```typescript\n@Component({\n  selector: 'app-user',\n  template: '<p>{{ name }}</p>',\n  standalone: true\n})\nexport class UserComponent {\n  @Input() name!: string;\n  @Output() clicked = new EventEmitter();\n}\n```",
+      "example": "@Input() name!: string;\n@Output() clicked = new EventEmitter();",
+      "action": "continue",
+      "next": "template-check"
+    },
+    {
+      "stepId": "template-check",
+      "mentorSays": "Good! Now let's start coding.",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's build the Service Creation solution step by step. We'll start with the basic structure and then add the implementation.",
+      "action": "continue",
+      "next": "coding-imports-ts"
+    },
+    {
+      "stepId": "coding-imports-ts",
+      "mentorSays": "First, we need to import the necessary Angular modules and dependencies. Let's identify what we need based on the solution.",
+      "example": "import { Component } from '@angular/core';",
+      "action": "continue",
+      "next": "coding-component-decorator-ts"
+    },
+    {
+      "stepId": "coding-component-decorator-ts",
+      "mentorSays": "Now let's create the component class with the @Component decorator. We'll set up the selector, template, and make it standalone.",
+      "example": "@Component({\n  selector: 'app-example',\n  template: '...',\n  standalone: true\n})",
+      "action": "continue",
+      "next": "coding-class-ts"
+    },
+    {
+      "stepId": "coding-class-ts",
+      "mentorSays": "Now let's define the component class. This is where we'll add our properties and methods.",
+      "example": "export class ExampleComponent {\n  // Properties and methods go here\n}",
+      "action": "continue",
+      "next": "coding-properties-ts"
+    },
+    {
+      "stepId": "coding-properties-ts",
+      "mentorSays": "Let's add the properties we need. These will hold our component's data.",
+      "example": "export class ExampleComponent {\n  message = 'Hello';\n  isActive = true;\n}",
+      "action": "continue",
+      "next": "coding-methods-ts"
+    },
+    {
+      "stepId": "coding-methods-ts",
+      "mentorSays": "Now let's add the methods that implement our logic. These methods will handle the component's behavior.",
+      "example": "export class ExampleComponent {\n  handleClick() {\n    // Implementation\n  }\n}",
+      "action": "continue",
+      "next": "coding-complete-ts"
+    },
+    {
+      "stepId": "coding-complete-ts",
+      "mentorSays": "Perfect! Here's the complete solution with all the pieces together:",
+      "example": "import { Injectable } from '@angular/core';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class DataService {\n  private data: string[] = [];\n\n  getData() {\n    return this.data;\n  }\n\n  addData(item: string) {\n    this.data.push(item);\n  }\n\n  removeData(index: number) {\n    this.data.splice(index, 1);\n  }\n}\n\n// Component using service\n@Component({\n  selector: 'app-consumer',\n  template: `\n    <ul>\n      <li *ngFor=\"let item of items\">{{ item }}</li>\n    </ul>\n  `,\n  standalone: true,\n  imports: [NgFor]\n})\nexport class ConsumerComponent {\n  items: string[];\n\n  constructor(private dataService: DataService) {\n    this.items = this.dataService.getData();\n  }\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code. Make sure it works correctly for the Service Creation challenge.\n\n**Test Cases:**\n1. Test with basic input\n2. Test with edge cases\n3. Test with empty/null values\n4. Verify the output matches expected behavior\n\nTry running it and verify the solution works as expected.",
+      "example": "// Test cases for Service Creation\n// 1. Basic functionality\n// 2. Edge cases\n// 3. Error handling",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've completed the Service Creation challenge.\n\n**Key Takeaways:**\n- You've mastered `@Injectable`, DI\n- You understand how to implement Service Creation in Angular\n- You've applied best practices for Angular development\n- You can handle this type of interview question confidently\n\n**Time Complexity:** Varies based on implementation\n**Space Complexity:** Varies based on implementation\n\n**Related Challenges:**\n- Practice similar Angular concepts\n- Try variations of this challenge\n- Explore more advanced Angular patterns\n\nKeep practicing!",
+      "action": "continue"
+    }
+  ]
+}
