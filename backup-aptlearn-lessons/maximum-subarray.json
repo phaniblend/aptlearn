@@ -1,0 +1,615 @@
+{
+  "id": "maximum-subarray",
+  "title": "Maximum subarray (Kadane's)",
+  "pattern": "dynamic-programming",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Maximum Subarray problem asks for\n2. Use Kadane's algorithm to find the maximum sum subarray\n3. Track the maximum sum as we iterate through the array\n4. Implement the solution step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what the Maximum Subarray problem is asking.\n\nImagine you have an array: [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n\nYour task: Find the contiguous subarray with the largest sum.\n\nA subarray is a contiguous part of the array - elements must be consecutive!\n\nLet's find subarrays and their sums:\n- [-2] → sum = -2\n- [1] → sum = 1\n- [-3] → sum = -3\n- [4] → sum = 4\n- [4, -1] → sum = 3\n- [4, -1, 2] → sum = 5\n- [4, -1, 2, 1] → sum = 6 ✓\n- [4, -1, 2, 1, -5] → sum = 1\n- [4, -1, 2, 1, -5, 4] → sum = 5\n\nMaximum subarray sum: 6 (from [4, -1, 2, 1])\n\n**Key Insight**: We use Kadane's algorithm:\n- Track the maximum sum ending at current position\n- If current sum becomes negative, reset it (start fresh)\n- Keep track of the overall maximum sum seen so far\n\nLet's trace with [-2, 1, -3, 4, -1, 2, 1, -5, 4]:\n\n- **i=0**: num=-2, currentSum=-2, maxSum=-2\n- **i=1**: num=1, currentSum=max(-2+1, 1)=1, maxSum=1\n- **i=2**: num=-3, currentSum=max(1-3, -3)=-2, maxSum=1\n- **i=3**: num=4, currentSum=max(-2+4, 4)=4, maxSum=4\n- **i=4**: num=-1, currentSum=4-1=3, maxSum=4\n- **i=5**: num=2, currentSum=3+2=5, maxSum=5\n- **i=6**: num=1, currentSum=5+1=6, maxSum=6 ✓\n- **i=7**: num=-5, currentSum=6-5=1, maxSum=6\n- **i=8**: num=4, currentSum=1+4=5, maxSum=6\n\nAnswer: 6\n\nThat's what the problem wants: the maximum sum of any contiguous subarray.",
+      "example": "nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n\nFind maximum subarray sum:\n- [4, -1, 2, 1] (sum = 6) ✓\n\nAnswer: 6\n\nAnother example:\nnums = [1]\n\nAnswer: 1\n\nAnother example:\nnums = [5, 4, -1, 7, 8]\n\nAnswer: 23 (entire array)",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU find the maximum subarray sum?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Use Kadane's algorithm - track max sum ending at each position",
+          "next": "explore-kadane"
+        },
+        {
+          "label": "Check all possible subarrays and find the one with maximum sum",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use divide and conquer approach",
+          "next": "explore-divide-conquer"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"I'll check all possible subarrays and find which one has the maximum sum.\"\n\nThis works! However, it's O(n²) time complexity.\n\nWould you like to learn Kadane's algorithm which is O(n) time?",
+      "action": "continue",
+      "next": "explore-kadane"
+    },
+    {
+      "stepId": "explore-divide-conquer",
+      "mentorSays": "Great thinking! Divide and conquer is an O(n log n) approach. However, Kadane's algorithm is simpler and more efficient (O(n)).\n\nLet's learn Kadane's algorithm!",
+      "action": "continue",
+      "next": "explore-kadane"
+    },
+    {
+      "stepId": "explore-kadane",
+      "mentorSays": "Excellent choice! Kadane's algorithm is efficient and elegant. Here's the core idea:\n\n1. **Track Current Sum**: Keep track of the maximum sum ending at the current position\n2. **Reset if Negative**: If current sum becomes negative, reset it to 0 (or the current element) - starting a new subarray is better\n3. **Track Maximum**: Keep track of the overall maximum sum seen so far\n4. **Result**: Return the maximum sum\n\n**Key Insight**: If the sum ending at position i-1 is negative, we should start fresh from position i, because adding a negative sum will only make things worse!\n\nLet's trace with [-2, 1, -3, 4, -1, 2, 1, -5, 4]:\n\n- **i=0**: num=-2, currentSum=max(-2, -2)=-2, maxSum=-2\n- **i=1**: num=1, currentSum=max(-2+1, 1)=1, maxSum=1 (reset!)\n- **i=2**: num=-3, currentSum=max(1-3, -3)=-2, maxSum=1\n- **i=3**: num=4, currentSum=max(-2+4, 4)=4, maxSum=4 (reset!)\n- **i=4**: num=-1, currentSum=4-1=3, maxSum=4\n- **i=5**: num=2, currentSum=3+2=5, maxSum=5\n- **i=6**: num=1, currentSum=5+1=6, maxSum=6 ✓\n- **i=7**: num=-5, currentSum=6-5=1, maxSum=6\n- **i=8**: num=4, currentSum=1+4=5, maxSum=6\n\nAnswer: 6\n\nThis is O(n) time and O(1) space! Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'maxSum' or 'currentSum') and put data inside it.\n\nFor example, 'let maxSum = 0;' creates a variable that stores the number 0.",
+      "example": "let maxSum = 0;\n\nNow the variable refers to the number 0",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "array-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "array-check-js"
+    },
+    {
+      "stepId": "array-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what an array is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-js",
+      "mentorSays": "An array is like a list of items that keeps them in order. Each item has a position number called an 'index'. Array indices start counting from 0.",
+      "example": "arr = [1, 2, 3]\n\narr[0] = 1\narr[1] = 2\narr[2] = 3",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement maximum subarray using Kadane's algorithm in JavaScript.",
+      "example": "function maxSubArray(nums) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "First, initialize variables to track the maximum sum and the current sum ending at the current position.",
+      "example": "function maxSubArray(nums) {\n  // Initialize maxSum with first element\n  let maxSum = nums[0];\n  let currentSum = nums[0];",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Now, iterate through the array starting from index 1. For each element, update the current sum.",
+      "example": "function maxSubArray(nums) {\n  let maxSum = nums[0];\n  let currentSum = nums[0];\n  \n  // Iterate through remaining elements\n  for (let i = 1; i < nums.length; i++) {\n    // Update current sum\n  }",
+      "action": "continue",
+      "next": "coding-update-js"
+    },
+    {
+      "stepId": "coding-update-js",
+      "mentorSays": "Update currentSum: either extend the previous subarray (currentSum + nums[i]) or start fresh (nums[i]). Choose the maximum. Then update maxSum if currentSum is larger.",
+      "example": "function maxSubArray(nums) {\n  let maxSum = nums[0];\n  let currentSum = nums[0];\n  \n  for (let i = 1; i < nums.length; i++) {\n    // Either extend previous subarray or start fresh\n    currentSum = Math.max(currentSum + nums[i], nums[i]);\n    \n    // Update maxSum if currentSum is larger\n    maxSum = Math.max(maxSum, currentSum);\n  }",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Finally, return maxSum, which contains the maximum subarray sum.",
+      "example": "function maxSubArray(nums) {\n  let maxSum = nums[0];\n  let currentSum = nums[0];\n  \n  for (let i = 1; i < nums.length; i++) {\n    currentSum = Math.max(currentSum + nums[i], nums[i]);\n    maxSum = Math.max(maxSum, currentSum);\n  }\n  \n  return maxSum;\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n\nAfter calling maxSubArray(nums), it should return:\n6\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n\nAfter maxSubArray(nums):\n6",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'max_sum' or 'current_sum') and put data inside it.\n\nFor example, 'max_sum = 0' creates a variable that stores the number 0.",
+      "example": "max_sum = 0\n\nNow the variable refers to the number 0",
+      "action": "continue",
+      "next": "function-check-python"
+    },
+    {
+      "stepId": "function-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "array-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "array-check-python"
+    },
+    {
+      "stepId": "array-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a list is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know lists",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain lists",
+          "next": "array-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-python",
+      "mentorSays": "A list is like an array - a collection of items that keeps them in order. Each item has a position number called an 'index'. List indices start counting from 0.",
+      "example": "arr = [1, 2, 3]\n\narr[0] = 1\narr[1] = 2\narr[2] = 3",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement maximum subarray using Kadane's algorithm in Python.",
+      "example": "def max_sub_array(nums):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-init-python"
+    },
+    {
+      "stepId": "coding-init-python",
+      "mentorSays": "First, initialize variables to track the maximum sum and the current sum ending at the current position.",
+      "example": "def max_sub_array(nums):\n    # Initialize maxSum with first element\n    max_sum = nums[0]\n    current_sum = nums[0]",
+      "action": "continue",
+      "next": "coding-loop-python"
+    },
+    {
+      "stepId": "coding-loop-python",
+      "mentorSays": "Now, iterate through the array starting from index 1. For each element, update the current sum.",
+      "example": "def max_sub_array(nums):\n    max_sum = nums[0]\n    current_sum = nums[0]\n    \n    # Iterate through remaining elements\n    for i in range(1, len(nums)):\n        # Update current sum\n        pass",
+      "action": "continue",
+      "next": "coding-update-python"
+    },
+    {
+      "stepId": "coding-update-python",
+      "mentorSays": "Update current_sum: either extend the previous subarray (current_sum + nums[i]) or start fresh (nums[i]). Choose the maximum. Then update max_sum if current_sum is larger.",
+      "example": "def max_sub_array(nums):\n    max_sum = nums[0]\n    current_sum = nums[0]\n    \n    for i in range(1, len(nums)):\n        # Either extend previous subarray or start fresh\n        current_sum = max(current_sum + nums[i], nums[i])\n        \n        # Update max_sum if current_sum is larger\n        max_sum = max(max_sum, current_sum)",
+      "action": "continue",
+      "next": "coding-return-python"
+    },
+    {
+      "stepId": "coding-return-python",
+      "mentorSays": "Finally, return max_sum, which contains the maximum subarray sum.",
+      "example": "def max_sub_array(nums):\n    max_sum = nums[0]\n    current_sum = nums[0]\n    \n    for i in range(1, len(nums)):\n        current_sum = max(current_sum + nums[i], nums[i])\n        max_sum = max(max_sum, current_sum)\n    \n    return max_sum",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n\nAfter calling max_sub_array(nums), it should return:\n6\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n\nAfter max_sub_array(nums):\n6",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'maxSum' or 'currentSum') and put data inside it.\n\nFor example, 'int maxSum = 0;' creates a variable that stores the number 0.",
+      "example": "int maxSum = 0;\n\nNow the variable refers to the number 0",
+      "action": "continue",
+      "next": "function-check-java"
+    },
+    {
+      "stepId": "function-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know methods",
+          "next": "array-check-java"
+        },
+        {
+          "label": "No, explain methods",
+          "next": "function-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-java",
+      "mentorSays": "A method is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "array-check-java"
+    },
+    {
+      "stepId": "array-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what an array is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-java",
+      "mentorSays": "An array is like a list of items that keeps them in order. Each item has a position number called an 'index'. Array indices start counting from 0.",
+      "example": "int[] arr = {1, 2, 3};\n\narr[0] = 1\narr[1] = 2\narr[2] = 3",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement maximum subarray using Kadane's algorithm in Java.",
+      "example": "public int maxSubArray(int[] nums) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-java"
+    },
+    {
+      "stepId": "coding-init-java",
+      "mentorSays": "First, initialize variables to track the maximum sum and the current sum ending at the current position.",
+      "example": "public int maxSubArray(int[] nums) {\n    // Initialize maxSum with first element\n    int maxSum = nums[0];\n    int currentSum = nums[0];",
+      "action": "continue",
+      "next": "coding-loop-java"
+    },
+    {
+      "stepId": "coding-loop-java",
+      "mentorSays": "Now, iterate through the array starting from index 1. For each element, update the current sum.",
+      "example": "public int maxSubArray(int[] nums) {\n    int maxSum = nums[0];\n    int currentSum = nums[0];\n    \n    // Iterate through remaining elements\n    for (int i = 1; i < nums.length; i++) {\n        // Update current sum\n    }",
+      "action": "continue",
+      "next": "coding-update-java"
+    },
+    {
+      "stepId": "coding-update-java",
+      "mentorSays": "Update currentSum: either extend the previous subarray (currentSum + nums[i]) or start fresh (nums[i]). Choose the maximum. Then update maxSum if currentSum is larger.",
+      "example": "public int maxSubArray(int[] nums) {\n    int maxSum = nums[0];\n    int currentSum = nums[0];\n    \n    for (int i = 1; i < nums.length; i++) {\n        // Either extend previous subarray or start fresh\n        currentSum = Math.max(currentSum + nums[i], nums[i]);\n        \n        // Update maxSum if currentSum is larger\n        maxSum = Math.max(maxSum, currentSum);\n    }",
+      "action": "continue",
+      "next": "coding-return-java"
+    },
+    {
+      "stepId": "coding-return-java",
+      "mentorSays": "Finally, return maxSum, which contains the maximum subarray sum.",
+      "example": "public int maxSubArray(int[] nums) {\n    int maxSum = nums[0];\n    int currentSum = nums[0];\n    \n    for (int i = 1; i < nums.length; i++) {\n        currentSum = Math.max(currentSum + nums[i], nums[i]);\n        maxSum = Math.max(maxSum, currentSum);\n    }\n    \n    return maxSum;\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n\nAfter calling maxSubArray(nums), it should return:\n6\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n\nAfter maxSubArray(nums):\n6",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'maxSum' or 'currentSum') and put data inside it.\n\nFor example, 'int maxSum = 0;' creates a variable that stores the number 0.",
+      "example": "int maxSum = 0;\n\nNow the variable refers to the number 0",
+      "action": "continue",
+      "next": "function-check-cpp"
+    },
+    {
+      "stepId": "function-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "array-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "array-check-cpp"
+    },
+    {
+      "stepId": "array-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a vector is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know vectors",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain vectors",
+          "next": "array-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-cpp",
+      "mentorSays": "A vector is like an array - a collection of items that keeps them in order. Each item has a position number called an 'index'. Vector indices start counting from 0.",
+      "example": "vector<int> arr = {1, 2, 3};\n\narr[0] = 1\narr[1] = 2\narr[2] = 3",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement maximum subarray using Kadane's algorithm in C++.",
+      "example": "int maxSubArray(vector<int>& nums) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-cpp"
+    },
+    {
+      "stepId": "coding-init-cpp",
+      "mentorSays": "First, initialize variables to track the maximum sum and the current sum ending at the current position.",
+      "example": "int maxSubArray(vector<int>& nums) {\n    // Initialize maxSum with first element\n    int maxSum = nums[0];\n    int currentSum = nums[0];",
+      "action": "continue",
+      "next": "coding-loop-cpp"
+    },
+    {
+      "stepId": "coding-loop-cpp",
+      "mentorSays": "Now, iterate through the array starting from index 1. For each element, update the current sum.",
+      "example": "int maxSubArray(vector<int>& nums) {\n    int maxSum = nums[0];\n    int currentSum = nums[0];\n    \n    // Iterate through remaining elements\n    for (int i = 1; i < nums.size(); i++) {\n        // Update current sum\n    }",
+      "action": "continue",
+      "next": "coding-update-cpp"
+    },
+    {
+      "stepId": "coding-update-cpp",
+      "mentorSays": "Update currentSum: either extend the previous subarray (currentSum + nums[i]) or start fresh (nums[i]). Choose the maximum. Then update maxSum if currentSum is larger.",
+      "example": "int maxSubArray(vector<int>& nums) {\n    int maxSum = nums[0];\n    int currentSum = nums[0];\n    \n    for (int i = 1; i < nums.size(); i++) {\n        // Either extend previous subarray or start fresh\n        currentSum = max(currentSum + nums[i], nums[i]);\n        \n        // Update maxSum if currentSum is larger\n        maxSum = max(maxSum, currentSum);\n    }",
+      "action": "continue",
+      "next": "coding-return-cpp"
+    },
+    {
+      "stepId": "coding-return-cpp",
+      "mentorSays": "Finally, return maxSum, which contains the maximum subarray sum.",
+      "example": "int maxSubArray(vector<int>& nums) {\n    int maxSum = nums[0];\n    int currentSum = nums[0];\n    \n    for (int i = 1; i < nums.size(); i++) {\n        currentSum = max(currentSum + nums[i], nums[i]);\n        maxSum = max(maxSum, currentSum);\n    }\n    \n    return maxSum;\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n\nAfter calling maxSubArray(nums), it should return:\n6\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n\nAfter maxSubArray(nums):\n6",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'maxSum' or 'currentSum') and put data inside it.\n\nFor example, 'let maxSum: number = 0;' creates a variable that stores the number 0.",
+      "example": "let maxSum: number = 0;\n\nNow the variable refers to the number 0",
+      "action": "continue",
+      "next": "function-check-ts"
+    },
+    {
+      "stepId": "function-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "array-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function add(a: number, b: number): number {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "array-check-ts"
+    },
+    {
+      "stepId": "array-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what an array is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know arrays",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain arrays",
+          "next": "array-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "array-explanation-ts",
+      "mentorSays": "An array is like a list of items that keeps them in order. Each item has a position number called an 'index'. Array indices start counting from 0.",
+      "example": "arr: number[] = [1, 2, 3]\n\narr[0] = 1\narr[1] = 2\narr[2] = 3",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement maximum subarray using Kadane's algorithm in TypeScript.",
+      "example": "function maxSubArray(nums: number[]): number {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-ts"
+    },
+    {
+      "stepId": "coding-init-ts",
+      "mentorSays": "First, initialize variables to track the maximum sum and the current sum ending at the current position.",
+      "example": "function maxSubArray(nums: number[]): number {\n  // Initialize maxSum with first element\n  let maxSum: number = nums[0];\n  let currentSum: number = nums[0];",
+      "action": "continue",
+      "next": "coding-loop-ts"
+    },
+    {
+      "stepId": "coding-loop-ts",
+      "mentorSays": "Now, iterate through the array starting from index 1. For each element, update the current sum.",
+      "example": "function maxSubArray(nums: number[]): number {\n  let maxSum: number = nums[0];\n  let currentSum: number = nums[0];\n  \n  // Iterate through remaining elements\n  for (let i = 1; i < nums.length; i++) {\n    // Update current sum\n  }",
+      "action": "continue",
+      "next": "coding-update-ts"
+    },
+    {
+      "stepId": "coding-update-ts",
+      "mentorSays": "Update currentSum: either extend the previous subarray (currentSum + nums[i]) or start fresh (nums[i]). Choose the maximum. Then update maxSum if currentSum is larger.",
+      "example": "function maxSubArray(nums: number[]): number {\n  let maxSum: number = nums[0];\n  let currentSum: number = nums[0];\n  \n  for (let i = 1; i < nums.length; i++) {\n    // Either extend previous subarray or start fresh\n    currentSum = Math.max(currentSum + nums[i], nums[i]);\n    \n    // Update maxSum if currentSum is larger\n    maxSum = Math.max(maxSum, currentSum);\n  }",
+      "action": "continue",
+      "next": "coding-return-ts"
+    },
+    {
+      "stepId": "coding-return-ts",
+      "mentorSays": "Finally, return maxSum, which contains the maximum subarray sum.",
+      "example": "function maxSubArray(nums: number[]): number {\n  let maxSum: number = nums[0];\n  let currentSum: number = nums[0];\n  \n  for (let i = 1; i < nums.length; i++) {\n    currentSum = Math.max(currentSum + nums[i], nums[i]);\n    maxSum = Math.max(maxSum, currentSum);\n  }\n  \n  return maxSum;\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n\nAfter calling maxSubArray(nums), it should return:\n6\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n\nAfter maxSubArray(nums):\n6",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've learned maximum subarray (Kadane's algorithm). You understand how to track the maximum sum ending at each position and reset when the sum becomes negative!\n\nThis is O(n) time and O(1) space - excellent for subarray problems! Keep practicing!",
+      "action": "continue"
+    }
+  ]
+}

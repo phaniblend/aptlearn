@@ -1,0 +1,703 @@
+{
+  "id": "remove-duplicates-sorted",
+  "title": "Remove duplicates from sorted array",
+  "pattern": "two-pointers",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "published",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Define and use variables in your chosen language\n2. Create functions with parameters\n3. Loop through arrays using 'for loop' in your chosen language\n4. Use two pointers to remove duplicates from a sorted array",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what we want to do.\n\nImagine you have a sorted array: [1, 1, 2, 2, 3, 4, 4, 5]\n\nWe want to remove duplicates, so each number appears only once. The result should be:\n[1, 2, 3, 4, 5]\n\nNotice that:\n- We keep the first 1, remove the second 1\n- We keep the first 2, remove the second 2\n- We keep 3 (no duplicate)\n- We keep the first 4, remove the second 4\n- We keep 5 (no duplicate)\n\nThat's what we're trying to do: remove duplicate elements from a sorted array, keeping only unique values.",
+      "example": "Original: [1, 1, 2, 2, 3, 4, 4, 5]\n\nAfter removing duplicates: [1, 2, 3, 4, 5]",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what we want to do, here's the question:\n\nHow would YOU remove duplicates from a sorted array?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Use two pointers: one to track unique elements, one to scan through",
+          "next": "explore-two-pointers"
+        },
+        {
+          "label": "Create a new array and only add elements we haven't seen",
+          "next": "explore-new-array"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-new-array",
+      "mentorSays": "Creating a new array works, but it uses extra space. Let's learn to remove duplicates in-place (modify the original array) which is more efficient!\n\nWe'll use two pointers: one to track where to place unique elements, and one to scan through. Let's try that!",
+      "action": "continue",
+      "next": "explore-two-pointers"
+    },
+    {
+      "stepId": "explore-two-pointers",
+      "mentorSays": "That's the right thinking! We'll use two pointers:\n- One pointer (let's call it 'write') tracks where to place the next unique element\n- Another pointer (let's call it 'read') scans through the array\n\nFor array [1, 1, 2, 2, 3, 4, 4, 5]:\n- Start: write = 0, read = 1\n- read=1: arr[1]=1 equals arr[0]=1 (duplicate, skip)\n- read=2: arr[2]=2 is new! → arr[write=1] = 2, write = 2\n- read=3: arr[3]=2 equals arr[2]=2 (duplicate, skip)\n- read=4: arr[4]=3 is new! → arr[write=2] = 3, write = 3\n- read=5: arr[5]=4 is new! → arr[write=3] = 4, write = 4\n- read=6: arr[6]=4 equals arr[5]=4 (duplicate, skip)\n- read=7: arr[7]=5 is new! → arr[write=4] = 5, write = 5\n\nResult: [1, 2, 3, 4, 5] (first 5 elements)\n\nNow let's turn this into code!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'let numbers = [3, 7, 2, 9, 5];' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "let numbers = [3, 7, 2, 9, 5];\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To remove duplicates, we'll need to use a loop. Do you know what a loop is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's create a function that takes a sorted array and removes duplicates in-place.",
+      "example": "function removeDuplicates(arr) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "First, we'll set up a write pointer at index 0. The first element is always unique, so we keep it.",
+      "example": "function removeDuplicates(arr) {\n  if (arr.length === 0) return 0;\n  let write = 0;\n  // Now scan from index 1\n}",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Now we loop from index 1 to the end. For each element, if it's different from the element at the write pointer, it's a new unique element.",
+      "example": "function removeDuplicates(arr) {\n  if (arr.length === 0) return 0;\n  let write = 0;\n  for (let read = 1; read < arr.length; read++) {\n    // If arr[read] is different from arr[write], it's unique\n  }\n}\n\nFor [1, 1, 2, 2, 3, 4, 4, 5]:\n- write=0, read=1: arr[1]=1 equals arr[0]=1 (skip)\n- read=2: arr[2]=2 is different → new unique",
+      "action": "continue",
+      "next": "coding-complete-js"
+    },
+    {
+      "stepId": "coding-complete-js",
+      "mentorSays": "When we find a unique element, we move the write pointer forward and place the new element there. At the end, we return the number of unique elements.",
+      "example": "function removeDuplicates(arr) {\n  if (arr.length === 0) return 0;\n  let write = 0;\n  for (let read = 1; read < arr.length; read++) {\n    if (arr[read] !== arr[write]) {\n      write++;\n      arr[write] = arr[read];\n    }",
+      "action": "continue",
+      "next": "coding-call-js"
+    },
+    {
+      "stepId": "variable-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'numbers = [3, 7, 2, 9, 5]' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-python"
+    },
+    {
+      "stepId": "function-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-python"
+    },
+    {
+      "stepId": "parameter-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def find_max(arr):', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'find_max([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "def find_max(arr): {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfind_max([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-python"
+    },
+    {
+      "stepId": "parameter-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def find_max(arr):', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'find_max([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "def find_max(arr): {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfind_max([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-python"
+    },
+    {
+      "stepId": "loop-check-python",
+      "mentorSays": "To remove duplicates, we'll need to use a loop. Do you know what a loop is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, 'for i in range(3)' means: run the code 3 times, with i being 0, then 1, then 2.",
+      "example": "for i in range(3):\n    print(i)\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's create a function that takes a sorted array and removes duplicates in-place.",
+      "example": "def remove_duplicates(arr):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-complete-python"
+    },
+    {
+      "stepId": "coding-complete-python",
+      "mentorSays": "We use two pointers: write tracks unique elements, read scans through. When we find a unique element, we place it at the write position.",
+      "example": "def remove_duplicates(arr):\n    if not arr:\n        return 0",
+      "action": "continue",
+      "next": "coding-call-python"
+    },
+    {
+      "stepId": "variable-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'int[] numbers = {3, 7, 2, 9, 5};' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "int[] numbers = {3, 7, 2, 9, 5};\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-java"
+    },
+    {
+      "stepId": "function-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know methods",
+          "next": "parameter-check-java"
+        },
+        {
+          "label": "No, explain methods",
+          "next": "function-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-java",
+      "mentorSays": "A method (Java's version of a function) is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-java"
+    },
+    {
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public int findMax(int[] arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the method.\n\nWhen you call 'findMax(new int[]{3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the method and stored in the 'arr' parameter. Inside the method, you can use 'arr' to refer to that array.",
+      "example": "public int findMax(int[] arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the method\n}\n\n// When we call it:\nfindMax(new int[]{3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the method, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-java"
+    },
+    {
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public int findMax(int[] arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the method.\n\nWhen you call 'findMax(new int[]{3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the method and stored in the 'arr' parameter. Inside the method, you can use 'arr' to refer to that array.",
+      "example": "public int findMax(int[] arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the method\n}\n\n// When we call it:\nfindMax(new int[]{3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the method, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-java"
+    },
+    {
+      "stepId": "loop-check-java",
+      "mentorSays": "To remove duplicates, we'll need to use a loop. Do you know what a loop is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (int i = 0; i < 3; i++) {\n    System.out.println(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's create a method that takes a sorted array and removes duplicates in-place.",
+      "example": "public int removeDuplicates(int[] arr) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-complete-java"
+    },
+    {
+      "stepId": "coding-complete-java",
+      "mentorSays": "We use two pointers: write tracks unique elements, read scans through. When we find a unique element, we place it at the write position.",
+      "example": "public int removeDuplicates(int[] arr) {\n    if (arr.length == 0) return 0;\n    int write = 0;\n    for (int read = 1; read < arr.length; read++) {\n        if (arr[read] != arr[write]) {\n            write++;\n            arr[write] = arr[read];\n        }",
+      "action": "continue",
+      "next": "coding-call-java"
+    },
+    {
+      "stepId": "variable-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'vector<int> numbers = {3, 7, 2, 9, 5};' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "vector<int> numbers = {3, 7, 2, 9, 5};\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-cpp"
+    },
+    {
+      "stepId": "function-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-cpp"
+    },
+    {
+      "stepId": "parameter-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'int findMax(vector<int>& arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax({3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "int findMax(vector<int>& arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax({3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "parameter-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'int findMax(vector<int>& arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax({3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "int findMax(vector<int>& arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax({3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "loop-check-cpp",
+      "mentorSays": "To remove duplicates, we'll need to use a loop. Do you know what a loop is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (int i = 0; i < 3; i++) {\n    cout << i << endl;\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's create a function that takes a sorted array and removes duplicates in-place.",
+      "example": "#include <vector>\n\nint removeDuplicates(vector<int>& arr) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-complete-cpp"
+    },
+    {
+      "stepId": "coding-complete-cpp",
+      "mentorSays": "We use two pointers: write tracks unique elements, read scans through. When we find a unique element, we place it at the write position.",
+      "example": "#include <vector>\n\nint removeDuplicates(vector<int>& arr) {\n    if (arr.empty()) return 0;\n    int write = 0;\n    for (int read = 1; read < arr.size(); read++) {\n        if (arr[read] != arr[write]) {\n            write++;\n            arr[write] = arr[read];\n        }",
+      "action": "continue",
+      "next": "coding-call-cpp"
+    },
+    {
+      "stepId": "variable-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'let numbers: number[] = [3, 7, 2, 9, 5];' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "let numbers: number[] = [3, 7, 2, 9, 5];\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-ts"
+    },
+    {
+      "stepId": "function-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a: number, b: number): number {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-ts"
+    },
+    {
+      "stepId": "parameter-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr: number[]): number', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr: number[]): number {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-ts"
+    },
+    {
+      "stepId": "parameter-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr: number[]): number', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr: number[]): number {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-ts"
+    },
+    {
+      "stepId": "loop-check-ts",
+      "mentorSays": "To remove duplicates, we'll need to use a loop. Do you know what a loop is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's create a function that takes a sorted array and removes duplicates in-place.",
+      "example": "function removeDuplicates(arr: number[]): number {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-complete-ts"
+    },
+    {
+      "stepId": "coding-complete-ts",
+      "mentorSays": "We use two pointers: write tracks unique elements, read scans through. When we find a unique element, we place it at the write position.",
+      "example": "function removeDuplicates(arr: number[]): number {\n  if (arr.length === 0) return 0;\n  let write = 0;\n  for (let read = 1; read < arr.length; read++) {\n    if (arr[read] !== arr[write]) {\n      write++;\n      arr[write] = arr[read];\n    }",
+      "action": "continue",
+      "next": "coding-call-ts"
+    },
+    {
+      "stepId": "coding-call-ts",
+      "mentorSays": "Now, to use this function, we need to call it with an actual array. We pass the array as an argument (the value we give to the parameter).",
+      "example": "// First, define the function:\nfunction removeDuplicates(arr: number[]): number {\n  if (arr.length === 0) return 0;\n  let write = 0;\n  for (let read = 1; read < arr.length; read++) {\n    if (arr[read] !== arr[write]) {\n      write++;\n      arr[write] = arr[read];\n    }\n\n// Then, call it with an array:\nfindMax([3, 7, 2, 9, 5]);\n\n// When we call findMax([3, 7, 2, 9, 5]):\n// The array [3, 7, 2, 9, 5] goes into the parameter\n// The function runs and returns the result",
+      "action": "continue",
+      "next": "test-code"
+    },
+    {
+      "stepId": "test-code",
+      "mentorSays": "Perfect! Now test your code with these examples:\n\n[1, 1, 2, 2, 3, 4, 4, 5] should return 5 and become [1, 2, 3, 4, 5, ...]\n[1, 2, 3] should return 3 (no duplicates)\n[1, 1, 1] should return 1\n\nTry it in your IDE or code editor!",
+      "example": "Test inputs:\n[1, 1, 2, 2, 3, 4, 4, 5] → Expected: 5, array becomes [1, 2, 3, 4, 5, ...]\n[1, 2, 3] → Expected: 3\n[1, 1, 1] → Expected: 1",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've learned how to remove duplicates from a sorted array using two pointers. You understand how to track unique elements and modify the array in-place.\n\nKeep practicing! Try removing duplicates from different sorted arrays.",
+      "action": "continue"
+    }
+  ]
+}

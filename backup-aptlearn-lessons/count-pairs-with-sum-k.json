@@ -1,0 +1,768 @@
+{
+  "id": "count-pairs-with-sum-k",
+  "title": "Count pairs with sum K",
+  "pattern": "hash-map",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what it means to count pairs with a given sum\n2. Use hash maps to efficiently find pairs\n3. Handle duplicate pairs correctly\n4. Implement the solution step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what the Count Pairs with Sum K problem is asking.\n\nImagine you have an array of numbers: [1, 5, 7, 1, 5]\n\nAnd you're told: \"Count how many pairs of numbers add up to 6.\"\n\nLooking at the numbers:\n- 1 (at index 0) + 5 (at index 1) = 6 ✓\n- 1 (at index 0) + 5 (at index 4) = 6 ✓\n- 5 (at index 1) + 1 (at index 3) = 6 ✓\n- 1 (at index 3) + 5 (at index 4) = 6 ✓\n\nSo we have 4 pairs that sum to 6.\n\nThat's what the problem wants: count all pairs (not just unique pairs) where the sum equals K.",
+      "example": "nums = [1, 5, 7, 1, 5]\nK = 6\n\nPairs that sum to 6:\n(1, 5) at indices (0, 1)\n(1, 5) at indices (0, 4)\n(5, 1) at indices (1, 3)\n(1, 5) at indices (3, 4)\n\nAnswer: 4 pairs",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU count these pairs?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Check every possible pair and count those that sum to K",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a hash map to track numbers and find pairs efficiently",
+          "next": "explore-hashmap"
+        },
+        {
+          "label": "Sort the array first, then use two pointers",
+          "next": "explore-two-pointers"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"Let me check every possible pair of numbers and count which ones add up to K.\"\n\nFor [1, 5, 7, 1, 5] with K = 6:\n- Check (1, 5): 1 + 5 = 6 ✓ Count: 1\n- Check (1, 7): 1 + 7 = 8 (not 6)\n- Check (1, 1): 1 + 1 = 2 (not 6)\n- Check (1, 5): 1 + 5 = 6 ✓ Count: 2\n- Check (5, 7): 5 + 7 = 12 (not 6)\n- ... and so on\n\nThis definitely works! However, it's slow for large arrays (O(n²) time complexity).\n\nWould you like to learn a more efficient approach using hash maps?",
+      "choices": [
+        {
+          "label": "Yes, teach me the hash map approach",
+          "next": "explore-hashmap"
+        },
+        {
+          "label": "No, I want to code the brute force first",
+          "next": "language-selection-brute"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-two-pointers",
+      "mentorSays": "Interesting idea! You're thinking: \"If I sort the array, maybe I can use two pointers to find pairs.\"\n\nThat's a good approach! However, there's something to consider: if we sort [1, 5, 7, 1, 5], we get [1, 1, 5, 5, 7]. But the problem asks us to count pairs in the original array, and we need to count all pairs (including duplicates).\n\nUsing two pointers on a sorted array works well for finding unique pairs, but counting all pairs (including duplicates) is easier with a hash map. Let's explore that approach instead!",
+      "action": "continue",
+      "next": "explore-hashmap"
+    },
+    {
+      "stepId": "explore-hashmap",
+      "mentorSays": "Excellent choice! The hash map approach is both efficient and elegant. Here's the core idea:\n\n1. **For each number**, calculate what we need: K - current number\n2. **Check if the needed number exists** in our hash map (which stores how many times we've seen each number)\n3. **Add the count** of how many times we've seen the needed number\n4. **Store the current number** in the hash map (increment its count)\n\nLet's trace this with [1, 5, 7, 1, 5] and K = 6:\n\n- **At 1** (index 0): Need 6 - 1 = 5. Is 5 in map? No (map is empty). Count: 0. Store 1 → map = {1: 1}\n- **At 5** (index 1): Need 6 - 5 = 1. Is 1 in map? Yes! It appears 1 time. Count: 1. Store 5 → map = {1: 1, 5: 1}\n- **At 7** (index 2): Need 6 - 7 = -1. Is -1 in map? No. Count: 1. Store 7 → map = {1: 1, 5: 1, 7: 1}\n- **At 1** (index 3): Need 6 - 1 = 5. Is 5 in map? Yes! It appears 1 time. Count: 2. Store 1 → map = {1: 2, 5: 1, 7: 1}\n- **At 5** (index 4): Need 6 - 5 = 1. Is 1 in map? Yes! It appears 2 times. Count: 4. Store 5 → map = {1: 2, 5: 2, 7: 1}\n\nFinal count: 4 pairs! This is much more efficient (O(n) time). Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this hash map solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'let numbers = [3, 7, 2, 9, 5];' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "let numbers = [3, 7, 2, 9, 5];\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the count pairs solution in JavaScript. We'll create a function that takes an array and K, then returns the count of pairs that sum to K.",
+      "example": "function countPairs(nums, k) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-map-js"
+    },
+    {
+      "stepId": "coding-map-js",
+      "mentorSays": "First, let's create a hash map to store how many times we've seen each number, and a counter for the pairs.",
+      "example": "function countPairs(nums, k) {\n  const map = {};\n  let count = 0;\n  // map will store: number -> how many times we've seen it\n  // count will store: how many pairs we've found\n}",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Now, let's loop through the array. For each number, we'll calculate what we need (K - current number) and check if it exists in our map.",
+      "example": "function countPairs(nums, k) {\n  const map = {};\n  let count = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    const needed = k - nums[i];\n    // Check if 'needed' exists in map\n  }\n}",
+      "action": "continue",
+      "next": "coding-check-js"
+    },
+    {
+      "stepId": "coding-check-js",
+      "mentorSays": "If the needed number exists in the map, add its count to our total count. Then, store the current number in the map (increment its count).",
+      "example": "function countPairs(nums, k) {\n  const map = {};\n  let count = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    const needed = k - nums[i];\n    \n    // If needed number exists, add its count\n    if (map[needed] !== undefined) {\n      count += map[needed];\n    }\n    \n    // Store current number in map\n    map[nums[i]] = (map[nums[i]] || 0) + 1;\n  }\n  \n  return count;\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 5, 7, 1, 5]\nK = 6\n\nExpected output: 4\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 5, 7, 1, 5]\nK = 6\n\nExpected output: 4\n\nBecause:\n- (1, 5) at indices (0, 1)\n- (1, 5) at indices (0, 4)\n- (5, 1) at indices (1, 3)\n- (1, 5) at indices (3, 4)",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'numbers = [3, 7, 2, 9, 5]' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-python"
+    },
+    {
+      "stepId": "function-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-python"
+    },
+    {
+      "stepId": "parameter-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def find_max(arr):', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'find_max([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "def find_max(arr):\n  # 'arr' is a parameter\n  # It will receive an array when we call the function\n\n# When we call it:\nfind_max([3, 7, 2, 9, 5])\n# The array [3, 7, 2, 9, 5] goes into 'arr'\n# Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-python"
+    },
+    {
+      "stepId": "loop-check-python",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, 'for i in range(3)' means: run the code 3 times, with i being 0, then 1, then 2.",
+      "example": "for i in range(3):\n    print(i)\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement the count pairs solution in Python. We'll create a function that takes an array and K, then returns the count of pairs that sum to K.",
+      "example": "def count_pairs(nums, k):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-map-python"
+    },
+    {
+      "stepId": "coding-map-python",
+      "mentorSays": "First, let's create a dictionary to store how many times we've seen each number, and a counter for the pairs.",
+      "example": "def count_pairs(nums, k):\n    map = {}\n    count = 0\n    # map will store: number -> how many times we've seen it\n    # count will store: how many pairs we've found",
+      "action": "continue",
+      "next": "coding-loop-python"
+    },
+    {
+      "stepId": "coding-loop-python",
+      "mentorSays": "Now, let's loop through the array. For each number, we'll calculate what we need (K - current number) and check if it exists in our map.",
+      "example": "def count_pairs(nums, k):\n    map = {}\n    count = 0\n    \n    for num in nums:\n        needed = k - num\n        # Check if 'needed' exists in map",
+      "action": "continue",
+      "next": "coding-check-python"
+    },
+    {
+      "stepId": "coding-check-python",
+      "mentorSays": "If the needed number exists in the map, add its count to our total count. Then, store the current number in the map (increment its count).",
+      "example": "def count_pairs(nums, k):\n    map = {}\n    count = 0\n    \n    for num in nums:\n        needed = k - num\n        \n        # If needed number exists, add its count\n        if needed in map:\n            count += map[needed]\n        \n        # Store current number in map\n        map[num] = map.get(num, 0) + 1\n    \n    return count",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 5, 7, 1, 5]\nK = 6\n\nExpected output: 4\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 5, 7, 1, 5]\nK = 6\n\nExpected output: 4\n\nBecause:\n- (1, 5) at indices (0, 1)\n- (1, 5) at indices (0, 4)\n- (5, 1) at indices (1, 3)\n- (1, 5) at indices (3, 4)",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'int[] numbers = {3, 7, 2, 9, 5};' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "int[] numbers = {3, 7, 2, 9, 5};\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-java"
+    },
+    {
+      "stepId": "function-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know methods",
+          "next": "parameter-check-java"
+        },
+        {
+          "label": "No, explain methods",
+          "next": "function-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-java",
+      "mentorSays": "A method (Java's version of a function) is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-java"
+    },
+    {
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a method, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public int findMax(int[] arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the method.\n\nWhen you call 'findMax(new int[]{3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the method and stored in the 'arr' parameter. Inside the method, you can use 'arr' to refer to that array.",
+      "example": "public int findMax(int[] arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the method\n}\n\n// When we call it:\nfindMax(new int[]{3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the method, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-java"
+    },
+    {
+      "stepId": "loop-check-java",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (int i = 0; i < 3; i++) {\n    System.out.println(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement the count pairs solution in Java. We'll create a method that takes an array and K, then returns the count of pairs that sum to K.",
+      "example": "import java.util.HashMap;\n\npublic int countPairs(int[] nums, int k) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-map-java"
+    },
+    {
+      "stepId": "coding-map-java",
+      "mentorSays": "First, let's create a HashMap to store how many times we've seen each number, and a counter for the pairs.",
+      "example": "import java.util.HashMap;\n\npublic int countPairs(int[] nums, int k) {\n    HashMap<Integer, Integer> map = new HashMap<>();\n    int count = 0;\n    // map will store: number -> how many times we've seen it\n    // count will store: how many pairs we've found\n}",
+      "action": "continue",
+      "next": "coding-loop-java"
+    },
+    {
+      "stepId": "coding-loop-java",
+      "mentorSays": "Now, let's loop through the array. For each number, we'll calculate what we need (K - current number) and check if it exists in our map.",
+      "example": "import java.util.HashMap;\n\npublic int countPairs(int[] nums, int k) {\n    HashMap<Integer, Integer> map = new HashMap<>();\n    int count = 0;\n    \n    for (int i = 0; i < nums.length; i++) {\n        int needed = k - nums[i];\n        // Check if 'needed' exists in map\n    }\n}",
+      "action": "continue",
+      "next": "coding-check-java"
+    },
+    {
+      "stepId": "coding-check-java",
+      "mentorSays": "If the needed number exists in the map, add its count to our total count. Then, store the current number in the map (increment its count).",
+      "example": "import java.util.HashMap;\n\npublic int countPairs(int[] nums, int k) {\n    HashMap<Integer, Integer> map = new HashMap<>();\n    int count = 0;\n    \n    for (int i = 0; i < nums.length; i++) {\n        int needed = k - nums[i];\n        \n        // If needed number exists, add its count\n        if (map.containsKey(needed)) {\n            count += map.get(needed);\n        }\n        \n        // Store current number in map\n        map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);\n    }\n    \n    return count;\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 5, 7, 1, 5]\nK = 6\n\nExpected output: 4\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 5, 7, 1, 5]\nK = 6\n\nExpected output: 4\n\nBecause:\n- (1, 5) at indices (0, 1)\n- (1, 5) at indices (0, 4)\n- (5, 1) at indices (1, 3)\n- (1, 5) at indices (3, 4)",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'vector<int> numbers = {3, 7, 2, 9, 5};' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "vector<int> numbers = {3, 7, 2, 9, 5};\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-cpp"
+    },
+    {
+      "stepId": "function-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-cpp"
+    },
+    {
+      "stepId": "parameter-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'int findMax(vector<int>& arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax({3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "int findMax(vector<int>& arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax({3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "loop-check-cpp",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (int i = 0; i < 3; i++) {\n    cout << i << endl;\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement the count pairs solution in C++. We'll create a function that takes an array and K, then returns the count of pairs that sum to K.",
+      "example": "#include <unordered_map>\n#include <vector>\n\nint countPairs(vector<int>& nums, int k) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-map-cpp"
+    },
+    {
+      "stepId": "coding-map-cpp",
+      "mentorSays": "First, let's create an unordered_map to store how many times we've seen each number, and a counter for the pairs.",
+      "example": "#include <unordered_map>\n#include <vector>\n\nint countPairs(vector<int>& nums, int k) {\n    unordered_map<int, int> map;\n    int count = 0;\n    // map will store: number -> how many times we've seen it\n    // count will store: how many pairs we've found\n}",
+      "action": "continue",
+      "next": "coding-loop-cpp"
+    },
+    {
+      "stepId": "coding-loop-cpp",
+      "mentorSays": "Now, let's loop through the array. For each number, we'll calculate what we need (K - current number) and check if it exists in our map.",
+      "example": "#include <unordered_map>\n#include <vector>\n\nint countPairs(vector<int>& nums, int k) {\n    unordered_map<int, int> map;\n    int count = 0;\n    \n    for (int i = 0; i < nums.size(); i++) {\n        int needed = k - nums[i];\n        // Check if 'needed' exists in map\n    }\n}",
+      "action": "continue",
+      "next": "coding-check-cpp"
+    },
+    {
+      "stepId": "coding-check-cpp",
+      "mentorSays": "If the needed number exists in the map, add its count to our total count. Then, store the current number in the map (increment its count).",
+      "example": "#include <unordered_map>\n#include <vector>\n\nint countPairs(vector<int>& nums, int k) {\n    unordered_map<int, int> map;\n    int count = 0;\n    \n    for (int i = 0; i < nums.size(); i++) {\n        int needed = k - nums[i];\n        \n        // If needed number exists, add its count\n        if (map.find(needed) != map.end()) {\n            count += map[needed];\n        }\n        \n        // Store current number in map\n        map[nums[i]]++;\n    }\n    \n    return count;\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 5, 7, 1, 5]\nK = 6\n\nExpected output: 4\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 5, 7, 1, 5]\nK = 6\n\nExpected output: 4\n\nBecause:\n- (1, 5) at indices (0, 1)\n- (1, 5) at indices (0, 4)\n- (5, 1) at indices (1, 3)\n- (1, 5) at indices (3, 4)",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'let numbers: number[] = [3, 7, 2, 9, 5];' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "let numbers: number[] = [3, 7, 2, 9, 5];\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-ts"
+    },
+    {
+      "stepId": "function-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a: number, b: number): number {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-ts"
+    },
+    {
+      "stepId": "parameter-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr: number[]): number', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr: number[]): number {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-ts"
+    },
+    {
+      "stepId": "loop-check-ts",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement the count pairs solution in TypeScript. We'll create a function that takes an array and K, then returns the count of pairs that sum to K.",
+      "example": "function countPairs(nums: number[], k: number): number {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-map-ts"
+    },
+    {
+      "stepId": "coding-map-ts",
+      "mentorSays": "First, let's create a map to store how many times we've seen each number, and a counter for the pairs.",
+      "example": "function countPairs(nums: number[], k: number): number {\n  const map: { [key: number]: number } = {};\n  let count = 0;\n  // map will store: number -> how many times we've seen it\n  // count will store: how many pairs we've found\n}",
+      "action": "continue",
+      "next": "coding-loop-ts"
+    },
+    {
+      "stepId": "coding-loop-ts",
+      "mentorSays": "Now, let's loop through the array. For each number, we'll calculate what we need (K - current number) and check if it exists in our map.",
+      "example": "function countPairs(nums: number[], k: number): number {\n  const map: { [key: number]: number } = {};\n  let count = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    const needed = k - nums[i];\n    // Check if 'needed' exists in map\n  }\n}",
+      "action": "continue",
+      "next": "coding-check-ts"
+    },
+    {
+      "stepId": "coding-check-ts",
+      "mentorSays": "If the needed number exists in the map, add its count to our total count. Then, store the current number in the map (increment its count).",
+      "example": "function countPairs(nums: number[], k: number): number {\n  const map: { [key: number]: number } = {};\n  let count = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    const needed = k - nums[i];\n    \n    // If needed number exists, add its count\n    if (map[needed] !== undefined) {\n      count += map[needed];\n    }\n    \n    // Store current number in map\n    map[nums[i]] = (map[nums[i]] || 0) + 1;\n  }\n  \n  return count;\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 5, 7, 1, 5]\nK = 6\n\nExpected output: 4\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 5, 7, 1, 5]\nK = 6\n\nExpected output: 4\n\nBecause:\n- (1, 5) at indices (0, 1)\n- (1, 5) at indices (0, 4)\n- (5, 1) at indices (1, 3)\n- (1, 5) at indices (3, 4)",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "language-selection-brute",
+      "mentorSays": "Great! Let's code the brute force solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "coding-brute-force-js"
+        },
+        {
+          "label": "Python",
+          "next": "coding-brute-force-python"
+        },
+        {
+          "label": "Java",
+          "next": "coding-brute-force-java"
+        },
+        {
+          "label": "C++",
+          "next": "coding-brute-force-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "coding-brute-force-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "coding-brute-force-js",
+      "mentorSays": "The brute force approach uses two nested loops to check every pair. This works but is slower (O(n²)).",
+      "example": "function countPairs(nums, k) {\n  let count = 0;\n  \n  for (let i = 0; i < nums.length - 1; i++) {\n    for (let j = i + 1; j < nums.length; j++) {\n      if (nums[i] + nums[j] === k) {\n        count++;\n      }\n    }\n  }\n  \n  return count;\n}",
+      "action": "continue",
+      "next": "recommend-hashmap"
+    },
+    {
+      "stepId": "coding-brute-force-python",
+      "mentorSays": "The brute force approach uses two nested loops to check every pair. This works but is slower (O(n²)).",
+      "example": "def count_pairs(nums, k):\n    count = 0\n    \n    for i in range(len(nums) - 1):\n        for j in range(i + 1, len(nums)):\n            if nums[i] + nums[j] == k:\n                count += 1\n    \n    return count",
+      "action": "continue",
+      "next": "recommend-hashmap"
+    },
+    {
+      "stepId": "coding-brute-force-java",
+      "mentorSays": "The brute force approach uses two nested loops to check every pair. This works but is slower (O(n²)).",
+      "example": "public int countPairs(int[] nums, int k) {\n    int count = 0;\n    \n    for (int i = 0; i < nums.length - 1; i++) {\n        for (int j = i + 1; j < nums.length; j++) {\n            if (nums[i] + nums[j] == k) {\n                count++;\n            }\n        }\n    }\n    \n    return count;\n}",
+      "action": "continue",
+      "next": "recommend-hashmap"
+    },
+    {
+      "stepId": "coding-brute-force-cpp",
+      "mentorSays": "The brute force approach uses two nested loops to check every pair. This works but is slower (O(n²)).",
+      "example": "int countPairs(vector<int>& nums, int k) {\n    int count = 0;\n    \n    for (int i = 0; i < nums.size() - 1; i++) {\n        for (int j = i + 1; j < nums.size(); j++) {\n            if (nums[i] + nums[j] == k) {\n                count++;\n            }\n        }\n    }\n    \n    return count;\n}",
+      "action": "continue",
+      "next": "recommend-hashmap"
+    },
+    {
+      "stepId": "coding-brute-force-ts",
+      "mentorSays": "The brute force approach uses two nested loops to check every pair. This works but is slower (O(n²)).",
+      "example": "function countPairs(nums: number[], k: number): number {\n  let count = 0;\n  \n  for (let i = 0; i < nums.length - 1; i++) {\n    for (let j = i + 1; j < nums.length; j++) {\n      if (nums[i] + nums[j] === k) {\n        count++;\n      }\n    }\n  }\n  \n  return count;\n}",
+      "action": "continue",
+      "next": "recommend-hashmap"
+    },
+    {
+      "stepId": "recommend-hashmap",
+      "mentorSays": "Great job! You've successfully implemented the brute force approach. This solution works, but there's a more efficient method using hash maps.\n\nThe hash map method is faster (O(n) instead of O(n²)) and handles duplicates more elegantly. Would you like to learn the hash map approach now?",
+      "choices": [
+        {
+          "label": "Yes, teach me the hash map approach",
+          "next": "explore-hashmap"
+        },
+        {
+          "label": "No, I'm done for now",
+          "next": "final"
+        }
+      ]
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've learned to think through the Count Pairs with Sum K problem. You understand what the problem asks for, how to count pairs efficiently, and you've explored different approaches to solve it.\n\nThis kind of thinking—breaking down problems, considering different solutions, and using hash maps for efficient lookups—is essential for solving algorithm problems. Keep practicing!",
+      "action": "continue"
+    }
+  ]
+}

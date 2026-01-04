@@ -1,0 +1,768 @@
+{
+  "id": "max-sum-subarray-k",
+  "title": "Max sum subarray of size K",
+  "pattern": "sliding-window",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what a subarray of fixed size K means\n2. Use the sliding window technique to efficiently find maximum sum\n3. Avoid recalculating sums by sliding the window\n4. Implement the solution step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what the Max Sum Subarray of Size K problem is asking.\n\nImagine you have an array of numbers: [2, 1, 5, 1, 3, 2]\n\nAnd you're told: \"Find the maximum sum of any subarray of size 3.\"\n\nA subarray is a contiguous part of the array. So we need to find all subarrays of size 3 and see which one has the maximum sum.\n\nLooking at the array:\n- Subarray [2, 1, 5] (indices 0-2): sum = 2 + 1 + 5 = 8\n- Subarray [1, 5, 1] (indices 1-3): sum = 1 + 5 + 1 = 7\n- Subarray [5, 1, 3] (indices 2-4): sum = 5 + 1 + 3 = 9\n- Subarray [1, 3, 2] (indices 3-5): sum = 1 + 3 + 2 = 6\n\nThe maximum sum is 9, which comes from the subarray [5, 1, 3].\n\nThat's what the problem wants: the maximum sum among all subarrays of size K.",
+      "example": "nums = [2, 1, 5, 1, 3, 2]\nK = 3\n\nAll subarrays of size 3:\n[2, 1, 5] → sum = 8\n[1, 5, 1] → sum = 7\n[5, 1, 3] → sum = 9 ← Maximum!\n[1, 3, 2] → sum = 6\n\nAnswer: 9",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU find the maximum sum?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Calculate the sum of each subarray separately",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a sliding window to avoid recalculating sums",
+          "next": "explore-sliding-window"
+        },
+        {
+          "label": "Sort the array and take the K largest elements",
+          "next": "explore-sort"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"For each possible starting position, calculate the sum of the next K elements.\"\n\nFor [2, 1, 5, 1, 3, 2] with K = 3:\n- Start at index 0: sum = 2 + 1 + 5 = 8\n- Start at index 1: sum = 1 + 5 + 1 = 7\n- Start at index 2: sum = 5 + 1 + 3 = 9\n- Start at index 3: sum = 1 + 3 + 2 = 6\n\nMaximum: 9\n\nThis definitely works! However, it's inefficient because we're recalculating sums. For each subarray, we add K elements, which takes O(K) time. With n subarrays, this is O(n*K) time.\n\nWould you like to learn a more efficient approach using sliding windows?",
+      "choices": [
+        {
+          "label": "Yes, teach me the sliding window approach",
+          "next": "explore-sliding-window"
+        },
+        {
+          "label": "No, I want to code the brute force first",
+          "next": "language-selection-brute"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-sort",
+      "mentorSays": "Interesting idea! You're thinking: \"If I sort the array and take the K largest elements, I'll get the maximum sum.\"\n\nThat's creative thinking! However, there's something to consider: a subarray must be contiguous (elements next to each other). If we sort [2, 1, 5, 1, 3, 2], we get [1, 1, 2, 2, 3, 5]. The largest 3 elements are [5, 3, 2], but these aren't next to each other in the original array!\n\nWe need contiguous elements, so sorting won't work here. Let's explore the sliding window approach instead!",
+      "action": "continue",
+      "next": "explore-sliding-window"
+    },
+    {
+      "stepId": "explore-sliding-window",
+      "mentorSays": "Excellent choice! The sliding window approach is both efficient and elegant. Here's the core idea:\n\n1. **Calculate the sum of the first window**: Sum of elements from index 0 to K-1\n2. **Slide the window**: Instead of recalculating the entire sum, we:\n   - Subtract the element leaving the window (leftmost)\n   - Add the element entering the window (rightmost)\n3. **Track the maximum**: Keep track of the maximum sum we've seen\n\nLet's trace this with [2, 1, 5, 1, 3, 2] and K = 3:\n\n- **Window 1** (indices 0-2): [2, 1, 5] → sum = 8, max = 8\n- **Slide right**: Remove 2 (left), add 1 (right)\n- **Window 2** (indices 1-3): [1, 5, 1] → sum = 8 - 2 + 1 = 7, max = 8\n- **Slide right**: Remove 1 (left), add 3 (right)\n- **Window 3** (indices 2-4): [5, 1, 3] → sum = 7 - 1 + 3 = 9, max = 9\n- **Slide right**: Remove 5 (left), add 2 (right)\n- **Window 4** (indices 3-5): [1, 3, 2] → sum = 9 - 5 + 2 = 6, max = 9\n\nFinal answer: 9\n\nThis is much more efficient (O(n) time instead of O(n*K))! Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this sliding window solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'let numbers = [3, 7, 2, 9, 5];' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "let numbers = [3, 7, 2, 9, 5];\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the max sum subarray solution in JavaScript. We'll create a function that takes an array and K, then returns the maximum sum of any subarray of size K.",
+      "example": "function maxSumSubarray(nums, k) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-first-window-js"
+    },
+    {
+      "stepId": "coding-first-window-js",
+      "mentorSays": "First, let's calculate the sum of the first window (elements from index 0 to K-1).",
+      "example": "function maxSumSubarray(nums, k) {\n  // Calculate sum of first window\n  let windowSum = 0;\n  for (let i = 0; i < k; i++) {\n    windowSum += nums[i];\n  }\n  // windowSum now contains sum of [2, 1, 5] = 8\n}",
+      "action": "continue",
+      "next": "coding-max-js"
+    },
+    {
+      "stepId": "coding-max-js",
+      "mentorSays": "Now, let's initialize the maximum sum with the first window's sum.",
+      "example": "function maxSumSubarray(nums, k) {\n  let windowSum = 0;\n  for (let i = 0; i < k; i++) {\n    windowSum += nums[i];\n  }\n  \n  let maxSum = windowSum;\n  // maxSum = 8 (sum of first window)\n}",
+      "action": "continue",
+      "next": "coding-slide-js"
+    },
+    {
+      "stepId": "coding-slide-js",
+      "mentorSays": "Now, let's slide the window. For each new position, subtract the element leaving the window and add the element entering the window. Update maxSum if we find a larger sum.",
+      "example": "function maxSumSubarray(nums, k) {\n  let windowSum = 0;\n  for (let i = 0; i < k; i++) {\n    windowSum += nums[i];\n  }\n  \n  let maxSum = windowSum;\n  \n  // Slide the window\n  for (let i = k; i < nums.length; i++) {\n    // Remove leftmost element, add rightmost element\n    windowSum = windowSum - nums[i - k] + nums[i];\n    maxSum = Math.max(maxSum, windowSum);\n  }\n  \n  return maxSum;\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [2, 1, 5, 1, 3, 2]\nK = 3\n\nExpected output: 9\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [2, 1, 5, 1, 3, 2]\nK = 3\n\nExpected output: 9\n\nBecause the subarray [5, 1, 3] has the maximum sum of 9.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'numbers = [3, 7, 2, 9, 5]' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-python"
+    },
+    {
+      "stepId": "function-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-python"
+    },
+    {
+      "stepId": "parameter-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def find_max(arr):', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'find_max([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "def find_max(arr):\n  # 'arr' is a parameter\n  # It will receive an array when we call the function\n\n# When we call it:\nfind_max([3, 7, 2, 9, 5])\n# The array [3, 7, 2, 9, 5] goes into 'arr'\n# Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-python"
+    },
+    {
+      "stepId": "loop-check-python",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, 'for i in range(3)' means: run the code 3 times, with i being 0, then 1, then 2.",
+      "example": "for i in range(3):\n    print(i)\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement the max sum subarray solution in Python. We'll create a function that takes an array and K, then returns the maximum sum of any subarray of size K.",
+      "example": "def max_sum_subarray(nums, k):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-first-window-python"
+    },
+    {
+      "stepId": "coding-first-window-python",
+      "mentorSays": "First, let's calculate the sum of the first window (elements from index 0 to K-1).",
+      "example": "def max_sum_subarray(nums, k):\n    # Calculate sum of first window\n    window_sum = sum(nums[0:k])\n    # window_sum now contains sum of [2, 1, 5] = 8",
+      "action": "continue",
+      "next": "coding-max-python"
+    },
+    {
+      "stepId": "coding-max-python",
+      "mentorSays": "Now, let's initialize the maximum sum with the first window's sum.",
+      "example": "def max_sum_subarray(nums, k):\n    window_sum = sum(nums[0:k])\n    max_sum = window_sum\n    # max_sum = 8 (sum of first window)",
+      "action": "continue",
+      "next": "coding-slide-python"
+    },
+    {
+      "stepId": "coding-slide-python",
+      "mentorSays": "Now, let's slide the window. For each new position, subtract the element leaving the window and add the element entering the window. Update max_sum if we find a larger sum.",
+      "example": "def max_sum_subarray(nums, k):\n    window_sum = sum(nums[0:k])\n    max_sum = window_sum\n    \n    # Slide the window\n    for i in range(k, len(nums)):\n        # Remove leftmost element, add rightmost element\n        window_sum = window_sum - nums[i - k] + nums[i]\n        max_sum = max(max_sum, window_sum)\n    \n    return max_sum",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [2, 1, 5, 1, 3, 2]\nK = 3\n\nExpected output: 9\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [2, 1, 5, 1, 3, 2]\nK = 3\n\nExpected output: 9\n\nBecause the subarray [5, 1, 3] has the maximum sum of 9.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'int[] numbers = {3, 7, 2, 9, 5};' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "int[] numbers = {3, 7, 2, 9, 5};\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-java"
+    },
+    {
+      "stepId": "function-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know methods",
+          "next": "parameter-check-java"
+        },
+        {
+          "label": "No, explain methods",
+          "next": "function-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-java",
+      "mentorSays": "A method (Java's version of a function) is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-java"
+    },
+    {
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a method, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public int findMax(int[] arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the method.\n\nWhen you call 'findMax(new int[]{3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the method and stored in the 'arr' parameter. Inside the method, you can use 'arr' to refer to that array.",
+      "example": "public int findMax(int[] arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the method\n}\n\n// When we call it:\nfindMax(new int[]{3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the method, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-java"
+    },
+    {
+      "stepId": "loop-check-java",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (int i = 0; i < 3; i++) {\n    System.out.println(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement the max sum subarray solution in Java. We'll create a method that takes an array and K, then returns the maximum sum of any subarray of size K.",
+      "example": "public int maxSumSubarray(int[] nums, int k) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-first-window-java"
+    },
+    {
+      "stepId": "coding-first-window-java",
+      "mentorSays": "First, let's calculate the sum of the first window (elements from index 0 to K-1).",
+      "example": "public int maxSumSubarray(int[] nums, int k) {\n    // Calculate sum of first window\n    int windowSum = 0;\n    for (int i = 0; i < k; i++) {\n        windowSum += nums[i];\n    }\n    // windowSum now contains sum of [2, 1, 5] = 8\n}",
+      "action": "continue",
+      "next": "coding-max-java"
+    },
+    {
+      "stepId": "coding-max-java",
+      "mentorSays": "Now, let's initialize the maximum sum with the first window's sum.",
+      "example": "public int maxSumSubarray(int[] nums, int k) {\n    int windowSum = 0;\n    for (int i = 0; i < k; i++) {\n        windowSum += nums[i];\n    }\n    \n    int maxSum = windowSum;\n    // maxSum = 8 (sum of first window)\n}",
+      "action": "continue",
+      "next": "coding-slide-java"
+    },
+    {
+      "stepId": "coding-slide-java",
+      "mentorSays": "Now, let's slide the window. For each new position, subtract the element leaving the window and add the element entering the window. Update maxSum if we find a larger sum.",
+      "example": "public int maxSumSubarray(int[] nums, int k) {\n    int windowSum = 0;\n    for (int i = 0; i < k; i++) {\n        windowSum += nums[i];\n    }\n    \n    int maxSum = windowSum;\n    \n    // Slide the window\n    for (int i = k; i < nums.length; i++) {\n        // Remove leftmost element, add rightmost element\n        windowSum = windowSum - nums[i - k] + nums[i];\n        maxSum = Math.max(maxSum, windowSum);\n    }\n    \n    return maxSum;\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [2, 1, 5, 1, 3, 2]\nK = 3\n\nExpected output: 9\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [2, 1, 5, 1, 3, 2]\nK = 3\n\nExpected output: 9\n\nBecause the subarray [5, 1, 3] has the maximum sum of 9.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'vector<int> numbers = {3, 7, 2, 9, 5};' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "vector<int> numbers = {3, 7, 2, 9, 5};\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-cpp"
+    },
+    {
+      "stepId": "function-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-cpp"
+    },
+    {
+      "stepId": "parameter-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'int findMax(vector<int>& arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax({3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "int findMax(vector<int>& arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax({3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "loop-check-cpp",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (int i = 0; i < 3; i++) {\n    cout << i << endl;\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement the max sum subarray solution in C++. We'll create a function that takes an array and K, then returns the maximum sum of any subarray of size K.",
+      "example": "int maxSumSubarray(vector<int>& nums, int k) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-first-window-cpp"
+    },
+    {
+      "stepId": "coding-first-window-cpp",
+      "mentorSays": "First, let's calculate the sum of the first window (elements from index 0 to K-1).",
+      "example": "int maxSumSubarray(vector<int>& nums, int k) {\n    // Calculate sum of first window\n    int windowSum = 0;\n    for (int i = 0; i < k; i++) {\n        windowSum += nums[i];\n    }\n    // windowSum now contains sum of [2, 1, 5] = 8\n}",
+      "action": "continue",
+      "next": "coding-max-cpp"
+    },
+    {
+      "stepId": "coding-max-cpp",
+      "mentorSays": "Now, let's initialize the maximum sum with the first window's sum.",
+      "example": "int maxSumSubarray(vector<int>& nums, int k) {\n    int windowSum = 0;\n    for (int i = 0; i < k; i++) {\n        windowSum += nums[i];\n    }\n    \n    int maxSum = windowSum;\n    // maxSum = 8 (sum of first window)\n}",
+      "action": "continue",
+      "next": "coding-slide-cpp"
+    },
+    {
+      "stepId": "coding-slide-cpp",
+      "mentorSays": "Now, let's slide the window. For each new position, subtract the element leaving the window and add the element entering the window. Update maxSum if we find a larger sum.",
+      "example": "int maxSumSubarray(vector<int>& nums, int k) {\n    int windowSum = 0;\n    for (int i = 0; i < k; i++) {\n        windowSum += nums[i];\n    }\n    \n    int maxSum = windowSum;\n    \n    // Slide the window\n    for (int i = k; i < nums.size(); i++) {\n        // Remove leftmost element, add rightmost element\n        windowSum = windowSum - nums[i - k] + nums[i];\n        maxSum = max(maxSum, windowSum);\n    }\n    \n    return maxSum;\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [2, 1, 5, 1, 3, 2]\nK = 3\n\nExpected output: 9\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [2, 1, 5, 1, 3, 2]\nK = 3\n\nExpected output: 9\n\nBecause the subarray [5, 1, 3] has the maximum sum of 9.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'let numbers: number[] = [3, 7, 2, 9, 5];' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "let numbers: number[] = [3, 7, 2, 9, 5];\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-ts"
+    },
+    {
+      "stepId": "function-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a: number, b: number): number {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-ts"
+    },
+    {
+      "stepId": "parameter-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr: number[]): number', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr: number[]): number {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-ts"
+    },
+    {
+      "stepId": "loop-check-ts",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement the max sum subarray solution in TypeScript. We'll create a function that takes an array and K, then returns the maximum sum of any subarray of size K.",
+      "example": "function maxSumSubarray(nums: number[], k: number): number {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-first-window-ts"
+    },
+    {
+      "stepId": "coding-first-window-ts",
+      "mentorSays": "First, let's calculate the sum of the first window (elements from index 0 to K-1).",
+      "example": "function maxSumSubarray(nums: number[], k: number): number {\n  // Calculate sum of first window\n  let windowSum = 0;\n  for (let i = 0; i < k; i++) {\n    windowSum += nums[i];\n  }\n  // windowSum now contains sum of [2, 1, 5] = 8\n}",
+      "action": "continue",
+      "next": "coding-max-ts"
+    },
+    {
+      "stepId": "coding-max-ts",
+      "mentorSays": "Now, let's initialize the maximum sum with the first window's sum.",
+      "example": "function maxSumSubarray(nums: number[], k: number): number {\n  let windowSum = 0;\n  for (let i = 0; i < k; i++) {\n    windowSum += nums[i];\n  }\n  \n  let maxSum = windowSum;\n  // maxSum = 8 (sum of first window)\n}",
+      "action": "continue",
+      "next": "coding-slide-ts"
+    },
+    {
+      "stepId": "coding-slide-ts",
+      "mentorSays": "Now, let's slide the window. For each new position, subtract the element leaving the window and add the element entering the window. Update maxSum if we find a larger sum.",
+      "example": "function maxSumSubarray(nums: number[], k: number): number {\n  let windowSum = 0;\n  for (let i = 0; i < k; i++) {\n    windowSum += nums[i];\n  }\n  \n  let maxSum = windowSum;\n  \n  // Slide the window\n  for (let i = k; i < nums.length; i++) {\n    // Remove leftmost element, add rightmost element\n    windowSum = windowSum - nums[i - k] + nums[i];\n    maxSum = Math.max(maxSum, windowSum);\n  }\n  \n  return maxSum;\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [2, 1, 5, 1, 3, 2]\nK = 3\n\nExpected output: 9\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [2, 1, 5, 1, 3, 2]\nK = 3\n\nExpected output: 9\n\nBecause the subarray [5, 1, 3] has the maximum sum of 9.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "language-selection-brute",
+      "mentorSays": "Great! Let's code the brute force solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "coding-brute-force-js"
+        },
+        {
+          "label": "Python",
+          "next": "coding-brute-force-python"
+        },
+        {
+          "label": "Java",
+          "next": "coding-brute-force-java"
+        },
+        {
+          "label": "C++",
+          "next": "coding-brute-force-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "coding-brute-force-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "coding-brute-force-js",
+      "mentorSays": "The brute force approach calculates the sum of each subarray separately. This works but is slower (O(n*K)).",
+      "example": "function maxSumSubarray(nums, k) {\n  let maxSum = -Infinity;\n  \n  for (let i = 0; i <= nums.length - k; i++) {\n    let sum = 0;\n    for (let j = i; j < i + k; j++) {\n      sum += nums[j];\n    }\n    maxSum = Math.max(maxSum, sum);\n  }\n  \n  return maxSum;\n}",
+      "action": "continue",
+      "next": "recommend-sliding-window"
+    },
+    {
+      "stepId": "coding-brute-force-python",
+      "mentorSays": "The brute force approach calculates the sum of each subarray separately. This works but is slower (O(n*K)).",
+      "example": "def max_sum_subarray(nums, k):\n    max_sum = float('-inf')\n    \n    for i in range(len(nums) - k + 1):\n        sum_val = sum(nums[i:i+k])\n        max_sum = max(max_sum, sum_val)\n    \n    return max_sum",
+      "action": "continue",
+      "next": "recommend-sliding-window"
+    },
+    {
+      "stepId": "coding-brute-force-java",
+      "mentorSays": "The brute force approach calculates the sum of each subarray separately. This works but is slower (O(n*K)).",
+      "example": "public int maxSumSubarray(int[] nums, int k) {\n    int maxSum = Integer.MIN_VALUE;\n    \n    for (int i = 0; i <= nums.length - k; i++) {\n        int sum = 0;\n        for (int j = i; j < i + k; j++) {\n            sum += nums[j];\n        }\n        maxSum = Math.max(maxSum, sum);\n    }\n    \n    return maxSum;\n}",
+      "action": "continue",
+      "next": "recommend-sliding-window"
+    },
+    {
+      "stepId": "coding-brute-force-cpp",
+      "mentorSays": "The brute force approach calculates the sum of each subarray separately. This works but is slower (O(n*K)).",
+      "example": "int maxSumSubarray(vector<int>& nums, int k) {\n    int maxSum = INT_MIN;\n    \n    for (int i = 0; i <= nums.size() - k; i++) {\n        int sum = 0;\n        for (int j = i; j < i + k; j++) {\n            sum += nums[j];\n        }\n        maxSum = max(maxSum, sum);\n    }\n    \n    return maxSum;\n}",
+      "action": "continue",
+      "next": "recommend-sliding-window"
+    },
+    {
+      "stepId": "coding-brute-force-ts",
+      "mentorSays": "The brute force approach calculates the sum of each subarray separately. This works but is slower (O(n*K)).",
+      "example": "function maxSumSubarray(nums: number[], k: number): number {\n  let maxSum = -Infinity;\n  \n  for (let i = 0; i <= nums.length - k; i++) {\n    let sum = 0;\n    for (let j = i; j < i + k; j++) {\n      sum += nums[j];\n    }\n    maxSum = Math.max(maxSum, sum);\n  }\n  \n  return maxSum;\n}",
+      "action": "continue",
+      "next": "recommend-sliding-window"
+    },
+    {
+      "stepId": "recommend-sliding-window",
+      "mentorSays": "Great job! You've successfully implemented the brute force approach. This solution works, but there's a more efficient method using sliding windows.\n\nThe sliding window method is faster (O(n) instead of O(n*K)) and avoids recalculating sums. Would you like to learn the sliding window approach now?",
+      "choices": [
+        {
+          "label": "Yes, teach me the sliding window approach",
+          "next": "explore-sliding-window"
+        },
+        {
+          "label": "No, I'm done for now",
+          "next": "final"
+        }
+      ]
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've learned to think through the Max Sum Subarray of Size K problem. You understand what the problem asks for, how to use sliding windows efficiently, and you've explored different approaches to solve it.\n\nThis kind of thinking—breaking down problems, considering different solutions, and using sliding windows to avoid redundant calculations—is essential for solving algorithm problems. Keep practicing!",
+      "action": "continue"
+    }
+  ]
+}

@@ -1,0 +1,776 @@
+{
+  "id": "reverse-string",
+  "title": "Reverse string",
+  "pattern": "two-pointers",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what it means to reverse a string\n2. Use two pointers to swap characters from both ends\n3. Reverse a string in-place efficiently\n4. Implement the solution step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what the Reverse String problem is asking.\n\nImagine you have a string: \"hello\"\n\nYour task: Reverse it to become \"olleh\".\n\nLooking at the string:\n- Original: h-e-l-l-o (indices 0, 1, 2, 3, 4)\n- Reversed: o-l-l-e-h (indices 4, 3, 2, 1, 0)\n\nNotice:\n- The first character 'h' (index 0) becomes the last character\n- The last character 'o' (index 4) becomes the first character\n- The middle character 'l' (index 2) stays in the middle\n\nAnother example: \"world\"\n- Original: w-o-r-l-d\n- Reversed: d-l-r-o-w\n\nThat's what the problem wants: reverse the order of characters in the string. We typically do this in-place (modify the original string/array).",
+      "example": "s = [\"h\", \"e\", \"l\", \"l\", \"o\"]\n\nReverse:\n[\"o\", \"l\", \"l\", \"e\", \"h\"]\n\nAnother example:\ns = [\"w\", \"o\", \"r\", \"l\", \"d\"]\n\nReverse:\n[\"d\", \"l\", \"r\", \"o\", \"w\"]\n\nNote: We modify the array in-place.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU reverse a string?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Swap characters from both ends using two pointers",
+          "next": "explore-two-pointers"
+        },
+        {
+          "label": "Create a new string/array and copy characters in reverse order",
+          "next": "explore-new-array"
+        },
+        {
+          "label": "Use built-in reverse function",
+          "next": "explore-builtin"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-new-array",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"I'll create a new array, then copy characters from the original in reverse order.\"\n\nFor [\"h\", \"e\", \"l\", \"l\", \"o\"]:\n- Create new array\n- Copy from end: 'o', 'l', 'l', 'e', 'h'\n- Result: [\"o\", \"l\", \"l\", \"e\", \"h\"]\n\nThis works! However, the problem asks us to modify the array in-place (without creating a new array). Also, using extra space makes it less efficient.\n\nWould you like to learn the two pointers approach that works in-place?",
+      "choices": [
+        {
+          "label": "Yes, teach me the two pointers approach",
+          "next": "explore-two-pointers"
+        },
+        {
+          "label": "No, I want to code the new array approach",
+          "next": "language-selection-new-array"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-builtin",
+      "mentorSays": "That's convenient! Many languages have built-in reverse functions. For example:\n- JavaScript: `s.reverse()`\n- Python: `s[::-1]` or `s.reverse()`\n- Java: `Collections.reverse()`\n\nThis works! However, learning the two pointers approach helps you understand the algorithm and is useful when built-in functions aren't available or when you need to reverse only part of an array.\n\nWould you like to learn the two pointers approach?",
+      "choices": [
+        {
+          "label": "Yes, teach me the two pointers approach",
+          "next": "explore-two-pointers"
+        },
+        {
+          "label": "No, I'll use the built-in function",
+          "next": "final"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-two-pointers",
+      "mentorSays": "Excellent choice! The two pointers approach is both efficient and elegant. Here's the core idea:\n\n1. **Two pointers**: One starts at the beginning (left = 0), one at the end (right = length - 1)\n2. **Swap**: Swap the characters at both pointers\n3. **Move inward**: Move left pointer right, right pointer left\n4. **Stop condition**: Stop when pointers meet or cross\n\nLet's trace this with [\"h\", \"e\", \"l\", \"l\", \"o\"]:\n\n- **Initial**: left = 0 ('h'), right = 4 ('o') → Swap → [\"o\", \"e\", \"l\", \"l\", \"h\"]\n- **Step 1**: left = 1 ('e'), right = 3 ('l') → Swap → [\"o\", \"l\", \"l\", \"e\", \"h\"]\n- **Step 2**: left = 2 ('l'), right = 2 ('l') → Pointers meet, stop\n- **Result**: [\"o\", \"l\", \"l\", \"e\", \"h\"] ✓\n\nThis is O(n) time and O(1) space - very efficient! Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code the two pointers solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'left' or 'right') and put data inside it.\n\nFor example, 'let left = 0;' creates a variable that stores the number 0. Later, you can use that variable name to refer to it.",
+      "example": "let left = 0;\n\nNow the variable refers to the number 0\nWe can use the variable name to access this value",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function reverseString(s)', the 's' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'reverseString([\"h\", \"e\", \"l\", \"l\", \"o\"])', the array goes into 's'. Inside the function, you can use 's' to refer to that array.",
+      "example": "function reverseString(s) {\n  // 's' is a parameter\n}\n\n// When we call it:\nreverseString([\"h\", \"e\", \"l\", \"l\", \"o\"]);\n// The array goes into 's'",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'while' loop runs code repeatedly while a condition is true.\n\nFor example, 'while (left < right)' means: keep going while left is less than right. When left becomes greater than or equal to right, stop.",
+      "example": "while (left < right) {\n  // Do something\n  left++;\n  right--;\n}\n\nThis continues until left >= right",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the reverse string solution in JavaScript. We'll create a function that takes an array of characters and reverses it in-place.",
+      "example": "function reverseString(s) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-pointers-js"
+    },
+    {
+      "stepId": "coding-pointers-js",
+      "mentorSays": "First, let's initialize two pointers: one at the start (left = 0) and one at the end (right = s.length - 1).",
+      "example": "function reverseString(s) {\n  let left = 0;\n  let right = s.length - 1;\n  // left points to first character, right points to last character\n}",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Now, let's create a loop that continues while left < right. Inside the loop, we'll swap characters and move the pointers.",
+      "example": "function reverseString(s) {\n  let left = 0;\n  let right = s.length - 1;\n  \n  while (left < right) {\n    // Swap and move pointers\n  }\n}",
+      "action": "continue",
+      "next": "coding-swap-js"
+    },
+    {
+      "stepId": "coding-swap-js",
+      "mentorSays": "Inside the loop, let's swap the characters at left and right positions, then move the pointers inward.",
+      "example": "function reverseString(s) {\n  let left = 0;\n  let right = s.length - 1;\n  \n  while (left < right) {\n    // Swap characters\n    let temp = s[left];\n    s[left] = s[right];\n    s[right] = temp;\n    \n    // Move pointers\n    left++;\n    right--;\n  }\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\ns = [\"h\", \"e\", \"l\", \"l\", \"o\"]\n\nAfter calling reverseString(s), the array should be:\n[\"o\", \"l\", \"l\", \"e\", \"h\"]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\ns = [\"h\", \"e\", \"l\", \"l\", \"o\"]\n\nAfter reverseString(s):\ns = [\"o\", \"l\", \"l\", \"e\", \"h\"]\n\nAll characters are reversed in-place.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'left' or 'right') and put data inside it.\n\nFor example, 'left = 0' creates a variable that stores the number 0. Later, you can use that variable name to refer to it.",
+      "example": "left = 0\n\nNow the variable refers to the number 0\nWe can use the variable name to access this value",
+      "action": "continue",
+      "next": "function-check-python"
+    },
+    {
+      "stepId": "function-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-python"
+    },
+    {
+      "stepId": "parameter-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def reverse_string(s):', the 's' is a parameter - it's a placeholder that will receive an actual list when you call the function.\n\nWhen you call 'reverse_string([\"h\", \"e\", \"l\", \"l\", \"o\"])', the list goes into 's'. Inside the function, you can use 's' to refer to that list.",
+      "example": "def reverse_string(s):\n  # 's' is a parameter\n\n# When we call it:\nreverse_string([\"h\", \"e\", \"l\", \"l\", \"o\"])\n# The list goes into 's'",
+      "action": "continue",
+      "next": "loop-check-python"
+    },
+    {
+      "stepId": "loop-check-python",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'while' loop runs code repeatedly while a condition is true.\n\nFor example, 'while left < right:' means: keep going while left is less than right. When left becomes greater than or equal to right, stop.",
+      "example": "while left < right:\n    # Do something\n    left += 1\n    right -= 1\n\nThis continues until left >= right",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement the reverse string solution in Python. We'll create a function that takes a list of characters and reverses it in-place.",
+      "example": "def reverse_string(s):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-pointers-python"
+    },
+    {
+      "stepId": "coding-pointers-python",
+      "mentorSays": "First, let's initialize two pointers: one at the start (left = 0) and one at the end (right = len(s) - 1).",
+      "example": "def reverse_string(s):\n    left = 0\n    right = len(s) - 1\n    # left points to first character, right points to last character",
+      "action": "continue",
+      "next": "coding-loop-python"
+    },
+    {
+      "stepId": "coding-loop-python",
+      "mentorSays": "Now, let's create a loop that continues while left < right. Inside the loop, we'll swap characters and move the pointers.",
+      "example": "def reverse_string(s):\n    left = 0\n    right = len(s) - 1\n    \n    while left < right:\n        # Swap and move pointers",
+      "action": "continue",
+      "next": "coding-swap-python"
+    },
+    {
+      "stepId": "coding-swap-python",
+      "mentorSays": "Inside the loop, let's swap the characters at left and right positions, then move the pointers inward. In Python, we can swap directly without a temp variable.",
+      "example": "def reverse_string(s):\n    left = 0\n    right = len(s) - 1\n    \n    while left < right:\n        # Swap characters (Python allows direct swap)\n        s[left], s[right] = s[right], s[left]\n        \n        # Move pointers\n        left += 1\n        right -= 1",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\ns = [\"h\", \"e\", \"l\", \"l\", \"o\"]\n\nAfter calling reverse_string(s), the list should be:\n[\"o\", \"l\", \"l\", \"e\", \"h\"]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\ns = [\"h\", \"e\", \"l\", \"l\", \"o\"]\n\nAfter reverse_string(s):\ns = [\"o\", \"l\", \"l\", \"e\", \"h\"]\n\nAll characters are reversed in-place.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'left' or 'right') and put data inside it.\n\nFor example, 'int left = 0;' creates a variable that stores the number 0. Later, you can use that variable name to refer to it.",
+      "example": "int left = 0;\n\nNow the variable refers to the number 0\nWe can use the variable name to access this value",
+      "action": "continue",
+      "next": "function-check-java"
+    },
+    {
+      "stepId": "function-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know methods",
+          "next": "parameter-check-java"
+        },
+        {
+          "label": "No, explain methods",
+          "next": "function-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-java",
+      "mentorSays": "A method (Java's version of a function) is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-java"
+    },
+    {
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a method, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public void reverseString(char[] s)', the 's' is a parameter - it's a placeholder that will receive an actual array when you call the method.\n\nWhen you call 'reverseString(new char[]{\"h\", \"e\", \"l\", \"l\", \"o\"})', the array goes into 's'. Inside the method, you can use 's' to refer to that array.",
+      "example": "public void reverseString(char[] s) {\n  // 's' is a parameter\n}\n\n// When we call it:\nreverseString(new char[]{\"h\", \"e\", \"l\", \"l\", \"o\"});\n// The array goes into 's'",
+      "action": "continue",
+      "next": "loop-check-java"
+    },
+    {
+      "stepId": "loop-check-java",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'while' loop runs code repeatedly while a condition is true.\n\nFor example, 'while (left < right)' means: keep going while left is less than right. When left becomes greater than or equal to right, stop.",
+      "example": "while (left < right) {\n    // Do something\n    left++;\n    right--;\n}\n\nThis continues until left >= right",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement the reverse string solution in Java. We'll create a method that takes an array of characters and reverses it in-place.",
+      "example": "public void reverseString(char[] s) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-pointers-java"
+    },
+    {
+      "stepId": "coding-pointers-java",
+      "mentorSays": "First, let's initialize two pointers: one at the start (left = 0) and one at the end (right = s.length - 1).",
+      "example": "public void reverseString(char[] s) {\n    int left = 0;\n    int right = s.length - 1;\n    // left points to first character, right points to last character\n}",
+      "action": "continue",
+      "next": "coding-loop-java"
+    },
+    {
+      "stepId": "coding-loop-java",
+      "mentorSays": "Now, let's create a loop that continues while left < right. Inside the loop, we'll swap characters and move the pointers.",
+      "example": "public void reverseString(char[] s) {\n    int left = 0;\n    int right = s.length - 1;\n    \n    while (left < right) {\n        // Swap and move pointers\n    }\n}",
+      "action": "continue",
+      "next": "coding-swap-java"
+    },
+    {
+      "stepId": "coding-swap-java",
+      "mentorSays": "Inside the loop, let's swap the characters at left and right positions, then move the pointers inward.",
+      "example": "public void reverseString(char[] s) {\n    int left = 0;\n    int right = s.length - 1;\n    \n    while (left < right) {\n        // Swap characters\n        char temp = s[left];\n        s[left] = s[right];\n        s[right] = temp;\n        \n        // Move pointers\n        left++;\n        right--;\n    }\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\ns = [\"h\", \"e\", \"l\", \"l\", \"o\"]\n\nAfter calling reverseString(s), the array should be:\n[\"o\", \"l\", \"l\", \"e\", \"h\"]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\ns = [\"h\", \"e\", \"l\", \"l\", \"o\"]\n\nAfter reverseString(s):\ns = [\"o\", \"l\", \"l\", \"e\", \"h\"]\n\nAll characters are reversed in-place.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'left' or 'right') and put data inside it.\n\nFor example, 'int left = 0;' creates a variable that stores the number 0. Later, you can use that variable name to refer to it.",
+      "example": "int left = 0;\n\nNow the variable refers to the number 0\nWe can use the variable name to access this value",
+      "action": "continue",
+      "next": "function-check-cpp"
+    },
+    {
+      "stepId": "function-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-cpp"
+    },
+    {
+      "stepId": "parameter-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'void reverseString(vector<char>& s)', the 's' is a parameter - it's a placeholder that will receive an actual vector when you call the function.\n\nWhen you call 'reverseString({\"h\", \"e\", \"l\", \"l\", \"o\"})', the vector goes into 's'. Inside the function, you can use 's' to refer to that vector.",
+      "example": "void reverseString(vector<char>& s) {\n  // 's' is a parameter\n}\n\n// When we call it:\nreverseString({\"h\", \"e\", \"l\", \"l\", \"o\"});\n// The vector goes into 's'",
+      "action": "continue",
+      "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "loop-check-cpp",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'while' loop runs code repeatedly while a condition is true.\n\nFor example, 'while (left < right)' means: keep going while left is less than right. When left becomes greater than or equal to right, stop.",
+      "example": "while (left < right) {\n    // Do something\n    left++;\n    right--;\n}\n\nThis continues until left >= right",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement the reverse string solution in C++. We'll create a function that takes a vector of characters and reverses it in-place.",
+      "example": "void reverseString(vector<char>& s) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-pointers-cpp"
+    },
+    {
+      "stepId": "coding-pointers-cpp",
+      "mentorSays": "First, let's initialize two pointers: one at the start (left = 0) and one at the end (right = s.size() - 1).",
+      "example": "void reverseString(vector<char>& s) {\n    int left = 0;\n    int right = s.size() - 1;\n    // left points to first character, right points to last character\n}",
+      "action": "continue",
+      "next": "coding-loop-cpp"
+    },
+    {
+      "stepId": "coding-loop-cpp",
+      "mentorSays": "Now, let's create a loop that continues while left < right. Inside the loop, we'll swap characters and move the pointers.",
+      "example": "void reverseString(vector<char>& s) {\n    int left = 0;\n    int right = s.size() - 1;\n    \n    while (left < right) {\n        // Swap and move pointers\n    }\n}",
+      "action": "continue",
+      "next": "coding-swap-cpp"
+    },
+    {
+      "stepId": "coding-swap-cpp",
+      "mentorSays": "Inside the loop, let's swap the characters at left and right positions, then move the pointers inward. C++ has a swap function we can use.",
+      "example": "void reverseString(vector<char>& s) {\n    int left = 0;\n    int right = s.size() - 1;\n    \n    while (left < right) {\n        // Swap characters\n        swap(s[left], s[right]);\n        \n        // Move pointers\n        left++;\n        right--;\n    }\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\ns = [\"h\", \"e\", \"l\", \"l\", \"o\"]\n\nAfter calling reverseString(s), the vector should be:\n[\"o\", \"l\", \"l\", \"e\", \"h\"]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\ns = [\"h\", \"e\", \"l\", \"l\", \"o\"]\n\nAfter reverseString(s):\ns = [\"o\", \"l\", \"l\", \"e\", \"h\"]\n\nAll characters are reversed in-place.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'left' or 'right') and put data inside it.\n\nFor example, 'let left: number = 0;' creates a variable that stores the number 0. Later, you can use that variable name to refer to it.",
+      "example": "let left: number = 0;\n\nNow the variable refers to the number 0\nWe can use the variable name to access this value",
+      "action": "continue",
+      "next": "function-check-ts"
+    },
+    {
+      "stepId": "function-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a: number, b: number): number {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-ts"
+    },
+    {
+      "stepId": "parameter-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function reverseString(s: string[]): void', the 's' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'reverseString([\"h\", \"e\", \"l\", \"l\", \"o\"])', the array goes into 's'. Inside the function, you can use 's' to refer to that array.",
+      "example": "function reverseString(s: string[]): void {\n  // 's' is a parameter\n}\n\n// When we call it:\nreverseString([\"h\", \"e\", \"l\", \"l\", \"o\"]);\n// The array goes into 's'",
+      "action": "continue",
+      "next": "loop-check-ts"
+    },
+    {
+      "stepId": "loop-check-ts",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'while' loop runs code repeatedly while a condition is true.\n\nFor example, 'while (left < right)' means: keep going while left is less than right. When left becomes greater than or equal to right, stop.",
+      "example": "while (left < right) {\n  // Do something\n  left++;\n  right--;\n}\n\nThis continues until left >= right",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement the reverse string solution in TypeScript. We'll create a function that takes an array of characters and reverses it in-place.",
+      "example": "function reverseString(s: string[]): void {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-pointers-ts"
+    },
+    {
+      "stepId": "coding-pointers-ts",
+      "mentorSays": "First, let's initialize two pointers: one at the start (left = 0) and one at the end (right = s.length - 1).",
+      "example": "function reverseString(s: string[]): void {\n  let left: number = 0;\n  let right: number = s.length - 1;\n  // left points to first character, right points to last character\n}",
+      "action": "continue",
+      "next": "coding-loop-ts"
+    },
+    {
+      "stepId": "coding-loop-ts",
+      "mentorSays": "Now, let's create a loop that continues while left < right. Inside the loop, we'll swap characters and move the pointers.",
+      "example": "function reverseString(s: string[]): void {\n  let left: number = 0;\n  let right: number = s.length - 1;\n  \n  while (left < right) {\n    // Swap and move pointers\n  }\n}",
+      "action": "continue",
+      "next": "coding-swap-ts"
+    },
+    {
+      "stepId": "coding-swap-ts",
+      "mentorSays": "Inside the loop, let's swap the characters at left and right positions, then move the pointers inward.",
+      "example": "function reverseString(s: string[]): void {\n  let left: number = 0;\n  let right: number = s.length - 1;\n  \n  while (left < right) {\n    // Swap characters\n    let temp: string = s[left];\n    s[left] = s[right];\n    s[right] = temp;\n    \n    // Move pointers\n    left++;\n    right--;\n  }\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\ns = [\"h\", \"e\", \"l\", \"l\", \"o\"]\n\nAfter calling reverseString(s), the array should be:\n[\"o\", \"l\", \"l\", \"e\", \"h\"]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\ns = [\"h\", \"e\", \"l\", \"l\", \"o\"]\n\nAfter reverseString(s):\ns = [\"o\", \"l\", \"l\", \"e\", \"h\"]\n\nAll characters are reversed in-place.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "language-selection-new-array",
+      "mentorSays": "Great! Now let's code the new array approach. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "coding-new-array-js"
+        },
+        {
+          "label": "Python",
+          "next": "coding-new-array-python"
+        },
+        {
+          "label": "Java",
+          "next": "coding-new-array-java"
+        },
+        {
+          "label": "C++",
+          "next": "coding-new-array-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "coding-new-array-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "coding-new-array-js",
+      "mentorSays": "The new array approach creates a reversed copy. This works but uses extra space and doesn't modify the original in-place.",
+      "example": "function reverseString(s) {\n  const reversed = [];\n  for (let i = s.length - 1; i >= 0; i--) {\n    reversed.push(s[i]);\n  }\n  // Copy back to original\n  for (let i = 0; i < s.length; i++) {\n    s[i] = reversed[i];\n  }\n}",
+      "action": "continue",
+      "next": "recommend-two-pointers"
+    },
+    {
+      "stepId": "coding-new-array-python",
+      "mentorSays": "The new array approach creates a reversed copy. This works but uses extra space and doesn't modify the original in-place.",
+      "example": "def reverse_string(s):\n    reversed_list = s[::-1]\n    s[:] = reversed_list",
+      "action": "continue",
+      "next": "recommend-two-pointers"
+    },
+    {
+      "stepId": "coding-new-array-java",
+      "mentorSays": "The new array approach creates a reversed copy. This works but uses extra space and doesn't modify the original in-place.",
+      "example": "public void reverseString(char[] s) {\n    char[] reversed = new char[s.length];\n    for (int i = 0; i < s.length; i++) {\n        reversed[i] = s[s.length - 1 - i];\n    }\n    // Copy back to original\n    System.arraycopy(reversed, 0, s, 0, s.length);\n}",
+      "action": "continue",
+      "next": "recommend-two-pointers"
+    },
+    {
+      "stepId": "coding-new-array-cpp",
+      "mentorSays": "The new array approach creates a reversed copy. This works but uses extra space and doesn't modify the original in-place.",
+      "example": "void reverseString(vector<char>& s) {\n    vector<char> reversed(s.rbegin(), s.rend());\n    s = reversed;\n}",
+      "action": "continue",
+      "next": "recommend-two-pointers"
+    },
+    {
+      "stepId": "coding-new-array-ts",
+      "mentorSays": "The new array approach creates a reversed copy. This works but uses extra space and doesn't modify the original in-place.",
+      "example": "function reverseString(s: string[]): void {\n  const reversed: string[] = [];\n  for (let i = s.length - 1; i >= 0; i--) {\n    reversed.push(s[i]);\n  }\n  // Copy back to original\n  for (let i = 0; i < s.length; i++) {\n    s[i] = reversed[i];\n  }\n}",
+      "action": "continue",
+      "next": "recommend-two-pointers"
+    },
+    {
+      "stepId": "recommend-two-pointers",
+      "mentorSays": "Great job! You've successfully implemented the new array approach. This solution works, but there's a more efficient method using two pointers.\n\nThe two pointers method is more space-efficient (O(1) space instead of O(n)) and works in-place. Would you like to learn the two pointers approach now?",
+      "choices": [
+        {
+          "label": "Yes, teach me the two pointers approach",
+          "next": "explore-two-pointers"
+        },
+        {
+          "label": "No, I'm done for now",
+          "next": "final"
+        }
+      ]
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've learned to think through the Reverse String problem. You understand what reversing means, how to use two pointers to swap characters efficiently, and you've explored different approaches to solve it.\n\nThis kind of thinking—using two pointers to swap elements from both ends—is essential for solving many algorithm problems. Keep practicing!",
+      "action": "continue"
+    }
+  ]
+}

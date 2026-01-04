@@ -1,0 +1,729 @@
+{
+  "id": "container-with-most-water",
+  "title": "Container with most water",
+  "pattern": "two-pointers",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Container With Most Water problem asks for\n2. Use two pointers to find the maximum water area\n3. Understand why moving the shorter pointer is optimal\n4. Implement the solution step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what the Container With Most Water problem is asking.\n\nImagine you have an array of heights: [1, 8, 6, 2, 5, 4, 8, 3, 7]\n\nEach number represents the height of a vertical line. Your task: Find two lines that together with the x-axis form a container that holds the most water.\n\nVisual representation:\n     |\n     |     |\n|    |     |    |\n|    |  |  |    |  |\n| |  |  |  | |  |  |\n1 8  6  2  5  4  8  3  7\n\n**Key Insight**: The water area between two lines at indices i and j is:\n- Width: j - i (distance between the lines)\n- Height: min(height[i], height[j]) (limited by the shorter line)\n- Area: width × height = (j - i) × min(height[i], height[j])\n\nLet's check some pairs:\n- Lines at index 1 (height=8) and index 8 (height=7):\n  - Width = 8 - 1 = 7\n  - Height = min(8, 7) = 7\n  - Area = 7 × 7 = 49 ✓\n\n- Lines at index 1 (height=8) and index 6 (height=8):\n  - Width = 6 - 1 = 5\n  - Height = min(8, 8) = 8\n  - Area = 5 × 8 = 40\n\n- Lines at index 0 (height=1) and index 8 (height=7):\n  - Width = 8 - 0 = 8\n  - Height = min(1, 7) = 1\n  - Area = 8 × 1 = 8\n\nThe maximum area is 49.\n\nThat's what the problem wants: the maximum area of water that can be contained.",
+      "example": "height = [1, 8, 6, 2, 5, 4, 8, 3, 7]\n\nVisual:\n     |\n     |     |\n|    |     |    |\n|    |  |  |    |  |\n| |  |  |  | |  |  |\n1 8  6  2  5  4  8  3  7\n\nBest container: lines at index 1 (height=8) and index 8 (height=7)\nArea = (8-1) × min(8,7) = 7 × 7 = 49\n\nAnswer: 49",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU find the container with the most water?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Check all possible pairs of lines",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use two pointers starting from both ends",
+          "next": "explore-two-pointers"
+        },
+        {
+          "label": "Use a greedy approach moving the shorter pointer",
+          "next": "explore-greedy"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"I'll check every possible pair of lines and find which one gives the maximum area.\"\n\nFor [1, 8, 6, 2, 5, 4, 8, 3, 7]:\n- Check (0,1), (0,2), ..., (0,8)\n- Check (1,2), (1,3), ..., (1,8)\n- ... and so on\n\nThis works! However, it's O(n²) time complexity.\n\nWould you like to learn the two pointers approach which is O(n) time?",
+      "choices": [
+        {
+          "label": "Yes, teach me the two pointers approach",
+          "next": "explore-two-pointers"
+        },
+        {
+          "label": "No, I want to code the brute force first",
+          "next": "language-selection-brute"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-greedy",
+      "mentorSays": "Excellent thinking! The greedy approach with two pointers is exactly the optimal solution!\n\nThis is the same as the two pointers approach. Let's learn it!",
+      "action": "continue",
+      "next": "explore-two-pointers"
+    },
+    {
+      "stepId": "explore-two-pointers",
+      "mentorSays": "Excellent choice! The two pointers approach is elegant and efficient. Here's the core idea:\n\n1. **Start with widest container**: Initialize left = 0, right = n-1\n2. **Calculate area**: Area = (right - left) × min(height[left], height[right])\n3. **Move the shorter pointer**: Always move the pointer pointing to the shorter line\n4. **Track maximum**: Keep track of the maximum area seen so far\n\n**Why move the shorter pointer?**\n- If we move the taller pointer, the width decreases and the height can't increase (limited by the shorter line)\n- If we move the shorter pointer, the width decreases but the height might increase\n- So moving the shorter pointer gives us a chance to find a better area\n\nLet's trace this with [1, 8, 6, 2, 5, 4, 8, 3, 7]:\n\n- **Initial**: left = 0 (height=1), right = 8 (height=7), maxArea = 0\n  - Area = (8-0) × min(1,7) = 8 × 1 = 8, maxArea = 8\n  - Move left (shorter)\n- **left = 1, right = 8**: height[left]=8, height[right]=7\n  - Area = (8-1) × min(8,7) = 7 × 7 = 49, maxArea = 49\n  - Move right (shorter)\n- **left = 1, right = 7**: height[left]=8, height[right]=3\n  - Area = (7-1) × min(8,3) = 6 × 3 = 18, maxArea = 49\n  - Move right (shorter)\n- Continue until left >= right\n\nThis is O(n) time and O(1) space! Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'left' or 'maxArea') and put data inside it.\n\nFor example, 'let left = 0;' creates a variable that stores the number 0. Later, you can use that variable name to refer to it.",
+      "example": "let left = 0;\nlet maxArea = 0;\n\nNow these variables store numbers\nWe can use them in our calculations",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "parameter-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function maxArea(height)', the 'height' is a parameter - it's a placeholder that will receive an actual array when you call the function.",
+      "example": "function maxArea(height) {\n  // 'height' is a parameter\n}\n\n// When we call it:\nmaxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]);\n// The array goes into 'height'",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use a while loop. Do you know what a while loop is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know while loops",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain while loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A while loop repeats code as long as a condition is true. 'while (left < right)' means: keep running the code inside as long as left is less than right.",
+      "example": "while (left < right) {\n  // This code runs repeatedly\n  // until left >= right\n}",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the container with most water solution using two pointers in JavaScript. We'll create a function that takes an array of heights and returns the maximum area.",
+      "example": "function maxArea(height) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-pointers-js"
+    },
+    {
+      "stepId": "coding-init-pointers-js",
+      "mentorSays": "First, initialize two pointers at the start and end of the array, and a variable to track the maximum area.",
+      "example": "function maxArea(height) {\n  let left = 0;\n  let right = height.length - 1;\n  let maxArea = 0;\n}",
+      "action": "continue",
+      "next": "coding-while-loop-js"
+    },
+    {
+      "stepId": "coding-while-loop-js",
+      "mentorSays": "Now, create a while loop that continues while left < right. Inside, we'll calculate the area and move pointers.",
+      "example": "function maxArea(height) {\n  let left = 0, right = height.length - 1;\n  let maxArea = 0;\n  \n  while (left < right) {\n    // Calculate area and update maxArea\n  }\n}",
+      "action": "continue",
+      "next": "coding-calculate-area-js"
+    },
+    {
+      "stepId": "coding-calculate-area-js",
+      "mentorSays": "Inside the loop, calculate the current area: width = right - left, height = min(height[left], height[right]), area = width × height. Update maxArea if this area is larger.",
+      "example": "function maxArea(height) {\n  let left = 0, right = height.length - 1;\n  let maxArea = 0;\n  \n  while (left < right) {\n    const width = right - left;\n    const h = Math.min(height[left], height[right]);\n    maxArea = Math.max(maxArea, width * h);\n  }\n}",
+      "action": "continue",
+      "next": "coding-move-pointers-js"
+    },
+    {
+      "stepId": "coding-move-pointers-js",
+      "mentorSays": "After calculating the area, move the pointer pointing to the shorter line. If height[left] < height[right], move left forward. Otherwise, move right backward.",
+      "example": "function maxArea(height) {\n  let left = 0, right = height.length - 1;\n  let maxArea = 0;\n  \n  while (left < right) {\n    const width = right - left;\n    const h = Math.min(height[left], height[right]);\n    maxArea = Math.max(maxArea, width * h);\n    \n    if (height[left] < height[right]) {\n      left++;\n    } else {\n      right--;\n    }\n  }\n  return maxArea;\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Test with height = [1,8,6,2,5,4,8,3,7]. Expected: 49.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in Python, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "main-function-check-python"
+    },
+    {
+      "stepId": "main-functions-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameter-check-python"
+    },
+    {
+      "stepId": "main-parameters-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "main-loop-check-python"
+    },
+    {
+      "stepId": "main-loops-check-python",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-loops-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
+      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement the container with most water solution using two pointers in Python. We'll create a function that takes a list of heights and returns the maximum area.",
+      "example": "def max_area(height):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-init-pointers-python"
+    },
+    {
+      "stepId": "coding-init-pointers-python",
+      "mentorSays": "First, initialize two pointers at the start and end of the list, and a variable to track the maximum area.",
+      "example": "def max_area(height):\n    left = 0\n    right = len(height) - 1\n    max_area = 0",
+      "action": "continue",
+      "next": "coding-while-loop-python"
+    },
+    {
+      "stepId": "coding-while-loop-python",
+      "mentorSays": "Now, create a while loop that continues while left < right. Inside, we'll calculate the area and move pointers.",
+      "example": "def max_area(height):\n    left, right = 0, len(height) - 1\n    max_area = 0\n    \n    while left < right:\n        # Calculate area and update max_area",
+      "action": "continue",
+      "next": "coding-calculate-area-python"
+    },
+    {
+      "stepId": "coding-calculate-area-python",
+      "mentorSays": "Inside the loop, calculate the current area: width = right - left, h = min(height[left], height[right]), area = width × h. Update max_area if this area is larger.",
+      "example": "def max_area(height):\n    left, right = 0, len(height) - 1\n    max_area = 0\n    \n    while left < right:\n        width = right - left\n        h = min(height[left], height[right])\n        max_area = max(max_area, width * h)",
+      "action": "continue",
+      "next": "coding-move-pointers-python"
+    },
+    {
+      "stepId": "coding-move-pointers-python",
+      "mentorSays": "After calculating the area, move the pointer pointing to the shorter line. If height[left] < height[right], move left forward. Otherwise, move right backward.",
+      "example": "def max_area(height):\n    left, right = 0, len(height) - 1\n    max_area = 0\n    \n    while left < right:\n        width = right - left\n        h = min(height[left], height[right])\n        max_area = max(max_area, width * h)\n        \n        if height[left] < height[right]:\n            left += 1\n        else:\n            right -= 1\n    \n    return max_area",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Test with height = [1,8,6,2,5,4,8,3,7]. Expected: 49.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in Java, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "main-function-check-java"
+    },
+    {
+      "stepId": "main-functions-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-java"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-java",
+      "mentorSays": "A method is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameter-check-java"
+    },
+    {
+      "stepId": "main-parameters-check-java",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "main-loop-check-java"
+    },
+    {
+      "stepId": "main-loops-check-java",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-loops-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Java runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
+      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement the container with most water solution using two pointers in Java. We'll create a method that takes an array of heights and returns the maximum area.",
+      "example": "public int maxArea(int[] height) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-pointers-java"
+    },
+    {
+      "stepId": "coding-init-pointers-java",
+      "mentorSays": "First, initialize two pointers at the start and end of the array, and a variable to track the maximum area.",
+      "example": "public int maxArea(int[] height) {\n    int left = 0;\n    int right = height.length - 1;\n    int maxArea = 0;\n}",
+      "action": "continue",
+      "next": "coding-while-loop-java"
+    },
+    {
+      "stepId": "coding-while-loop-java",
+      "mentorSays": "Now, create a while loop that continues while left < right. Inside, we'll calculate the area and move pointers.",
+      "example": "public int maxArea(int[] height) {\n    int left = 0, right = height.length - 1;\n    int maxArea = 0;\n    \n    while (left < right) {\n        // Calculate area and update maxArea\n    }\n}",
+      "action": "continue",
+      "next": "coding-calculate-area-java"
+    },
+    {
+      "stepId": "coding-calculate-area-java",
+      "mentorSays": "Inside the loop, calculate the current area: width = right - left, h = min(height[left], height[right]), area = width × h. Update maxArea if this area is larger.",
+      "example": "public int maxArea(int[] height) {\n    int left = 0, right = height.length - 1;\n    int maxArea = 0;\n    \n    while (left < right) {\n        int width = right - left;\n        int h = Math.min(height[left], height[right]);\n        maxArea = Math.max(maxArea, width * h);\n    }\n}",
+      "action": "continue",
+      "next": "coding-move-pointers-java"
+    },
+    {
+      "stepId": "coding-move-pointers-java",
+      "mentorSays": "After calculating the area, move the pointer pointing to the shorter line. If height[left] < height[right], move left forward. Otherwise, move right backward.",
+      "example": "public int maxArea(int[] height) {\n    int left = 0, right = height.length - 1;\n    int maxArea = 0;\n    \n    while (left < right) {\n        int width = right - left;\n        int h = Math.min(height[left], height[right]);\n        maxArea = Math.max(maxArea, width * h);\n        \n        if (height[left] < height[right]) {\n            left++;\n        } else {\n            right--;\n        }\n    }\n    return maxArea;\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Test with height = [1,8,6,2,5,4,8,3,7]. Expected: 49.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in C++, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "main-function-check-cpp"
+    },
+    {
+      "stepId": "main-functions-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameter-check-cpp"
+    },
+    {
+      "stepId": "main-parameters-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "main-loop-check-cpp"
+    },
+    {
+      "stepId": "main-loops-check-cpp",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-loops-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in C++ runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
+      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement the container with most water solution using two pointers in C++. We'll create a function that takes a vector of heights and returns the maximum area.",
+      "example": "int maxArea(vector<int>& height) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-pointers-cpp"
+    },
+    {
+      "stepId": "coding-init-pointers-cpp",
+      "mentorSays": "First, initialize two pointers at the start and end of the vector, and a variable to track the maximum area.",
+      "example": "int maxArea(vector<int>& height) {\n    int left = 0;\n    int right = height.size() - 1;\n    int maxArea = 0;\n}",
+      "action": "continue",
+      "next": "coding-while-loop-cpp"
+    },
+    {
+      "stepId": "coding-while-loop-cpp",
+      "mentorSays": "Now, create a while loop that continues while left < right. Inside, we'll calculate the area and move pointers.",
+      "example": "int maxArea(vector<int>& height) {\n    int left = 0, right = height.size() - 1;\n    int maxArea = 0;\n    \n    while (left < right) {\n        // Calculate area and update maxArea\n    }\n}",
+      "action": "continue",
+      "next": "coding-calculate-area-cpp"
+    },
+    {
+      "stepId": "coding-calculate-area-cpp",
+      "mentorSays": "Inside the loop, calculate the current area: width = right - left, h = min(height[left], height[right]), area = width × h. Update maxArea if this area is larger.",
+      "example": "int maxArea(vector<int>& height) {\n    int left = 0, right = height.size() - 1;\n    int maxArea = 0;\n    \n    while (left < right) {\n        int width = right - left;\n        int h = min(height[left], height[right]);\n        maxArea = max(maxArea, width * h);\n    }\n}",
+      "action": "continue",
+      "next": "coding-move-pointers-cpp"
+    },
+    {
+      "stepId": "coding-move-pointers-cpp",
+      "mentorSays": "After calculating the area, move the pointer pointing to the shorter line. If height[left] < height[right], move left forward. Otherwise, move right backward.",
+      "example": "int maxArea(vector<int>& height) {\n    int left = 0, right = height.size() - 1;\n    int maxArea = 0;\n    \n    while (left < right) {\n        int width = right - left;\n        int h = min(height[left], height[right]);\n        maxArea = max(maxArea, width * h);\n        \n        if (height[left] < height[right]) {\n            left++;\n        } else {\n            right--;\n        }\n    }\n    return maxArea;\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Test with height = [1,8,6,2,5,4,8,3,7]. Expected: 49.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in TypeScript, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "main-function-check-ts"
+    },
+    {
+      "stepId": "main-functions-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameter-check-ts"
+    },
+    {
+      "stepId": "main-parameters-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "main-loop-check-ts"
+    },
+    {
+      "stepId": "main-loops-check-ts",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-loops-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in TypeScript runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
+      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement the container with most water solution using two pointers in TypeScript. We'll create a function that takes an array of heights and returns the maximum area.",
+      "example": "function maxArea(height: number[]): number {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-pointers-ts"
+    },
+    {
+      "stepId": "coding-init-pointers-ts",
+      "mentorSays": "First, initialize two pointers at the start and end of the array, and a variable to track the maximum area.",
+      "example": "function maxArea(height: number[]): number {\n  let left = 0;\n  let right = height.length - 1;\n  let maxArea = 0;\n}",
+      "action": "continue",
+      "next": "coding-while-loop-ts"
+    },
+    {
+      "stepId": "coding-while-loop-ts",
+      "mentorSays": "Now, create a while loop that continues while left < right. Inside, we'll calculate the area and move pointers.",
+      "example": "function maxArea(height: number[]): number {\n  let left = 0, right = height.length - 1;\n  let maxArea = 0;\n  \n  while (left < right) {\n    // Calculate area and update maxArea\n  }\n}",
+      "action": "continue",
+      "next": "coding-calculate-area-ts"
+    },
+    {
+      "stepId": "coding-calculate-area-ts",
+      "mentorSays": "Inside the loop, calculate the current area: width = right - left, h = min(height[left], height[right]), area = width × h. Update maxArea if this area is larger.",
+      "example": "function maxArea(height: number[]): number {\n  let left = 0, right = height.length - 1;\n  let maxArea = 0;\n  \n  while (left < right) {\n    const width = right - left;\n    const h = Math.min(height[left], height[right]);\n    maxArea = Math.max(maxArea, width * h);\n  }\n}",
+      "action": "continue",
+      "next": "coding-move-pointers-ts"
+    },
+    {
+      "stepId": "coding-move-pointers-ts",
+      "mentorSays": "After calculating the area, move the pointer pointing to the shorter line. If height[left] < height[right], move left forward. Otherwise, move right backward.",
+      "example": "function maxArea(height: number[]): number {\n  let left = 0, right = height.length - 1;\n  let maxArea = 0;\n  \n  while (left < right) {\n    const width = right - left;\n    const h = Math.min(height[left], height[right]);\n    maxArea = Math.max(maxArea, width * h);\n    \n    if (height[left] < height[right]) {\n      left++;\n    } else {\n      right--;\n    }\n  }\n  return maxArea;\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Test with height = [1,8,6,2,5,4,8,3,7]. Expected: 49.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "test-code",
+      "mentorSays": "Perfect! Now try running your code with the example input. Test it to make sure it produces the expected output!",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've completed this lesson. Practice more to master this pattern!",
+      "action": "continue"
+    }
+  ]
+}

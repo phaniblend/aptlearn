@@ -1,0 +1,826 @@
+{
+  "id": "fruits-into-baskets",
+  "title": "Fruits into baskets",
+  "pattern": "sliding-window",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Fruits Into Baskets problem asks for\n2. Use a sliding window with a hash map to track fruit types\n3. Maintain at most 2 distinct fruit types in the window\n4. Implement the solution step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what the Fruits Into Baskets problem is asking.\n\nImagine you have an array of fruits: [1, 2, 1]\n\nEach number represents a type of fruit. You have 2 baskets, and each basket can only hold one type of fruit.\n\nYour task: Find the maximum number of fruits you can collect (pick fruits from a contiguous subarray) such that you have at most 2 different types of fruits.\n\nLet's explore:\n- Start at index 0: [1] → 1 type, count = 1\n- Continue to index 1: [1, 2] → 2 types, count = 2\n- Continue to index 2: [1, 2, 1] → 2 types, count = 3 ✓\n\nMaximum: 3 fruits\n\n**Key Insight**: This is the same as \"Longest Substring with At Most K Distinct Characters\" where K = 2!\n\nWe use a sliding window with a hash map to track fruit types. We expand the window until we have more than 2 types, then shrink it from the left.\n\nThat's what the problem wants: the maximum number of fruits you can collect with at most 2 different types.",
+      "example": "fruits = [1, 2, 1]\n\nFind longest contiguous subarray with at most 2 types:\n- [1, 2, 1] → types: {1, 2}, count = 3 ✓\n\nAnswer: 3\n\nAnother example:\nfruits = [0, 1, 2, 2]\n\n- [0, 1, 2, 2] → types: {0, 1, 2} = 3 types, too many!\n- [1, 2, 2] → types: {1, 2}, count = 3 ✓\n- [0, 1] → types: {0, 1}, count = 2\n\nAnswer: 3",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU find the maximum fruits you can collect with at most 2 types?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Use a sliding window with a hash map to track fruit types",
+          "next": "explore-sliding-window"
+        },
+        {
+          "label": "Check all possible subarrays and count distinct types",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use two pointers to expand and shrink the window",
+          "next": "explore-two-pointers"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"I'll check all possible subarrays and see which ones have at most 2 distinct fruit types.\"\n\nThis works! However, it's O(n²) time complexity.\n\nWould you like to learn the sliding window approach which is O(n) time?",
+      "action": "continue",
+      "next": "explore-sliding-window"
+    },
+    {
+      "stepId": "explore-two-pointers",
+      "mentorSays": "Great thinking! Two pointers with a sliding window is exactly what we need!\n\nThis is the same as the sliding window approach. Let's learn it!",
+      "action": "continue",
+      "next": "explore-sliding-window"
+    },
+    {
+      "stepId": "explore-sliding-window",
+      "mentorSays": "Excellent choice! The sliding window approach is efficient and elegant. Here's the core idea:\n\n1. **Two pointers**: Use `left` and `right` to define the current window\n2. **Hash map**: Track fruit type frequencies in the current window\n3. **Expand**: Move `right` pointer to expand the window\n4. **Shrink**: If we have more than 2 types, move `left` pointer to shrink the window\n5. **Track maximum**: Keep track of the maximum window size seen so far\n\nLet's trace this with [1, 2, 1]:\n\n- **Initial**: left = 0, right = 0, fruitMap = {}, maxFruits = 0\n- **right = 0**: fruit = 1, fruitMap = {1:1}, types = 1, window = [1], maxFruits = 1\n- **right = 1**: fruit = 2, fruitMap = {1:1, 2:1}, types = 2, window = [1,2], maxFruits = 2\n- **right = 2**: fruit = 1, fruitMap = {1:2, 2:1}, types = 2, window = [1,2,1], maxFruits = 3\n\nAnswer: 3\n\nThis is O(n) time! Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'fruitMap' or 'maxFruits') and put data inside it.\n\nFor example, 'let fruitMap = new Map();' creates a variable that stores a map.",
+      "example": "let fruitMap = new Map();\nlet maxFruits = 0;\n\nNow these variables store a map and a number",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "parameter-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function totalFruit(fruits)', the 'fruits' is a parameter.",
+      "example": "function totalFruit(fruits) {\n  // 'fruits' is a parameter\n}\n\n// When we call it:\ntotalFruit([1, 2, 1]);\n// The array goes into 'fruits'",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use a loop. Do you know what a loop is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "hashmap-check-js"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let right = 0; right < fruits.length; right++)' means: start at 0, keep going while right is less than array length, and add 1 to right each time.",
+      "example": "for (let right = 0; right < fruits.length; right++) {\n  console.log(fruits[right]);\n}\n\nThis prints each fruit in the array",
+      "action": "continue",
+      "next": "hashmap-check-js"
+    },
+    {
+      "stepId": "hashmap-check-js",
+      "mentorSays": "To solve this efficiently, we'll use a hash map (Map) to track fruit type frequencies. Do you know what a hash map is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know hash maps",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain hash maps",
+          "next": "hashmap-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "hashmap-explanation-js",
+      "mentorSays": "A hash map (Map) stores key-value pairs. You can quickly look up values by their keys. We'll use it to count how many times each fruit type appears in our window.",
+      "example": "let fruitMap = new Map();\nfruitMap.set(1, 2);\nfruitMap.get(1); // returns 2\n\nThis stores that fruit type 1 appears 2 times",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the fruits into baskets solution using sliding window in JavaScript. We'll create a function that takes an array of fruits and returns the maximum number of fruits you can collect.",
+      "example": "function totalFruit(fruits) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "First, initialize variables: left pointer, maxFruits, and a map to track fruit type frequencies.",
+      "example": "function totalFruit(fruits) {\n  let left = 0;\n  let maxFruits = 0;\n  const fruitMap = new Map();\n}",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Now, loop through the fruits array with right pointer. For each fruit, add it to the map and update its frequency.",
+      "example": "function totalFruit(fruits) {\n  let left = 0, maxFruits = 0;\n  const fruitMap = new Map();\n  \n  for (let right = 0; right < fruits.length; right++) {\n    const fruit = fruits[right];\n    fruitMap.set(fruit, (fruitMap.get(fruit) || 0) + 1);\n    // Add fruit to map or increment its count\n  }\n}",
+      "action": "continue",
+      "next": "coding-shrink-js"
+    },
+    {
+      "stepId": "coding-shrink-js",
+      "mentorSays": "After adding a fruit, if we have more than 2 types, shrink the window from the left until we have at most 2 types.",
+      "example": "function totalFruit(fruits) {\n  let left = 0, maxFruits = 0;\n  const fruitMap = new Map();\n  \n  for (let right = 0; right < fruits.length; right++) {\n    const fruit = fruits[right];\n    fruitMap.set(fruit, (fruitMap.get(fruit) || 0) + 1);\n    \n    while (fruitMap.size > 2) {\n      const leftFruit = fruits[left];\n      fruitMap.set(leftFruit, fruitMap.get(leftFruit) - 1);\n      if (fruitMap.get(leftFruit) === 0) {\n        fruitMap.delete(leftFruit);\n      }\n      left++;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-update-max-js"
+    },
+    {
+      "stepId": "coding-update-max-js",
+      "mentorSays": "After ensuring we have at most 2 types, update maxFruits if the current window is larger.",
+      "example": "function totalFruit(fruits) {\n  let left = 0, maxFruits = 0;\n  const fruitMap = new Map();\n  \n  for (let right = 0; right < fruits.length; right++) {\n    const fruit = fruits[right];\n    fruitMap.set(fruit, (fruitMap.get(fruit) || 0) + 1);\n    \n    while (fruitMap.size > 2) {\n      const leftFruit = fruits[left];\n      fruitMap.set(leftFruit, fruitMap.get(leftFruit) - 1);\n      if (fruitMap.get(leftFruit) === 0) {\n        fruitMap.delete(leftFruit);\n      }\n      left++;\n    }\n    \n    maxFruits = Math.max(maxFruits, right - left + 1);\n  }\n  \n  return maxFruits;\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Test with fruits = [1, 2, 1]. Expected: 3 (subarray [1, 2, 1]).",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "main-next-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "main-variables-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in Python, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "main-function-check-python"
+    },
+    {
+      "stepId": "main-functions-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "main-next-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "main-functions-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameter-check-python"
+    },
+    {
+      "stepId": "main-parameters-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "main-next-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "main-parameters-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "main-loop-check-python"
+    },
+    {
+      "stepId": "main-loops-check-python",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "main-next-python"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "main-loops-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-loops-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
+      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "action": "continue",
+      "next": "main-coding-start-python"
+    },
+    {
+      "stepId": "main-hash-maps-check-python",
+      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know hash maps",
+          "next": "main-next-python"
+        },
+        {
+          "label": "No, explain hash maps",
+          "next": "main-hash-maps-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-hash-maps-explanation-python",
+      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In Python, you can use objects or dictionaries to create hash maps.",
+      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "action": "continue",
+      "next": "main-coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement the longest substring with K distinct characters solution using sliding window in Python.",
+      "example": "def longest_substring_k_distinct(s, k):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-init-python"
+    },
+    {
+      "stepId": "coding-init-python",
+      "mentorSays": "First, initialize variables: left pointer, max_len, and a dictionary to track character frequencies.",
+      "example": "def longest_substring_k_distinct(s, k):\n    left = 0\n    max_len = 0\n    char_map = {}\n",
+      "action": "continue",
+      "next": "coding-loop-python"
+    },
+    {
+      "stepId": "coding-loop-python",
+      "mentorSays": "Now, loop through the string with right pointer. For each character, add it to the dictionary and update its frequency.",
+      "example": "def longest_substring_k_distinct(s, k):\n    left = 0\n    max_len = 0\n    char_map = {}\n    \n    for right in range(len(s)):\n        char = s[right]\n        char_map[char] = char_map.get(char, 0) + 1\n        # Add character to map or increment its count",
+      "action": "continue",
+      "next": "coding-shrink-python"
+    },
+    {
+      "stepId": "coding-shrink-python",
+      "mentorSays": "After adding a character, if we have more than K distinct characters, shrink the window from the left until we have at most K distinct characters.",
+      "example": "def longest_substring_k_distinct(s, k):\n    left = 0\n    max_len = 0\n    char_map = {}\n    \n    for right in range(len(s)):\n        char = s[right]\n        char_map[char] = char_map.get(char, 0) + 1\n        \n        while len(char_map) > k:\n            left_char = s[left]\n            char_map[left_char] -= 1\n            if char_map[left_char] == 0:\n                del char_map[left_char]\n            left += 1",
+      "action": "continue",
+      "next": "coding-update-max-python"
+    },
+    {
+      "stepId": "coding-update-max-python",
+      "mentorSays": "After ensuring we have at most K distinct characters, update max_len if the current window is longer.",
+      "example": "def longest_substring_k_distinct(s, k):\n    left = 0\n    max_len = 0\n    char_map = {}\n    \n    for right in range(len(s)):\n        char = s[right]\n        char_map[char] = char_map.get(char, 0) + 1\n        \n        while len(char_map) > k:\n            left_char = s[left]\n            char_map[left_char] -= 1\n            if char_map[left_char] == 0:\n                del char_map[left_char]\n            left += 1\n        \n        max_len = max(max_len, right - left + 1)\n    \n    return max_len",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Test with s = \"araaci\", k = 2. Expected: 4 (substring \"araa\").",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "main-next-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "main-variables-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in Java, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "main-function-check-java"
+    },
+    {
+      "stepId": "main-functions-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "main-next-java"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "main-functions-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-java",
+      "mentorSays": "A method is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameter-check-java"
+    },
+    {
+      "stepId": "main-parameters-check-java",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "main-next-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "main-parameters-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "main-loop-check-java"
+    },
+    {
+      "stepId": "main-loops-check-java",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "main-next-java"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "main-loops-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-loops-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Java runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
+      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "action": "continue",
+      "next": "main-coding-start-java"
+    },
+    {
+      "stepId": "main-hash-maps-check-java",
+      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know hash maps",
+          "next": "main-next-java"
+        },
+        {
+          "label": "No, explain hash maps",
+          "next": "main-hash-maps-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-hash-maps-explanation-java",
+      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In Java, you can use objects or dictionaries to create hash maps.",
+      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "action": "continue",
+      "next": "main-coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement the longest substring with K distinct characters solution using sliding window in Java.",
+      "example": "public int longestSubstringKDistinct(String s, int k) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-java"
+    },
+    {
+      "stepId": "coding-init-java",
+      "mentorSays": "First, initialize variables: left pointer, maxLen, and a map to track character frequencies.",
+      "example": "public int longestSubstringKDistinct(String s, int k) {\n    int left = 0;\n    int maxLen = 0;\n    Map<Character, Integer> charMap = new HashMap<>();\n}",
+      "action": "continue",
+      "next": "coding-loop-java"
+    },
+    {
+      "stepId": "coding-loop-java",
+      "mentorSays": "Now, loop through the string with right pointer. For each character, add it to the map and update its frequency.",
+      "example": "public int longestSubstringKDistinct(String s, int k) {\n    int left = 0, maxLen = 0;\n    Map<Character, Integer> charMap = new HashMap<>();\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        charMap.put(c, charMap.getOrDefault(c, 0) + 1);\n        // Add character to map or increment its count\n    }\n}",
+      "action": "continue",
+      "next": "coding-shrink-java"
+    },
+    {
+      "stepId": "coding-shrink-java",
+      "mentorSays": "After adding a character, if we have more than K distinct characters, shrink the window from the left until we have at most K distinct characters.",
+      "example": "public int longestSubstringKDistinct(String s, int k) {\n    int left = 0, maxLen = 0;\n    Map<Character, Integer> charMap = new HashMap<>();\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        charMap.put(c, charMap.getOrDefault(c, 0) + 1);\n        \n        while (charMap.size() > k) {\n            char leftChar = s.charAt(left);\n            charMap.put(leftChar, charMap.get(leftChar) - 1);\n            if (charMap.get(leftChar) == 0) {\n                charMap.remove(leftChar);\n            }\n            left++;\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-update-max-java"
+    },
+    {
+      "stepId": "coding-update-max-java",
+      "mentorSays": "After ensuring we have at most K distinct characters, update maxLen if the current window is longer.",
+      "example": "public int longestSubstringKDistinct(String s, int k) {\n    int left = 0, maxLen = 0;\n    Map<Character, Integer> charMap = new HashMap<>();\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        charMap.put(c, charMap.getOrDefault(c, 0) + 1);\n        \n        while (charMap.size() > k) {\n            char leftChar = s.charAt(left);\n            charMap.put(leftChar, charMap.get(leftChar) - 1);\n            if (charMap.get(leftChar) == 0) {\n                charMap.remove(leftChar);\n            }\n            left++;\n        }\n        \n        maxLen = Math.max(maxLen, right - left + 1);\n    }\n    \n    return maxLen;\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Test with s = \"araaci\", k = 2. Expected: 4 (substring \"araa\").",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "main-next-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "main-variables-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in C++, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "main-function-check-cpp"
+    },
+    {
+      "stepId": "main-functions-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "main-next-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "main-functions-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameter-check-cpp"
+    },
+    {
+      "stepId": "main-parameters-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "main-next-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "main-parameters-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "main-loop-check-cpp"
+    },
+    {
+      "stepId": "main-loops-check-cpp",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "main-next-cpp"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "main-loops-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-loops-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in C++ runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
+      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "action": "continue",
+      "next": "main-coding-start-cpp"
+    },
+    {
+      "stepId": "main-hash-maps-check-cpp",
+      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know hash maps",
+          "next": "main-next-cpp"
+        },
+        {
+          "label": "No, explain hash maps",
+          "next": "main-hash-maps-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-hash-maps-explanation-cpp",
+      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In C++, you can use objects or dictionaries to create hash maps.",
+      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "action": "continue",
+      "next": "main-coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement the longest substring with K distinct characters solution using sliding window in C++.",
+      "example": "int longestSubstringKDistinct(string s, int k) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-cpp"
+    },
+    {
+      "stepId": "coding-init-cpp",
+      "mentorSays": "First, initialize variables: left pointer, maxLen, and an unordered_map to track character frequencies.",
+      "example": "int longestSubstringKDistinct(string s, int k) {\n    int left = 0;\n    int maxLen = 0;\n    unordered_map<char, int> charMap;\n}",
+      "action": "continue",
+      "next": "coding-loop-cpp"
+    },
+    {
+      "stepId": "coding-loop-cpp",
+      "mentorSays": "Now, loop through the string with right pointer. For each character, add it to the map and update its frequency.",
+      "example": "int longestSubstringKDistinct(string s, int k) {\n    int left = 0, maxLen = 0;\n    unordered_map<char, int> charMap;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s[right];\n        charMap[c]++;\n        // Add character to map or increment its count\n    }\n}",
+      "action": "continue",
+      "next": "coding-shrink-cpp"
+    },
+    {
+      "stepId": "coding-shrink-cpp",
+      "mentorSays": "After adding a character, if we have more than K distinct characters, shrink the window from the left until we have at most K distinct characters.",
+      "example": "int longestSubstringKDistinct(string s, int k) {\n    int left = 0, maxLen = 0;\n    unordered_map<char, int> charMap;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s[right];\n        charMap[c]++;\n        \n        while (charMap.size() > k) {\n            char leftChar = s[left];\n            charMap[leftChar]--;\n            if (charMap[leftChar] == 0) {\n                charMap.erase(leftChar);\n            }\n            left++;\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-update-max-cpp"
+    },
+    {
+      "stepId": "coding-update-max-cpp",
+      "mentorSays": "After ensuring we have at most K distinct characters, update maxLen if the current window is longer.",
+      "example": "int longestSubstringKDistinct(string s, int k) {\n    int left = 0, maxLen = 0;\n    unordered_map<char, int> charMap;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s[right];\n        charMap[c]++;\n        \n        while (charMap.size() > k) {\n            char leftChar = s[left];\n            charMap[leftChar]--;\n            if (charMap[leftChar] == 0) {\n                charMap.erase(leftChar);\n            }\n            left++;\n        }\n        \n        maxLen = max(maxLen, right - left + 1);\n    }\n    \n    return maxLen;\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Test with s = \"araaci\", k = 2. Expected: 4 (substring \"araa\").",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "main-next-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "main-variables-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in TypeScript, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "main-function-check-ts"
+    },
+    {
+      "stepId": "main-functions-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "main-next-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "main-functions-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameter-check-ts"
+    },
+    {
+      "stepId": "main-parameters-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "main-next-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "main-parameters-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "main-loop-check-ts"
+    },
+    {
+      "stepId": "main-loops-check-ts",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "main-next-ts"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "main-loops-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-loops-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in TypeScript runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each element one by one.",
+      "example": "for (let i = 0; i < arr.length; i++) {\n  // Process arr[i]\n}",
+      "action": "continue",
+      "next": "main-coding-start-ts"
+    },
+    {
+      "stepId": "main-hash-maps-check-ts",
+      "mentorSays": "To solve this efficiently, we'll use a hash map (object/dictionary). Do you know what a hash map is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know hash maps",
+          "next": "main-next-ts"
+        },
+        {
+          "label": "No, explain hash maps",
+          "next": "main-hash-maps-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-hash-maps-explanation-ts",
+      "mentorSays": "A hash map stores key-value pairs. You can quickly look up values by their keys. In TypeScript, you can use objects or dictionaries to create hash maps.",
+      "example": "let map = {{}};\nmap['key'] = 'value';\nlet value = map['key'];",
+      "action": "continue",
+      "next": "main-coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement the longest substring with K distinct characters solution using sliding window in TypeScript.",
+      "example": "function longestSubstringKDistinct(s: string, k: number): number {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-ts"
+    },
+    {
+      "stepId": "coding-init-ts",
+      "mentorSays": "First, initialize variables: left pointer, maxLen, and a Map to track character frequencies.",
+      "example": "function longestSubstringKDistinct(s: string, k: number): number {\n  let left = 0;\n  let maxLen = 0;\n  const charMap = new Map<string, number>();\n}",
+      "action": "continue",
+      "next": "coding-loop-ts"
+    },
+    {
+      "stepId": "coding-loop-ts",
+      "mentorSays": "Now, loop through the string with right pointer. For each character, add it to the map and update its frequency.",
+      "example": "function longestSubstringKDistinct(s: string, k: number): number {\n  let left = 0, maxLen = 0;\n  const charMap = new Map<string, number>();\n  \n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    charMap.set(char, (charMap.get(char) || 0) + 1);\n    // Add character to map or increment its count\n  }\n}",
+      "action": "continue",
+      "next": "coding-shrink-ts"
+    },
+    {
+      "stepId": "coding-shrink-ts",
+      "mentorSays": "After adding a character, if we have more than K distinct characters, shrink the window from the left until we have at most K distinct characters.",
+      "example": "function longestSubstringKDistinct(s: string, k: number): number {\n  let left = 0, maxLen = 0;\n  const charMap = new Map<string, number>();\n  \n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    charMap.set(char, (charMap.get(char) || 0) + 1);\n    \n    while (charMap.size > k) {\n      const leftChar = s[left];\n      charMap.set(leftChar, charMap.get(leftChar)! - 1);\n      if (charMap.get(leftChar) === 0) {\n        charMap.delete(leftChar);\n      }\n      left++;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-update-max-ts"
+    },
+    {
+      "stepId": "coding-update-max-ts",
+      "mentorSays": "After ensuring we have at most K distinct characters, update maxLen if the current window is longer.",
+      "example": "function longestSubstringKDistinct(s: string, k: number): number {\n  let left = 0, maxLen = 0;\n  const charMap = new Map<string, number>();\n  \n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    charMap.set(char, (charMap.get(char) || 0) + 1);\n    \n    while (charMap.size > k) {\n      const leftChar = s[left];\n      charMap.set(leftChar, charMap.get(leftChar)! - 1);\n      if (charMap.get(leftChar) === 0) {\n        charMap.delete(leftChar);\n      }\n      left++;\n    }\n    \n    maxLen = Math.max(maxLen, right - left + 1);\n  }\n  \n  return maxLen;\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Test with s = \"araaci\", k = 2. Expected: 4 (substring \"araa\").",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "test-code",
+      "mentorSays": "Perfect! Now try running your code with the example input. Test it to make sure it produces the expected output!",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've completed this lesson. Practice more to master this pattern!",
+      "action": "continue"
+    }
+  ]
+}

@@ -1,0 +1,724 @@
+{
+  "id": "max-average-subarray",
+  "title": "Max average subarray",
+  "pattern": "sliding-window",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Maximum Average Subarray of Size K problem asks for\n2. Use a sliding window to efficiently find the maximum average\n3. Maintain a window of fixed size K and track the maximum average\n4. Implement the solution step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what the Maximum Average Subarray of Size K problem is asking.\n\nImagine you have an array: [1, 12, -5, -6, 50, 3]\n\nAnd K = 4 (subarray size)\n\nYour task: Find the maximum average among all subarrays of size K.\n\nLet's find all subarrays of size 4:\n- Subarray [0:4]: [1, 12, -5, -6] → sum = 1 + 12 + (-5) + (-6) = 2, average = 2/4 = 0.5\n- Subarray [1:5]: [12, -5, -6, 50] → sum = 12 + (-5) + (-6) + 50 = 51, average = 51/4 = 12.75\n- Subarray [2:6]: [-5, -6, 50, 3] → sum = (-5) + (-6) + 50 + 3 = 42, average = 42/4 = 10.5\n\nMaximum average: 12.75 (from subarray [12, -5, -6, 50])\n\n**Key Insight**: We can use a sliding window! Instead of recalculating the sum for each subarray, we can slide the window and update the sum. Since we're comparing averages of the same size K, we can just compare sums (sum/K vs sum'/K → compare sum vs sum').\n\nThat's what the problem wants: the maximum average among all subarrays of size K.",
+      "example": "nums = [1, 12, -5, -6, 50, 3]\nK = 4\n\nAll subarrays of size 4:\n[1, 12, -5, -6] → sum = 2, average = 0.5\n[12, -5, -6, 50] → sum = 51, average = 12.75 ✓\n[-5, -6, 50, 3] → sum = 42, average = 10.5\n\nMaximum average: 12.75\n\nAnswer: 12.75",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU find the maximum average subarray of size K?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Use a sliding window to efficiently calculate sums and compare",
+          "next": "explore-sliding-window"
+        },
+        {
+          "label": "Calculate average for each subarray separately",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Since all subarrays have size K, just find maximum sum",
+          "next": "explore-sum-optimization"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"I'll calculate the average for each subarray of size K and find the maximum.\"\n\nFor [1, 12, -5, -6, 50, 3] with K = 4:\n- Calculate average([1, 12, -5, -6]) = 0.5\n- Calculate average([12, -5, -6, 50]) = 12.75\n- ... and so on\n\nThis works! However, it's O(n × K) time complexity because we recalculate sums.\n\nWould you like to learn the sliding window approach which is O(n) time?",
+      "choices": [
+        {
+          "label": "Yes, teach me the sliding window approach",
+          "next": "explore-sliding-window"
+        },
+        {
+          "label": "No, I want to code the brute force first",
+          "next": "language-selection-brute"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-sum-optimization",
+      "mentorSays": "Excellent insight! You're thinking: \"Since all subarrays have the same size K, comparing averages is the same as comparing sums!\"\n\nYou're absolutely right! If we're comparing:\n- average1 = sum1 / K\n- average2 = sum2 / K\n\nAnd K is the same, then average1 > average2 if and only if sum1 > sum2.\n\nSo we can just find the maximum sum and divide by K at the end!\n\nThis is exactly what the sliding window approach does. Let's learn it!",
+      "action": "continue",
+      "next": "explore-sliding-window"
+    },
+    {
+      "stepId": "explore-sliding-window",
+      "mentorSays": "Excellent choice! The sliding window approach is elegant and efficient. Here's the core idea:\n\n1. **Key Insight**: Since all subarrays have size K, comparing averages is the same as comparing sums. So we find the maximum sum, then divide by K.\n\n2. **Calculate first window sum**: Sum the first K elements\n3. **Initialize maximum**: Set maxSum to this first sum\n4. **Slide the window**: For each new position:\n   - Subtract the element leaving the window (leftmost)\n   - Add the element entering the window (rightmost)\n   - Update maxSum if current sum is larger\n5. **Return average**: Return maxSum / K\n\nLet's trace this with [1, 12, -5, -6, 50, 3] and K = 4:\n\n- **Initial window [0:4]**: sum = 1 + 12 + (-5) + (-6) = 2, maxSum = 2\n- **Slide to [1:5]**: sum = 2 - 1 + 50 = 51, maxSum = 51\n- **Slide to [2:6]**: sum = 51 - 12 + 3 = 42, maxSum = 51\n- **Return**: 51 / 4 = 12.75\n\nAnswer: 12.75\n\nThis is O(n) time and O(1) space! Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'sum' or 'maxSum') and put data inside it.\n\nFor example, 'let sum = 0;' creates a variable that stores the number 0.",
+      "example": "let sum = 0;\nlet maxSum = 0;\n\nNow these variables store numbers\nWe can use them in our calculations",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "parameter-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMaxAverage(nums, k)', the 'nums' and 'k' are parameters.",
+      "example": "function findMaxAverage(nums, k) {\n  // 'nums' and 'k' are parameters\n}\n\n// When we call it:\nfindMaxAverage([1, 12, -5, -6, 50, 3], 4);\n// The array goes into 'nums', 4 goes into 'k'",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use a loop. Do you know what a loop is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < nums.length; i++)' means: start at 0, keep going while i is less than the array length, and add 1 to i each time.",
+      "example": "for (let i = 0; i < nums.length; i++) {\n  console.log(nums[i]);\n}\n\nThis prints each element of the array",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the maximum average subarray solution using sliding window in JavaScript. We'll create a function that takes an array and K, then returns the maximum average.",
+      "example": "function findMaxAverage(nums, k) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-first-window-js"
+    },
+    {
+      "stepId": "coding-first-window-js",
+      "mentorSays": "First, calculate the sum of the first K elements. This is our initial window sum.",
+      "example": "function findMaxAverage(nums, k) {\n  let sum = 0;\n  for (let i = 0; i < k; i++) {\n    sum += nums[i];\n  }\n  // sum = 1 + 12 + (-5) + (-6) = 2 for first window\n}",
+      "action": "continue",
+      "next": "coding-init-max-js"
+    },
+    {
+      "stepId": "coding-init-max-js",
+      "mentorSays": "Now, initialize maxSum with this first window sum. We'll update it as we slide the window.",
+      "example": "function findMaxAverage(nums, k) {\n  let sum = 0;\n  for (let i = 0; i < k; i++) {\n    sum += nums[i];\n  }\n  let maxSum = sum;\n  // maxSum = 2 initially\n}",
+      "action": "continue",
+      "next": "coding-slide-window-js"
+    },
+    {
+      "stepId": "coding-slide-window-js",
+      "mentorSays": "Now, slide the window from position k to the end. For each position, subtract the element leaving the window and add the element entering the window.",
+      "example": "function findMaxAverage(nums, k) {\n  let sum = 0;\n  for (let i = 0; i < k; i++) {\n    sum += nums[i];\n  }\n  let maxSum = sum;\n  \n  for (let i = k; i < nums.length; i++) {\n    sum = sum - nums[i - k] + nums[i];\n    // Subtract element leaving, add element entering\n  }\n}",
+      "action": "continue",
+      "next": "coding-update-max-js"
+    },
+    {
+      "stepId": "coding-update-max-js",
+      "mentorSays": "After updating the sum for each window, update maxSum if the current sum is larger.",
+      "example": "function findMaxAverage(nums, k) {\n  let sum = 0;\n  for (let i = 0; i < k; i++) {\n    sum += nums[i];\n  }\n  let maxSum = sum;\n  \n  for (let i = k; i < nums.length; i++) {\n    sum = sum - nums[i - k] + nums[i];\n    maxSum = Math.max(maxSum, sum);\n  }\n  \n  return maxSum / k;\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Test with nums = [1, 12, -5, -6, 50, 3], k = 4. Expected: 12.75.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "main-variables-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in Python, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+          "next": "function-check-python"
+    },
+    {
+      "stepId": "function-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "main-functions-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+          "next": "parameter-check-python"
+    },
+    {
+      "stepId": "parameter-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "main-parameters-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+          "next": "loop-check-python"
+    },
+    {
+      "stepId": "loop-check-python",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "main-loops-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, 'for i in range(len(nums)):' means: loop through indices from 0 to len(nums)-1.",
+      "example": "for i in range(len(nums)):\n    print(nums[i])\n\nThis prints each element of the array",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement the maximum average subarray solution using sliding window in Python.",
+      "example": "def findMaxAverage(nums, k):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-first-window-python"
+    },
+    {
+      "stepId": "coding-first-window-python",
+      "mentorSays": "First, calculate the sum of the first K elements. This is our initial window sum.",
+      "example": "def findMaxAverage(nums, k):\n    sum_val = sum(nums[:k])\n    # sum_val = 1 + 12 + (-5) + (-6) = 2 for first window",
+      "action": "continue",
+      "next": "coding-init-max-python"
+    },
+    {
+      "stepId": "coding-init-max-python",
+      "mentorSays": "Now, initialize max_sum with this first window sum. We'll update it as we slide the window.",
+      "example": "def findMaxAverage(nums, k):\n    sum_val = sum(nums[:k])\n    max_sum = sum_val\n    # max_sum = 2 initially",
+      "action": "continue",
+      "next": "coding-slide-window-python"
+    },
+    {
+      "stepId": "coding-slide-window-python",
+      "mentorSays": "Now, slide the window from position k to the end. For each position, subtract the element leaving and add the element entering.",
+      "example": "def findMaxAverage(nums, k):\n    sum_val = sum(nums[:k])\n    max_sum = sum_val\n    \n    for i in range(k, len(nums)):\n        sum_val = sum_val - nums[i - k] + nums[i]\n        # Subtract element leaving, add element entering",
+      "action": "continue",
+      "next": "coding-update-max-python"
+    },
+    {
+      "stepId": "coding-update-max-python",
+      "mentorSays": "After updating the sum for each window, update max_sum if the current sum is larger. Then return max_sum / k.",
+      "example": "def findMaxAverage(nums, k):\n    sum_val = sum(nums[:k])\n    max_sum = sum_val\n    \n    for i in range(k, len(nums)):\n        sum_val = sum_val - nums[i - k] + nums[i]\n        max_sum = max(max_sum, sum_val)\n    \n    return max_sum / k",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Test with nums = [1, 12, -5, -6, 50, 3], k = 4. Expected: 12.75.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "main-variables-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in Java, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+          "next": "function-check-java"
+    },
+    {
+      "stepId": "function-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-java"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "main-functions-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-java",
+      "mentorSays": "A method is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+          "next": "parameter-check-java"
+    },
+    {
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "main-parameters-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+          "next": "loop-check-java"
+    },
+    {
+      "stepId": "loop-check-java",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "main-loops-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Java runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < nums.length; i++)' means: start at 0, keep going while i is less than the array length, and add 1 to i each time.",
+      "example": "for (int i = 0; i < nums.length; i++) {\n    System.out.println(nums[i]);\n}\n\nThis prints each element of the array",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement the maximum average subarray solution using sliding window in Java.",
+      "example": "public double findMaxAverage(int[] nums, int k) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-first-window-java"
+    },
+    {
+      "stepId": "coding-first-window-java",
+      "mentorSays": "First, calculate the sum of the first K elements. This is our initial window sum.",
+      "example": "public double findMaxAverage(int[] nums, int k) {\n    int sum = 0;\n    for (int i = 0; i < k; i++) {\n        sum += nums[i];\n    }\n    // sum = 1 + 12 + (-5) + (-6) = 2 for first window",
+      "action": "continue",
+      "next": "coding-init-max-java"
+    },
+    {
+      "stepId": "coding-init-max-java",
+      "mentorSays": "Now, initialize maxSum with this first window sum. We'll update it as we slide the window.",
+      "example": "public double findMaxAverage(int[] nums, int k) {\n    int sum = 0;\n    for (int i = 0; i < k; i++) {\n        sum += nums[i];\n    }\n    int maxSum = sum;\n    // maxSum = 2 initially",
+      "action": "continue",
+      "next": "coding-slide-window-java"
+    },
+    {
+      "stepId": "coding-slide-window-java",
+      "mentorSays": "Now, slide the window from position k to the end. For each position, subtract the element leaving the window and add the element entering the window.",
+      "example": "public double findMaxAverage(int[] nums, int k) {\n    int sum = 0;\n    for (int i = 0; i < k; i++) {\n        sum += nums[i];\n    }\n    int maxSum = sum;\n    \n    for (int i = k; i < nums.length; i++) {\n        sum = sum - nums[i - k] + nums[i];\n        // Subtract element leaving, add element entering\n    }\n}",
+      "action": "continue",
+      "next": "coding-update-max-java"
+    },
+    {
+      "stepId": "coding-update-max-java",
+      "mentorSays": "After updating the sum for each window, update maxSum if the current sum is larger. Then return maxSum / k.",
+      "example": "public double findMaxAverage(int[] nums, int k) {\n    int sum = 0;\n    for (int i = 0; i < k; i++) {\n        sum += nums[i];\n    }\n    int maxSum = sum;\n    \n    for (int i = k; i < nums.length; i++) {\n        sum = sum - nums[i - k] + nums[i];\n        maxSum = Math.max(maxSum, sum);\n    }\n    \n    return (double) maxSum / k;\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Test with nums = [1, 12, -5, -6, 50, 3], k = 4. Expected: 12.75.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "main-variables-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in C++, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+          "next": "function-check-cpp"
+    },
+    {
+      "stepId": "function-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "main-functions-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+          "next": "parameter-check-cpp"
+    },
+    {
+      "stepId": "parameter-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "main-parameters-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+          "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "loop-check-cpp",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "main-loops-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in C++ runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < nums.size(); i++)' means: start at 0, keep going while i is less than the array size, and add 1 to i each time.",
+      "example": "for (int i = 0; i < nums.size(); i++) {\n    cout << nums[i] << endl;\n}\n\nThis prints each element of the array",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement the maximum average subarray solution using sliding window in C++.",
+      "example": "double findMaxAverage(vector<int>& nums, int k) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-first-window-cpp"
+    },
+    {
+      "stepId": "coding-first-window-cpp",
+      "mentorSays": "First, calculate the sum of the first K elements. This is our initial window sum.",
+      "example": "double findMaxAverage(vector<int>& nums, int k) {\n    int sum = 0;\n    for (int i = 0; i < k; i++) {\n        sum += nums[i];\n    }\n    // sum = 1 + 12 + (-5) + (-6) = 2 for first window",
+      "action": "continue",
+      "next": "coding-init-max-cpp"
+    },
+    {
+      "stepId": "coding-init-max-cpp",
+      "mentorSays": "Now, initialize maxSum with this first window sum. We'll update it as we slide the window.",
+      "example": "double findMaxAverage(vector<int>& nums, int k) {\n    int sum = 0;\n    for (int i = 0; i < k; i++) {\n        sum += nums[i];\n    }\n    int maxSum = sum;\n    // maxSum = 2 initially",
+      "action": "continue",
+      "next": "coding-slide-window-cpp"
+    },
+    {
+      "stepId": "coding-slide-window-cpp",
+      "mentorSays": "Now, slide the window from position k to the end. For each position, subtract the element leaving the window and add the element entering the window.",
+      "example": "double findMaxAverage(vector<int>& nums, int k) {\n    int sum = 0;\n    for (int i = 0; i < k; i++) {\n        sum += nums[i];\n    }\n    int maxSum = sum;\n    \n    for (int i = k; i < nums.size(); i++) {\n        sum = sum - nums[i - k] + nums[i];\n        // Subtract element leaving, add element entering\n    }\n}",
+      "action": "continue",
+      "next": "coding-update-max-cpp"
+    },
+    {
+      "stepId": "coding-update-max-cpp",
+      "mentorSays": "After updating the sum for each window, update maxSum if the current sum is larger. Then return maxSum / k.",
+      "example": "double findMaxAverage(vector<int>& nums, int k) {\n    int sum = 0;\n    for (int i = 0; i < k; i++) {\n        sum += nums[i];\n    }\n    int maxSum = sum;\n    \n    for (int i = k; i < nums.size(); i++) {\n        sum = sum - nums[i - k] + nums[i];\n        maxSum = max(maxSum, sum);\n    }\n    \n    return (double) maxSum / k;\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Test with nums = [1, 12, -5, -6, 50, 3], k = 4. Expected: 12.75.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "main-variables-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, in TypeScript, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+          "next": "function-check-ts"
+    },
+    {
+      "stepId": "function-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "main-functions-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+          "next": "parameter-check-ts"
+    },
+    {
+      "stepId": "parameter-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "main-parameters-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n}\n\nfindMax([3, 7, 2, 9, 5]);\n// The array goes into 'arr'",
+      "action": "continue",
+          "next": "loop-check-ts"
+    },
+    {
+      "stepId": "loop-check-ts",
+      "mentorSays": "To solve this, we'll need to use a loop. Do you know what a loop is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "main-loops-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in TypeScript runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < nums.length; i++)' means: start at 0, keep going while i is less than the array length, and add 1 to i each time.",
+      "example": "for (let i = 0; i < nums.length; i++) {\n    console.log(nums[i]);\n}\n\nThis prints each element of the array",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement the maximum average subarray solution using sliding window in TypeScript.",
+      "example": "function findMaxAverage(nums: number[], k: number): number {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-first-window-ts"
+    },
+    {
+      "stepId": "coding-first-window-ts",
+      "mentorSays": "First, calculate the sum of the first K elements. This is our initial window sum.",
+      "example": "function findMaxAverage(nums: number[], k: number): number {\n  let sum = 0;\n  for (let i = 0; i < k; i++) {\n    sum += nums[i];\n  }\n  // sum = 1 + 12 + (-5) + (-6) = 2 for first window",
+      "action": "continue",
+      "next": "coding-init-max-ts"
+    },
+    {
+      "stepId": "coding-init-max-ts",
+      "mentorSays": "Now, initialize maxSum with this first window sum. We'll update it as we slide the window.",
+      "example": "function findMaxAverage(nums: number[], k: number): number {\n  let sum = 0;\n  for (let i = 0; i < k; i++) {\n    sum += nums[i];\n  }\n  let maxSum = sum;\n  // maxSum = 2 initially",
+      "action": "continue",
+      "next": "coding-slide-window-ts"
+    },
+    {
+      "stepId": "coding-slide-window-ts",
+      "mentorSays": "Now, slide the window from position k to the end. For each position, subtract the element leaving the window and add the element entering the window.",
+      "example": "function findMaxAverage(nums: number[], k: number): number {\n  let sum = 0;\n  for (let i = 0; i < k; i++) {\n    sum += nums[i];\n  }\n  let maxSum = sum;\n  \n  for (let i = k; i < nums.length; i++) {\n    sum = sum - nums[i - k] + nums[i];\n    // Subtract element leaving, add element entering\n  }\n}",
+      "action": "continue",
+      "next": "coding-update-max-ts"
+    },
+    {
+      "stepId": "coding-update-max-ts",
+      "mentorSays": "After updating the sum for each window, update maxSum if the current sum is larger. Then return maxSum / k.",
+      "example": "function findMaxAverage(nums: number[], k: number): number {\n  let sum = 0;\n  for (let i = 0; i < k; i++) {\n    sum += nums[i];\n  }\n  let maxSum = sum;\n  \n  for (let i = k; i < nums.length; i++) {\n    sum = sum - nums[i - k] + nums[i];\n    maxSum = Math.max(maxSum, sum);\n  }\n  \n  return maxSum / k;\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Test with nums = [1, 12, -5, -6, 50, 3], k = 4. Expected: 12.75.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've completed this lesson. Practice more to master this pattern!",
+      "action": "continue"
+    }
+  ]
+}

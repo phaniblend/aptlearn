@@ -1,0 +1,1461 @@
+{
+  "lessons": [
+    {
+      "id": "two-sum",
+      "title": "Two Sum",
+      "pattern": "hash-map",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "print-array-elements",
+      "title": "Print all elements of an array",
+      "pattern": "iteration",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "published",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "find-max-element",
+      "title": "Find max element in an array",
+      "pattern": "iteration",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "published",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "find-min-element",
+      "title": "Find min element in an array",
+      "pattern": "iteration",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "published",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "sum-array-elements",
+      "title": "Sum of array elements",
+      "pattern": "iteration",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "published",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "reverse-array",
+      "title": "Reverse an array",
+      "pattern": "two-pointers",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "published",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "check-sorted-array",
+      "title": "Check if array is sorted",
+      "pattern": "iteration",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "published",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "find-index-of-element",
+      "title": "Find index of an element",
+      "pattern": "linear-search",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "published",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "count-occurrences",
+      "title": "Count occurrences of a number",
+      "pattern": "iteration",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "published",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "remove-duplicates-sorted",
+      "title": "Remove duplicates from sorted array",
+      "pattern": "two-pointers",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "published",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "merge-two-arrays",
+      "title": "Merge two arrays",
+      "pattern": "two-pointers",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "published",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "two-sum-hashmap",
+      "title": "Two Sum (hash map)",
+      "pattern": "hash-map",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "hash-maps"
+      ]
+    },
+    {
+      "id": "pair-with-difference",
+      "title": "Pair with given difference",
+      "pattern": "hash-map",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "hash-maps"
+      ]
+    },
+    {
+      "id": "pair-with-sum-unsorted",
+      "title": "Pair with given sum (unsorted)",
+      "pattern": "hash-map",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "hash-maps"
+      ]
+    },
+    {
+      "id": "pair-with-sum-sorted",
+      "title": "Pair with given sum (sorted)",
+      "pattern": "two-pointers",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "two-pointers"
+      ]
+    },
+    {
+      "id": "three-sum",
+      "title": "Three Sum (basic idea)",
+      "pattern": "two-pointers",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "two-pointers"
+      ]
+    },
+    {
+      "id": "count-pairs-with-sum-k",
+      "title": "Count pairs with sum K",
+      "pattern": "hash-map",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "hash-maps"
+      ]
+    },
+    {
+      "id": "first-repeating-element",
+      "title": "Find first repeating element",
+      "pattern": "hash-map",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "hash-maps"
+      ]
+    },
+    {
+      "id": "first-non-repeating-element",
+      "title": "Find first non-repeating element",
+      "pattern": "hash-map",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "hash-maps"
+      ]
+    },
+    {
+      "id": "majority-element",
+      "title": "Majority element (basic)",
+      "pattern": "hash-map",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "hash-maps"
+      ]
+    },
+    {
+      "id": "max-sum-subarray-k",
+      "title": "Max sum subarray of size K",
+      "pattern": "sliding-window",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "sliding-window"
+      ]
+    },
+    {
+      "id": "min-sum-subarray-k",
+      "title": "Min sum subarray of size K",
+      "pattern": "sliding-window",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "sliding-window"
+      ]
+    },
+    {
+      "id": "count-subarrays-size-k",
+      "title": "Count subarrays of size K",
+      "pattern": "sliding-window",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "sliding-window"
+      ]
+    },
+    {
+      "id": "longest-subarray-sum-k",
+      "title": "Longest subarray with sum K (positive nums)",
+      "pattern": "sliding-window",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "sliding-window"
+      ]
+    },
+    {
+      "id": "smallest-subarray-sum-s",
+      "title": "Smallest subarray with sum ≥ S",
+      "pattern": "sliding-window",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "sliding-window"
+      ]
+    },
+    {
+      "id": "max-average-subarray",
+      "title": "Max average subarray",
+      "pattern": "sliding-window",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "sliding-window"
+      ]
+    },
+    {
+      "id": "longest-substring-k-distinct",
+      "title": "Longest substring with K distinct chars",
+      "pattern": "sliding-window",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "sliding-window",
+        "hash-maps"
+      ]
+    },
+    {
+      "id": "longest-substring-no-repeat",
+      "title": "Longest substring without repeating chars",
+      "pattern": "sliding-window",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "sliding-window",
+        "hash-maps"
+      ]
+    },
+    {
+      "id": "fruits-into-baskets",
+      "title": "Fruits into baskets",
+      "pattern": "sliding-window",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "sliding-window",
+        "hash-maps"
+      ]
+    },
+    {
+      "id": "sliding-window-template",
+      "title": "Sliding window template mastery",
+      "pattern": "sliding-window",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "sliding-window"
+      ]
+    },
+    {
+      "id": "reverse-string",
+      "title": "Reverse string",
+      "pattern": "two-pointers",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "two-pointers"
+      ]
+    },
+    {
+      "id": "check-palindrome",
+      "title": "Check palindrome",
+      "pattern": "two-pointers",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "two-pointers"
+      ]
+    },
+    {
+      "id": "remove-duplicates-unsorted",
+      "title": "Remove duplicates (unsorted)",
+      "pattern": "hash-map",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "hash-maps"
+      ]
+    },
+    {
+      "id": "remove-element-inplace",
+      "title": "Remove element in-place",
+      "pattern": "two-pointers",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "two-pointers"
+      ]
+    },
+    {
+      "id": "move-zeros-to-end",
+      "title": "Move zeros to end",
+      "pattern": "two-pointers",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "two-pointers"
+      ]
+    },
+    {
+      "id": "squares-of-sorted-array",
+      "title": "Squares of sorted array",
+      "pattern": "two-pointers",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "two-pointers"
+      ]
+    },
+    {
+      "id": "container-with-most-water",
+      "title": "Container with most water",
+      "pattern": "two-pointers",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "two-pointers"
+      ]
+    },
+    {
+      "id": "trapping-rain-water",
+      "title": "Trapping rain water",
+      "pattern": "two-pointers",
+      "difficulty": "hard",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "two-pointers"
+      ]
+    },
+    {
+      "id": "dutch-national-flag",
+      "title": "Dutch National Flag",
+      "pattern": "two-pointers",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "two-pointers"
+      ]
+    },
+    {
+      "id": "valid-palindrome-deletions",
+      "title": "Valid palindrome with deletions",
+      "pattern": "two-pointers",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops",
+        "two-pointers"
+      ]
+    },
+    {
+      "id": "linear-search",
+      "title": "Linear search",
+      "pattern": "linear-search",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "binary-search",
+      "title": "Binary search",
+      "pattern": "binary-search",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "binary-search-recursive",
+      "title": "Binary search (recursive)",
+      "pattern": "binary-search",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "first-occurrence",
+      "title": "First occurrence",
+      "pattern": "binary-search",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "last-occurrence",
+      "title": "Last occurrence",
+      "pattern": "binary-search",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "count-occurrences-binary",
+      "title": "Count occurrences using binary search",
+      "pattern": "binary-search",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "search-rotated-sorted",
+      "title": "Search in rotated sorted array",
+      "pattern": "binary-search",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "find-min-rotated",
+      "title": "Find minimum in rotated array",
+      "pattern": "binary-search",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "square-root-binary",
+      "title": "Square root using binary search",
+      "pattern": "binary-search",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "peak-element",
+      "title": "Peak element",
+      "pattern": "binary-search",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": [
+        "arrays",
+        "variables",
+        "functions",
+        "parameters",
+        "loops"
+      ]
+    },
+    {
+      "id": "four-sum",
+      "title": "Four Sum",
+      "pattern": "two-pointers",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "group-anagrams",
+      "title": "Group anagrams",
+      "pattern": "hash-map",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "valid-anagram",
+      "title": "Valid anagram",
+      "pattern": "hash-map",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "contains-duplicate",
+      "title": "Contains duplicate",
+      "pattern": "hash-map",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "intersection-of-arrays",
+      "title": "Intersection of two arrays",
+      "pattern": "hash-map",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "bubble-sort",
+      "title": "Bubble sort",
+      "pattern": "sorting",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "selection-sort",
+      "title": "Selection sort",
+      "pattern": "sorting",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "insertion-sort",
+      "title": "Insertion sort",
+      "pattern": "sorting",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "merge-sort",
+      "title": "Merge sort",
+      "pattern": "sorting",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "quick-sort",
+      "title": "Quick sort",
+      "pattern": "sorting",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "heap-sort",
+      "title": "Heap sort",
+      "pattern": "sorting",
+      "difficulty": "hard",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "counting-sort",
+      "title": "Counting sort",
+      "pattern": "sorting",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "radix-sort",
+      "title": "Radix sort",
+      "pattern": "sorting",
+      "difficulty": "hard",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "sort-colors",
+      "title": "Sort colors (Dutch flag variant)",
+      "pattern": "sorting",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "kth-largest-element",
+      "title": "Kth largest element",
+      "pattern": "sorting",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "two-sum-optimized",
+      "title": "Two Sum (optimized)",
+      "pattern": "hash-map",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "subarray-sum-equals-k",
+      "title": "Subarray sum equals K",
+      "pattern": "hash-map",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "longest-consecutive-sequence",
+      "title": "Longest consecutive sequence",
+      "pattern": "hash-map",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "find-all-anagrams",
+      "title": "Find all anagrams in string",
+      "pattern": "hash-map",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "minimum-window-substring",
+      "title": "Minimum window substring",
+      "pattern": "hash-map",
+      "difficulty": "hard",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "word-pattern",
+      "title": "Word pattern",
+      "pattern": "hash-map",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "isomorphic-strings",
+      "title": "Isomorphic strings",
+      "pattern": "hash-map",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "top-k-frequent-elements",
+      "title": "Top K frequent elements",
+      "pattern": "hash-map",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "product-of-array-except-self",
+      "title": "Product of array except self",
+      "pattern": "hash-map",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "encode-decode-strings",
+      "title": "Encode and decode strings",
+      "pattern": "hash-map",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "valid-parentheses",
+      "title": "Valid parentheses",
+      "pattern": "stack",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "min-stack",
+      "title": "Min stack",
+      "pattern": "stack",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "daily-temperatures",
+      "title": "Daily temperatures",
+      "pattern": "stack",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "next-greater-element",
+      "title": "Next greater element",
+      "pattern": "stack",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "largest-rectangle-histogram",
+      "title": "Largest rectangle in histogram",
+      "pattern": "stack",
+      "difficulty": "hard",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "evaluate-reverse-polish",
+      "title": "Evaluate reverse Polish notation",
+      "pattern": "stack",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "remove-k-digits",
+      "title": "Remove K digits",
+      "pattern": "stack",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "decode-string",
+      "title": "Decode string",
+      "pattern": "stack",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "basic-calculator",
+      "title": "Basic calculator",
+      "pattern": "stack",
+      "difficulty": "hard",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "trapping-rain-water-stack",
+      "title": "Trapping rain water (stack approach)",
+      "pattern": "stack",
+      "difficulty": "hard",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "implement-queue",
+      "title": "Implement queue using stacks",
+      "pattern": "queue",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "sliding-window-maximum",
+      "title": "Sliding window maximum",
+      "pattern": "queue",
+      "difficulty": "hard",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "design-circular-queue",
+      "title": "Design circular queue",
+      "pattern": "queue",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "first-unique-character",
+      "title": "First unique character in stream",
+      "pattern": "queue",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "moving-average",
+      "title": "Moving average from data stream",
+      "pattern": "queue",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "design-hit-counter",
+      "title": "Design hit counter",
+      "pattern": "queue",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "task-scheduler",
+      "title": "Task scheduler",
+      "pattern": "queue",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "rearrange-string-k-distance",
+      "title": "Rearrange string K distance apart",
+      "pattern": "queue",
+      "difficulty": "hard",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "design-phone-directory",
+      "title": "Design phone directory",
+      "pattern": "queue",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "max-value-in-sliding-window",
+      "title": "Max value in sliding window",
+      "pattern": "queue",
+      "difficulty": "hard",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "factorial-recursive",
+      "title": "Factorial (recursive)",
+      "pattern": "recursion",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "fibonacci-recursive",
+      "title": "Fibonacci (recursive)",
+      "pattern": "recursion",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "power-of-two",
+      "title": "Power of two",
+      "pattern": "recursion",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "reverse-string-recursive",
+      "title": "Reverse string (recursive)",
+      "pattern": "recursion",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "palindrome-check-recursive",
+      "title": "Palindrome check (recursive)",
+      "pattern": "recursion",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "climbing-stairs",
+      "title": "Climbing stairs",
+      "pattern": "recursion",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "pow-x-n",
+      "title": "Pow(x, n)",
+      "pattern": "recursion",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "merge-sorted-lists",
+      "title": "Merge two sorted lists (recursive)",
+      "pattern": "recursion",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "reverse-linked-list-recursive",
+      "title": "Reverse linked list (recursive)",
+      "pattern": "recursion",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "tree-traversal-recursive",
+      "title": "Tree traversal (recursive)",
+      "pattern": "recursion",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "subsets",
+      "title": "Subsets",
+      "pattern": "backtracking",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "subsets-ii",
+      "title": "Subsets II (with duplicates)",
+      "pattern": "backtracking",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "permutations",
+      "title": "Permutations",
+      "pattern": "backtracking",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "permutations-ii",
+      "title": "Permutations II (with duplicates)",
+      "pattern": "backtracking",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "combination-sum",
+      "title": "Combination sum",
+      "pattern": "backtracking",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "combination-sum-ii",
+      "title": "Combination sum II",
+      "pattern": "backtracking",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "letter-combinations-phone",
+      "title": "Letter combinations of phone number",
+      "pattern": "backtracking",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "generate-parentheses",
+      "title": "Generate parentheses",
+      "pattern": "backtracking",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "word-search",
+      "title": "Word search",
+      "pattern": "backtracking",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "n-queens",
+      "title": "N-Queens",
+      "pattern": "backtracking",
+      "difficulty": "hard",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "fibonacci-dp",
+      "title": "Fibonacci with DP",
+      "pattern": "dynamic-programming",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "climbing-stairs-dp",
+      "title": "Climbing stairs (DP)",
+      "pattern": "dynamic-programming",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "house-robber",
+      "title": "House robber",
+      "pattern": "dynamic-programming",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "coin-change",
+      "title": "Coin change",
+      "pattern": "dynamic-programming",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "longest-increasing-subsequence",
+      "title": "Longest increasing subsequence",
+      "pattern": "dynamic-programming",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "longest-common-subsequence",
+      "title": "Longest common subsequence",
+      "pattern": "dynamic-programming",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "edit-distance",
+      "title": "Edit distance",
+      "pattern": "dynamic-programming",
+      "difficulty": "hard",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "maximum-subarray",
+      "title": "Maximum subarray (Kadane's)",
+      "pattern": "dynamic-programming",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "unique-paths",
+      "title": "Unique paths",
+      "pattern": "dynamic-programming",
+      "difficulty": "medium",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    },
+    {
+      "id": "min-cost-climbing-stairs",
+      "title": "Min cost climbing stairs",
+      "pattern": "dynamic-programming",
+      "difficulty": "easy",
+      "language": "javascript",
+      "status": "draft",
+      "prerequisites": []
+    }
+  ]
+}

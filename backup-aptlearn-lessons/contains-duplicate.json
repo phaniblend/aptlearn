@@ -1,0 +1,755 @@
+{
+  "id": "contains-duplicate",
+  "title": "Contains duplicate",
+  "pattern": "hash-map",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Contains Duplicate problem asks for\n2. Use a hash set to efficiently check for duplicates\n3. Understand the trade-off between time and space complexity\n4. Implement the solution step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what the Contains Duplicate problem is asking.\n\nImagine you have an array: [1, 2, 3, 1]\n\nYour task: Determine if the array contains any duplicate values (values that appear more than once).\n\nLet's check:\n- 1 appears at index 0 and index 3 → duplicate! ✓\n- 2 appears once\n- 3 appears once\n\nSince 1 appears twice, the array contains duplicates. Answer: true\n\nAnother example:\n- [1, 2, 3, 4]\n- All values appear exactly once → no duplicates. Answer: false\n\nThat's what the problem wants: return true if any value appears at least twice, false otherwise.",
+      "example": "nums = [1, 2, 3, 1]\n\nCheck for duplicates:\n- 1 appears at index 0 and 3 → duplicate found!\n\nAnswer: true\n\nAnother example:\nnums = [1, 2, 3, 4]\n\nAll values are unique → no duplicates\n\nAnswer: false\n\nAnother example:\nnums = [1, 1, 1, 3, 3, 4, 3, 2, 4, 2]\n\n- 1 appears 3 times\n- 2 appears 2 times\n- 3 appears 3 times\n- 4 appears 2 times\n\nDuplicates found → Answer: true",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU check if an array contains duplicates?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Use a hash set to track seen numbers",
+          "next": "explore-hashset"
+        },
+        {
+          "label": "Sort the array and check adjacent elements",
+          "next": "explore-sort"
+        },
+        {
+          "label": "Compare each element with all other elements",
+          "next": "explore-brute-force"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"I'll compare each element with all other elements to see if any match.\"\n\nFor [1, 2, 3, 1]:\n- Compare 1 with [2, 3, 1] → found match at index 3!\n\nThis works! However, it's O(n²) time complexity.\n\nWould you like to learn the hash set approach which is O(n) time?",
+      "action": "continue",
+      "next": "explore-hashset"
+    },
+    {
+      "stepId": "explore-sort",
+      "mentorSays": "Great thinking! You're thinking: \"If I sort the array, duplicates will be adjacent, so I can check adjacent elements.\"\n\nFor [1, 2, 3, 1] sorted → [1, 1, 2, 3]:\n- Check adjacent: (1,1) → match! ✓\n\nThis works! However, sorting takes O(n log n) time.\n\nThe hash set approach is O(n) time and simpler. Would you like to learn it?",
+      "action": "continue",
+      "next": "explore-hashset"
+    },
+    {
+      "stepId": "explore-hashset",
+      "mentorSays": "Excellent choice! The hash set approach is efficient and elegant. Here's the core idea:\n\n1. **Create a hash set**: Use a set to track numbers we've seen\n2. **Iterate through array**: For each number:\n   - If it's already in the set → duplicate found! Return true\n   - Otherwise, add it to the set\n3. **No duplicates found**: If we finish the loop, return false\n\nLet's trace this with [1, 2, 3, 1]:\n\n- **Process 1**: Not in set → add to set, set = {1}\n- **Process 2**: Not in set → add to set, set = {1, 2}\n- **Process 3**: Not in set → add to set, set = {1, 2, 3}\n- **Process 1**: Already in set → duplicate found! Return true\n\nThis is O(n) time and O(n) space! Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'seen' or 'set') and put data inside it.\n\nFor example, 'let seen = new Set();' creates a variable that stores a Set (hash set). Later, you can use that variable name to refer to it.",
+      "example": "let seen = new Set();\n\nNow the variable refers to an empty set\nWe can use the variable name to access this set",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function containsDuplicate(nums)', the 'nums' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'containsDuplicate([1, 2, 3, 1])', the array [1, 2, 3, 1] goes into 'nums'.",
+      "example": "function containsDuplicate(nums) {\n  // 'nums' is a parameter\n}\n\n// When we call it:\ncontainsDuplicate([1, 2, 3, 1]);\n// The array goes into 'nums'",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for...of' loop runs code for each item in a sequence.\n\nFor example, 'for (let num of nums)' means: run the code for each number in the array nums.",
+      "example": "for (let num of [1, 2, 3]) {\n  console.log(num);\n}\n\nThis prints: 1, 2, 3",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the contains duplicate solution in JavaScript. We'll create a function that takes an array and returns true if it contains duplicates, false otherwise.",
+      "example": "function containsDuplicate(nums) {\n  \n}",
+      "action": "continue",
+      "next": "coding-init-set-js"
+    },
+    {
+      "stepId": "coding-init-set-js",
+      "mentorSays": "First, let's create a Set to track numbers we've seen.",
+      "example": "function containsDuplicate(nums) {\n  // Create a set to track seen numbers\n  let seen = new Set();\n}",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Now, let's iterate through the array and check each number.",
+      "example": "function containsDuplicate(nums) {\n  let seen = new Set();\n  \n  // Iterate through each number\n  for (let num of nums) {\n    \n  }\n}",
+      "action": "continue",
+      "next": "coding-check-duplicate-js"
+    },
+    {
+      "stepId": "coding-check-duplicate-js",
+      "mentorSays": "For each number, check if it's already in the set. If it is, we found a duplicate! Return true immediately.",
+      "example": "function containsDuplicate(nums) {\n  let seen = new Set();\n  \n  for (let num of nums) {\n    // If number is already in set, duplicate found!\n    if (seen.has(num)) {\n      return true;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-add-to-set-js"
+    },
+    {
+      "stepId": "coding-add-to-set-js",
+      "mentorSays": "If the number is not in the set, add it to the set so we remember we've seen it.",
+      "example": "function containsDuplicate(nums) {\n  let seen = new Set();\n  \n  for (let num of nums) {\n    if (seen.has(num)) {\n      return true;\n    }\n    // Add number to set\n    seen.add(num);\n  }\n}",
+      "action": "continue",
+      "next": "coding-return-false-js"
+    },
+    {
+      "stepId": "coding-return-false-js",
+      "mentorSays": "If we finish the loop without finding any duplicates, return false.",
+      "example": "function containsDuplicate(nums) {\n  let seen = new Set();\n  \n  for (let num of nums) {\n    if (seen.has(num)) {\n      return true;\n    }\n    seen.add(num);\n  }\n  \n  // No duplicates found\n  return false;\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 2, 3, 1]\n\nExpected output: true\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 2, 3, 1]\n\nExpected output: true\n\nBecause 1 appears twice in the array.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'seen' or 'set') and put data inside it.\n\nFor example, 'seen = set()' creates a variable that stores a set (hash set). Later, you can use that variable name to refer to it.",
+      "example": "seen = set()\n\nNow the variable refers to an empty set\nWe can use the variable name to access this set",
+      "action": "continue",
+      "next": "function-check-python"
+    },
+    {
+      "stepId": "function-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-python"
+    },
+    {
+      "stepId": "parameter-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def contains_duplicate(nums):', the 'nums' is a parameter - it's a placeholder that will receive an actual list when you call the function.\n\nWhen you call 'contains_duplicate([1, 2, 3, 1])', the list [1, 2, 3, 1] goes into 'nums'.",
+      "example": "def contains_duplicate(nums):\n  # 'nums' is a parameter\n\n# When we call it:\ncontains_duplicate([1, 2, 3, 1])\n# The list goes into 'nums'",
+      "action": "continue",
+      "next": "loop-check-python"
+    },
+    {
+      "stepId": "loop-check-python",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, 'for num in nums:' means: run the code for each number in the list nums.",
+      "example": "for num in [1, 2, 3]:\n    print(num)\n\nThis prints: 1, 2, 3",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement the contains duplicate solution in Python. We'll create a function that takes a list and returns True if it contains duplicates, False otherwise.",
+      "example": "def contains_duplicate(nums):\n    \n    pass",
+      "action": "continue",
+      "next": "coding-init-set-python"
+    },
+    {
+      "stepId": "coding-init-set-python",
+      "mentorSays": "First, let's create a set to track numbers we've seen.",
+      "example": "def contains_duplicate(nums):\n    # Create a set to track seen numbers\n    seen = set()\n    \n    pass",
+      "action": "continue",
+      "next": "coding-loop-python"
+    },
+    {
+      "stepId": "coding-loop-python",
+      "mentorSays": "Now, let's iterate through the list and check each number.",
+      "example": "def contains_duplicate(nums):\n    seen = set()\n    \n    # Iterate through each number\n    for num in nums:\n        \n    pass",
+      "action": "continue",
+      "next": "coding-check-duplicate-python"
+    },
+    {
+      "stepId": "coding-check-duplicate-python",
+      "mentorSays": "For each number, check if it's already in the set. If it is, we found a duplicate! Return True immediately.",
+      "example": "def contains_duplicate(nums):\n    seen = set()\n    \n    for num in nums:\n        # If number is already in set, duplicate found!\n        if num in seen:\n            return True\n    \n    pass",
+      "action": "continue",
+      "next": "coding-add-to-set-python"
+    },
+    {
+      "stepId": "coding-add-to-set-python",
+      "mentorSays": "If the number is not in the set, add it to the set so we remember we've seen it.",
+      "example": "def contains_duplicate(nums):\n    seen = set()\n    \n    for num in nums:\n        if num in seen:\n            return True\n        # Add number to set\n        seen.add(num)\n    \n    pass",
+      "action": "continue",
+      "next": "coding-return-false-python"
+    },
+    {
+      "stepId": "coding-return-false-python",
+      "mentorSays": "If we finish the loop without finding any duplicates, return False.",
+      "example": "def contains_duplicate(nums):\n    seen = set()\n    \n    for num in nums:\n        if num in seen:\n            return True\n        seen.add(num)\n    \n    # No duplicates found\n    return False",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 2, 3, 1]\n\nExpected output: True\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 2, 3, 1]\n\nExpected output: True\n\nBecause 1 appears twice in the list.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'seen' or 'set') and put data inside it.\n\nFor example, 'Set<Integer> seen = new HashSet<>();' creates a variable that stores a HashSet. Later, you can use that variable name to refer to it.",
+      "example": "Set<Integer> seen = new HashSet<>();\n\nNow the variable refers to an empty hash set\nWe can use the variable name to access this hash set",
+      "action": "continue",
+      "next": "function-check-java"
+    },
+    {
+      "stepId": "function-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know methods",
+          "next": "parameter-check-java"
+        },
+        {
+          "label": "No, explain methods",
+          "next": "function-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-java",
+      "mentorSays": "A method (Java's version of a function) is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-java"
+    },
+    {
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a method, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public boolean containsDuplicate(int[] nums)', the 'nums' is a parameter - it's a placeholder that will receive an actual array when you call the method.\n\nWhen you call 'containsDuplicate(new int[]{1, 2, 3, 1})', the array goes into 'nums'.",
+      "example": "public boolean containsDuplicate(int[] nums) {\n  // 'nums' is a parameter\n}\n\n// When we call it:\ncontainsDuplicate(new int[]{1, 2, 3, 1});\n// The array goes into 'nums'",
+      "action": "continue",
+      "next": "loop-check-java"
+    },
+    {
+      "stepId": "loop-check-java",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int num : nums)' means: run the code for each number in the array nums.",
+      "example": "for (int num : new int[]{1, 2, 3}) {\n    System.out.println(num);\n}\n\nThis prints: 1, 2, 3",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement the contains duplicate solution in Java. We'll create a method that takes an array and returns true if it contains duplicates, false otherwise.",
+      "example": "public boolean containsDuplicate(int[] nums) {\n    \n}",
+      "action": "continue",
+      "next": "coding-init-set-java"
+    },
+    {
+      "stepId": "coding-init-set-java",
+      "mentorSays": "First, let's create a HashSet to track numbers we've seen.",
+      "example": "public boolean containsDuplicate(int[] nums) {\n    // Create a HashSet to track seen numbers\n    Set<Integer> seen = new HashSet<>();\n}",
+      "action": "continue",
+      "next": "coding-loop-java"
+    },
+    {
+      "stepId": "coding-loop-java",
+      "mentorSays": "Now, let's iterate through the array and check each number.",
+      "example": "public boolean containsDuplicate(int[] nums) {\n    Set<Integer> seen = new HashSet<>();\n    \n    // Iterate through each number\n    for (int num : nums) {\n        \n    }\n}",
+      "action": "continue",
+      "next": "coding-check-duplicate-java"
+    },
+    {
+      "stepId": "coding-check-duplicate-java",
+      "mentorSays": "For each number, check if it's already in the set. If it is, we found a duplicate! Return true immediately.",
+      "example": "public boolean containsDuplicate(int[] nums) {\n    Set<Integer> seen = new HashSet<>();\n    \n    for (int num : nums) {\n        // If number is already in set, duplicate found!\n        if (seen.contains(num)) {\n            return true;\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-add-to-set-java"
+    },
+    {
+      "stepId": "coding-add-to-set-java",
+      "mentorSays": "If the number is not in the set, add it to the set so we remember we've seen it.",
+      "example": "public boolean containsDuplicate(int[] nums) {\n    Set<Integer> seen = new HashSet<>();\n    \n    for (int num : nums) {\n        if (seen.contains(num)) {\n            return true;\n        }\n        // Add number to set\n        seen.add(num);\n    }\n}",
+      "action": "continue",
+      "next": "coding-return-false-java"
+    },
+    {
+      "stepId": "coding-return-false-java",
+      "mentorSays": "If we finish the loop without finding any duplicates, return false.",
+      "example": "public boolean containsDuplicate(int[] nums) {\n    Set<Integer> seen = new HashSet<>();\n    \n    for (int num : nums) {\n        if (seen.contains(num)) {\n            return true;\n        }\n        seen.add(num);\n    }\n    \n    // No duplicates found\n    return false;\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 2, 3, 1]\n\nExpected output: true\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 2, 3, 1]\n\nExpected output: true\n\nBecause 1 appears twice in the array.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'seen' or 'set') and put data inside it.\n\nFor example, 'unordered_set<int> seen;' creates a variable that stores an unordered_set. Later, you can use that variable name to refer to it.",
+      "example": "unordered_set<int> seen;\n\nNow the variable refers to an empty hash set\nWe can use the variable name to access this hash set",
+      "action": "continue",
+      "next": "function-check-cpp"
+    },
+    {
+      "stepId": "function-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-cpp"
+    },
+    {
+      "stepId": "parameter-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'bool containsDuplicate(vector<int>& nums)', the 'nums' is a parameter - it's a placeholder that will receive an actual vector when you call the function.\n\nWhen you call 'containsDuplicate({1, 2, 3, 1})', the vector goes into 'nums'.",
+      "example": "bool containsDuplicate(vector<int>& nums) {\n  // 'nums' is a parameter\n}\n\n// When we call it:\ncontainsDuplicate({1, 2, 3, 1});\n// The vector goes into 'nums'",
+      "action": "continue",
+      "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "loop-check-cpp",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int num : nums)' means: run the code for each number in the vector nums.",
+      "example": "for (int num : vector<int>{1, 2, 3}) {\n    cout << num << endl;\n}\n\nThis prints: 1, 2, 3",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement the contains duplicate solution in C++. We'll create a function that takes a vector and returns true if it contains duplicates, false otherwise.",
+      "example": "bool containsDuplicate(vector<int>& nums) {\n    \n}",
+      "action": "continue",
+      "next": "coding-init-set-cpp"
+    },
+    {
+      "stepId": "coding-init-set-cpp",
+      "mentorSays": "First, let's create an unordered_set to track numbers we've seen.",
+      "example": "bool containsDuplicate(vector<int>& nums) {\n    // Create an unordered_set to track seen numbers\n    unordered_set<int> seen;\n}",
+      "action": "continue",
+      "next": "coding-loop-cpp"
+    },
+    {
+      "stepId": "coding-loop-cpp",
+      "mentorSays": "Now, let's iterate through the vector and check each number.",
+      "example": "bool containsDuplicate(vector<int>& nums) {\n    unordered_set<int> seen;\n    \n    // Iterate through each number\n    for (int num : nums) {\n        \n    }\n}",
+      "action": "continue",
+      "next": "coding-check-duplicate-cpp"
+    },
+    {
+      "stepId": "coding-check-duplicate-cpp",
+      "mentorSays": "For each number, check if it's already in the set. If it is, we found a duplicate! Return true immediately.",
+      "example": "bool containsDuplicate(vector<int>& nums) {\n    unordered_set<int> seen;\n    \n    for (int num : nums) {\n        // If number is already in set, duplicate found!\n        if (seen.find(num) != seen.end()) {\n            return true;\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-add-to-set-cpp"
+    },
+    {
+      "stepId": "coding-add-to-set-cpp",
+      "mentorSays": "If the number is not in the set, add it to the set so we remember we've seen it.",
+      "example": "bool containsDuplicate(vector<int>& nums) {\n    unordered_set<int> seen;\n    \n    for (int num : nums) {\n        if (seen.find(num) != seen.end()) {\n            return true;\n        }\n        // Add number to set\n        seen.insert(num);\n    }\n}",
+      "action": "continue",
+      "next": "coding-return-false-cpp"
+    },
+    {
+      "stepId": "coding-return-false-cpp",
+      "mentorSays": "If we finish the loop without finding any duplicates, return false.",
+      "example": "bool containsDuplicate(vector<int>& nums) {\n    unordered_set<int> seen;\n    \n    for (int num : nums) {\n        if (seen.find(num) != seen.end()) {\n            return true;\n        }\n        seen.insert(num);\n    }\n    \n    // No duplicates found\n    return false;\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 2, 3, 1]\n\nExpected output: true\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 2, 3, 1]\n\nExpected output: true\n\nBecause 1 appears twice in the vector.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'seen' or 'set') and put data inside it.\n\nFor example, 'let seen = new Set<number>();' creates a variable that stores a Set. Later, you can use that variable name to refer to it.",
+      "example": "let seen = new Set<number>();\n\nNow the variable refers to an empty set\nWe can use the variable name to access this set",
+      "action": "continue",
+      "next": "function-check-ts"
+    },
+    {
+      "stepId": "function-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a: number, b: number): number {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-ts"
+    },
+    {
+      "stepId": "parameter-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function containsDuplicate(nums: number[]): boolean', the 'nums' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'containsDuplicate([1, 2, 3, 1])', the array goes into 'nums'.",
+      "example": "function containsDuplicate(nums: number[]): boolean {\n  // 'nums' is a parameter\n}\n\n// When we call it:\ncontainsDuplicate([1, 2, 3, 1]);\n// The array goes into 'nums'",
+      "action": "continue",
+      "next": "loop-check-ts"
+    },
+    {
+      "stepId": "loop-check-ts",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for...of' loop runs code for each item in a sequence.\n\nFor example, 'for (let num of nums)' means: run the code for each number in the array nums.",
+      "example": "for (let num of [1, 2, 3]) {\n  console.log(num);\n}\n\nThis prints: 1, 2, 3",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement the contains duplicate solution in TypeScript. We'll create a function that takes an array and returns true if it contains duplicates, false otherwise.",
+      "example": "function containsDuplicate(nums: number[]): boolean {\n  \n}",
+      "action": "continue",
+      "next": "coding-init-set-ts"
+    },
+    {
+      "stepId": "coding-init-set-ts",
+      "mentorSays": "First, let's create a Set to track numbers we've seen.",
+      "example": "function containsDuplicate(nums: number[]): boolean {\n  // Create a set to track seen numbers\n  let seen = new Set<number>();\n}",
+      "action": "continue",
+      "next": "coding-loop-ts"
+    },
+    {
+      "stepId": "coding-loop-ts",
+      "mentorSays": "Now, let's iterate through the array and check each number.",
+      "example": "function containsDuplicate(nums: number[]): boolean {\n  let seen = new Set<number>();\n  \n  // Iterate through each number\n  for (let num of nums) {\n    \n  }\n}",
+      "action": "continue",
+      "next": "coding-check-duplicate-ts"
+    },
+    {
+      "stepId": "coding-check-duplicate-ts",
+      "mentorSays": "For each number, check if it's already in the set. If it is, we found a duplicate! Return true immediately.",
+      "example": "function containsDuplicate(nums: number[]): boolean {\n  let seen = new Set<number>();\n  \n  for (let num of nums) {\n    // If number is already in set, duplicate found!\n    if (seen.has(num)) {\n      return true;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-add-to-set-ts"
+    },
+    {
+      "stepId": "coding-add-to-set-ts",
+      "mentorSays": "If the number is not in the set, add it to the set so we remember we've seen it.",
+      "example": "function containsDuplicate(nums: number[]): boolean {\n  let seen = new Set<number>();\n  \n  for (let num of nums) {\n    if (seen.has(num)) {\n      return true;\n    }\n    // Add number to set\n    seen.add(num);\n  }\n}",
+      "action": "continue",
+      "next": "coding-return-false-ts"
+    },
+    {
+      "stepId": "coding-return-false-ts",
+      "mentorSays": "If we finish the loop without finding any duplicates, return false.",
+      "example": "function containsDuplicate(nums: number[]): boolean {\n  let seen = new Set<number>();\n  \n  for (let num of nums) {\n    if (seen.has(num)) {\n      return true;\n    }\n    seen.add(num);\n  }\n  \n  // No duplicates found\n  return false;\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 2, 3, 1]\n\nExpected output: true\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 2, 3, 1]\n\nExpected output: true\n\nBecause 1 appears twice in the array.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've learned to think through the Contains Duplicate problem. You understand what the problem asks for, how to use hash sets to efficiently track seen numbers, and how to detect duplicates.\n\nThis kind of thinking—using hash sets to track seen elements—is essential for solving many array and string problems. Keep practicing!",
+      "action": "continue"
+    }
+  ]
+}

@@ -1,0 +1,733 @@
+{
+  "id": "first-repeating-element",
+  "title": "Find first repeating element",
+  "pattern": "hash-map",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what it means to find the first repeating element\n2. Use hash maps to track element occurrences\n3. Identify the first element that appears more than once\n4. Implement the solution step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what the Find First Repeating Element problem is asking.\n\nImagine you have an array of numbers: [10, 5, 3, 4, 3, 5, 6]\n\nYour task: Find the first element that appears more than once (repeats) in the array.\n\nLooking at the array from left to right:\n- 10 appears once (at index 0)\n- 5 appears first at index 1, then again at index 5 → This is a repeat!\n- 3 appears first at index 2, then again at index 4 → This is also a repeat!\n\nBut which one is the FIRST repeating element? We need to find which element repeats first as we scan from left to right.\n\n- 5 first appears at index 1, then repeats at index 5\n- 3 first appears at index 2, then repeats at index 4\n\nSince 5 appears earlier (index 1) than 3 (index 2), 5 is the first repeating element.\n\nThat's what the problem wants: the element that appears first in the array and then appears again later.",
+      "example": "nums = [10, 5, 3, 4, 3, 5, 6]\n\nScanning from left:\n- 10 (index 0) - appears once\n- 5 (index 1) - appears once so far\n- 3 (index 2) - appears once so far\n- 4 (index 3) - appears once so far\n- 3 (index 4) - REPEAT! But 3 first appeared at index 2\n- 5 (index 5) - REPEAT! And 5 first appeared at index 1\n\nSince 5 appeared first (index 1 < index 2), 5 is the first repeating element.\n\nAnswer: 5",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU find the first repeating element?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Use nested loops to check each element against all previous elements",
+          "next": "explore-nested-loops"
+        },
+        {
+          "label": "Use a hash map to track which elements we've seen",
+          "next": "explore-hashmap"
+        },
+        {
+          "label": "Sort the array first, then find duplicates",
+          "next": "explore-sort"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-nested-loops",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"For each element, check if it appeared earlier in the array.\"\n\nFor [10, 5, 3, 4, 3, 5, 6]:\n- At index 0 (10): Check previous elements (none) → No repeat\n- At index 1 (5): Check previous elements (10) → No repeat\n- At index 2 (3): Check previous elements (10, 5) → No repeat\n- At index 3 (4): Check previous elements (10, 5, 3) → No repeat\n- At index 4 (3): Check previous elements (10, 5, 3, 4) → Found 3! But wait...\n- At index 5 (5): Check previous elements (10, 5, 3, 4, 3) → Found 5!\n\nSince 5 appeared at index 1 (before 3 appeared at index 2), 5 is the first repeating element.\n\nThis definitely works! However, it's slow for large arrays (O(n²) time complexity).\n\nWould you like to learn a more efficient approach using hash maps?",
+      "choices": [
+        {
+          "label": "Yes, teach me the hash map approach",
+          "next": "explore-hashmap"
+        },
+        {
+          "label": "No, I want to code the nested loops first",
+          "next": "language-selection-brute"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-sort",
+      "mentorSays": "Interesting idea! You're thinking: \"If I sort the array, maybe it'll be easier to find duplicates.\"\n\nThat's creative thinking! However, there's something to consider: if we sort [10, 5, 3, 4, 3, 5, 6], we get [3, 3, 4, 5, 5, 6, 10]. But the problem asks for the FIRST repeating element in the original order, not in sorted order.\n\nWe'd need to keep track of original positions, which adds complexity. Let's explore a simpler approach using hash maps instead!",
+      "action": "continue",
+      "next": "explore-hashmap"
+    },
+    {
+      "stepId": "explore-hashmap",
+      "mentorSays": "Excellent choice! The hash map approach is both efficient and elegant. Here's the core idea:\n\n1. **Use a hash map** to store the first index where we've seen each number\n2. **As we scan the array**, if we encounter a number that's already in the map, we found a repeat!\n3. **Track the earliest repeating element** by comparing indices\n\nLet's trace this with [10, 5, 3, 4, 3, 5, 6]:\n\n- **At 10** (index 0): Not in map. Store {10: 0}\n- **At 5** (index 1): Not in map. Store {10: 0, 5: 1}\n- **At 3** (index 2): Not in map. Store {10: 0, 5: 1, 3: 2}\n- **At 4** (index 3): Not in map. Store {10: 0, 5: 1, 3: 2, 4: 3}\n- **At 3** (index 4): Already in map! 3 was first seen at index 2. First repeat found at index 2.\n- **At 5** (index 5): Already in map! 5 was first seen at index 1. This is earlier than index 2, so update first repeat to index 1.\n- **At 6** (index 6): Not in map. Store {10: 0, 5: 1, 3: 2, 4: 3, 6: 6}\n\nFirst repeating element: 5 (first appeared at index 1). This is much more efficient (O(n) time)! Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this hash map solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'let numbers = [3, 7, 2, 9, 5];' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "let numbers = [3, 7, 2, 9, 5];\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the first repeating element solution in JavaScript. We'll create a function that takes an array and returns the first repeating element.",
+      "example": "function firstRepeating(nums) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-map-js"
+    },
+    {
+      "stepId": "coding-map-js",
+      "mentorSays": "First, let's create a hash map to store the first index where we've seen each number, and variables to track the first repeating element.",
+      "example": "function firstRepeating(nums) {\n  const map = {};\n  let firstRepeatIndex = Infinity;\n  let firstRepeatElement = -1;\n  // map will store: number -> first index where we saw it\n  // firstRepeatIndex will track the earliest index where a repeat occurred\n}",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Now, let's loop through the array. For each number, check if we've seen it before. If yes, and if this is the earliest repeat we've found, update our answer.",
+      "example": "function firstRepeating(nums) {\n  const map = {};\n  let firstRepeatIndex = Infinity;\n  let firstRepeatElement = -1;\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (map[nums[i]] !== undefined) {\n      // We've seen this number before!\n      // Check if this is the earliest repeat\n      if (map[nums[i]] < firstRepeatIndex) {\n        firstRepeatIndex = map[nums[i]];\n        firstRepeatElement = nums[i];\n      }\n    } else {\n      // First time seeing this number, store its index\n      map[nums[i]] = i;\n    }\n  }\n  \n  return firstRepeatElement;\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [10, 5, 3, 4, 3, 5, 6]\n\nExpected output: 5\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [10, 5, 3, 4, 3, 5, 6]\n\nExpected output: 5\n\nBecause 5 is the first element (appears at index 1) that repeats later in the array.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'numbers = [3, 7, 2, 9, 5]' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-python"
+    },
+    {
+      "stepId": "function-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-python"
+    },
+    {
+      "stepId": "parameter-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def find_max(arr):', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'find_max([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "def find_max(arr):\n  # 'arr' is a parameter\n  # It will receive an array when we call the function\n\n# When we call it:\nfind_max([3, 7, 2, 9, 5])\n# The array [3, 7, 2, 9, 5] goes into 'arr'\n# Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-python"
+    },
+    {
+      "stepId": "loop-check-python",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, 'for i in range(3)' means: run the code 3 times, with i being 0, then 1, then 2.",
+      "example": "for i in range(3):\n    print(i)\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement the first repeating element solution in Python. We'll create a function that takes an array and returns the first repeating element.",
+      "example": "def first_repeating(nums):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-map-python"
+    },
+    {
+      "stepId": "coding-map-python",
+      "mentorSays": "First, let's create a dictionary to store the first index where we've seen each number, and variables to track the first repeating element.",
+      "example": "def first_repeating(nums):\n    map = {}\n    first_repeat_index = float('inf')\n    first_repeat_element = -1\n    # map will store: number -> first index where we saw it\n    # first_repeat_index will track the earliest index where a repeat occurred",
+      "action": "continue",
+      "next": "coding-loop-python"
+    },
+    {
+      "stepId": "coding-loop-python",
+      "mentorSays": "Now, let's loop through the array. For each number, check if we've seen it before. If yes, and if this is the earliest repeat we've found, update our answer.",
+      "example": "def first_repeating(nums):\n    map = {}\n    first_repeat_index = float('inf')\n    first_repeat_element = -1\n    \n    for i in range(len(nums)):\n        if nums[i] in map:\n            # We've seen this number before!\n            # Check if this is the earliest repeat\n            if map[nums[i]] < first_repeat_index:\n                first_repeat_index = map[nums[i]]\n                first_repeat_element = nums[i]\n        else:\n            # First time seeing this number, store its index\n            map[nums[i]] = i\n    \n    return first_repeat_element",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [10, 5, 3, 4, 3, 5, 6]\n\nExpected output: 5\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [10, 5, 3, 4, 3, 5, 6]\n\nExpected output: 5\n\nBecause 5 is the first element (appears at index 1) that repeats later in the array.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'int[] numbers = {3, 7, 2, 9, 5};' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "int[] numbers = {3, 7, 2, 9, 5};\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-java"
+    },
+    {
+      "stepId": "function-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know methods",
+          "next": "parameter-check-java"
+        },
+        {
+          "label": "No, explain methods",
+          "next": "function-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-java",
+      "mentorSays": "A method (Java's version of a function) is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-java"
+    },
+    {
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a method, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public int findMax(int[] arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the method.\n\nWhen you call 'findMax(new int[]{3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the method and stored in the 'arr' parameter. Inside the method, you can use 'arr' to refer to that array.",
+      "example": "public int findMax(int[] arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the method\n}\n\n// When we call it:\nfindMax(new int[]{3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the method, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-java"
+    },
+    {
+      "stepId": "loop-check-java",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (int i = 0; i < 3; i++) {\n    System.out.println(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement the first repeating element solution in Java. We'll create a method that takes an array and returns the first repeating element.",
+      "example": "import java.util.HashMap;\n\npublic int firstRepeating(int[] nums) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-map-java"
+    },
+    {
+      "stepId": "coding-map-java",
+      "mentorSays": "First, let's create a HashMap to store the first index where we've seen each number, and variables to track the first repeating element.",
+      "example": "import java.util.HashMap;\n\npublic int firstRepeating(int[] nums) {\n    HashMap<Integer, Integer> map = new HashMap<>();\n    int firstRepeatIndex = Integer.MAX_VALUE;\n    int firstRepeatElement = -1;\n    // map will store: number -> first index where we saw it\n    // firstRepeatIndex will track the earliest index where a repeat occurred\n}",
+      "action": "continue",
+      "next": "coding-loop-java"
+    },
+    {
+      "stepId": "coding-loop-java",
+      "mentorSays": "Now, let's loop through the array. For each number, check if we've seen it before. If yes, and if this is the earliest repeat we've found, update our answer.",
+      "example": "import java.util.HashMap;\n\npublic int firstRepeating(int[] nums) {\n    HashMap<Integer, Integer> map = new HashMap<>();\n    int firstRepeatIndex = Integer.MAX_VALUE;\n    int firstRepeatElement = -1;\n    \n    for (int i = 0; i < nums.length; i++) {\n        if (map.containsKey(nums[i])) {\n            // We've seen this number before!\n            // Check if this is the earliest repeat\n            if (map.get(nums[i]) < firstRepeatIndex) {\n                firstRepeatIndex = map.get(nums[i]);\n                firstRepeatElement = nums[i];\n            }\n        } else {\n            // First time seeing this number, store its index\n            map.put(nums[i], i);\n        }\n    }\n    \n    return firstRepeatElement;\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [10, 5, 3, 4, 3, 5, 6]\n\nExpected output: 5\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [10, 5, 3, 4, 3, 5, 6]\n\nExpected output: 5\n\nBecause 5 is the first element (appears at index 1) that repeats later in the array.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'vector<int> numbers = {3, 7, 2, 9, 5};' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "vector<int> numbers = {3, 7, 2, 9, 5};\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-cpp"
+    },
+    {
+      "stepId": "function-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-cpp"
+    },
+    {
+      "stepId": "parameter-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'int findMax(vector<int>& arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax({3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "int findMax(vector<int>& arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax({3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "loop-check-cpp",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (int i = 0; i < 3; i++) {\n    cout << i << endl;\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement the first repeating element solution in C++. We'll create a function that takes an array and returns the first repeating element.",
+      "example": "#include <unordered_map>\n#include <vector>\n#include <climits>\n\nint firstRepeating(vector<int>& nums) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-map-cpp"
+    },
+    {
+      "stepId": "coding-map-cpp",
+      "mentorSays": "First, let's create an unordered_map to store the first index where we've seen each number, and variables to track the first repeating element.",
+      "example": "#include <unordered_map>\n#include <vector>\n#include <climits>\n\nint firstRepeating(vector<int>& nums) {\n    unordered_map<int, int> map;\n    int firstRepeatIndex = INT_MAX;\n    int firstRepeatElement = -1;\n    // map will store: number -> first index where we saw it\n    // firstRepeatIndex will track the earliest index where a repeat occurred\n}",
+      "action": "continue",
+      "next": "coding-loop-cpp"
+    },
+    {
+      "stepId": "coding-loop-cpp",
+      "mentorSays": "Now, let's loop through the array. For each number, check if we've seen it before. If yes, and if this is the earliest repeat we've found, update our answer.",
+      "example": "#include <unordered_map>\n#include <vector>\n#include <climits>\n\nint firstRepeating(vector<int>& nums) {\n    unordered_map<int, int> map;\n    int firstRepeatIndex = INT_MAX;\n    int firstRepeatElement = -1;\n    \n    for (int i = 0; i < nums.size(); i++) {\n        if (map.find(nums[i]) != map.end()) {\n            // We've seen this number before!\n            // Check if this is the earliest repeat\n            if (map[nums[i]] < firstRepeatIndex) {\n                firstRepeatIndex = map[nums[i]];\n                firstRepeatElement = nums[i];\n            }\n        } else {\n            // First time seeing this number, store its index\n            map[nums[i]] = i;\n        }\n    }\n    \n    return firstRepeatElement;\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [10, 5, 3, 4, 3, 5, 6]\n\nExpected output: 5\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [10, 5, 3, 4, 3, 5, 6]\n\nExpected output: 5\n\nBecause 5 is the first element (appears at index 1) that repeats later in the array.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'let numbers: number[] = [3, 7, 2, 9, 5];' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "let numbers: number[] = [3, 7, 2, 9, 5];\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-ts"
+    },
+    {
+      "stepId": "function-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a: number, b: number): number {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-ts"
+    },
+    {
+      "stepId": "parameter-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr: number[]): number', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr: number[]): number {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-ts"
+    },
+    {
+      "stepId": "loop-check-ts",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement the first repeating element solution in TypeScript. We'll create a function that takes an array and returns the first repeating element.",
+      "example": "function firstRepeating(nums: number[]): number {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-map-ts"
+    },
+    {
+      "stepId": "coding-map-ts",
+      "mentorSays": "First, let's create a map to store the first index where we've seen each number, and variables to track the first repeating element.",
+      "example": "function firstRepeating(nums: number[]): number {\n  const map: { [key: number]: number } = {};\n  let firstRepeatIndex = Infinity;\n  let firstRepeatElement = -1;\n  // map will store: number -> first index where we saw it\n  // firstRepeatIndex will track the earliest index where a repeat occurred\n}",
+      "action": "continue",
+      "next": "coding-loop-ts"
+    },
+    {
+      "stepId": "coding-loop-ts",
+      "mentorSays": "Now, let's loop through the array. For each number, check if we've seen it before. If yes, and if this is the earliest repeat we've found, update our answer.",
+      "example": "function firstRepeating(nums: number[]): number {\n  const map: { [key: number]: number } = {};\n  let firstRepeatIndex = Infinity;\n  let firstRepeatElement = -1;\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (map[nums[i]] !== undefined) {\n      // We've seen this number before!\n      // Check if this is the earliest repeat\n      if (map[nums[i]] < firstRepeatIndex) {\n        firstRepeatIndex = map[nums[i]];\n        firstRepeatElement = nums[i];\n      }\n    } else {\n      // First time seeing this number, store its index\n      map[nums[i]] = i;\n    }\n  }\n  \n  return firstRepeatElement;\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [10, 5, 3, 4, 3, 5, 6]\n\nExpected output: 5\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [10, 5, 3, 4, 3, 5, 6]\n\nExpected output: 5\n\nBecause 5 is the first element (appears at index 1) that repeats later in the array.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "language-selection-brute",
+      "mentorSays": "Great! Let's code the nested loops solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "coding-brute-force-js"
+        },
+        {
+          "label": "Python",
+          "next": "coding-brute-force-python"
+        },
+        {
+          "label": "Java",
+          "next": "coding-brute-force-java"
+        },
+        {
+          "label": "C++",
+          "next": "coding-brute-force-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "coding-brute-force-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "coding-brute-force-js",
+      "mentorSays": "The nested loops approach checks each element against all previous elements. This works but is slower (O(n²)).",
+      "example": "function firstRepeating(nums) {\n  for (let i = 1; i < nums.length; i++) {\n    for (let j = 0; j < i; j++) {\n      if (nums[i] === nums[j]) {\n        return nums[j]; // Return the first occurrence\n      }\n    }\n  }\n  return -1; // No repeating element found\n}",
+      "action": "continue",
+      "next": "recommend-hashmap"
+    },
+    {
+      "stepId": "coding-brute-force-python",
+      "mentorSays": "The nested loops approach checks each element against all previous elements. This works but is slower (O(n²)).",
+      "example": "def first_repeating(nums):\n    for i in range(1, len(nums)):\n        for j in range(i):\n            if nums[i] == nums[j]:\n                return nums[j]  # Return the first occurrence\n    return -1  # No repeating element found",
+      "action": "continue",
+      "next": "recommend-hashmap"
+    },
+    {
+      "stepId": "coding-brute-force-java",
+      "mentorSays": "The nested loops approach checks each element against all previous elements. This works but is slower (O(n²)).",
+      "example": "public int firstRepeating(int[] nums) {\n    for (int i = 1; i < nums.length; i++) {\n        for (int j = 0; j < i; j++) {\n            if (nums[i] == nums[j]) {\n                return nums[j]; // Return the first occurrence\n            }\n        }\n    }\n    return -1; // No repeating element found\n}",
+      "action": "continue",
+      "next": "recommend-hashmap"
+    },
+    {
+      "stepId": "coding-brute-force-cpp",
+      "mentorSays": "The nested loops approach checks each element against all previous elements. This works but is slower (O(n²)).",
+      "example": "int firstRepeating(vector<int>& nums) {\n    for (int i = 1; i < nums.size(); i++) {\n        for (int j = 0; j < i; j++) {\n            if (nums[i] == nums[j]) {\n                return nums[j]; // Return the first occurrence\n            }\n        }\n    }\n    return -1; // No repeating element found\n}",
+      "action": "continue",
+      "next": "recommend-hashmap"
+    },
+    {
+      "stepId": "coding-brute-force-ts",
+      "mentorSays": "The nested loops approach checks each element against all previous elements. This works but is slower (O(n²)).",
+      "example": "function firstRepeating(nums: number[]): number {\n  for (let i = 1; i < nums.length; i++) {\n    for (let j = 0; j < i; j++) {\n      if (nums[i] === nums[j]) {\n        return nums[j]; // Return the first occurrence\n      }\n    }\n  }\n  return -1; // No repeating element found\n}",
+      "action": "continue",
+      "next": "recommend-hashmap"
+    },
+    {
+      "stepId": "recommend-hashmap",
+      "mentorSays": "Great job! You've successfully implemented the nested loops approach. This solution works, but there's a more efficient method using hash maps.\n\nThe hash map method is faster (O(n) instead of O(n²)) and is more elegant. Would you like to learn the hash map approach now?",
+      "choices": [
+        {
+          "label": "Yes, teach me the hash map approach",
+          "next": "explore-hashmap"
+        },
+        {
+          "label": "No, I'm done for now",
+          "next": "final"
+        }
+      ]
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've learned to think through the Find First Repeating Element problem. You understand what the problem asks for, how to track element occurrences, and you've explored different approaches to solve it.\n\nThis kind of thinking—breaking down problems, considering different solutions, and using hash maps for efficient lookups—is essential for solving algorithm problems. Keep practicing!",
+      "action": "continue"
+    }
+  ]
+}

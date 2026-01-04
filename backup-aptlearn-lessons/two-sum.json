@@ -1,0 +1,1033 @@
+{
+  "id": "two-sum",
+  "title": "Two Sum",
+  "pattern": "hash-map",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Define and use variables in your chosen language\n2. Understand what arrays are and how indexing works\n3. Create functions with parameters\n4. Use loops to iterate through arrays\n5. Solve the two sum problem using different approaches",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what the Two Sum problem is asking.\n\nImagine you have an array of numbers: [2, 6, 7, 9]\n\nAnd you're told: \"Find two numbers in this array that add up to 9.\"\n\nLooking at the numbers:\n- 2 + 7 = 9 ✓\n- 2 is at index 0\n- 7 is at index 2\n\nSo the answer would be the indices [0, 2].\n\nThat's what the problem wants: not the numbers themselves, but the positions (indices) where those numbers are located.",
+      "example": "nums = [2, 6, 7, 9]\ntarget = 9\n\nWhich two numbers add to 9?\n2 (at index 0) + 7 (at index 2) = 9\n\nAnswer: [0, 2]",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU try to find these indices?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try every pair and check their sum",
+          "next": "explore-pairs"
+        },
+        {
+          "label": "Sort the array first and then find a pair",
+          "next": "explore-sort"
+        },
+        {
+          "label": "Subtract each number from the target and see if the needed number exists",
+          "next": "explore-subtract"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-pairs",
+      "mentorSays": "That's a solid approach! You're thinking: \"Let me check every possible pair of numbers and see which ones add up to the target.\"\n\nLet's walk through this step by step with [2, 6, 7, 9] and target 9.\n\nStarting with the first element 2, let's add it to all the rest of the elements one by one:\n- 2 + 6 = 8 (not 9)\n- 2 + 7 = 9 ✓ Found it!\n- 2 + 9 = 11 (not 9)\n\nNow let's take the second element 6:\n- 6 + 7 = 13 (not 9)\n- 6 + 9 = 15 (not 9)\n\nNow let's take the next element 7:\n- 7 + 9 = 16 (not 9)\n\nThis definitely works! We found that 2 + 7 = 9, which means indices [0, 2] is our answer. Now let's turn this into code!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "explore-sort",
+      "mentorSays": "Interesting idea! You're thinking: \"If I sort the numbers first, maybe it'll be easier to find pairs.\"\n\nThat's creative thinking! However, there's something to consider: if we sort [2, 6, 7, 9], the numbers move to new positions. But the problem asks for the original indices, not the sorted positions.\n\nWe'd need to keep track of where each number originally was, which adds complexity. Let's explore a simpler approach instead.",
+      "action": "continue",
+      "next": "choose-alternative-approach"
+    },
+    {
+      "stepId": "choose-alternative-approach",
+      "mentorSays": "Since sorting adds complexity, which approach would you like to try instead?",
+      "choices": [
+        {
+          "label": "Try every pair and check their sum",
+          "next": "explore-pairs"
+        },
+        {
+          "label": "Subtract each number from the target and see if the needed number exists",
+          "next": "explore-subtract"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-subtract",
+      "mentorSays": "Excellent thinking! You're saying: \"For each number, I'll figure out what number I need to add to it to reach the target, then check if that needed number exists in the array.\"\n\nFor example, with [2, 6, 7, 9] and target 9:\n- At 2: I need 9 - 2 = 7. Is 7 in the array? Yes! At index 2.\n- So indices [0, 2] work!\n\nThis is a clever way to think about it! We'll use a hash map (or dictionary) to remember numbers we've seen. Now let's turn this into code!",
+      "action": "continue",
+      "next": "language-selection-hashmap"
+    },
+    {
+      "stepId": "language-selection-hashmap",
+      "mentorSays": "Great! Now let's code this hash map solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "function-check-hashmap-js"
+        },
+        {
+          "label": "Python",
+          "next": "function-check-hashmap-python"
+        },
+        {
+          "label": "Java",
+          "next": "function-check-hashmap-java"
+        },
+        {
+          "label": "C++",
+          "next": "function-check-hashmap-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "function-check-hashmap-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "function-check-hashmap-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "coding-hashmap-start-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-hashmap-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-hashmap-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "coding-hashmap-start-js"
+    },
+    {
+      "stepId": "function-check-hashmap-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "coding-hashmap-start-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-hashmap-python"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-hashmap-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "coding-hashmap-start-python"
+    },
+    {
+      "stepId": "function-check-hashmap-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know methods",
+          "next": "coding-hashmap-start-java"
+        },
+        {
+          "label": "No, explain methods",
+          "next": "function-explanation-hashmap-java"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-hashmap-java",
+      "mentorSays": "A method (Java's version of a function) is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "coding-hashmap-start-java"
+    },
+    {
+      "stepId": "function-check-hashmap-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "coding-hashmap-start-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-hashmap-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-hashmap-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "coding-hashmap-start-cpp"
+    },
+    {
+      "stepId": "function-check-hashmap-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "coding-hashmap-start-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-hashmap-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-hashmap-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a: number, b: number): number {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "coding-hashmap-start-ts"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this pairs solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'let numbers = [3, 7, 2, 9, 5];' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "let numbers = [3, 7, 2, 9, 5];\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "variable-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'numbers = [3, 7, 2, 9, 5]' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-python"
+    },
+    {
+      "stepId": "function-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-python"
+    },
+    {
+      "stepId": "parameter-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def find_max(arr):', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'find_max([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "def find_max(arr): {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfind_max([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-python"
+    },
+    {
+      "stepId": "parameter-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def find_max(arr):', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'find_max([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "def find_max(arr): {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfind_max([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-python"
+    },
+    {
+      "stepId": "variable-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'int[] numbers = {3, 7, 2, 9, 5};' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "int[] numbers = {3, 7, 2, 9, 5};\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-java"
+    },
+    {
+      "stepId": "function-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know methods",
+          "next": "parameter-check-java"
+        },
+        {
+          "label": "No, explain methods",
+          "next": "function-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-java",
+      "mentorSays": "A method (Java's version of a function) is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-java"
+    },
+    {
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public int findMax(int[] arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the method.\n\nWhen you call 'findMax(new int[]{3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the method and stored in the 'arr' parameter. Inside the method, you can use 'arr' to refer to that array.",
+      "example": "public int findMax(int[] arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the method\n}\n\n// When we call it:\nfindMax(new int[]{3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the method, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-java"
+    },
+    {
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public int findMax(int[] arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the method.\n\nWhen you call 'findMax(new int[]{3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the method and stored in the 'arr' parameter. Inside the method, you can use 'arr' to refer to that array.",
+      "example": "public int findMax(int[] arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the method\n}\n\n// When we call it:\nfindMax(new int[]{3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the method, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-java"
+    },
+    {
+      "stepId": "variable-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'vector<int> numbers = {3, 7, 2, 9, 5};' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "vector<int> numbers = {3, 7, 2, 9, 5};\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-cpp"
+    },
+    {
+      "stepId": "function-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-cpp"
+    },
+    {
+      "stepId": "parameter-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'int findMax(vector<int>& arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax({3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "int findMax(vector<int>& arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax({3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "parameter-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'int findMax(vector<int>& arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax({3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "int findMax(vector<int>& arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax({3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "variable-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'let numbers: number[] = [3, 7, 2, 9, 5];' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "let numbers: number[] = [3, 7, 2, 9, 5];\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-ts"
+    },
+    {
+      "stepId": "function-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a: number, b: number): number {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-ts"
+    },
+    {
+      "stepId": "parameter-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr: number[]): number', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr: number[]): number {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-ts"
+    },
+    {
+      "stepId": "parameter-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr: number[]): number', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr: number[]): number {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-ts"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement this in JavaScript. We'll create a function that takes the array and target, then returns the indices.",
+      "example": "function twoSum(nums, target) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To check every pair, we'll need to use loops. Do you know what a loop is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-pairs-outer-js"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-pairs-outer-js"
+    },
+    {
+      "stepId": "coding-pairs-outer-js",
+      "mentorSays": "Let's build this step by step. First, we need an outer loop to pick the first element.\n\nFor our array [2, 6, 7, 9], the outer loop will pick each element one by one: first 2 (at index 0), then 6 (at index 1), then 7 (at index 2), then 9 (at index 3).",
+      "example": "function twoSum(nums, target) {\n  // Outer loop: pick first element\n  for (let i = 0; i < nums.length; i++) {\n    // nums[i] is the first element we're checking\n    // When i=0, nums[i] = 2\n    // When i=1, nums[i] = 6\n    // When i=2, nums[i] = 7\n    // When i=3, nums[i] = 9\n  }\n}",
+      "action": "continue",
+      "next": "coding-pairs-inner-js"
+    },
+    {
+      "stepId": "coding-pairs-inner-js",
+      "mentorSays": "Now, for each element picked by the outer loop, we need an inner loop to pick all the remaining elements one at a time.\n\nFor example, when the outer loop picks 2 (at index 0), the inner loop should pick 6, 7, and 9 (at indices 1, 2, 3) one by one to add to 2.",
+      "example": "function twoSum(nums, target) {\n  for (let i = 0; i < nums.length; i++) {\n    // Inner loop: pick remaining elements\n    for (let j = i + 1; j < nums.length; j++) {\n      // When i=0 (picking 2), j goes from 1 to 3\n      // This picks: nums[1]=6, nums[2]=7, nums[3]=9\n      // So we check: 2+6, 2+7, 2+9\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-pairs-complete-js"
+    },
+    {
+      "stepId": "coding-pairs-complete-js",
+      "mentorSays": "Perfect! Now inside the inner loop, we check if the sum of the two numbers equals the target. If it does, we return their indices!",
+      "example": "function twoSum(nums, target) {\n  for (let i = 0; i < nums.length; i++) {\n    for (let j = i + 1; j < nums.length; j++) {\n      if (nums[i] + nums[j] === target) {\n        return [i, j];\n      }\n    }\n  }\n}\n\nFor [2,6,7,9] with target 9:\n- When i=0, j=1: 2+6=8 (not 9)\n- When i=0, j=2: 2+7=9 ✓ Return [0,2]",
+      "action": "continue",
+      "next": "test-code-pairs"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement this in Python. We'll create a function that takes the array and target, then returns the indices.",
+      "example": "def two_sum(nums, target):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "loop-check-python"
+    },
+    {
+      "stepId": "loop-check-python",
+      "mentorSays": "To check every pair, we'll need to use loops. Do you know what a loop is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-pairs-outer-python"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, 'for i in range(3)' means: run the code 3 times, with i being 0, then 1, then 2.",
+      "example": "for i in range(3):\n    print(i)\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-pairs-outer-python"
+    },
+    {
+      "stepId": "coding-pairs-outer-python",
+      "mentorSays": "Let's build this step by step. First, we need an outer loop to pick the first element.\n\nFor our array [2, 6, 7, 9], the outer loop will pick each element one by one: first 2 (at index 0), then 6 (at index 1), then 7 (at index 2), then 9 (at index 3).",
+      "example": "def two_sum(nums, target):\n    # Outer loop: pick first element\n    for i in range(len(nums)):\n        # nums[i] is the first element we're checking\n        # When i=0, nums[i] = 2\n        # When i=1, nums[i] = 6\n        # When i=2, nums[i] = 7\n        # When i=3, nums[i] = 9",
+      "action": "continue",
+      "next": "coding-pairs-inner-python"
+    },
+    {
+      "stepId": "coding-pairs-inner-python",
+      "mentorSays": "Now, for each element picked by the outer loop, we need an inner loop to pick all the remaining elements one at a time.\n\nFor example, when the outer loop picks 2 (at index 0), the inner loop should pick 6, 7, and 9 (at indices 1, 2, 3) one by one to add to 2.",
+      "example": "def two_sum(nums, target):\n    for i in range(len(nums)):\n        # Inner loop: pick remaining elements\n        for j in range(i + 1, len(nums)):\n            # When i=0 (picking 2), j goes from 1 to 3\n            # This picks: nums[1]=6, nums[2]=7, nums[3]=9\n            # So we check: 2+6, 2+7, 2+9",
+      "action": "continue",
+      "next": "coding-pairs-complete-python"
+    },
+    {
+      "stepId": "coding-pairs-complete-python",
+      "mentorSays": "Perfect! Now inside the inner loop, we check if the sum of the two numbers equals the target. If it does, we return their indices!",
+      "example": "def two_sum(nums, target):\n    for i in range(len(nums)):\n        for j in range(i + 1, len(nums)):\n            if nums[i] + nums[j] == target:\n                return [i, j]\n\nFor [2,6,7,9] with target 9:\n- When i=0, j=1: 2+6=8 (not 9)\n- When i=0, j=2: 2+7=9 ✓ Return [0,2]",
+      "action": "continue",
+      "next": "test-code-pairs"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement this in Java. We'll create a method that takes the array and target, then returns the indices.",
+      "example": "public int[] twoSum(int[] nums, int target) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "loop-check-java"
+    },
+    {
+      "stepId": "loop-check-java",
+      "mentorSays": "To check every pair, we'll need to use loops. Do you know what a loop is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-pairs-outer-java"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (int i = 0; i < 3; i++) {\n    System.out.println(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-pairs-outer-java"
+    },
+    {
+      "stepId": "coding-pairs-outer-java",
+      "mentorSays": "Let's build this step by step. First, we need an outer loop to pick the first element.\n\nFor our array [2, 6, 7, 9], the outer loop will pick each element one by one: first 2 (at index 0), then 6 (at index 1), then 7 (at index 2), then 9 (at index 3).",
+      "example": "public int[] twoSum(int[] nums, int target) {\n    // Outer loop: pick first element\n    for (int i = 0; i < nums.length; i++) {\n        // nums[i] is the first element we're checking\n        // When i=0, nums[i] = 2\n        // When i=1, nums[i] = 6\n        // When i=2, nums[i] = 7\n        // When i=3, nums[i] = 9\n    }\n}",
+      "action": "continue",
+      "next": "coding-pairs-inner-java"
+    },
+    {
+      "stepId": "coding-pairs-inner-java",
+      "mentorSays": "Now, for each element picked by the outer loop, we need an inner loop to pick all the remaining elements one at a time.\n\nFor example, when the outer loop picks 2 (at index 0), the inner loop should pick 6, 7, and 9 (at indices 1, 2, 3) one by one to add to 2.",
+      "example": "public int[] twoSum(int[] nums, int target) {\n    for (int i = 0; i < nums.length; i++) {\n        // Inner loop: pick remaining elements\n        for (int j = i + 1; j < nums.length; j++) {\n            // When i=0 (picking 2), j goes from 1 to 3\n            // This picks: nums[1]=6, nums[2]=7, nums[3]=9\n            // So we check: 2+6, 2+7, 2+9\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-pairs-complete-java"
+    },
+    {
+      "stepId": "coding-pairs-complete-java",
+      "mentorSays": "Perfect! Now inside the inner loop, we check if the sum of the two numbers equals the target. If it does, we return their indices!",
+      "example": "public int[] twoSum(int[] nums, int target) {\n    for (int i = 0; i < nums.length; i++) {\n        for (int j = i + 1; j < nums.length; j++) {\n            if (nums[i] + nums[j] == target) {\n                return new int[]{i, j};\n            }\n        }\n    }\n    return new int[]{};\n}\n\nFor [2,6,7,9] with target 9:\n- When i=0, j=1: 2+6=8 (not 9)\n- When i=0, j=2: 2+7=9 ✓ Return [0,2]",
+      "action": "continue",
+      "next": "test-code-pairs"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement this in C++. We'll create a function that takes the array and target, then returns the indices.",
+      "example": "vector<int> twoSum(vector<int>& nums, int target) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "loop-check-cpp",
+      "mentorSays": "To check every pair, we'll need to use loops. Do you know what a loop is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-pairs-outer-cpp"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (int i = 0; i < 3; i++) {\n    cout << i << endl;\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-pairs-outer-cpp"
+    },
+    {
+      "stepId": "coding-pairs-outer-cpp",
+      "mentorSays": "Let's build this step by step. First, we need an outer loop to pick the first element.\n\nFor our array [2, 6, 7, 9], the outer loop will pick each element one by one: first 2 (at index 0), then 6 (at index 1), then 7 (at index 2), then 9 (at index 3).",
+      "example": "vector<int> twoSum(vector<int>& nums, int target) {\n    // Outer loop: pick first element\n    for (int i = 0; i < nums.size(); i++) {\n        // nums[i] is the first element we're checking\n        // When i=0, nums[i] = 2\n        // When i=1, nums[i] = 6\n        // When i=2, nums[i] = 7\n        // When i=3, nums[i] = 9\n    }\n}",
+      "action": "continue",
+      "next": "coding-pairs-inner-cpp"
+    },
+    {
+      "stepId": "coding-pairs-inner-cpp",
+      "mentorSays": "Now, for each element picked by the outer loop, we need an inner loop to pick all the remaining elements one at a time.\n\nFor example, when the outer loop picks 2 (at index 0), the inner loop should pick 6, 7, and 9 (at indices 1, 2, 3) one by one to add to 2.",
+      "example": "vector<int> twoSum(vector<int>& nums, int target) {\n    for (int i = 0; i < nums.size(); i++) {\n        // Inner loop: pick remaining elements\n        for (int j = i + 1; j < nums.size(); j++) {\n            // When i=0 (picking 2), j goes from 1 to 3\n            // This picks: nums[1]=6, nums[2]=7, nums[3]=9\n            // So we check: 2+6, 2+7, 2+9\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-pairs-complete-cpp"
+    },
+    {
+      "stepId": "coding-pairs-complete-cpp",
+      "mentorSays": "Perfect! Now inside the inner loop, we check if the sum of the two numbers equals the target. If it does, we return their indices!",
+      "example": "vector<int> twoSum(vector<int>& nums, int target) {\n    for (int i = 0; i < nums.size(); i++) {\n        for (int j = i + 1; j < nums.size(); j++) {\n            if (nums[i] + nums[j] == target) {\n                return {i, j};\n            }\n        }\n    }\n    return {};\n}\n\nFor [2,6,7,9] with target 9:\n- When i=0, j=1: 2+6=8 (not 9)\n- When i=0, j=2: 2+7=9 ✓ Return [0,2]",
+      "action": "continue",
+      "next": "test-code-pairs"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement this in TypeScript. We'll create a function that takes the array and target, then returns the indices.",
+      "example": "function twoSum(nums: number[], target: number): number[] {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "loop-check-ts"
+    },
+    {
+      "stepId": "loop-check-ts",
+      "mentorSays": "To check every pair, we'll need to use loops. Do you know what a loop is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-pairs-outer-ts"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-pairs-outer-ts"
+    },
+    {
+      "stepId": "coding-pairs-outer-ts",
+      "mentorSays": "Let's build this step by step. First, we need an outer loop to pick the first element.\n\nFor our array [2, 6, 7, 9], the outer loop will pick each element one by one: first 2 (at index 0), then 6 (at index 1), then 7 (at index 2), then 9 (at index 3).",
+      "example": "function twoSum(nums: number[], target: number): number[] {\n  // Outer loop: pick first element\n  for (let i = 0; i < nums.length; i++) {\n    // nums[i] is the first element we're checking\n    // When i=0, nums[i] = 2\n    // When i=1, nums[i] = 6\n    // When i=2, nums[i] = 7\n    // When i=3, nums[i] = 9\n  }\n}",
+      "action": "continue",
+      "next": "coding-pairs-inner-ts"
+    },
+    {
+      "stepId": "coding-pairs-inner-ts",
+      "mentorSays": "Now, for each element picked by the outer loop, we need an inner loop to pick all the remaining elements one at a time.\n\nFor example, when the outer loop picks 2 (at index 0), the inner loop should pick 6, 7, and 9 (at indices 1, 2, 3) one by one to add to 2.",
+      "example": "function twoSum(nums: number[], target: number): number[] {\n  for (let i = 0; i < nums.length; i++) {\n    // Inner loop: pick remaining elements\n    for (let j = i + 1; j < nums.length; j++) {\n      // When i=0 (picking 2), j goes from 1 to 3\n      // This picks: nums[1]=6, nums[2]=7, nums[3]=9\n      // So we check: 2+6, 2+7, 2+9\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-pairs-complete-ts"
+    },
+    {
+      "stepId": "coding-pairs-complete-ts",
+      "mentorSays": "Perfect! Now inside the inner loop, we check if the sum of the two numbers equals the target. If it does, we return their indices!",
+      "example": "function twoSum(nums: number[], target: number): number[] {\n  for (let i = 0; i < nums.length; i++) {\n    for (let j = i + 1; j < nums.length; j++) {\n      if (nums[i] + nums[j] === target) {\n        return [i, j];\n      }\n    }\n  }\n  return [];\n}\n\nFor [2,6,7,9] with target 9:\n- When i=0, j=1: 2+6=8 (not 9)\n- When i=0, j=2: 2+7=9 ✓ Return [0,2]",
+      "action": "continue",
+      "next": "test-code-pairs"
+    },
+    {
+      "stepId": "coding-hashmap-start-js",
+      "mentorSays": "Perfect! Let's implement the hash map approach in JavaScript. We'll create a map to remember numbers we've seen and their indices.",
+      "example": "function twoSum(nums, target) {\n  const map = {};\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-hashmap-loop-js"
+    },
+    {
+      "stepId": "coding-hashmap-loop-js",
+      "mentorSays": "Now loop through the array. For each number, calculate what we need: target - current number.",
+      "example": "function twoSum(nums, target) {\n  const map = {};\n  for (let i = 0; i < nums.length; i++) {\n    const needed = target - nums[i];\n    // Check if needed is in map\n  }\n}",
+      "action": "continue",
+      "next": "coding-hashmap-complete-js"
+    },
+    {
+      "stepId": "coding-hashmap-complete-js",
+      "mentorSays": "Check if the needed number is in the map. If yes, return the indices! If no, store the current number and its index in the map.",
+      "example": "function twoSum(nums, target) {\n  const map = {};\n  for (let i = 0; i < nums.length; i++) {\n    const needed = target - nums[i];\n    if (map[needed] !== undefined) {\n      return [map[needed], i];\n    }\n    map[nums[i]] = i;\n  }\n}",
+      "action": "continue",
+      "next": "test-code"
+    },
+    {
+      "stepId": "coding-hashmap-start-python",
+      "mentorSays": "Perfect! Let's implement the hash map approach in Python. We'll create a dictionary to remember numbers we've seen and their indices.",
+      "example": "def two_sum(nums, target):\n    map = {}\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-hashmap-loop-python"
+    },
+    {
+      "stepId": "coding-hashmap-loop-python",
+      "mentorSays": "Now loop through the array. For each number, calculate what we need: target - current number.",
+      "example": "def two_sum(nums, target):\n    map = {}\n    for i in range(len(nums)):\n        needed = target - nums[i]\n        # Check if needed is in map\n        pass",
+      "action": "continue",
+      "next": "coding-hashmap-complete-python"
+    },
+    {
+      "stepId": "coding-hashmap-complete-python",
+      "mentorSays": "Check if the needed number is in the map. If yes, return the indices! If no, store the current number and its index in the map.",
+      "example": "def two_sum(nums, target):\n    map = {}\n    for i in range(len(nums)):\n        needed = target - nums[i]\n        if needed in map:\n            return [map[needed], i]\n        map[nums[i]] = i",
+      "action": "continue",
+      "next": "test-code"
+    },
+    {
+      "stepId": "coding-hashmap-start-java",
+      "mentorSays": "Perfect! Let's implement the hash map approach in Java. We'll create a HashMap to remember numbers we've seen and their indices.",
+      "example": "import java.util.HashMap;\n\npublic int[] twoSum(int[] nums, int target) {\n    HashMap<Integer, Integer> map = new HashMap<>();\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-hashmap-loop-java"
+    },
+    {
+      "stepId": "coding-hashmap-loop-java",
+      "mentorSays": "Now loop through the array. For each number, calculate what we need: target - current number.",
+      "example": "import java.util.HashMap;\n\npublic int[] twoSum(int[] nums, int target) {\n    HashMap<Integer, Integer> map = new HashMap<>();\n    for (int i = 0; i < nums.length; i++) {\n        int needed = target - nums[i];\n        // Check if needed is in map\n    }\n}",
+      "action": "continue",
+      "next": "coding-hashmap-complete-java"
+    },
+    {
+      "stepId": "coding-hashmap-complete-java",
+      "mentorSays": "Check if the needed number is in the map. If yes, return the indices! If no, store the current number and its index in the map.",
+      "example": "import java.util.HashMap;\n\npublic int[] twoSum(int[] nums, int target) {\n    HashMap<Integer, Integer> map = new HashMap<>();\n    for (int i = 0; i < nums.length; i++) {\n        int needed = target - nums[i];\n        if (map.containsKey(needed)) {\n            return new int[]{map.get(needed), i};\n        }\n        map.put(nums[i], i);\n    }\n    return new int[]{};\n}",
+      "action": "continue",
+      "next": "test-code"
+    },
+    {
+      "stepId": "coding-hashmap-start-cpp",
+      "mentorSays": "Perfect! Let's implement the hash map approach in C++. We'll create an unordered_map to remember numbers we've seen and their indices.",
+      "example": "#include <unordered_map>\n#include <vector>\n\nvector<int> twoSum(vector<int>& nums, int target) {\n    unordered_map<int, int> map;\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-hashmap-loop-cpp"
+    },
+    {
+      "stepId": "coding-hashmap-loop-cpp",
+      "mentorSays": "Now loop through the array. For each number, calculate what we need: target - current number.",
+      "example": "#include <unordered_map>\n#include <vector>\n\nvector<int> twoSum(vector<int>& nums, int target) {\n    unordered_map<int, int> map;\n    for (int i = 0; i < nums.size(); i++) {\n        int needed = target - nums[i];\n        // Check if needed is in map\n    }\n}",
+      "action": "continue",
+      "next": "coding-hashmap-complete-cpp"
+    },
+    {
+      "stepId": "coding-hashmap-complete-cpp",
+      "mentorSays": "Check if the needed number is in the map. If yes, return the indices! If no, store the current number and its index in the map.",
+      "example": "#include <unordered_map>\n#include <vector>\n\nvector<int> twoSum(vector<int>& nums, int target) {\n    unordered_map<int, int> map;\n    for (int i = 0; i < nums.size(); i++) {\n        int needed = target - nums[i];\n        if (map.find(needed) != map.end()) {\n            return {map[needed], i};\n        }\n        map[nums[i]] = i;\n    }\n    return {};\n}",
+      "action": "continue",
+      "next": "test-code"
+    },
+    {
+      "stepId": "coding-hashmap-start-ts",
+      "mentorSays": "Perfect! Let's implement the hash map approach in TypeScript. We'll create a map to remember numbers we've seen and their indices.",
+      "example": "function twoSum(nums: number[], target: number): number[] {\n  const map: { [key: number]: number } = {};\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-hashmap-loop-ts"
+    },
+    {
+      "stepId": "coding-hashmap-loop-ts",
+      "mentorSays": "Now loop through the array. For each number, calculate what we need: target - current number.",
+      "example": "function twoSum(nums: number[], target: number): number[] {\n  const map: { [key: number]: number } = {};\n  for (let i = 0; i < nums.length; i++) {\n    const needed = target - nums[i];\n    // Check if needed is in map\n  }\n}",
+      "action": "continue",
+      "next": "coding-hashmap-complete-ts"
+    },
+    {
+      "stepId": "coding-hashmap-complete-ts",
+      "mentorSays": "Check if the needed number is in the map. If yes, return the indices! If no, store the current number and its index in the map.",
+      "example": "function twoSum(nums: number[], target: number): number[] {\n  const map: { [key: number]: number } = {};\n  for (let i = 0; i < nums.length; i++) {\n    const needed = target - nums[i];\n    if (map[needed] !== undefined) {\n      return [map[needed], i];\n    }\n    map[nums[i]] = i;\n  }\n  return [];\n}",
+      "action": "continue",
+      "next": "test-code"
+    },
+    {
+      "stepId": "test-code-pairs",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [2, 6, 7, 9]\ntarget = 9\n\nRun your function and verify it returns [0, 2]. Try it in your IDE or code editor!",
+      "example": "Test input:\nnums = [2, 6, 7, 9]\ntarget = 9\n\nExpected output: [0, 2]\nBecause nums[0] + nums[2] = 2 + 7 = 9",
+      "action": "continue",
+      "next": "recommend-hashmap"
+    },
+    {
+      "stepId": "recommend-hashmap",
+      "mentorSays": "Great job! You've successfully implemented the pairs approach. This solution works, but there's a more efficient method called the hash map approach.\n\nThe hash map method can solve this problem faster, especially for large arrays. It only needs to go through the array once instead of checking every pair.\n\nWould you like to learn the hash map approach now?",
+      "choices": [
+        {
+          "label": "Yes, teach me the hash map approach",
+          "next": "explore-subtract"
+        },
+        {
+          "label": "No, I'm done for now",
+          "next": "final"
+        }
+      ]
+    },
+    {
+      "stepId": "test-code",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [2, 6, 7, 9]\ntarget = 9\n\nRun your function and verify it returns [0, 2]. Try it in your IDE or code editor!",
+      "example": "Test input:\nnums = [2, 6, 7, 9]\ntarget = 9\n\nExpected output: [0, 2]\nBecause nums[0] + nums[2] = 2 + 7 = 9",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've learned to think through the Two Sum problem. You understand what arrays are, what the problem is asking, and you've explored different ways to approach it.\n\nThis kind of thinking—breaking down problems and considering different approaches—is the foundation of solving algorithm problems. Keep practicing!",
+      "action": "continue"
+    }
+  ]
+}

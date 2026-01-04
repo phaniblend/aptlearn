@@ -1,0 +1,692 @@
+{
+  "id": "count-subarrays-size-k",
+  "title": "Count subarrays of size K",
+  "pattern": "sliding-window",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what counting subarrays of size K means\n2. Recognize that this is a simple formula-based problem\n3. Calculate the number of possible subarrays of fixed size\n4. Implement the solution step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what counting subarrays of size K means.\n\nImagine you have an array: [1, 2, 3, 4, 5]\n\nAnd K = 3 (subarray size)\n\nYour task: Count how many subarrays of size K exist in this array.\n\nLet's find all subarrays of size 3:\n- Subarray starting at index 0: [1, 2, 3] (indices 0-2)\n- Subarray starting at index 1: [2, 3, 4] (indices 1-3)\n- Subarray starting at index 2: [3, 4, 5] (indices 2-4)\n\nTotal: 3 subarrays of size 3\n\n**Key Insight**: For an array of length n, the number of subarrays of size K is simply: n - K + 1\n\nWhy? Because we can start a subarray at any index from 0 to (n-K). That's (n-K+1) possible starting positions.\n\nFor [1, 2, 3, 4, 5] with n=5, K=3:\n- Starting positions: 0, 1, 2 (that's 3 positions)\n- Formula: 5 - 3 + 1 = 3 ✓\n\nThat's what the problem wants: the count of subarrays of size K.",
+      "example": "nums = [1, 2, 3, 4, 5]\nK = 3\n\nSubarrays of size 3:\n- [1, 2, 3] (indices 0-2)\n- [2, 3, 4] (indices 1-3)\n- [3, 4, 5] (indices 2-4)\n\nCount: 3\n\nFormula: n - K + 1 = 5 - 3 + 1 = 3",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU count subarrays of size K?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Use the formula: n - K + 1",
+          "next": "explore-formula"
+        },
+        {
+          "label": "Loop through and count each possible starting position",
+          "next": "explore-loop"
+        },
+        {
+          "label": "Use a sliding window to count",
+          "next": "explore-sliding-window"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-loop",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"I'll loop from 0 to (n-K) and count each starting position.\"\n\n**How the loop approach works**:\n- Start a counter at 0\n- Loop from index 0 to (n-K) inclusive\n- For each valid starting position, increment the counter\n- Return the counter\n\n**Example with [1, 2, 3, 4, 5], K=3**:\n- i=0: Can start subarray at index 0 → count = 1\n- i=1: Can start subarray at index 1 → count = 2\n- i=2: Can start subarray at index 2 → count = 3\n- i=3: Can't start (would need indices 3,4,5 but only have 5 elements)\n- Result: 3\n\n**Time Complexity**: O(n-K) = O(n) in worst case\n**Space Complexity**: O(1)\n\nThis works perfectly! However, we can optimize this to O(1) time using a simple formula. Would you like to learn the formula approach, or code the loop approach?",
+      "choices": [
+        {
+          "label": "Learn the formula approach (more efficient)",
+          "next": "explore-formula"
+        },
+        {
+          "label": "Code the loop approach (more intuitive)",
+          "next": "language-selection-loop"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-sliding-window",
+      "mentorSays": "Good thinking! A sliding window can help visualize this.\n\n**How the sliding window approach works**:\n- Use a window of size K\n- Slide it from left to right\n- Count how many positions the window can occupy\n- The window can start at positions 0, 1, 2, ..., (n-K)\n\n**Example with [1, 2, 3, 4, 5], K=3**:\n- Window at position 0: [1, 2, 3] → count = 1\n- Window at position 1: [2, 3, 4] → count = 2\n- Window at position 2: [3, 4, 5] → count = 3\n- Window at position 3: Can't fit (would need 3 more elements)\n- Result: 3\n\n**Time Complexity**: O(n-K) = O(n) in worst case\n**Space Complexity**: O(1)\n\nThis is essentially the same as the loop approach! Both count valid starting positions. We can simplify this to O(1) time using a formula. Would you like to learn the formula approach, or code the sliding window?",
+      "choices": [
+        {
+          "label": "Learn the formula approach (more efficient)",
+          "next": "explore-formula"
+        },
+        {
+          "label": "Code the sliding window approach",
+          "next": "language-selection-loop"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-formula",
+      "mentorSays": "Excellent choice! The formula approach is the most efficient. Here's the core idea:\n\n**Formula**: count = n - K + 1\n\nWhere:\n- n = length of the array\n- K = size of subarray\n\n**Why this works**:\n- We can start a subarray at any index from 0 to (n-K) inclusive\n- That's exactly (n-K+1) possible starting positions\n- Each starting position gives us exactly one subarray of size K\n\n**Derivation**:\n- Last valid starting position: (n-K)\n- Valid positions: 0, 1, 2, ..., (n-K)\n- Count: (n-K) - 0 + 1 = n - K + 1\n\n**Example with [1, 2, 3, 4, 5], K=3**:\n- n = 5, K = 3\n- Formula: 5 - 3 + 1 = 3 ✓\n- Valid positions: 0, 1, 2 (that's 3 positions)\n\n**Time Complexity**: O(1) - constant time!\n**Space Complexity**: O(1)\n\nThis is optimal! Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection-loop",
+      "mentorSays": "Great! Now let's code the loop approach. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "main-variables-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "main-variables-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "main-variables-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "main-variables-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "main-variables-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "main-variables-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "main-variables-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "main-variables-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "main-variables-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "main-variables-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "main-functions-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "main-variables-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'nums' or 'k') and put data inside it.\n\nFor example, in JavaScript, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "const nums = [1, 2, 3, 4, 5];\nconst k = 3;\n\nNow the variables refer to the array and the number\nWe can use these variable names to access them",
+      "action": "continue",
+      "next": "main-functions-check-js"
+    },
+    {
+      "stepId": "main-functions-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "main-parameters-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "main-functions-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameters-check-js"
+    },
+    {
+      "stepId": "main-parameters-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "main-parameters-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function countSubarrays(nums, k)', the 'nums' and 'k' are parameters - they're placeholders that will receive actual values when you call the function.",
+      "example": "function countSubarrays(nums, k) {\n  // 'nums' and 'k' are parameters\n}\n\n// When we call it:\ncountSubarrays([1, 2, 3, 4, 5], 3);\n// The array goes into 'nums' and 3 goes into 'k'",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the count subarrays solution in JavaScript. We'll create a function that takes an array and K, then returns the count using the formula.",
+      "example": "function countSubarrays(nums, k) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-get-length-js"
+    },
+    {
+      "stepId": "coding-get-length-js",
+      "mentorSays": "First, let's get the length of the array. We'll need this for our formula.",
+      "example": "function countSubarrays(nums, k) {\n  const n = nums.length;\n  // Now we have the array length stored in 'n'\n}",
+      "action": "continue",
+      "next": "coding-check-length-js"
+    },
+    {
+      "stepId": "coding-check-length-js",
+      "mentorSays": "Now, let's add a check: if the array length is less than k, we can't form any subarrays of size k, so return 0. This handles the edge case where k is larger than the array.",
+      "example": "function countSubarrays(nums, k) {\n  const n = nums.length;\n  \n  // Check if array is too small\n  if (n < k) {\n    return 0;\n  }\n}",
+      "action": "continue",
+      "next": "coding-calculate-positions-js"
+    },
+    {
+      "stepId": "coding-calculate-positions-js",
+      "mentorSays": "Now, let's think about the valid starting positions. The last valid starting position is (n - k), because starting at (n - k) gives us indices from (n-k) to (n-k+k-1) = (n-1), which is the last index.",
+      "example": "function countSubarrays(nums, k) {\n  const n = nums.length;\n  \n  if (n < k) {\n    return 0;\n  }\n  \n  // Last valid starting position\n  const lastStart = n - k;\n  // Valid positions: 0, 1, 2, ..., lastStart\n}",
+      "action": "continue",
+      "next": "coding-count-positions-js"
+    },
+    {
+      "stepId": "coding-count-positions-js",
+      "mentorSays": "The number of valid starting positions is: (lastStart - 0 + 1) = (n - k + 1). This is our formula! Let's calculate it.",
+      "example": "function countSubarrays(nums, k) {\n  const n = nums.length;\n  \n  if (n < k) {\n    return 0;\n  }\n  \n  // Number of valid starting positions\n  const count = n - k + 1;\n}",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Finally, return the count. This gives us the number of subarrays of size k.",
+      "example": "function countSubarrays(nums, k) {\n  const n = nums.length;\n  \n  if (n < k) {\n    return 0;\n  }\n  \n  // Formula: number of starting positions\n  return n - k + 1;\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 2, 3, 4, 5]\nk = 3\n\nExpected output: 3\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 2, 3, 4, 5]\nk = 3\n\nExpected output: 3\n\nSubarrays of size 3:\n- [1, 2, 3] (starting at index 0)\n- [2, 3, 4] (starting at index 1)\n- [3, 4, 5] (starting at index 2)",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "main-functions-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "main-variables-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'nums' or 'k') and put data inside it.\n\nFor example, in Python, you can create a variable that stores a list. Later, you can use that variable name to refer to the list.",
+      "example": "nums = [1, 2, 3, 4, 5]\nk = 3\n\nNow the variables refer to the list and the number\nWe can use these variable names to access them",
+      "action": "continue",
+      "next": "main-functions-check-python"
+    },
+    {
+      "stepId": "main-functions-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "main-parameters-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "main-functions-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameters-check-python"
+    },
+    {
+      "stepId": "main-parameters-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "main-parameters-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def count_subarrays(nums, k):', the 'nums' and 'k' are parameters - they're placeholders that will receive actual values when you call the function.",
+      "example": "def count_subarrays(nums, k):\n    # 'nums' and 'k' are parameters\n    pass\n\n# When we call it:\ncount_subarrays([1, 2, 3, 4, 5], 3)\n# The list goes into 'nums' and 3 goes into 'k'",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement the count subarrays solution in Python. We'll create a function that takes a list and K, then returns the count using the formula.",
+      "example": "def count_subarrays(nums, k):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-get-length-python"
+    },
+    {
+      "stepId": "coding-get-length-python",
+      "mentorSays": "First, let's get the length of the list. We'll need this for our formula.",
+      "example": "def count_subarrays(nums, k):\n    n = len(nums)\n    # Now we have the list length stored in 'n'",
+      "action": "continue",
+      "next": "coding-check-length-python"
+    },
+    {
+      "stepId": "coding-check-length-python",
+      "mentorSays": "Now, let's add a check: if the list length is less than k, we can't form any subarrays of size k, so return 0. This handles the edge case where k is larger than the list.",
+      "example": "def count_subarrays(nums, k):\n    n = len(nums)\n    \n    # Check if list is too small\n    if n < k:\n        return 0",
+      "action": "continue",
+      "next": "coding-calculate-positions-python"
+    },
+    {
+      "stepId": "coding-calculate-positions-python",
+      "mentorSays": "Now, let's think about the valid starting positions. The last valid starting position is (n - k), because starting at (n - k) gives us indices from (n-k) to (n-k+k-1) = (n-1), which is the last index.",
+      "example": "def count_subarrays(nums, k):\n    n = len(nums)\n    \n    if n < k:\n        return 0\n    \n    # Last valid starting position\n    last_start = n - k\n    # Valid positions: 0, 1, 2, ..., last_start",
+      "action": "continue",
+      "next": "coding-count-positions-python"
+    },
+    {
+      "stepId": "coding-count-positions-python",
+      "mentorSays": "The number of valid starting positions is: (last_start - 0 + 1) = (n - k + 1). This is our formula! Let's calculate it.",
+      "example": "def count_subarrays(nums, k):\n    n = len(nums)\n    \n    if n < k:\n        return 0\n    \n    # Number of valid starting positions\n    count = n - k + 1",
+      "action": "continue",
+      "next": "coding-return-python"
+    },
+    {
+      "stepId": "coding-return-python",
+      "mentorSays": "Finally, return the count. This gives us the number of subarrays of size k.",
+      "example": "def count_subarrays(nums, k):\n    n = len(nums)\n    \n    if n < k:\n        return 0\n    \n    # Formula: number of starting positions\n    return n - k + 1",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 2, 3, 4, 5]\nk = 3\n\nExpected output: 3\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 2, 3, 4, 5]\nk = 3\n\nExpected output: 3\n\nSubarrays of size 3:\n- [1, 2, 3] (starting at index 0)\n- [2, 3, 4] (starting at index 1)\n- [3, 4, 5] (starting at index 2)",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "main-functions-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "main-variables-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'nums' or 'k') and put data inside it.\n\nFor example, in Java, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "int[] nums = {1, 2, 3, 4, 5};\nint k = 3;\n\nNow the variables refer to the array and the number\nWe can use these variable names to access them",
+      "action": "continue",
+      "next": "main-functions-check-java"
+    },
+    {
+      "stepId": "main-functions-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know methods",
+          "next": "main-parameters-check-java"
+        },
+        {
+          "label": "No, explain methods",
+          "next": "main-functions-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-java",
+      "mentorSays": "A method is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameters-check-java"
+    },
+    {
+      "stepId": "main-parameters-check-java",
+      "mentorSays": "When we write a method, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "main-parameters-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public int countSubarrays(int[] nums, int k)', the 'nums' and 'k' are parameters - they're placeholders that will receive actual values when you call the method.",
+      "example": "public int countSubarrays(int[] nums, int k) {\n    // 'nums' and 'k' are parameters\n}\n\n// When we call it:\ncountSubarrays(new int[]{1, 2, 3, 4, 5}, 3);\n// The array goes into 'nums' and 3 goes into 'k'",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement the count subarrays solution in Java. We'll create a method that takes an array and K, then returns the count using the formula.",
+      "example": "public int countSubarrays(int[] nums, int k) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-get-length-java"
+    },
+    {
+      "stepId": "coding-get-length-java",
+      "mentorSays": "First, let's get the length of the array. We'll need this for our formula.",
+      "example": "public int countSubarrays(int[] nums, int k) {\n    int n = nums.length;\n    // Now we have the array length stored in 'n'\n}",
+      "action": "continue",
+      "next": "coding-check-length-java"
+    },
+    {
+      "stepId": "coding-check-length-java",
+      "mentorSays": "Now, let's add a check: if the array length is less than k, we can't form any subarrays of size k, so return 0. This handles the edge case where k is larger than the array.",
+      "example": "public int countSubarrays(int[] nums, int k) {\n    int n = nums.length;\n    \n    // Check if array is too small\n    if (n < k) {\n        return 0;\n    }\n}",
+      "action": "continue",
+      "next": "coding-calculate-positions-java"
+    },
+    {
+      "stepId": "coding-calculate-positions-java",
+      "mentorSays": "Now, let's think about the valid starting positions. The last valid starting position is (n - k), because starting at (n - k) gives us indices from (n-k) to (n-k+k-1) = (n-1), which is the last index.",
+      "example": "public int countSubarrays(int[] nums, int k) {\n    int n = nums.length;\n    \n    if (n < k) {\n        return 0;\n    }\n    \n    // Last valid starting position\n    int lastStart = n - k;\n    // Valid positions: 0, 1, 2, ..., lastStart\n}",
+      "action": "continue",
+      "next": "coding-count-positions-java"
+    },
+    {
+      "stepId": "coding-count-positions-java",
+      "mentorSays": "The number of valid starting positions is: (lastStart - 0 + 1) = (n - k + 1). This is our formula! Let's calculate it.",
+      "example": "public int countSubarrays(int[] nums, int k) {\n    int n = nums.length;\n    \n    if (n < k) {\n        return 0;\n    }\n    \n    // Number of valid starting positions\n    int count = n - k + 1;\n}",
+      "action": "continue",
+      "next": "coding-return-java"
+    },
+    {
+      "stepId": "coding-return-java",
+      "mentorSays": "Finally, return the count. This gives us the number of subarrays of size k.",
+      "example": "public int countSubarrays(int[] nums, int k) {\n    int n = nums.length;\n    \n    if (n < k) {\n        return 0;\n    }\n    \n    // Formula: number of starting positions\n    return n - k + 1;\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 2, 3, 4, 5]\nk = 3\n\nExpected output: 3\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 2, 3, 4, 5]\nk = 3\n\nExpected output: 3\n\nSubarrays of size 3:\n- [1, 2, 3] (starting at index 0)\n- [2, 3, 4] (starting at index 1)\n- [3, 4, 5] (starting at index 2)",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "main-functions-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "main-variables-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'nums' or 'k') and put data inside it.\n\nFor example, in C++, you can create a variable that stores a vector. Later, you can use that variable name to refer to the vector.",
+      "example": "vector<int> nums = {1, 2, 3, 4, 5};\nint k = 3;\n\nNow the variables refer to the vector and the number\nWe can use these variable names to access them",
+      "action": "continue",
+      "next": "main-functions-check-cpp"
+    },
+    {
+      "stepId": "main-functions-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "main-parameters-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "main-functions-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameters-check-cpp"
+    },
+    {
+      "stepId": "main-parameters-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "main-parameters-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'int countSubarrays(vector<int>& nums, int k)', the 'nums' and 'k' are parameters - they're placeholders that will receive actual values when you call the function.",
+      "example": "int countSubarrays(vector<int>& nums, int k) {\n    // 'nums' and 'k' are parameters\n}\n\n// When we call it:\nvector<int> arr = {1, 2, 3, 4, 5};\ncountSubarrays(arr, 3);\n// The vector goes into 'nums' and 3 goes into 'k'",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement the count subarrays solution in C++. We'll create a function that takes a vector and K, then returns the count using the formula.",
+      "example": "int countSubarrays(vector<int>& nums, int k) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-get-length-cpp"
+    },
+    {
+      "stepId": "coding-get-length-cpp",
+      "mentorSays": "First, let's get the size of the vector. We'll need this for our formula.",
+      "example": "int countSubarrays(vector<int>& nums, int k) {\n    int n = nums.size();\n    // Now we have the vector size stored in 'n'\n}",
+      "action": "continue",
+      "next": "coding-check-length-cpp"
+    },
+    {
+      "stepId": "coding-check-length-cpp",
+      "mentorSays": "Now, let's add a check: if the vector size is less than k, we can't form any subarrays of size k, so return 0. This handles the edge case where k is larger than the vector.",
+      "example": "int countSubarrays(vector<int>& nums, int k) {\n    int n = nums.size();\n    \n    // Check if vector is too small\n    if (n < k) {\n        return 0;\n    }\n}",
+      "action": "continue",
+      "next": "coding-calculate-positions-cpp"
+    },
+    {
+      "stepId": "coding-calculate-positions-cpp",
+      "mentorSays": "Now, let's think about the valid starting positions. The last valid starting position is (n - k), because starting at (n - k) gives us indices from (n-k) to (n-k+k-1) = (n-1), which is the last index.",
+      "example": "int countSubarrays(vector<int>& nums, int k) {\n    int n = nums.size();\n    \n    if (n < k) {\n        return 0;\n    }\n    \n    // Last valid starting position\n    int lastStart = n - k;\n    // Valid positions: 0, 1, 2, ..., lastStart\n}",
+      "action": "continue",
+      "next": "coding-count-positions-cpp"
+    },
+    {
+      "stepId": "coding-count-positions-cpp",
+      "mentorSays": "The number of valid starting positions is: (lastStart - 0 + 1) = (n - k + 1). This is our formula! Let's calculate it.",
+      "example": "int countSubarrays(vector<int>& nums, int k) {\n    int n = nums.size();\n    \n    if (n < k) {\n        return 0;\n    }\n    \n    // Number of valid starting positions\n    int count = n - k + 1;\n}",
+      "action": "continue",
+      "next": "coding-return-cpp"
+    },
+    {
+      "stepId": "coding-return-cpp",
+      "mentorSays": "Finally, return the count. This gives us the number of subarrays of size k.",
+      "example": "int countSubarrays(vector<int>& nums, int k) {\n    int n = nums.size();\n    \n    if (n < k) {\n        return 0;\n    }\n    \n    // Formula: number of starting positions\n    return n - k + 1;\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 2, 3, 4, 5]\nk = 3\n\nExpected output: 3\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 2, 3, 4, 5]\nk = 3\n\nExpected output: 3\n\nSubarrays of size 3:\n- [1, 2, 3] (starting at index 0)\n- [2, 3, 4] (starting at index 1)\n- [3, 4, 5] (starting at index 2)",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "main-variables-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "main-functions-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "main-variables-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-variables-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'nums' or 'k') and put data inside it.\n\nFor example, in TypeScript, you can create a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "const nums: number[] = [1, 2, 3, 4, 5];\nconst k: number = 3;\n\nNow the variables refer to the array and the number\nWe can use these variable names to access them",
+      "action": "continue",
+      "next": "main-functions-check-ts"
+    },
+    {
+      "stepId": "main-functions-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "main-parameters-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "main-functions-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-functions-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a: number, b: number): number {\n    return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "main-parameters-check-ts"
+    },
+    {
+      "stepId": "main-parameters-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "main-parameters-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "main-parameters-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function countSubarrays(nums: number[], k: number)', the 'nums' and 'k' are parameters - they're placeholders that will receive actual values when you call the function.",
+      "example": "function countSubarrays(nums: number[], k: number): number {\n    // 'nums' and 'k' are parameters\n}\n\n// When we call it:\ncountSubarrays([1, 2, 3, 4, 5], 3);\n// The array goes into 'nums' and 3 goes into 'k'",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement the count subarrays solution in TypeScript. We'll create a function that takes an array and K, then returns the count using the formula.",
+      "example": "function countSubarrays(nums: number[], k: number): number {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-get-length-ts"
+    },
+    {
+      "stepId": "coding-get-length-ts",
+      "mentorSays": "First, let's get the length of the array. We'll need this for our formula.",
+      "example": "function countSubarrays(nums: number[], k: number): number {\n    const n: number = nums.length;\n    // Now we have the array length stored in 'n'\n}",
+      "action": "continue",
+      "next": "coding-check-length-ts"
+    },
+    {
+      "stepId": "coding-check-length-ts",
+      "mentorSays": "Now, let's add a check: if the array length is less than k, we can't form any subarrays of size k, so return 0. This handles the edge case where k is larger than the array.",
+      "example": "function countSubarrays(nums: number[], k: number): number {\n    const n: number = nums.length;\n    \n    // Check if array is too small\n    if (n < k) {\n        return 0;\n    }\n}",
+      "action": "continue",
+      "next": "coding-calculate-positions-ts"
+    },
+    {
+      "stepId": "coding-calculate-positions-ts",
+      "mentorSays": "Now, let's think about the valid starting positions. The last valid starting position is (n - k), because starting at (n - k) gives us indices from (n-k) to (n-k+k-1) = (n-1), which is the last index.",
+      "example": "function countSubarrays(nums: number[], k: number): number {\n    const n: number = nums.length;\n    \n    if (n < k) {\n        return 0;\n    }\n    \n    // Last valid starting position\n    const lastStart: number = n - k;\n    // Valid positions: 0, 1, 2, ..., lastStart\n}",
+      "action": "continue",
+      "next": "coding-count-positions-ts"
+    },
+    {
+      "stepId": "coding-count-positions-ts",
+      "mentorSays": "The number of valid starting positions is: (lastStart - 0 + 1) = (n - k + 1). This is our formula! Let's calculate it.",
+      "example": "function countSubarrays(nums: number[], k: number): number {\n    const n: number = nums.length;\n    \n    if (n < k) {\n        return 0;\n    }\n    \n    // Number of valid starting positions\n    const count: number = n - k + 1;\n}",
+      "action": "continue",
+      "next": "coding-return-ts"
+    },
+    {
+      "stepId": "coding-return-ts",
+      "mentorSays": "Finally, return the count. This gives us the number of subarrays of size k.",
+      "example": "function countSubarrays(nums: number[], k: number): number {\n    const n: number = nums.length;\n    \n    if (n < k) {\n        return 0;\n    }\n    \n    // Formula: number of starting positions\n    return n - k + 1;\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [1, 2, 3, 4, 5]\nk = 3\n\nExpected output: 3\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [1, 2, 3, 4, 5]\nk = 3\n\nExpected output: 3\n\nSubarrays of size 3:\n- [1, 2, 3] (starting at index 0)\n- [2, 3, 4] (starting at index 1)\n- [3, 4, 5] (starting at index 2)",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've learned how to count subarrays of size K. You understand the key insight: the simple formula n - K + 1 gives us the number of possible starting positions.\n\nThis is a fundamental concept that appears in many sliding window problems! Keep practicing!",
+      "action": "continue"
+    }
+  ]
+}

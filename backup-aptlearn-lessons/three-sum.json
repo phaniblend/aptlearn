@@ -1,0 +1,846 @@
+{
+  "id": "three-sum",
+  "title": "Three Sum (basic idea)",
+  "pattern": "two-pointers",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Three Sum problem asks for\n2. Use sorting and two pointers to find triplets\n3. Handle duplicate triplets correctly\n4. Implement the solution step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what the Three Sum problem is asking.\n\nImagine you have an array of numbers: [-1, 0, 1, 2, -1, -4]\n\nYour task: Find all unique triplets (sets of 3 numbers) that add up to 0.\n\nLooking at the array:\n- [-1, 0, 1] adds to 0 ✓\n- [-1, -1, 2] adds to 0 ✓\n\nThese are our answers. Notice we want unique triplets - we don't count [-1, 0, 1] and [1, 0, -1] as different since they use the same numbers (just in different order).\n\nThe challenge: How do we find all such triplets efficiently without duplicates?",
+      "example": "nums = [-1, 0, 1, 2, -1, -4]\ntarget = 0\n\nFind all unique triplets that sum to 0:\n[-1, 0, 1] ✓\n[-1, -1, 2] ✓\n\nAnswer: [[-1, -1, 2], [-1, 0, 1]]\n\nNote: The order of triplets doesn't matter, and each triplet should be unique.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU try to find these triplets?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try every possible combination of three numbers",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Sort the array first, then use two pointers",
+          "next": "explore-two-pointers"
+        },
+        {
+          "label": "Use a hash map to store pairs and look for the third number",
+          "next": "explore-hashmap"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"Let me check every possible combination of three numbers and see which ones add up to 0.\"\n\nFor [-1, 0, 1, 2, -1, -4], we'd check:\n- (-1, 0, 1) → -1 + 0 + 1 = 0 ✓\n- (-1, 0, 2) → -1 + 0 + 2 = 1 (not 0)\n- (-1, 0, -1) → -1 + 0 + (-1) = -2 (not 0)\n- ... and so on for all combinations\n\nThis definitely works! However, it's slow for large arrays (O(n³) time complexity). Also, we need to be careful about duplicates.\n\nWould you like to learn a more efficient approach using sorting and two pointers?",
+      "choices": [
+        {
+          "label": "Yes, teach me the two pointers approach",
+          "next": "explore-two-pointers"
+        },
+        {
+          "label": "No, I want to code the brute force first",
+          "next": "language-selection-brute"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-hashmap",
+      "mentorSays": "Interesting idea! You're thinking: \"I can use a hash map to store pairs of numbers and their sums, then look for the third number that makes the total 0.\"\n\nThat's creative! However, handling duplicates with this approach can be tricky. Also, we'd need to store all pairs, which uses extra space.\n\nThere's a more elegant solution using sorting and two pointers that's both efficient and easier to handle duplicates. Would you like to learn that approach?",
+      "choices": [
+        {
+          "label": "Yes, teach me the two pointers approach",
+          "next": "explore-two-pointers"
+        },
+        {
+          "label": "No, I want to try the hash map approach",
+          "next": "explore-brute-force"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-two-pointers",
+      "mentorSays": "Excellent choice! The two pointers approach is both efficient and elegant. Here's the core idea:\n\n1. **Sort the array first**: This allows us to use two pointers effectively.\n   Sorted: [-4, -1, -1, 0, 1, 2]\n\n2. **Fix one number**: For each number in the array, we'll treat it as the first number of our triplet.\n\n3. **Use two pointers**: For the remaining numbers, we'll use two pointers (left and right) to find pairs that sum to the negative of our fixed number.\n\nLet's trace this with [-4, -1, -1, 0, 1, 2]:\n\n- **Fix -4** (index 0): We need two numbers that sum to 4.\n  - left = 1, right = 5 → -1 + 2 = 1 (too small, move left)\n  - left = 2, right = 5 → -1 + 2 = 1 (too small, move left)\n  - left = 3, right = 5 → 0 + 2 = 2 (too small, move left)\n  - left = 4, right = 5 → 1 + 2 = 3 (too small, move left)\n  - left = 5, right = 5 → stop (no triplet found)\n\n- **Fix -1** (index 1): We need two numbers that sum to 1.\n  - left = 2, right = 5 → -1 + 2 = 1 ✓ Found! [-1, -1, 2]\n  - Skip duplicates: left moves to 3, right = 4\n  - left = 3, right = 4 → 0 + 1 = 1 ✓ Found! [-1, 0, 1]\n\nThis is much more efficient! Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this two pointers solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'let numbers = [3, 7, 2, 9, 5];' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "let numbers = [3, 7, 2, 9, 5];\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the three sum solution in JavaScript. We'll create a function that takes an array and returns all unique triplets that sum to 0.",
+      "example": "function threeSum(nums) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-sort-js"
+    },
+    {
+      "stepId": "coding-sort-js",
+      "mentorSays": "First, we need to sort the array. This is crucial because it allows us to use two pointers effectively and helps us skip duplicates easily.",
+      "example": "function threeSum(nums) {\n  // Sort the array first\n  nums.sort((a, b) => a - b);\n  // Now nums is sorted: [-4, -1, -1, 0, 1, 2]\n}",
+      "action": "continue",
+      "next": "coding-result-array-js"
+    },
+    {
+      "stepId": "coding-result-array-js",
+      "mentorSays": "Now, let's create an array to store our results (the triplets we find).",
+      "example": "function threeSum(nums) {\n  nums.sort((a, b) => a - b);\n  const result = [];\n  // result will store all unique triplets\n}",
+      "action": "continue",
+      "next": "coding-outer-loop-js"
+    },
+    {
+      "stepId": "coding-outer-loop-js",
+      "mentorSays": "Now we'll loop through the array. For each number, we'll treat it as the first number of our triplet. We'll skip duplicates to avoid finding the same triplet multiple times.",
+      "example": "function threeSum(nums) {\n  nums.sort((a, b) => a - b);\n  const result = [];\n  \n  // Loop through array, fixing each number as first element\n  for (let i = 0; i < nums.length - 2; i++) {\n    // Skip duplicates for the first number\n    if (i > 0 && nums[i] === nums[i - 1]) continue;\n    // nums[i] is our fixed first number\n  }\n}",
+      "action": "continue",
+      "next": "coding-two-pointers-js"
+    },
+    {
+      "stepId": "coding-two-pointers-js",
+      "mentorSays": "For each fixed number, we'll use two pointers (left and right) to find pairs in the remaining array that sum to the negative of our fixed number.\n\nIf nums[i] is our fixed number, we need two numbers that sum to -nums[i].",
+      "example": "function threeSum(nums) {\n  nums.sort((a, b) => a - b);\n  const result = [];\n  \n  for (let i = 0; i < nums.length - 2; i++) {\n    if (i > 0 && nums[i] === nums[i - 1]) continue;\n    \n    // Two pointers: left starts after i, right starts at end\n    let left = i + 1;\n    let right = nums.length - 1;\n    // We need: nums[i] + nums[left] + nums[right] === 0\n    // Which means: nums[left] + nums[right] === -nums[i]\n  }\n}",
+      "action": "continue",
+      "next": "coding-pointer-loop-js"
+    },
+    {
+      "stepId": "coding-pointer-loop-js",
+      "mentorSays": "Now we'll move the pointers based on the sum. If the sum is too small, we move left forward. If it's too large, we move right backward. If it equals our target, we found a triplet!",
+      "example": "function threeSum(nums) {\n  nums.sort((a, b) => a - b);\n  const result = [];\n  \n  for (let i = 0; i < nums.length - 2; i++) {\n    if (i > 0 && nums[i] === nums[i - 1]) continue;\n    \n    let left = i + 1;\n    let right = nums.length - 1;\n    \n    while (left < right) {\n      const sum = nums[i] + nums[left] + nums[right];\n      \n      if (sum === 0) {\n        // Found a triplet!\n        result.push([nums[i], nums[left], nums[right]]);\n        // Skip duplicates\n        while (left < right && nums[left] === nums[left + 1]) left++;\n        while (left < right && nums[right] === nums[right - 1]) right--;\n        left++;\n        right--;\n      } else if (sum < 0) {\n        // Sum is too small, move left forward\n        left++;\n      } else {\n        // Sum is too large, move right backward\n        right--;\n      }\n    }\n  }\n  \n  return result;\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [-1, 0, 1, 2, -1, -4]\n\nAfter sorting: [-4, -1, -1, 0, 1, 2]\n\nExpected output: [[-1, -1, 2], [-1, 0, 1]]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [-1, 0, 1, 2, -1, -4]\n\nExpected output: [[-1, -1, 2], [-1, 0, 1]]\n\nBecause:\n- -1 + (-1) + 2 = 0 ✓\n- -1 + 0 + 1 = 0 ✓",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-python"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'numbers = [3, 7, 2, 9, 5]' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "numbers = [3, 7, 2, 9, 5]\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-python"
+    },
+    {
+      "stepId": "function-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-python"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-python"
+    },
+    {
+      "stepId": "parameter-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-python"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def find_max(arr):', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'find_max([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "def find_max(arr):\n  # 'arr' is a parameter\n  # It will receive an array when we call the function\n\n# When we call it:\nfind_max([3, 7, 2, 9, 5])\n# The array [3, 7, 2, 9, 5] goes into 'arr'\n# Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-python"
+    },
+    {
+      "stepId": "loop-check-python",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Python?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-python"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-python",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in Python runs code for each item in a sequence.\n\nFor example, 'for i in range(3)' means: run the code 3 times, with i being 0, then 1, then 2.",
+      "example": "for i in range(3):\n    print(i)\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement the three sum solution in Python. We'll create a function that takes an array and returns all unique triplets that sum to 0.",
+      "example": "def three_sum(nums):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-sort-python"
+    },
+    {
+      "stepId": "coding-sort-python",
+      "mentorSays": "First, we need to sort the array. This is crucial because it allows us to use two pointers effectively and helps us skip duplicates easily.",
+      "example": "def three_sum(nums):\n    # Sort the array first\n    nums.sort()\n    # Now nums is sorted: [-4, -1, -1, 0, 1, 2]",
+      "action": "continue",
+      "next": "coding-result-array-python"
+    },
+    {
+      "stepId": "coding-result-array-python",
+      "mentorSays": "Now, let's create a list to store our results (the triplets we find).",
+      "example": "def three_sum(nums):\n    nums.sort()\n    result = []\n    # result will store all unique triplets",
+      "action": "continue",
+      "next": "coding-outer-loop-python"
+    },
+    {
+      "stepId": "coding-outer-loop-python",
+      "mentorSays": "Now we'll loop through the array. For each number, we'll treat it as the first number of our triplet. We'll skip duplicates to avoid finding the same triplet multiple times.",
+      "example": "def three_sum(nums):\n    nums.sort()\n    result = []\n    \n    # Loop through array, fixing each number as first element\n    for i in range(len(nums) - 2):\n        # Skip duplicates for the first number\n        if i > 0 and nums[i] == nums[i - 1]:\n            continue\n        # nums[i] is our fixed first number",
+      "action": "continue",
+      "next": "coding-two-pointers-python"
+    },
+    {
+      "stepId": "coding-two-pointers-python",
+      "mentorSays": "For each fixed number, we'll use two pointers (left and right) to find pairs in the remaining array that sum to the negative of our fixed number.\n\nIf nums[i] is our fixed number, we need two numbers that sum to -nums[i].",
+      "example": "def three_sum(nums):\n    nums.sort()\n    result = []\n    \n    for i in range(len(nums) - 2):\n        if i > 0 and nums[i] == nums[i - 1]:\n            continue\n        \n        # Two pointers: left starts after i, right starts at end\n        left = i + 1\n        right = len(nums) - 1\n        # We need: nums[i] + nums[left] + nums[right] == 0\n        # Which means: nums[left] + nums[right] == -nums[i]",
+      "action": "continue",
+      "next": "coding-pointer-loop-python"
+    },
+    {
+      "stepId": "coding-pointer-loop-python",
+      "mentorSays": "Now we'll move the pointers based on the sum. If the sum is too small, we move left forward. If it's too large, we move right backward. If it equals our target, we found a triplet!",
+      "example": "def three_sum(nums):\n    nums.sort()\n    result = []\n    \n    for i in range(len(nums) - 2):\n        if i > 0 and nums[i] == nums[i - 1]:\n            continue\n        \n        left = i + 1\n        right = len(nums) - 1\n        \n        while left < right:\n            sum_val = nums[i] + nums[left] + nums[right]\n            \n            if sum_val == 0:\n                # Found a triplet!\n                result.append([nums[i], nums[left], nums[right]])\n                # Skip duplicates\n                while left < right and nums[left] == nums[left + 1]:\n                    left += 1\n                while left < right and nums[right] == nums[right - 1]:\n                    right -= 1\n                left += 1\n                right -= 1\n            elif sum_val < 0:\n                # Sum is too small, move left forward\n                left += 1\n            else:\n                # Sum is too large, move right backward\n                right -= 1\n    \n    return result",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [-1, 0, 1, 2, -1, -4]\n\nAfter sorting: [-4, -1, -1, 0, 1, 2]\n\nExpected output: [[-1, -1, 2], [-1, 0, 1]]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [-1, 0, 1, 2, -1, -4]\n\nExpected output: [[-1, -1, 2], [-1, 0, 1]]\n\nBecause:\n- -1 + (-1) + 2 = 0 ✓\n- -1 + 0 + 1 = 0 ✓",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-java"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'int[] numbers = {3, 7, 2, 9, 5};' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "int[] numbers = {3, 7, 2, 9, 5};\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-java"
+    },
+    {
+      "stepId": "function-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know methods",
+          "next": "parameter-check-java"
+        },
+        {
+          "label": "No, explain methods",
+          "next": "function-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-java",
+      "mentorSays": "A method (Java's version of a function) is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the method does the work, and gives you a result (return value).",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-java"
+    },
+    {
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a method, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-java"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public int findMax(int[] arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the method.\n\nWhen you call 'findMax(new int[]{3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the method and stored in the 'arr' parameter. Inside the method, you can use 'arr' to refer to that array.",
+      "example": "public int findMax(int[] arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the method\n}\n\n// When we call it:\nfindMax(new int[]{3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the method, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-java"
+    },
+    {
+      "stepId": "loop-check-java",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in Java?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-java"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-java"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-java",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (int i = 0; i < 3; i++) {\n    System.out.println(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement the three sum solution in Java. We'll create a method that takes an array and returns all unique triplets that sum to 0.",
+      "example": "import java.util.*;\n\npublic List<List<Integer>> threeSum(int[] nums) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-sort-java"
+    },
+    {
+      "stepId": "coding-sort-java",
+      "mentorSays": "First, we need to sort the array. This is crucial because it allows us to use two pointers effectively and helps us skip duplicates easily.",
+      "example": "import java.util.*;\n\npublic List<List<Integer>> threeSum(int[] nums) {\n    // Sort the array first\n    Arrays.sort(nums);\n    // Now nums is sorted: [-4, -1, -1, 0, 1, 2]\n}",
+      "action": "continue",
+      "next": "coding-result-array-java"
+    },
+    {
+      "stepId": "coding-result-array-java",
+      "mentorSays": "Now, let's create a list to store our results (the triplets we find).",
+      "example": "import java.util.*;\n\npublic List<List<Integer>> threeSum(int[] nums) {\n    Arrays.sort(nums);\n    List<List<Integer>> result = new ArrayList<>();\n    // result will store all unique triplets\n}",
+      "action": "continue",
+      "next": "coding-outer-loop-java"
+    },
+    {
+      "stepId": "coding-outer-loop-java",
+      "mentorSays": "Now we'll loop through the array. For each number, we'll treat it as the first number of our triplet. We'll skip duplicates to avoid finding the same triplet multiple times.",
+      "example": "import java.util.*;\n\npublic List<List<Integer>> threeSum(int[] nums) {\n    Arrays.sort(nums);\n    List<List<Integer>> result = new ArrayList<>();\n    \n    // Loop through array, fixing each number as first element\n    for (int i = 0; i < nums.length - 2; i++) {\n        // Skip duplicates for the first number\n        if (i > 0 && nums[i] == nums[i - 1]) continue;\n        // nums[i] is our fixed first number\n    }\n}",
+      "action": "continue",
+      "next": "coding-two-pointers-java"
+    },
+    {
+      "stepId": "coding-two-pointers-java",
+      "mentorSays": "For each fixed number, we'll use two pointers (left and right) to find pairs in the remaining array that sum to the negative of our fixed number.\n\nIf nums[i] is our fixed number, we need two numbers that sum to -nums[i].",
+      "example": "import java.util.*;\n\npublic List<List<Integer>> threeSum(int[] nums) {\n    Arrays.sort(nums);\n    List<List<Integer>> result = new ArrayList<>();\n    \n    for (int i = 0; i < nums.length - 2; i++) {\n        if (i > 0 && nums[i] == nums[i - 1]) continue;\n        \n        // Two pointers: left starts after i, right starts at end\n        int left = i + 1;\n        int right = nums.length - 1;\n        // We need: nums[i] + nums[left] + nums[right] == 0\n        // Which means: nums[left] + nums[right] == -nums[i]\n    }\n}",
+      "action": "continue",
+      "next": "coding-pointer-loop-java"
+    },
+    {
+      "stepId": "coding-pointer-loop-java",
+      "mentorSays": "Now we'll move the pointers based on the sum. If the sum is too small, we move left forward. If it's too large, we move right backward. If it equals our target, we found a triplet!",
+      "example": "import java.util.*;\n\npublic List<List<Integer>> threeSum(int[] nums) {\n    Arrays.sort(nums);\n    List<List<Integer>> result = new ArrayList<>();\n    \n    for (int i = 0; i < nums.length - 2; i++) {\n        if (i > 0 && nums[i] == nums[i - 1]) continue;\n        \n        int left = i + 1;\n        int right = nums.length - 1;\n        \n        while (left < right) {\n            int sum = nums[i] + nums[left] + nums[right];\n            \n            if (sum == 0) {\n                // Found a triplet!\n                result.add(Arrays.asList(nums[i], nums[left], nums[right]));\n                // Skip duplicates\n                while (left < right && nums[left] == nums[left + 1]) left++;\n                while (left < right && nums[right] == nums[right - 1]) right--;\n                left++;\n                right--;\n            } else if (sum < 0) {\n                // Sum is too small, move left forward\n                left++;\n            } else {\n                // Sum is too large, move right backward\n                right--;\n            }\n        }\n    }\n    \n    return result;\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [-1, 0, 1, 2, -1, -4]\n\nAfter sorting: [-4, -1, -1, 0, 1, 2]\n\nExpected output: [[-1, -1, 2], [-1, 0, 1]]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [-1, 0, 1, 2, -1, -4]\n\nExpected output: [[-1, -1, 2], [-1, 0, 1]]\n\nBecause:\n- -1 + (-1) + 2 = 0 ✓\n- -1 + 0 + 1 = 0 ✓",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-cpp"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'vector<int> numbers = {3, 7, 2, 9, 5};' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "vector<int> numbers = {3, 7, 2, 9, 5};\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-cpp"
+    },
+    {
+      "stepId": "function-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-cpp"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-cpp"
+    },
+    {
+      "stepId": "parameter-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-cpp"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'int findMax(vector<int>& arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax({3, 7, 2, 9, 5})', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "int findMax(vector<int>& arr) {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax({3, 7, 2, 9, 5});\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "loop-check-cpp",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in C++?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-cpp"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-cpp",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (int i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (int i = 0; i < 3; i++) {\n    cout << i << endl;\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement the three sum solution in C++. We'll create a function that takes an array and returns all unique triplets that sum to 0.",
+      "example": "#include <vector>\n#include <algorithm>\n\nvector<vector<int>> threeSum(vector<int>& nums) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-sort-cpp"
+    },
+    {
+      "stepId": "coding-sort-cpp",
+      "mentorSays": "First, we need to sort the array. This is crucial because it allows us to use two pointers effectively and helps us skip duplicates easily.",
+      "example": "#include <vector>\n#include <algorithm>\n\nvector<vector<int>> threeSum(vector<int>& nums) {\n    // Sort the array first\n    sort(nums.begin(), nums.end());\n    // Now nums is sorted: [-4, -1, -1, 0, 1, 2]\n}",
+      "action": "continue",
+      "next": "coding-result-array-cpp"
+    },
+    {
+      "stepId": "coding-result-array-cpp",
+      "mentorSays": "Now, let's create a vector to store our results (the triplets we find).",
+      "example": "#include <vector>\n#include <algorithm>\n\nvector<vector<int>> threeSum(vector<int>& nums) {\n    sort(nums.begin(), nums.end());\n    vector<vector<int>> result;\n    // result will store all unique triplets\n}",
+      "action": "continue",
+      "next": "coding-outer-loop-cpp"
+    },
+    {
+      "stepId": "coding-outer-loop-cpp",
+      "mentorSays": "Now we'll loop through the array. For each number, we'll treat it as the first number of our triplet. We'll skip duplicates to avoid finding the same triplet multiple times.",
+      "example": "#include <vector>\n#include <algorithm>\n\nvector<vector<int>> threeSum(vector<int>& nums) {\n    sort(nums.begin(), nums.end());\n    vector<vector<int>> result;\n    \n    // Loop through array, fixing each number as first element\n    for (int i = 0; i < nums.size() - 2; i++) {\n        // Skip duplicates for the first number\n        if (i > 0 && nums[i] == nums[i - 1]) continue;\n        // nums[i] is our fixed first number\n    }\n}",
+      "action": "continue",
+      "next": "coding-two-pointers-cpp"
+    },
+    {
+      "stepId": "coding-two-pointers-cpp",
+      "mentorSays": "For each fixed number, we'll use two pointers (left and right) to find pairs in the remaining array that sum to the negative of our fixed number.\n\nIf nums[i] is our fixed number, we need two numbers that sum to -nums[i].",
+      "example": "#include <vector>\n#include <algorithm>\n\nvector<vector<int>> threeSum(vector<int>& nums) {\n    sort(nums.begin(), nums.end());\n    vector<vector<int>> result;\n    \n    for (int i = 0; i < nums.size() - 2; i++) {\n        if (i > 0 && nums[i] == nums[i - 1]) continue;\n        \n        // Two pointers: left starts after i, right starts at end\n        int left = i + 1;\n        int right = nums.size() - 1;\n        // We need: nums[i] + nums[left] + nums[right] == 0\n        // Which means: nums[left] + nums[right] == -nums[i]\n    }\n}",
+      "action": "continue",
+      "next": "coding-pointer-loop-cpp"
+    },
+    {
+      "stepId": "coding-pointer-loop-cpp",
+      "mentorSays": "Now we'll move the pointers based on the sum. If the sum is too small, we move left forward. If it's too large, we move right backward. If it equals our target, we found a triplet!",
+      "example": "#include <vector>\n#include <algorithm>\n\nvector<vector<int>> threeSum(vector<int>& nums) {\n    sort(nums.begin(), nums.end());\n    vector<vector<int>> result;\n    \n    for (int i = 0; i < nums.size() - 2; i++) {\n        if (i > 0 && nums[i] == nums[i - 1]) continue;\n        \n        int left = i + 1;\n        int right = nums.size() - 1;\n        \n        while (left < right) {\n            int sum = nums[i] + nums[left] + nums[right];\n            \n            if (sum == 0) {\n                // Found a triplet!\n                result.push_back({nums[i], nums[left], nums[right]});\n                // Skip duplicates\n                while (left < right && nums[left] == nums[left + 1]) left++;\n                while (left < right && nums[right] == nums[right - 1]) right--;\n                left++;\n                right--;\n            } else if (sum < 0) {\n                // Sum is too small, move left forward\n                left++;\n            } else {\n                // Sum is too large, move right backward\n                right--;\n            }\n        }\n    }\n    \n    return result;\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [-1, 0, 1, 2, -1, -4]\n\nAfter sorting: [-4, -1, -1, 0, 1, 2]\n\nExpected output: [[-1, -1, 2], [-1, 0, 1]]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [-1, 0, 1, 2, -1, -4]\n\nExpected output: [[-1, -1, 2], [-1, 0, 1]]\n\nBecause:\n- -1 + (-1) + 2 = 0 ✓\n- -1 + 0 + 1 = 0 ✓",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-ts"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'numbers') and put data inside it.\n\nFor example, 'let numbers: number[] = [3, 7, 2, 9, 5];' creates a variable that stores an array. Later, you can use that variable name to refer to the array.",
+      "example": "let numbers: number[] = [3, 7, 2, 9, 5];\n\nNow the variable refers to the array\nWe can use the variable name to access this array",
+      "action": "continue",
+      "next": "function-check-ts"
+    },
+    {
+      "stepId": "function-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-ts"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a: number, b: number): number {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "parameter-check-ts"
+    },
+    {
+      "stepId": "parameter-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-ts"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function findMax(arr: number[]): number', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.\n\nWhen you call 'findMax([3, 7, 2, 9, 5])', the array [3, 7, 2, 9, 5] gets passed into the function and stored in the 'arr' parameter. Inside the function, you can use 'arr' to refer to that array.",
+      "example": "function findMax(arr: number[]): number {\n  // 'arr' is a parameter\n  // It will receive an array when we call the function\n}\n\n// When we call it:\nfindMax([3, 7, 2, 9, 5]);\n// The array [3, 7, 2, 9, 5] goes into 'arr'\n// Inside the function, 'arr' refers to [3, 7, 2, 9, 5]",
+      "action": "continue",
+      "next": "loop-check-ts"
+    },
+    {
+      "stepId": "loop-check-ts",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I know loops",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, explain loops",
+          "next": "loop-explanation-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-ts",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < 3; i++)' means: start at 0, keep going while i is less than 3, and add 1 to i each time. So it runs 3 times: when i is 0, 1, and 2.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement the three sum solution in TypeScript. We'll create a function that takes an array and returns all unique triplets that sum to 0.",
+      "example": "function threeSum(nums: number[]): number[][] {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-sort-ts"
+    },
+    {
+      "stepId": "coding-sort-ts",
+      "mentorSays": "First, we need to sort the array. This is crucial because it allows us to use two pointers effectively and helps us skip duplicates easily.",
+      "example": "function threeSum(nums: number[]): number[][] {\n  // Sort the array first\n  nums.sort((a, b) => a - b);\n  // Now nums is sorted: [-4, -1, -1, 0, 1, 2]\n}",
+      "action": "continue",
+      "next": "coding-result-array-ts"
+    },
+    {
+      "stepId": "coding-result-array-ts",
+      "mentorSays": "Now, let's create an array to store our results (the triplets we find).",
+      "example": "function threeSum(nums: number[]): number[][] {\n  nums.sort((a, b) => a - b);\n  const result: number[][] = [];\n  // result will store all unique triplets\n}",
+      "action": "continue",
+      "next": "coding-outer-loop-ts"
+    },
+    {
+      "stepId": "coding-outer-loop-ts",
+      "mentorSays": "Now we'll loop through the array. For each number, we'll treat it as the first number of our triplet. We'll skip duplicates to avoid finding the same triplet multiple times.",
+      "example": "function threeSum(nums: number[]): number[][] {\n  nums.sort((a, b) => a - b);\n  const result: number[][] = [];\n  \n  // Loop through array, fixing each number as first element\n  for (let i = 0; i < nums.length - 2; i++) {\n    // Skip duplicates for the first number\n    if (i > 0 && nums[i] === nums[i - 1]) continue;\n    // nums[i] is our fixed first number\n  }\n}",
+      "action": "continue",
+      "next": "coding-two-pointers-ts"
+    },
+    {
+      "stepId": "coding-two-pointers-ts",
+      "mentorSays": "For each fixed number, we'll use two pointers (left and right) to find pairs in the remaining array that sum to the negative of our fixed number.\n\nIf nums[i] is our fixed number, we need two numbers that sum to -nums[i].",
+      "example": "function threeSum(nums: number[]): number[][] {\n  nums.sort((a, b) => a - b);\n  const result: number[][] = [];\n  \n  for (let i = 0; i < nums.length - 2; i++) {\n    if (i > 0 && nums[i] === nums[i - 1]) continue;\n    \n    // Two pointers: left starts after i, right starts at end\n    let left = i + 1;\n    let right = nums.length - 1;\n    // We need: nums[i] + nums[left] + nums[right] === 0\n    // Which means: nums[left] + nums[right] === -nums[i]\n  }\n}",
+      "action": "continue",
+      "next": "coding-pointer-loop-ts"
+    },
+    {
+      "stepId": "coding-pointer-loop-ts",
+      "mentorSays": "Now we'll move the pointers based on the sum. If the sum is too small, we move left forward. If it's too large, we move right backward. If it equals our target, we found a triplet!",
+      "example": "function threeSum(nums: number[]): number[][] {\n  nums.sort((a, b) => a - b);\n  const result: number[][] = [];\n  \n  for (let i = 0; i < nums.length - 2; i++) {\n    if (i > 0 && nums[i] === nums[i - 1]) continue;\n    \n    let left = i + 1;\n    let right = nums.length - 1;\n    \n    while (left < right) {\n      const sum = nums[i] + nums[left] + nums[right];\n      \n      if (sum === 0) {\n        // Found a triplet!\n        result.push([nums[i], nums[left], nums[right]]);\n        // Skip duplicates\n        while (left < right && nums[left] === nums[left + 1]) left++;\n        while (left < right && nums[right] === nums[right - 1]) right--;\n        left++;\n        right--;\n      } else if (sum < 0) {\n        // Sum is too small, move left forward\n        left++;\n      } else {\n        // Sum is too large, move right backward\n        right--;\n      }\n    }\n  }\n  \n  return result;\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\nnums = [-1, 0, 1, 2, -1, -4]\n\nAfter sorting: [-4, -1, -1, 0, 1, 2]\n\nExpected output: [[-1, -1, 2], [-1, 0, 1]]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\nnums = [-1, 0, 1, 2, -1, -4]\n\nExpected output: [[-1, -1, 2], [-1, 0, 1]]\n\nBecause:\n- -1 + (-1) + 2 = 0 ✓\n- -1 + 0 + 1 = 0 ✓",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "language-selection-brute",
+      "mentorSays": "Great! Let's code the brute force solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "coding-brute-force-js"
+        },
+        {
+          "label": "Python",
+          "next": "coding-brute-force-python"
+        },
+        {
+          "label": "Java",
+          "next": "coding-brute-force-java"
+        },
+        {
+          "label": "C++",
+          "next": "coding-brute-force-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "coding-brute-force-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "coding-brute-force-js",
+      "mentorSays": "The brute force approach uses three nested loops to check every combination. This works but is slower (O(n³)). We also need to handle duplicates by using a Set to store unique triplets.",
+      "example": "function threeSum(nums) {\n  const result = [];\n  const seen = new Set();\n  \n  for (let i = 0; i < nums.length - 2; i++) {\n    for (let j = i + 1; j < nums.length - 1; j++) {\n      for (let k = j + 1; k < nums.length; k++) {\n        if (nums[i] + nums[j] + nums[k] === 0) {\n          const triplet = [nums[i], nums[j], nums[k]].sort((a, b) => a - b);\n          const key = triplet.join(',');\n          if (!seen.has(key)) {\n            seen.add(key);\n            result.push(triplet);\n          }\n        }\n      }\n    }\n  }\n  \n  return result;\n}",
+      "action": "continue",
+      "next": "recommend-two-pointers"
+    },
+    {
+      "stepId": "coding-brute-force-python",
+      "mentorSays": "The brute force approach uses three nested loops to check every combination. This works but is slower (O(n³)). We also need to handle duplicates by using a set to store unique triplets.",
+      "example": "def three_sum(nums):\n    result = []\n    seen = set()\n    \n    for i in range(len(nums) - 2):\n        for j in range(i + 1, len(nums) - 1):\n            for k in range(j + 1, len(nums)):\n                if nums[i] + nums[j] + nums[k] == 0:\n                    triplet = sorted([nums[i], nums[j], nums[k]])\n                    key = tuple(triplet)\n                    if key not in seen:\n                        seen.add(key)\n                        result.append(triplet)\n    \n    return result",
+      "action": "continue",
+      "next": "recommend-two-pointers"
+    },
+    {
+      "stepId": "coding-brute-force-java",
+      "mentorSays": "The brute force approach uses three nested loops to check every combination. This works but is slower (O(n³)). We also need to handle duplicates by using a Set to store unique triplets.",
+      "example": "import java.util.*;\n\npublic List<List<Integer>> threeSum(int[] nums) {\n    List<List<Integer>> result = new ArrayList<>();\n    Set<String> seen = new HashSet<>();\n    \n    for (int i = 0; i < nums.length - 2; i++) {\n        for (int j = i + 1; j < nums.length - 1; j++) {\n            for (int k = j + 1; k < nums.length; k++) {\n                if (nums[i] + nums[j] + nums[k] == 0) {\n                    List<Integer> triplet = Arrays.asList(nums[i], nums[j], nums[k]);\n                    Collections.sort(triplet);\n                    String key = triplet.toString();\n                    if (!seen.contains(key)) {\n                        seen.add(key);\n                        result.add(triplet);\n                    }\n                }\n            }\n        }\n    }\n    \n    return result;\n}",
+      "action": "continue",
+      "next": "recommend-two-pointers"
+    },
+    {
+      "stepId": "coding-brute-force-cpp",
+      "mentorSays": "The brute force approach uses three nested loops to check every combination. This works but is slower (O(n³)). We also need to handle duplicates by using a set to store unique triplets.",
+      "example": "#include <vector>\n#include <set>\n#include <algorithm>\n#include <sstream>\n\nvector<vector<int>> threeSum(vector<int>& nums) {\n    vector<vector<int>> result;\n    set<string> seen;\n    \n    for (int i = 0; i < nums.size() - 2; i++) {\n        for (int j = i + 1; j < nums.size() - 1; j++) {\n            for (int k = j + 1; k < nums.size(); k++) {\n                if (nums[i] + nums[j] + nums[k] == 0) {\n                    vector<int> triplet = {nums[i], nums[j], nums[k]};\n                    sort(triplet.begin(), triplet.end());\n                    stringstream ss;\n                    ss << triplet[0] << ',' << triplet[1] << ',' << triplet[2];\n                    string key = ss.str();\n                    if (seen.find(key) == seen.end()) {\n                        seen.insert(key);\n                        result.push_back(triplet);\n                    }\n                }\n            }\n        }\n    }\n    \n    return result;\n}",
+      "action": "continue",
+      "next": "recommend-two-pointers"
+    },
+    {
+      "stepId": "coding-brute-force-ts",
+      "mentorSays": "The brute force approach uses three nested loops to check every combination. This works but is slower (O(n³)). We also need to handle duplicates by using a Set to store unique triplets.",
+      "example": "function threeSum(nums: number[]): number[][] {\n  const result: number[][] = [];\n  const seen = new Set<string>();\n  \n  for (let i = 0; i < nums.length - 2; i++) {\n    for (let j = i + 1; j < nums.length - 1; j++) {\n      for (let k = j + 1; k < nums.length; k++) {\n        if (nums[i] + nums[j] + nums[k] === 0) {\n          const triplet = [nums[i], nums[j], nums[k]].sort((a, b) => a - b);\n          const key = triplet.join(',');\n          if (!seen.has(key)) {\n            seen.add(key);\n            result.push(triplet);\n          }\n        }\n      }\n    }\n  }\n  \n  return result;\n}",
+      "action": "continue",
+      "next": "recommend-two-pointers"
+    },
+    {
+      "stepId": "recommend-two-pointers",
+      "mentorSays": "Great job! You've successfully implemented the brute force approach. This solution works, but there's a more efficient method using sorting and two pointers.\n\nThe two pointers method is faster (O(n²) instead of O(n³)) and handles duplicates more elegantly. Would you like to learn the two pointers approach now?",
+      "choices": [
+        {
+          "label": "Yes, teach me the two pointers approach",
+          "next": "explore-two-pointers"
+        },
+        {
+          "label": "No, I'm done for now",
+          "next": "final"
+        }
+      ]
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've learned to think through the Three Sum problem. You understand what the problem asks for, how to find triplets that sum to zero, and you've explored different approaches to solve it.\n\nThis kind of thinking—breaking down problems, considering different solutions, and handling edge cases like duplicates—is essential for solving algorithm problems. Keep practicing!",
+      "action": "continue"
+    }
+  ]
+}

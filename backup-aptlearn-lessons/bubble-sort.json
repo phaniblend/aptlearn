@@ -1,0 +1,589 @@
+{
+  "id": "bubble-sort",
+  "title": "Bubble sort",
+  "pattern": "sorting",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand how bubble sort works\n2. Compare adjacent elements and swap when needed\n3. Recognize that the largest element 'bubbles' to the end in each pass\n4. Implement bubble sort step by step in your chosen language",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Perfect! Now let's understand what Bubble Sort does.\n\nImagine you have an unsorted array: [5, 2, 8, 1, 9]\n\nYour task: Sort it in ascending order (smallest to largest).\n\nBubble sort works by repeatedly comparing adjacent elements and swapping them if they're in the wrong order. The largest element 'bubbles' to the end in each pass.\n\nLet's trace through one pass:\n\n**Pass 1** (comparing adjacent pairs):\n- Compare 5 and 2: 5 > 2, swap → [2, 5, 8, 1, 9]\n- Compare 5 and 8: 5 < 8, no swap → [2, 5, 8, 1, 9]\n- Compare 8 and 1: 8 > 1, swap → [2, 5, 1, 8, 9]\n- Compare 8 and 9: 8 < 9, no swap → [2, 5, 1, 8, 9]\n\nAfter Pass 1, the largest element (9) is at the end!\n\nWe repeat this process until the array is sorted. Each pass moves the next largest element to its correct position.",
+      "example": "nums = [5, 2, 8, 1, 9]\n\nPass 1: [2, 5, 1, 8, 9] (9 is in place)\nPass 2: [2, 1, 5, 8, 9] (8 is in place)\nPass 3: [1, 2, 5, 8, 9] (5 is in place)\nPass 4: [1, 2, 5, 8, 9] (2 is in place, already sorted)\n\nFinal: [1, 2, 5, 8, 9]",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what bubble sort does, here's the real question:\n\nHow would YOU implement bubble sort?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Use nested loops: outer loop for passes, inner loop for comparisons",
+          "next": "explore-nested-loops"
+        },
+        {
+          "label": "Use a single loop and keep swapping until no swaps are needed",
+          "next": "explore-single-loop"
+        },
+        {
+          "label": "Use recursion to sort smaller portions",
+          "next": "explore-recursion"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-single-loop",
+      "mentorSays": "That's an interesting approach! You're thinking: \"I'll keep swapping adjacent elements until no more swaps are needed.\"\n\nThis works! However, it's less efficient because we might do unnecessary comparisons. Also, we need to track whether any swaps occurred.\n\nThe standard approach uses nested loops which is clearer and more efficient. Would you like to learn that?",
+      "action": "continue",
+      "next": "explore-nested-loops"
+    },
+    {
+      "stepId": "explore-recursion",
+      "mentorSays": "Recursion is creative thinking! However, bubble sort is typically implemented iteratively (with loops) rather than recursively. The iterative approach is simpler and more intuitive for this algorithm.\n\nLet's learn the standard nested loops approach, which is the most common way to implement bubble sort.",
+      "action": "continue",
+      "next": "explore-nested-loops"
+    },
+    {
+      "stepId": "explore-nested-loops",
+      "mentorSays": "Excellent choice! The nested loops approach is the standard way to implement bubble sort. Here's the core idea:\n\n1. **Outer loop**: Runs n-1 times (where n is array length). Each iteration represents one pass.\n2. **Inner loop**: Compares adjacent elements. After each pass, the largest unsorted element moves to its correct position, so we can reduce the inner loop range.\n3. **Swap**: If the left element is greater than the right, swap them.\n\nLet's trace this with [5, 2, 8, 1, 9]:\n\n- **Pass 1** (i=0, compare indices 0 to 3):\n  - Compare [0] and [1]: 5 > 2, swap → [2, 5, 8, 1, 9]\n  - Compare [1] and [2]: 5 < 8, no swap\n  - Compare [2] and [3]: 8 > 1, swap → [2, 5, 1, 8, 9]\n  - Compare [3] and [4]: 8 < 9, no swap\n  - Result: [2, 5, 1, 8, 9] (9 is in place)\n\n- **Pass 2** (i=1, compare indices 0 to 2):\n  - Compare [0] and [1]: 2 < 5, no swap\n  - Compare [1] and [2]: 5 > 1, swap → [2, 1, 5, 8, 9]\n  - Compare [2] and [3]: 5 < 8, no swap (but we don't need to check [3] since 8 is already in place)\n  - Result: [2, 1, 5, 8, 9] (8 is in place)\n\n- **Pass 3** (i=2, compare indices 0 to 1):\n  - Compare [0] and [1]: 2 > 1, swap → [1, 2, 5, 8, 9]\n  - Result: [1, 2, 5, 8, 9] (sorted!)\n\nThis is O(n²) time complexity. Now let's code it step by step.",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code the bubble sort solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "variable-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "variable-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know variables",
+          "next": "function-check-js"
+        },
+        {
+          "label": "No, explain variables",
+          "next": "variable-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "variable-explanation-js",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'temp') and put data inside it.\n\nFor example, 'let temp = 0;' creates a variable that stores the number 0. Later, you can use that variable name to refer to it.",
+      "example": "let temp = 0;\n\nNow the variable refers to the number 0",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know functions",
+          "next": "parameter-check-js"
+        },
+        {
+          "label": "No, explain functions",
+          "next": "function-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "parameter-check-js"
+    },
+    {
+      "stepId": "parameter-check-js",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {
+          "label": "Yes, I know parameters",
+          "next": "loop-check-js"
+        },
+        {
+          "label": "No, explain parameters",
+          "next": "parameter-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-js",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function bubbleSort(arr)', the 'arr' is a parameter - it's a placeholder that will receive an actual array when you call the function.",
+      "example": "function bubbleSort(arr) {\n  // 'arr' is a parameter\n}\n\n// When we call it:\nbubbleSort([5, 2, 8, 1, 9]);\n// The array goes into 'arr'",
+      "action": "continue",
+      "next": "loop-check-js"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use nested loops. Do you know what nested loops are in JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I know nested loops",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, explain nested loops",
+          "next": "loop-explanation-js"
+        }
+      ]
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A nested loop is a loop inside another loop. The outer loop runs once, and for each iteration, the inner loop runs completely.\n\nFor example, 'for (let i = 0; i < 2; i++)' with a nested 'for (let j = 0; j < 3; j++)' means: for each i (0, 1), run j from 0 to 2.",
+      "example": "for (let i = 0; i < 2; i++) {\n  for (let j = 0; j < 3; j++) {\n    console.log(i, j);\n  }\n}\n\nThis prints: (0,0), (0,1), (0,2), (1,0), (1,1), (1,2)",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement bubble sort in JavaScript. We'll create a function that takes an array and sorts it in-place.",
+      "example": "function bubbleSort(arr) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-outer-loop-js"
+    },
+    {
+      "stepId": "coding-outer-loop-js",
+      "mentorSays": "First, let's create the outer loop. This loop runs n-1 times, where n is the array length. Each iteration represents one pass through the array.",
+      "example": "function bubbleSort(arr) {\n  const n = arr.length;\n  \n  // Outer loop: n-1 passes\n  for (let i = 0; i < n - 1; i++) {\n    // Each pass will move the largest unsorted element to its place\n  }\n}",
+      "action": "continue",
+      "next": "coding-inner-loop-js"
+    },
+    {
+      "stepId": "coding-inner-loop-js",
+      "mentorSays": "Now, let's add the inner loop. This loop compares adjacent elements. After each pass, the largest element is in place, so we can reduce the range: compare from index 0 to n-1-i (since i elements are already sorted at the end).",
+      "example": "function bubbleSort(arr) {\n  const n = arr.length;\n  \n  for (let i = 0; i < n - 1; i++) {\n    // Inner loop: compare adjacent elements\n    // After i passes, the last i elements are sorted\n    for (let j = 0; j < n - 1 - i; j++) {\n      // Compare arr[j] and arr[j+1]\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-compare-swap-js"
+    },
+    {
+      "stepId": "coding-compare-swap-js",
+      "mentorSays": "Now, let's add the comparison and swap logic. If arr[j] > arr[j+1], we swap them because we want ascending order (smaller values first).",
+      "example": "function bubbleSort(arr) {\n  const n = arr.length;\n  \n  for (let i = 0; i < n - 1; i++) {\n    for (let j = 0; j < n - 1 - i; j++) {\n      // Compare adjacent elements\n      if (arr[j] > arr[j + 1]) {\n        // Swap them\n        const temp = arr[j];\n        arr[j] = arr[j + 1];\n        arr[j + 1] = temp;\n      }\n    }\n  }\n}",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\narr = [5, 2, 8, 1, 9]\n\nAfter calling bubbleSort(arr), the array should be:\n[1, 2, 5, 8, 9]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\narr = [5, 2, 8, 1, 9]\n\nAfter bubbleSort(arr):\narr = [1, 2, 5, 8, 9]\n\nAll elements are sorted in ascending order.",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
+      "choices": [
+        {"label": "Yes, I know variables", "next": "function-check-python"},
+        {"label": "No, explain variables", "next": "variable-explanation-python"}
+      ]
+    },
+    {
+      "stepId": "variable-explanation-python",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'temp') and put data inside it.\n\nFor example, 'temp = 0' creates a variable that stores the number 0.",
+      "example": "temp = 0\n\nNow the variable refers to the number 0",
+      "action": "continue",
+      "next": "function-check-python"
+    },
+    {
+      "stepId": "function-check-python",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in Python?",
+      "choices": [
+        {"label": "Yes, I know functions", "next": "parameter-check-python"},
+        {"label": "No, explain functions", "next": "function-explanation-python"}
+      ]
+    },
+    {
+      "stepId": "function-explanation-python",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "def add(a, b):\n    return a + b\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "parameter-check-python"
+    },
+    {
+      "stepId": "parameter-check-python",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {"label": "Yes, I know parameters", "next": "loop-check-python"},
+        {"label": "No, explain parameters", "next": "parameter-explanation-python"}
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-python",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'def bubble_sort(arr):', the 'arr' is a parameter.",
+      "example": "def bubble_sort(arr):\n  # 'arr' is a parameter\n\n# When we call it:\nbubble_sort([5, 2, 8, 1, 9])\n# The list goes into 'arr'",
+      "action": "continue",
+      "next": "loop-check-python"
+    },
+    {
+      "stepId": "loop-check-python",
+      "mentorSays": "To solve this problem, we'll need to use nested loops. Do you know what nested loops are in Python?",
+      "choices": [
+        {"label": "Yes, I know nested loops", "next": "coding-start-python"},
+        {"label": "No, explain nested loops", "next": "loop-explanation-python"}
+      ]
+    },
+    {
+      "stepId": "loop-explanation-python",
+      "mentorSays": "A nested loop is a loop inside another loop. The outer loop runs once, and for each iteration, the inner loop runs completely.",
+      "example": "for i in range(2):\n    for j in range(3):\n        print(i, j)\n\nThis prints: (0,0), (0,1), (0,2), (1,0), (1,1), (1,2)",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Let's implement bubble sort in Python. We'll create a function that takes a list and sorts it in-place.",
+      "example": "def bubble_sort(arr):\n    # Your code here\n    pass",
+      "action": "continue",
+      "next": "coding-outer-loop-python"
+    },
+    {
+      "stepId": "coding-outer-loop-python",
+      "mentorSays": "First, let's create the outer loop. This loop runs n-1 times, where n is the list length.",
+      "example": "def bubble_sort(arr):\n    n = len(arr)\n    \n    # Outer loop: n-1 passes\n    for i in range(n - 1):\n        # Each pass will move the largest unsorted element to its place",
+      "action": "continue",
+      "next": "coding-inner-loop-python"
+    },
+    {
+      "stepId": "coding-inner-loop-python",
+      "mentorSays": "Now, let's add the inner loop. This loop compares adjacent elements. After each pass, we can reduce the range.",
+      "example": "def bubble_sort(arr):\n    n = len(arr)\n    \n    for i in range(n - 1):\n        # Inner loop: compare adjacent elements\n        for j in range(n - 1 - i):\n            # Compare arr[j] and arr[j+1]",
+      "action": "continue",
+      "next": "coding-compare-swap-python"
+    },
+    {
+      "stepId": "coding-compare-swap-python",
+      "mentorSays": "Now, let's add the comparison and swap logic. If arr[j] > arr[j+1], we swap them.",
+      "example": "def bubble_sort(arr):\n    n = len(arr)\n    \n    for i in range(n - 1):\n        for j in range(n - 1 - i):\n            # Compare adjacent elements\n            if arr[j] > arr[j + 1]:\n                # Swap them\n                arr[j], arr[j + 1] = arr[j + 1], arr[j]",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\narr = [5, 2, 8, 1, 9]\n\nAfter calling bubble_sort(arr), the list should be:\n[1, 2, 5, 8, 9]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\narr = [5, 2, 8, 1, 9]\n\nAfter bubble_sort(arr):\narr = [1, 2, 5, 8, 9]",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
+      "choices": [
+        {"label": "Yes, I know variables", "next": "function-check-java"},
+        {"label": "No, explain variables", "next": "variable-explanation-java"}
+      ]
+    },
+    {
+      "stepId": "variable-explanation-java",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'temp') and put data inside it.\n\nFor example, 'int temp = 0;' creates a variable that stores the number 0.",
+      "example": "int temp = 0;\n\nNow the variable refers to the number 0",
+      "action": "continue",
+      "next": "function-check-java"
+    },
+    {
+      "stepId": "function-check-java",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a method is in Java?",
+      "choices": [
+        {"label": "Yes, I know methods", "next": "parameter-check-java"},
+        {"label": "No, explain methods", "next": "function-explanation-java"}
+      ]
+    },
+    {
+      "stepId": "function-explanation-java",
+      "mentorSays": "A method (Java's version of a function) is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "public int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "parameter-check-java"
+    },
+    {
+      "stepId": "parameter-check-java",
+      "mentorSays": "When we write a method, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {"label": "Yes, I know parameters", "next": "loop-check-java"},
+        {"label": "No, explain parameters", "next": "parameter-explanation-java"}
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-java",
+      "mentorSays": "Parameters are like variables that receive values when you call the method. When you write 'public void bubbleSort(int[] arr)', the 'arr' is a parameter.",
+      "example": "public void bubbleSort(int[] arr) {\n  // 'arr' is a parameter\n}",
+      "action": "continue",
+      "next": "loop-check-java"
+    },
+    {
+      "stepId": "loop-check-java",
+      "mentorSays": "To solve this problem, we'll need to use nested loops. Do you know what nested loops are in Java?",
+      "choices": [
+        {"label": "Yes, I know nested loops", "next": "coding-start-java"},
+        {"label": "No, explain nested loops", "next": "loop-explanation-java"}
+      ]
+    },
+    {
+      "stepId": "loop-explanation-java",
+      "mentorSays": "A nested loop is a loop inside another loop. The outer loop runs once, and for each iteration, the inner loop runs completely.",
+      "example": "for (int i = 0; i < 2; i++) {\n    for (int j = 0; j < 3; j++) {\n        System.out.println(i + \" \" + j);\n    }\n}",
+      "action": "continue",
+      "next": "coding-start-java"
+    },
+    {
+      "stepId": "coding-start-java",
+      "mentorSays": "Perfect! Let's implement bubble sort in Java. We'll create a method that takes an array and sorts it in-place.",
+      "example": "public void bubbleSort(int[] arr) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-outer-loop-java"
+    },
+    {
+      "stepId": "coding-outer-loop-java",
+      "mentorSays": "First, let's create the outer loop. This loop runs n-1 times, where n is the array length.",
+      "example": "public void bubbleSort(int[] arr) {\n    int n = arr.length;\n    \n    // Outer loop: n-1 passes\n    for (int i = 0; i < n - 1; i++) {\n        // Each pass will move the largest unsorted element to its place\n    }\n}",
+      "action": "continue",
+      "next": "coding-inner-loop-java"
+    },
+    {
+      "stepId": "coding-inner-loop-java",
+      "mentorSays": "Now, let's add the inner loop. This loop compares adjacent elements. After each pass, we can reduce the range.",
+      "example": "public void bubbleSort(int[] arr) {\n    int n = arr.length;\n    \n    for (int i = 0; i < n - 1; i++) {\n        // Inner loop: compare adjacent elements\n        for (int j = 0; j < n - 1 - i; j++) {\n            // Compare arr[j] and arr[j+1]\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-compare-swap-java"
+    },
+    {
+      "stepId": "coding-compare-swap-java",
+      "mentorSays": "Now, let's add the comparison and swap logic. If arr[j] > arr[j+1], we swap them.",
+      "example": "public void bubbleSort(int[] arr) {\n    int n = arr.length;\n    \n    for (int i = 0; i < n - 1; i++) {\n        for (int j = 0; j < n - 1 - i; j++) {\n            // Compare adjacent elements\n            if (arr[j] > arr[j + 1]) {\n                // Swap them\n                int temp = arr[j];\n                arr[j] = arr[j + 1];\n                arr[j + 1] = temp;\n            }\n        }\n    }\n}",
+      "action": "continue",
+      "next": "test-code-java"
+    },
+    {
+      "stepId": "test-code-java",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\narr = [5, 2, 8, 1, 9]\n\nAfter calling bubbleSort(arr), the array should be:\n[1, 2, 5, 8, 9]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\narr = [5, 2, 8, 1, 9]\n\nAfter bubbleSort(arr):\narr = [1, 2, 5, 8, 9]",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
+      "choices": [
+        {"label": "Yes, I know variables", "next": "function-check-cpp"},
+        {"label": "No, explain variables", "next": "variable-explanation-cpp"}
+      ]
+    },
+    {
+      "stepId": "variable-explanation-cpp",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'temp') and put data inside it.\n\nFor example, 'int temp = 0;' creates a variable that stores the number 0.",
+      "example": "int temp = 0;\n\nNow the variable refers to the number 0",
+      "action": "continue",
+      "next": "function-check-cpp"
+    },
+    {
+      "stepId": "function-check-cpp",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in C++?",
+      "choices": [
+        {"label": "Yes, I know functions", "next": "parameter-check-cpp"},
+        {"label": "No, explain functions", "next": "function-explanation-cpp"}
+      ]
+    },
+    {
+      "stepId": "function-explanation-cpp",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "int add(int a, int b) {\n    return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "parameter-check-cpp"
+    },
+    {
+      "stepId": "parameter-check-cpp",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {"label": "Yes, I know parameters", "next": "loop-check-cpp"},
+        {"label": "No, explain parameters", "next": "parameter-explanation-cpp"}
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-cpp",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'void bubbleSort(vector<int>& arr)', the 'arr' is a parameter.",
+      "example": "void bubbleSort(vector<int>& arr) {\n  // 'arr' is a parameter\n}",
+      "action": "continue",
+      "next": "loop-check-cpp"
+    },
+    {
+      "stepId": "loop-check-cpp",
+      "mentorSays": "To solve this problem, we'll need to use nested loops. Do you know what nested loops are in C++?",
+      "choices": [
+        {"label": "Yes, I know nested loops", "next": "coding-start-cpp"},
+        {"label": "No, explain nested loops", "next": "loop-explanation-cpp"}
+      ]
+    },
+    {
+      "stepId": "loop-explanation-cpp",
+      "mentorSays": "A nested loop is a loop inside another loop. The outer loop runs once, and for each iteration, the inner loop runs completely.",
+      "example": "for (int i = 0; i < 2; i++) {\n    for (int j = 0; j < 3; j++) {\n        cout << i << \" \" << j << endl;\n    }\n}",
+      "action": "continue",
+      "next": "coding-start-cpp"
+    },
+    {
+      "stepId": "coding-start-cpp",
+      "mentorSays": "Perfect! Let's implement bubble sort in C++. We'll create a function that takes a vector and sorts it in-place.",
+      "example": "void bubbleSort(vector<int>& arr) {\n    // Your code here\n}",
+      "action": "continue",
+      "next": "coding-outer-loop-cpp"
+    },
+    {
+      "stepId": "coding-outer-loop-cpp",
+      "mentorSays": "First, let's create the outer loop. This loop runs n-1 times, where n is the vector size.",
+      "example": "void bubbleSort(vector<int>& arr) {\n    int n = arr.size();\n    \n    // Outer loop: n-1 passes\n    for (int i = 0; i < n - 1; i++) {\n        // Each pass will move the largest unsorted element to its place\n    }\n}",
+      "action": "continue",
+      "next": "coding-inner-loop-cpp"
+    },
+    {
+      "stepId": "coding-inner-loop-cpp",
+      "mentorSays": "Now, let's add the inner loop. This loop compares adjacent elements. After each pass, we can reduce the range.",
+      "example": "void bubbleSort(vector<int>& arr) {\n    int n = arr.size();\n    \n    for (int i = 0; i < n - 1; i++) {\n        // Inner loop: compare adjacent elements\n        for (int j = 0; j < n - 1 - i; j++) {\n            // Compare arr[j] and arr[j+1]\n        }\n    }\n}",
+      "action": "continue",
+      "next": "coding-compare-swap-cpp"
+    },
+    {
+      "stepId": "coding-compare-swap-cpp",
+      "mentorSays": "Now, let's add the comparison and swap logic. If arr[j] > arr[j+1], we swap them.",
+      "example": "void bubbleSort(vector<int>& arr) {\n    int n = arr.size();\n    \n    for (int i = 0; i < n - 1; i++) {\n        for (int j = 0; j < n - 1 - i; j++) {\n            // Compare adjacent elements\n            if (arr[j] > arr[j + 1]) {\n                // Swap them\n                int temp = arr[j];\n                arr[j] = arr[j + 1];\n                arr[j + 1] = temp;\n            }\n        }\n    }\n}",
+      "action": "continue",
+      "next": "test-code-cpp"
+    },
+    {
+      "stepId": "test-code-cpp",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\narr = [5, 2, 8, 1, 9]\n\nAfter calling bubbleSort(arr), the vector should be:\n[1, 2, 5, 8, 9]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\narr = [5, 2, 8, 1, 9]\n\nAfter bubbleSort(arr):\narr = [1, 2, 5, 8, 9]",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "variable-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in TypeScript?",
+      "choices": [
+        {"label": "Yes, I know variables", "next": "function-check-ts"},
+        {"label": "No, explain variables", "next": "variable-explanation-ts"}
+      ]
+    },
+    {
+      "stepId": "variable-explanation-ts",
+      "mentorSays": "A variable is like a labeled box where you can store a value. You give it a name (like 'arr' or 'temp') and put data inside it.\n\nFor example, 'let temp: number = 0;' creates a variable that stores the number 0.",
+      "example": "let temp: number = 0;\n\nNow the variable refers to the number 0",
+      "action": "continue",
+      "next": "function-check-ts"
+    },
+    {
+      "stepId": "function-check-ts",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in TypeScript?",
+      "choices": [
+        {"label": "Yes, I know functions", "next": "parameter-check-ts"},
+        {"label": "No, explain functions", "next": "function-explanation-ts"}
+      ]
+    },
+    {
+      "stepId": "function-explanation-ts",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function add(a: number, b: number): number {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "parameter-check-ts"
+    },
+    {
+      "stepId": "parameter-check-ts",
+      "mentorSays": "When we write a function, we can give it inputs. These inputs are called 'parameters'. Do you know what parameters are?",
+      "choices": [
+        {"label": "Yes, I know parameters", "next": "loop-check-ts"},
+        {"label": "No, explain parameters", "next": "parameter-explanation-ts"}
+      ]
+    },
+    {
+      "stepId": "parameter-explanation-ts",
+      "mentorSays": "Parameters are like variables that receive values when you call the function. When you write 'function bubbleSort(arr: number[]): void', the 'arr' is a parameter.",
+      "example": "function bubbleSort(arr: number[]): void {\n  // 'arr' is a parameter\n}",
+      "action": "continue",
+      "next": "loop-check-ts"
+    },
+    {
+      "stepId": "loop-check-ts",
+      "mentorSays": "To solve this problem, we'll need to use nested loops. Do you know what nested loops are in TypeScript?",
+      "choices": [
+        {"label": "Yes, I know nested loops", "next": "coding-start-ts"},
+        {"label": "No, explain nested loops", "next": "loop-explanation-ts"}
+      ]
+    },
+    {
+      "stepId": "loop-explanation-ts",
+      "mentorSays": "A nested loop is a loop inside another loop. The outer loop runs once, and for each iteration, the inner loop runs completely.",
+      "example": "for (let i = 0; i < 2; i++) {\n    for (let j = 0; j < 3; j++) {\n        console.log(i, j);\n    }\n}",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Let's implement bubble sort in TypeScript. We'll create a function that takes an array and sorts it in-place.",
+      "example": "function bubbleSort(arr: number[]): void {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-outer-loop-ts"
+    },
+    {
+      "stepId": "coding-outer-loop-ts",
+      "mentorSays": "First, let's create the outer loop. This loop runs n-1 times, where n is the array length.",
+      "example": "function bubbleSort(arr: number[]): void {\n  const n: number = arr.length;\n  \n  // Outer loop: n-1 passes\n  for (let i = 0; i < n - 1; i++) {\n    // Each pass will move the largest unsorted element to its place\n  }\n}",
+      "action": "continue",
+      "next": "coding-inner-loop-ts"
+    },
+    {
+      "stepId": "coding-inner-loop-ts",
+      "mentorSays": "Now, let's add the inner loop. This loop compares adjacent elements. After each pass, we can reduce the range.",
+      "example": "function bubbleSort(arr: number[]): void {\n  const n: number = arr.length;\n  \n  for (let i = 0; i < n - 1; i++) {\n    // Inner loop: compare adjacent elements\n    for (let j = 0; j < n - 1 - i; j++) {\n      // Compare arr[j] and arr[j+1]\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-compare-swap-ts"
+    },
+    {
+      "stepId": "coding-compare-swap-ts",
+      "mentorSays": "Now, let's add the comparison and swap logic. If arr[j] > arr[j+1], we swap them.",
+      "example": "function bubbleSort(arr: number[]): void {\n  const n: number = arr.length;\n  \n  for (let i = 0; i < n - 1; i++) {\n    for (let j = 0; j < n - 1 - i; j++) {\n      // Compare adjacent elements\n      if (arr[j] > arr[j + 1]) {\n        // Swap them\n        const temp: number = arr[j];\n        arr[j] = arr[j + 1];\n        arr[j + 1] = temp;\n      }\n    }\n  }\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code with the example we used earlier:\n\narr = [5, 2, 8, 1, 9]\n\nAfter calling bubbleSort(arr), the array should be:\n[1, 2, 5, 8, 9]\n\nTry it in your IDE or code editor!",
+      "example": "Test input:\narr = [5, 2, 8, 1, 9]\n\nAfter bubbleSort(arr):\narr = [1, 2, 5, 8, 9]",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've learned bubble sort. You understand how it compares adjacent elements and 'bubbles' the largest element to the end in each pass.\n\nBubble sort is simple but not the most efficient (O(n²) time). However, it's great for learning sorting concepts! Keep practicing!",
+      "action": "continue"
+    }
+  ]
+}
